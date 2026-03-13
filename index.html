@@ -1,0 +1,1148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ja"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1">&lt;title&gt;B.E.A.T&lt;/title&gt;</p>
+<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;family=Roboto+Mono:wght@500&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">:root {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--bg-main:#0d1117; --bg-card:#161b22; --bg-sidebar:#1c2128;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--accent:#f5a623; --text-main:#e6edf3; --text-sub:#8b949e;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--live:#ff3b30; --success:#238636; --border:#30363d;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--font-h:'Barlow Condensed',sans-serif; --font-b:'Noto Sans JP',sans-serif; --font-m:'Roboto Mono',monospace;</p>
+<p class="p1">}</p>
+<p class="p1">*{box-sizing:border-box;margin:0;padding:0;}</p>
+<p class="p1">body{font-family:var(--font-b);background:var(--bg-main);color:var(--text-main);overflow-x:hidden;}</p>
+<p class="p1">a{text-decoration:none;color:inherit;}</p>
+<p class="p2"><br></p>
+<p class="p1">.header{background:var(--bg-sidebar);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;justify-content:space-between;align-items:stretch;position:sticky;top:0;z-index:100;height:56px;}</p>
+<p class="p1">.header-left{display:flex;align-items:stretch;gap:0;}</p>
+<p class="p1">.logo{font-family:var(--font-h);font-size:1.4rem;font-weight:700;color:var(--accent);letter-spacing:1px;display:flex;align-items:center;gap:6px;padding:0 16px 0 0;border:none;background:none;cursor:pointer;white-space:nowrap;}</p>
+<p class="p1">.logo:hover{opacity:0.85;}</p>
+<p class="p1">.logo svg{flex-shrink:0;}</p>
+<p class="p1">.header-divider{width:1px;background:var(--border);margin:10px 0;}</p>
+<p class="p1">.header-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 16px;background:none;border:none;border-bottom:3px solid transparent;color:var(--text-sub);cursor:pointer;font-family:var(--font-b);font-size:11px;height:100%;position:relative;transition:all 0.2s;white-space:nowrap;}</p>
+<p class="p1">.header-tab:hover{color:var(--text-main);background:rgba(255,255,255,0.04);}</p>
+<p class="p1">.header-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(245,166,35,0.07);}</p>
+<p class="p1">.htab-icon{font-size:15px;line-height:1;}</p>
+<p class="p1">.htab-label{font-size:10px;font-weight:500;}</p>
+<p class="p1">.live-dot{position:absolute;top:10px;right:12px;width:6px;height:6px;background:var(--live);border-radius:50%;border:1px solid var(--bg-sidebar);animation:pulseDot 1s infinite;}</p>
+<p class="p1">@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:0.4}}</p>
+<p class="p1">.header-right{display:flex;align-items:center;gap:8px;}</p>
+<p class="p1">.balance{font-family:var(--font-m);font-size:13px;color:var(--text-main);background:var(--bg-main);padding:4px 10px;border-radius:4px;border:1px solid var(--border);}</p>
+<p class="p1">@media(max-width:600px){.htab-label{display:none;}.header-tab{padding:0 11px;}.logo{font-size:1.1rem;padding-right:8px;}}</p>
+<p class="p2"><br></p>
+<p class="p1">.main-content{display:flex;flex:1;position:relative;}</p>
+<p class="p1">.content-area{flex:1;padding:1rem;padding-bottom:100px;}</p>
+<p class="p1">.view-section{display:none;}</p>
+<p class="p1">.view-section.active{display:block;animation:fadeIn 0.25s ease-out;}</p>
+<p class="p1">@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}</p>
+<p class="p2"><br></p>
+<p class="p1">.studio-wrap{position:relative;background:linear-gradient(160deg,#0a0a0a 0%,#1a0000 40%,#0d0d1a 100%);border:2px solid #cc0000;border-radius:10px 10px 0 0;overflow:hidden;margin-bottom:0;}</p>
+<p class="p1">.studio-wrap::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,rgba(200,0,0,0.25) 0%,transparent 8%),linear-gradient(270deg,rgba(200,0,0,0.25) 0%,transparent 8%);pointer-events:none;}</p>
+<p class="p1">.studio-hd{background:linear-gradient(90deg,#cc0000,#880000);padding:5px 14px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;}</p>
+<p class="p1">.studio-hd-title{font-size:13px;font-weight:bold;color:#fff;letter-spacing:2px;}</p>
+<p class="p1">.studio-live-badge{background:#ff0000;color:#fff;font-size:10px;font-weight:bold;padding:2px 7px;border-radius:3px;animation:liveBlink 1s infinite;letter-spacing:1px;}</p>
+<p class="p1">@keyframes liveBlink{0%,100%{opacity:1}50%{opacity:0.5}}</p>
+<p class="p1">.studio-body{display:flex;align-items:flex-end;gap:14px;padding:10px 14px 0;position:relative;z-index:1;}</p>
+<p class="p1">.studio-char-wrap{flex-shrink:0;text-align:center;}</p>
+<p class="p1">.studio-char{position:relative;width:76px;height:86px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;}</p>
+<p class="p1">.ai-caster{display:flex;flex-direction:column;align-items:center;}</p>
+<p class="p1">.ai-head{position:relative;font-size:34px;line-height:1;filter:drop-shadow(0 0 8px rgba(255,100,0,0.6));}</p>
+<p class="p1">.ai-headset{position:absolute;top:-6px;right:-10px;font-size:15px;}</p>
+<p class="p1">.ai-body{width:38px;height:28px;background:linear-gradient(180deg,#1a3a6a,#0d1f3c);border-radius:8px 8px 0 0;margin-top:3px;border:1px solid #2a4a8a;}</p>
+<p class="p1">.studio-desk{position:absolute;bottom:0;width:76px;height:13px;background:linear-gradient(180deg,#333,#1a1a1a);border-top:2px solid #cc0000;border-radius:2px;z-index:2;}</p>
+<p class="p1">.studio-nameplate{font-size:9px;color:#cc0000;font-weight:bold;letter-spacing:2px;margin-top:3px;font-family:monospace;}</p>
+<p class="p1">.studio-speech-wrap{flex:1;padding-bottom:14px;}</p>
+<p class="p1">.studio-bubble{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:12px 12px 12px 0;padding:10px 13px;font-size:13px;color:#e6edf3;line-height:1.6;min-height:56px;}</p>
+<p class="p1">.speech-cursor{display:inline-block;color:var(--accent);animation:cur 0.8s step-end infinite;font-weight:bold;}</p>
+<p class="p1">@keyframes cur{0%,100%{opacity:1}50%{opacity:0}}</p>
+<p class="p1">.studio-tag{font-size:10px;color:var(--text-sub);margin-top:5px;padding-left:3px;}</p>
+<p class="p2"><br></p>
+<p class="p1">.studio-actions{display:flex;gap:0;padding:0;border-top:1px solid rgba(200,0,0,0.3);background:rgba(0,0,0,0.3);position:relative;z-index:1;border-radius:0 0 0 0;overflow:hidden;}</p>
+<p class="p1">.studio-btn{flex:1;background:rgba(255,255,255,0.04);border:none;border-right:1px solid rgba(255,255,255,0.06);color:var(--text-sub);padding:8px 4px;font-size:11px;font-family:var(--font-b);cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:2px;}</p>
+<p class="p1">.studio-btn:last-child{border-right:none;}</p>
+<p class="p1">.studio-btn:hover,.studio-btn.active{background:rgba(204,0,0,0.2);color:#e6edf3;}</p>
+<p class="p1">.studio-btn.active{border-bottom:2px solid #cc0000;}</p>
+<p class="p1">.studio-btn-icon{font-size:14px;}</p>
+<p class="p1">.studio-btn-label{font-size:9px;}</p>
+<p class="p2"><br></p>
+<p class="p1">.studio-panel{background:#0d1117;border:1px solid #30363d;border-top:none;border-radius:0 0 10px 10px;margin-bottom:14px;overflow:hidden;}</p>
+<p class="p1">.studio-panel-inner{padding:12px 14px;}</p>
+<p class="p2"><br></p>
+<p class="p1">.sp-live-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #21262d;}</p>
+<p class="p1">.sp-live-row:last-child{border-bottom:none;}</p>
+<p class="p1">.sp-live-badge{font-size:9px;font-weight:bold;padding:2px 6px;border-radius:10px;flex-shrink:0;}</p>
+<p class="p1">.sp-live-badge.live{background:#ff3b30;color:#fff;animation:pulseDot 1s infinite;}</p>
+<p class="p1">.sp-live-badge.fin{background:#21262d;color:#8b949e;}</p>
+<p class="p1">.sp-live-teams{flex:1;font-size:12px;color:#e6edf3;}</p>
+<p class="p1">.sp-live-score{font-size:14px;font-weight:bold;font-family:var(--font-m);color:#e6edf3;flex-shrink:0;}</p>
+<p class="p1">.sp-live-arrow{font-size:10px;color:#30363d;}</p>
+<p class="p2"><br></p>
+<p class="p1">.sp-result-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #21262d;cursor:pointer;transition:background 0.15s;}</p>
+<p class="p1">.sp-result-row:last-child{border-bottom:none;}</p>
+<p class="p1">.sp-result-row:hover{background:rgba(255,255,255,0.03);}</p>
+<p class="p1">.sp-result-icon{font-size:14px;flex-shrink:0;}</p>
+<p class="p1">.sp-result-label{flex:1;font-size:12px;color:#e6edf3;}</p>
+<p class="p1">.sp-result-pt{font-size:12px;font-weight:bold;flex-shrink:0;}</p>
+<p class="p1">.sp-result-pt.won{color:#3fb950;}.sp-result-pt.lost{color:#ff6b6b;}.sp-result-pt.pending{color:#f5a623;}</p>
+<p class="p2"><br></p>
+<p class="p1">.sp-news-row{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #21262d;cursor:pointer;transition:background 0.15s;}</p>
+<p class="p1">.sp-news-row:last-child{border-bottom:none;}</p>
+<p class="p1">.sp-news-row:hover{background:rgba(255,255,255,0.03);}</p>
+<p class="p1">.sp-news-icon{font-size:18px;flex-shrink:0;}</p>
+<p class="p1">.sp-news-info{flex:1;}</p>
+<p class="p1">.sp-news-title{font-size:12px;color:#e6edf3;font-weight:bold;margin-bottom:2px;}</p>
+<p class="p1">.sp-news-meta{font-size:10px;color:#8b949e;}</p>
+<p class="p2"><br></p>
+<p class="p1">.sp-comment-input-row{display:flex;gap:8px;margin-bottom:10px;}</p>
+<p class="p1">.sp-comment-input{flex:1;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:7px 10px;font-size:12px;color:#e6edf3;outline:none;font-family:var(--font-b);}</p>
+<p class="p1">.sp-comment-input:focus{border-color:var(--accent);}</p>
+<p class="p1">.sp-comment-send{background:var(--accent);color:#000;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:bold;cursor:pointer;}</p>
+<p class="p1">.sp-comment-list{display:flex;flex-direction:column;gap:6px;max-height:140px;overflow-y:auto;}</p>
+<p class="p1">.sp-comment-item{display:flex;gap:8px;align-items:flex-start;}</p>
+<p class="p1">.sp-comment-avatar{font-size:16px;flex-shrink:0;}</p>
+<p class="p1">.sp-comment-bubble{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:5px 9px;font-size:12px;color:#e6edf3;line-height:1.4;}</p>
+<p class="p1">.sp-comment-name{font-size:10px;color:#f5a623;font-weight:bold;margin-bottom:1px;}</p>
+<p class="p2"><br></p>
+<p class="p1">.info-bar-league{display:flex;justify-content:space-between;align-items:center;background:#0d1117;border:1px solid #30363d;border-top:none;padding:6px 14px;font-size:12px;cursor:pointer;}</p>
+<p class="p1">.info-bar-league:hover{background:#161b22;}</p>
+<p class="p1">.lib-league{color:#7c3aed;font-weight:bold;}.lib-rank{color:var(--accent);font-weight:bold;}.lib-diff{color:#ff6b6b;font-size:11px;}.lib-timer{color:var(--accent);font-weight:bold;}</p>
+<p class="p1">.info-bar-ticker{display:flex;align-items:center;gap:8px;background:#161b22;border:1px solid #30363d;border-top:none;padding:5px 14px;overflow:hidden;margin-bottom:14px;border-radius:0 0 10px 10px;}</p>
+<p class="p1">.ticker-track-wrap{overflow:hidden;flex:1;}</p>
+<p class="p1">.ticker-track{display:inline-block;white-space:nowrap;font-size:12px;color:#8b949e;animation:tickerMove 30s linear infinite;}</p>
+<p class="p1">@keyframes tickerMove{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}</p>
+<p class="p2"><br></p>
+<p class="p1">.section-header{display:flex;justify-content:space-between;align-items:center;padding:6px 0;margin-bottom:10px;border-bottom:1px solid var(--border);font-size:14px;font-weight:bold;}</p>
+<p class="p1">.see-more-btn{background:none;border:none;color:var(--text-sub);font-size:12px;cursor:pointer;padding:4px 8px;}</p>
+<p class="p1">.see-more-btn:hover{color:var(--accent);}</p>
+<p class="p2"><br></p>
+<p class="p1">.match-card-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}</p>
+<p class="p1">@media(max-width:768px){.match-card-list{display:flex;overflow-x:auto;padding-bottom:1rem;scroll-snap-type:x mandatory;}.home-match-card{min-width:270px;scroll-snap-align:start;}}</p>
+<p class="p1">.home-match-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.25s;display:flex;flex-direction:column;cursor:pointer;}</p>
+<p class="p1">.home-match-card:hover{border-color:var(--text-sub);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.4);}</p>
+<p class="p1">.home-match-card.is-hot{border-color:#ff6b00;animation:glowOrange 2s infinite alternate;}</p>
+<p class="p1">@keyframes glowOrange{from{box-shadow:0 0 5px rgba(255,107,0,0.2)}to{box-shadow:0 0 15px rgba(255,107,0,0.5)}}</p>
+<p class="p1">.card-top-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 10px 4px;}</p>
+<p class="p1">.hot-badge{background:#ff6b00;color:#fff;font-size:10px;font-weight:bold;padding:2px 6px;border-radius:4px;}</p>
+<p class="p1">.status-badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:bold;margin-left:auto;}</p>
+<p class="p1">.status-live{background:var(--live);color:#fff;animation:pulseDot 1s infinite;}</p>
+<p class="p1">.status-upcoming{background:#30363d;color:#fff;}</p>
+<p class="p1">.status-finished{background:#21262d;color:#8b949e;}</p>
+<p class="p1">.status-closing{background:var(--accent);color:#000;}</p>
+<p class="p1">.card-divider{height:1px;background:var(--border);}</p>
+<p class="p1">.card-meta-section{padding:6px 10px;display:flex;flex-direction:column;gap:3px;}</p>
+<p class="p1">.meta-row{display:flex;align-items:center;gap:5px;font-size:11px;color:#8b949e;}</p>
+<p class="p1">.text-amber{color:var(--accent);}.text-orange{color:#ff6b00;}.text-red{color:var(--live);}</p>
+<p class="p1">.blink{animation:blinkTxt 1s infinite;}</p>
+<p class="p1">@keyframes blinkTxt{50%{opacity:0}}</p>
+<p class="p1">.part-bar{padding:5px 10px;font-size:11px;border-top:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;border-radius:0 0 6px 6px;}</p>
+<p class="p1">.part-done{background:#1a2a1a;color:#3fb950;}.part-open{background:#1c2128;color:#8b949e;}.part-won{background:#1a2a1a;color:#3fb950;}</p>
+<p class="p1">.part-btn{background:var(--accent);color:#000;border:none;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:bold;cursor:pointer;}</p>
+<p class="p1">.csr-row{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;gap:4px;}</p>
+<p class="p1">.csr-home{display:flex;align-items:center;gap:4px;flex:1;}</p>
+<p class="p1">.csr-away{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end;}</p>
+<p class="p1">.csr-flag{font-size:17px;}.csr-name{font-size:12px;white-space:nowrap;}</p>
+<p class="p1">.csr-center{display:flex;align-items:center;gap:3px;flex-shrink:0;}</p>
+<p class="p1">.csr-num{font-size:20px;font-weight:bold;font-family:var(--font-m);}.csr-sep{font-size:14px;color:#8b949e;}</p>
+<p class="p2"><br></p>
+<p class="p1">.player-cards-section{margin-top:24px;}</p>
+<p class="p1">.player-card-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;}</p>
+<p class="p1">.player-card-scroll::-webkit-scrollbar{height:4px;}</p>
+<p class="p1">.player-card-scroll::-webkit-scrollbar-track{background:#161b22;}</p>
+<p class="p1">.player-card-scroll::-webkit-scrollbar-thumb{background:#30363d;border-radius:2px;}</p>
+<p class="p1">.pcard{flex-shrink:0;width:110px;scroll-snap-align:start;cursor:pointer;border-radius:10px;overflow:hidden;border:2px solid var(--border);background:var(--bg-card);transition:all 0.25s;position:relative;}</p>
+<p class="p1">.pcard:hover{transform:translateY(-4px) scale(1.03);z-index:10;}</p>
+<p class="p1">.pcard.rarity-EPIC{border-color:#f5a623;box-shadow:0 0 10px rgba(245,166,35,0.3);}</p>
+<p class="p1">.pcard.rarity-RARE{border-color:#58a6ff;box-shadow:0 0 10px rgba(88,166,255,0.3);}</p>
+<p class="p1">.pcard.rarity-UNCOMMON{border-color:#7c3aed;}</p>
+<p class="p1">.pcard.rarity-NORMAL{border-color:#30363d;}</p>
+<p class="p1">.pcard-img{width:100%;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;}</p>
+<p class="p1">.pcard-bg{position:absolute;inset:0;}</p>
+<p class="p1">.pcard-emoji{font-size:36px;position:relative;z-index:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6));}</p>
+<p class="p1">.pcard-number{position:absolute;top:5px;left:7px;font-size:11px;font-weight:bold;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.8);z-index:2;}</p>
+<p class="p1">.pcard-rarity-badge{position:absolute;top:4px;right:4px;font-size:8px;font-weight:bold;padding:2px 5px;border-radius:8px;z-index:2;}</p>
+<p class="p1">.pcard-rarity-badge.EPIC{background:linear-gradient(135deg,#f5a623,#c87800);color:#000;}</p>
+<p class="p1">.pcard-rarity-badge.RARE{background:linear-gradient(135deg,#58a6ff,#1a5fa8);color:#fff;}</p>
+<p class="p1">.pcard-rarity-badge.UNCOMMON{background:#7c3aed;color:#fff;}</p>
+<p class="p1">.pcard-rarity-badge.NORMAL{background:#30363d;color:#8b949e;}</p>
+<p class="p1">.pcard-info{padding:6px 7px;}</p>
+<p class="p1">.pcard-name{font-size:11px;font-weight:bold;color:#e6edf3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}</p>
+<p class="p1">.pcard-team{font-size:9px;color:#8b949e;margin-top:1px;}</p>
+<p class="p1">.pcard-new{position:absolute;top:-4px;right:-4px;background:var(--live);color:#fff;font-size:9px;font-weight:bold;padding:2px 5px;border-radius:8px;z-index:3;}</p>
+<p class="p2"><br></p>
+<p class="p1">.betslip-panel{width:300px;background:var(--bg-card);border-left:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:56px;height:calc(100vh - 56px);z-index:90;}</p>
+<p class="p1">.betslip-header{padding:1rem;border-bottom:1px solid var(--border);background:var(--bg-sidebar);display:flex;justify-content:space-between;align-items:center;cursor:pointer;}</p>
+<p class="p1">.betslip-title{font-family:var(--font-h);font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:6px;}</p>
+<p class="p1">.betslip-count{background:var(--accent);color:#000;font-size:11px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;justify-content:center;align-items:center;}</p>
+<p class="p1">.betslip-body{flex:1;overflow-y:auto;padding:1rem;}</p>
+<p class="p1">.empty-betslip{text-align:center;color:var(--text-sub);padding-top:2rem;font-size:13px;}</p>
+<p class="p1">.bet-item{background:var(--bg-main);border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:10px;position:relative;}</p>
+<p class="p1">.bet-selection{font-weight:700;color:var(--accent);font-size:13px;}</p>
+<p class="p1">.bet-market{font-size:11px;color:var(--text-sub);}</p>
+<p class="p1">.bet-odds-badge{font-family:var(--font-m);font-weight:700;background:var(--bg-card);padding:2px 6px;border-radius:4px;font-size:12px;}</p>
+<p class="p1">.btn-remove{position:absolute;top:8px;right:8px;color:var(--text-sub);cursor:pointer;background:none;border:none;font-size:14px;}</p>
+<p class="p1">.btn-remove:hover{color:var(--live);}</p>
+<p class="p1">.stake-input{width:100%;background:var(--bg-card);border:1px solid var(--border);color:var(--text-main);padding:6px 6px 6px 22px;border-radius:4px;font-family:var(--font-m);font-size:13px;margin-top:6px;}</p>
+<p class="p1">.stake-input:focus{outline:none;border-color:var(--accent);}</p>
+<p class="p1">.stake-sym{position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--text-sub);font-size:12px;pointer-events:none;}</p>
+<p class="p1">.quick-stakes{display:flex;gap:4px;margin-top:5px;}</p>
+<p class="p1">.btn-quick{flex:1;background:var(--bg-card);border:1px solid var(--border);color:var(--text-sub);font-size:10px;padding:3px;border-radius:4px;cursor:pointer;}</p>
+<p class="p1">.btn-quick:hover{background:var(--border);color:var(--text-main);}</p>
+<p class="p1">.potential-return{display:flex;justify-content:space-between;margin-top:5px;font-size:11px;color:var(--text-sub);}</p>
+<p class="p1">.return-amount{color:var(--success);font-weight:700;font-family:var(--font-m);}</p>
+<p class="p1">.betslip-footer{padding:1rem;border-top:1px solid var(--border);background:var(--bg-sidebar);}</p>
+<p class="p1">.total-row{display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;}</p>
+<p class="p1">.total-row.big{font-weight:700;font-size:1rem;color:var(--success);margin-bottom:10px;}</p>
+<p class="p1">.btn-place{width:100%;background:var(--success);color:#fff;border:none;padding:12px;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer;text-transform:uppercase;}</p>
+<p class="p1">.btn-place:hover{background:#1c6b2b;}</p>
+<p class="p1">.btn-place:disabled{background:var(--border);color:var(--text-sub);cursor:not-allowed;}</p>
+<p class="p1">@keyframes flashGreen{0%{background:var(--success);color:#fff}100%{background:var(--bg-card)}}</p>
+<p class="p1">@keyframes flashRed{0%{background:var(--live);color:#fff}100%{background:var(--bg-card)}}</p>
+<p class="p1">.flash-up{animation:flashGreen 1s ease-out;}</p>
+<p class="p1">.flash-down{animation:flashRed 1s ease-out;}</p>
+<p class="p1">@media(max-width:1024px){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.betslip-panel{position:fixed;bottom:0;top:auto;left:0;width:100%;height:auto;max-height:80vh;border-left:none;border-top:1px solid var(--border);transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:0 -4px 20px rgba(0,0,0,0.5);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.betslip-panel.open{transform:translateY(0);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.betslip-toggle{display:flex;position:fixed;bottom:0;left:0;width:100%;background:var(--bg-sidebar);padding:12px 1rem;border-top:1px solid var(--border);justify-content:space-between;align-items:center;z-index:100;cursor:pointer;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.betslip-toggle.hidden{display:none;}</p>
+<p class="p1">}</p>
+<p class="p1">@media(min-width:1025px){.betslip-toggle{display:none;}}</p>
+<p class="p2"><br></p>
+<p class="p1">.match-detail-topbar{padding:7px 14px;border-bottom:1px solid #30363d;background:#0d1117;position:sticky;top:56px;z-index:50;}</p>
+<p class="p1">.md-back-btn{background:none;border:none;color:var(--accent);font-size:13px;cursor:pointer;padding:4px 0;display:flex;align-items:center;gap:4px;}</p>
+<p class="p1">.md-back-btn:hover{text-decoration:underline;}</p>
+<p class="p1">.tabs{display:flex;gap:1rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem;overflow-x:auto;white-space:nowrap;}</p>
+<p class="p1">.tab{padding:10px 0;color:var(--text-sub);cursor:pointer;position:relative;font-weight:500;font-size:13px;transition:color 0.2s;}</p>
+<p class="p1">.tab.active{color:var(--accent);}</p>
+<p class="p1">.tab.active::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;height:2px;background:var(--accent);}</p>
+<p class="p1">.market-group{margin-bottom:1.25rem;}</p>
+<p class="p1">.market-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;cursor:pointer;}</p>
+<p class="p1">.market-title{font-size:14px;font-weight:700;color:var(--text-main);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}</p>
+<p class="p1">.odds-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}</p>
+<p class="p1">.odds-btn{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.2s;position:relative;}</p>
+<p class="p1">.odds-btn:hover{border-color:var(--text-sub);background:#1f252e;}</p>
+<p class="p1">.odds-btn.selected{background:rgba(245,166,35,0.15);border-color:var(--accent);}</p>
+<p class="p1">.odds-label{font-size:12px;color:var(--text-main);}</p>
+<p class="p1">.odds-value{font-family:var(--font-m);font-weight:700;color:var(--accent);font-size:13px;}</p>
+<p class="p1">.popular-tag{font-size:10px;color:var(--text-sub);background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:3px;margin-top:3px;}</p>
+<p class="p1">.difficulty-badge{font-size:9px;padding:2px 6px;border-radius:8px;font-weight:bold;}</p>
+<p class="p1">.difficulty-badge.easy{background:#1a3a2a;color:#3fb950;}</p>
+<p class="p1">.difficulty-badge.medium{background:#3a2e0a;color:var(--accent);}</p>
+<p class="p1">.difficulty-badge.hard{background:#3a1a1a;color:#ff6b6b;}</p>
+<p class="p1">.tooltip-icon{cursor:help;font-size:12px;color:#8b949e;position:relative;}</p>
+<p class="p1">.tooltip-icon::after{content:attr(data-tooltip);position:absolute;bottom:125%;left:50%;transform:translateX(-50%);background:#21262d;color:#e6edf3;font-size:10px;padding:5px 8px;border-radius:5px;white-space:nowrap;border:1px solid #30363d;opacity:0;pointer-events:none;transition:opacity 0.2s;z-index:100;}</p>
+<p class="p1">.tooltip-icon:hover::after{opacity:1;}</p>
+<p class="p1">.accordion-content{display:none;}</p>
+<p class="p1">.accordion-content.open{display:block;}</p>
+<p class="p1">.chevron{transition:transform 0.3s;}</p>
+<p class="p1">.chevron.open{transform:rotate(180deg);}</p>
+<p class="p2"><br></p>
+<p class="p1">.live-header-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:1rem;display:flex;flex-direction:column;gap:5px;}</p>
+<p class="p1">.live-status-bar{display:flex;justify-content:space-between;align-items:center;font-size:12px;}</p>
+<p class="p1">.live-status-left{color:var(--text-sub);}</p>
+<p class="p1">.live-status-right{display:flex;align-items:center;gap:6px;font-weight:bold;color:#fff;}</p>
+<p class="p1">.live-badge-anim{color:var(--live);animation:pulseDot 1s infinite;}</p>
+<p class="p1">.live-teams-score{display:flex;justify-content:space-between;align-items:center;padding:0 8px;}</p>
+<p class="p1">.live-team{display:flex;flex-direction:column;align-items:center;gap:4px;}</p>
+<p class="p1">.live-team-flag{font-size:28px;line-height:1;}</p>
+<p class="p1">.live-team-name{font-size:11px;color:var(--text-sub);}</p>
+<p class="p1">.live-score-area{display:flex;align-items:center;gap:8px;font-size:36px;font-weight:bold;color:#fff;}</p>
+<p class="p2"><br></p>
+<p class="p1">.mp-chat-wrap{background:#0d1117;border:1px solid #30363d;border-top:none;padding:10px 14px;}</p>
+<p class="p1">.mp-chat-history{max-height:110px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;margin-bottom:7px;}</p>
+<p class="p1">.mp-chat-msg{display:flex;align-items:flex-start;gap:7px;}</p>
+<p class="p1">.mp-chat-msg.user{flex-direction:row-reverse;}</p>
+<p class="p1">.mp-chat-avatar{font-size:16px;flex-shrink:0;}</p>
+<p class="p1">.mp-chat-bubble{background:#161b22;border:1px solid #30363d;border-radius:9px;padding:5px 9px;font-size:11px;color:#e6edf3;max-width:75%;line-height:1.4;}</p>
+<p class="p1">.mp-chat-msg.user .mp-chat-bubble{background:#1a2a3a;border-color:var(--accent);color:var(--accent);}</p>
+<p class="p1">.mp-chat-input-row{display:flex;gap:7px;}</p>
+<p class="p1">.mp-chat-input{flex:1;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px 9px;font-size:11px;color:#e6edf3;outline:none;}</p>
+<p class="p1">.mp-chat-input:focus{border-color:var(--accent);}</p>
+<p class="p1">.mp-chat-send{background:var(--accent);color:#000;border:none;border-radius:6px;padding:6px 12px;font-size:11px;font-weight:bold;cursor:pointer;}</p>
+<p class="p1">.mp-section{padding:12px 14px;border-bottom:1px solid #30363d;}</p>
+<p class="p1">.mp-section-title{font-size:13px;font-weight:bold;color:#e6edf3;margin-bottom:9px;}</p>
+<p class="p1">.mp-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}</p>
+<p class="p1">.mp-stat-card{background:#1c2128;border:1px solid #30363d;border-radius:7px;padding:9px 11px;}</p>
+<p class="p1">.mp-stat-label{font-size:10px;color:#8b949e;margin-bottom:3px;}</p>
+<p class="p1">.mp-stat-main{display:flex;align-items:baseline;gap:5px;}</p>
+<p class="p1">.mp-stat-pt{font-size:18px;font-weight:bold;}</p>
+<p class="p1">.mp-stat-pt.positive{color:#3fb950;}.mp-stat-pt.negative{color:#ff6b6b;}</p>
+<p class="p1">.mp-stat-sep{color:#8b949e;font-size:13px;}</p>
+<p class="p1">.mp-stat-rank{font-size:15px;font-weight:bold;color:#e6edf3;}</p>
+<p class="p1">.mp-stat-sub{font-size:10px;color:#8b949e;margin-top:2px;}</p>
+<p class="p1">.mp-progress-wrap{height:5px;background:#21262d;border-radius:3px;margin:9px 0 3px;}</p>
+<p class="p1">.mp-progress-bar{height:100%;background:#3fb950;border-radius:3px;transition:width 0.5s ease;}</p>
+<p class="p1">.mp-progress-label{font-size:10px;color:#3fb950;text-align:right;}</p>
+<p class="p1">.mp-section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}</p>
+<p class="p1">.mp-league-badge{font-size:10px;color:#8b949e;}</p>
+<p class="p1">.mp-link-btn{background:none;border:none;color:var(--accent);font-size:11px;cursor:pointer;}</p>
+<p class="p1">.lb-row{display:flex;align-items:center;padding:9px 14px;border-bottom:1px solid #21262d;cursor:pointer;gap:8px;transition:background 0.15s;}</p>
+<p class="p1">.lb-row:last-child{border-bottom:none;}</p>
+<p class="p1">.lb-row:hover{background:#1c2128;}</p>
+<p class="p1">.lb-status{font-size:13px;flex-shrink:0;}</p>
+<p class="p1">.lb-label{flex:1;font-size:12px;color:#e6edf3;}</p>
+<p class="p1">.lb-pt{font-size:12px;font-weight:bold;flex-shrink:0;}</p>
+<p class="p1">.lb-pt.won{color:#3fb950;}.lb-pt.lost{color:#ff6b6b;}.lb-pt.pending{color:var(--accent);}</p>
+<p class="p1">.lb-arrow{font-size:10px;color:#30363d;flex-shrink:0;}</p>
+<p class="p1">.mp-active-bet-card{display:flex;align-items:center;background:#1c2128;border:1px solid #30363d;border-radius:7px;padding:9px 11px;margin-bottom:7px;gap:9px;cursor:pointer;}</p>
+<p class="p1">.mp-active-bet-card:hover{border-color:var(--accent);}</p>
+<p class="p1">.mp-active-sport{font-size:17px;flex-shrink:0;}</p>
+<p class="p1">.mp-active-info{flex:1;}</p>
+<p class="p1">.mp-active-match{font-size:12px;color:#e6edf3;font-weight:bold;}</p>
+<p class="p1">.mp-active-my{font-size:10px;color:var(--accent);margin-top:2px;}</p>
+<p class="p1">.mp-active-status{font-size:10px;font-weight:bold;flex-shrink:0;padding:2px 7px;border-radius:9px;}</p>
+<p class="p1">.mp-active-status.live{background:var(--live);color:#fff;}</p>
+<p class="p1">.mp-active-status.pending{background:#3a2e0a;color:var(--accent);}</p>
+<p class="p1">.mp-friend-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid #21262d;gap:9px;}</p>
+<p class="p1">.mp-friend-row:last-child{border-bottom:none;}</p>
+<p class="p1">.mp-friend-avatar{font-size:20px;flex-shrink:0;}</p>
+<p class="p1">.mp-friend-info{flex:1;}</p>
+<p class="p1">.mp-friend-name{font-size:12px;color:#e6edf3;font-weight:bold;}</p>
+<p class="p1">.mp-friend-bet{font-size:10px;color:#8b949e;margin-top:1px;}</p>
+<p class="p1">.mp-friend-result{font-size:11px;font-weight:bold;flex-shrink:0;}</p>
+<p class="p1">.mp-friend-result.won{color:#3fb950;}.mp-friend-result.pending{color:var(--accent);}.mp-friend-result.lost{color:#ff6b6b;}</p>
+<p class="p1">.lr-row{display:flex;align-items:center;padding:8px 12px;gap:9px;border-bottom:1px solid #21262d;}</p>
+<p class="p1">.lr-row.me{background:#1c2820;border-left:3px solid var(--accent);}</p>
+<p class="p1">.lr-rank{width:20px;font-size:11px;color:#8b949e;text-align:center;flex-shrink:0;}</p>
+<p class="p1">.lr-avatar{font-size:20px;flex-shrink:0;}</p>
+<p class="p1">.lr-name{flex:1;font-size:12px;color:#e6edf3;}</p>
+<p class="p1">.lr-name.me-name{color:var(--accent);font-weight:bold;}</p>
+<p class="p1">.lr-pts{font-size:12px;color:#8b949e;font-weight:bold;}</p>
+<p class="p1">.lr-pts.me-pts{color:#3fb950;}</p>
+<p class="p1">.league-ranking-wrap{background:#161b22;border:1px solid #30363d;border-radius:7px;margin-top:10px;overflow:hidden;}</p>
+<p class="p2"><br></p>
+<p class="p1">.rd-header{display:flex;align-items:center;gap:7px;padding:11px 13px;border-bottom:1px solid #30363d;background:#161b22;}</p>
+<p class="p1">.rd-back{background:none;border:none;color:var(--accent);font-size:13px;cursor:pointer;}</p>
+<p class="p1">.rd-title{flex:1;font-size:13px;font-weight:bold;color:#e6edf3;}</p>
+<p class="p1">.rd-timer{font-size:10px;color:#8b949e;}</p>
+<p class="p1">.rd-trophy-row{display:flex;gap:9px;padding:13px 15px;overflow-x:auto;border-bottom:1px solid #30363d;}</p>
+<p class="p1">.rd-trophy{font-size:26px;flex-shrink:0;filter:drop-shadow(0 0 5px rgba(245,166,35,0.5));}</p>
+<p class="p1">.rd-trophy.locked{filter:grayscale(1) opacity(0.3);}</p>
+<p class="p1">.rd-zone-up{font-size:10px;color:#3fb950;text-align:center;padding:4px;border-top:1px solid #3fb950;border-bottom:1px solid #3fb950;margin:3px 0;}</p>
+<p class="p2"><br></p>
+<p class="p1">.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:none;justify-content:center;align-items:center;z-index:1000;}</p>
+<p class="p1">.modal-overlay.active{display:flex;}</p>
+<p class="p1">.modal-content{background:var(--bg-card);border:1px solid var(--border);border-radius:11px;padding:1.25rem;width:90%;max-width:380px;position:relative;}</p>
+<p class="p1">.modal-close{position:absolute;top:12px;right:12px;cursor:pointer;color:var(--text-sub);}</p>
+<p class="p1">.modal-title{font-size:1.1rem;font-weight:bold;margin-bottom:1.25rem;}</p>
+<p class="p1">.radio-group{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem;}</p>
+<p class="p1">.radio-label{display:flex;align-items:center;gap:6px;cursor:pointer;}</p>
+<p class="p1">.balance-calc{background:var(--bg-main);padding:10px;border-radius:7px;margin-bottom:1.25rem;font-size:13px;}</p>
+<p class="p1">.modal-actions{display:flex;gap:10px;justify-content:flex-end;}</p>
+<p class="p1">.btn-cancel{background:transparent;border:1px solid var(--border);color:#fff;padding:6px 14px;border-radius:6px;cursor:pointer;}</p>
+<p class="p1">.btn-confirm{background:var(--accent);border:none;color:#000;padding:6px 14px;border-radius:6px;font-weight:bold;cursor:pointer;}</p>
+<p class="p1">.btn-confirm:disabled{background:var(--border);color:var(--text-sub);cursor:not-allowed;}</p>
+<p class="p2"><br></p>
+<p class="p1">.coin-paid{color:var(--accent);}.coin-free{color:#58a6ff;}</p>
+<p class="p1">.cards-tab-nav{display:flex;gap:1rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem;}</p>
+<p class="p1">.cards-tab{padding:10px 1rem;color:var(--text-sub);cursor:pointer;font-weight:bold;border-bottom:2px solid transparent;font-size:13px;}</p>
+<p class="p1">.cards-tab.active{color:var(--accent);border-bottom-color:var(--accent);}</p>
+<p class="p1">.coin-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:7px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;}</p>
+<p class="p1">.coin-balances{display:flex;gap:1.25rem;font-weight:bold;font-size:13px;}</p>
+<p class="p1">.btn-buy-coin{background:transparent;border:1px solid var(--border);color:var(--text-sub);padding:5px 10px;border-radius:4px;font-size:12px;cursor:not-allowed;}</p>
+<p class="p1">.pack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;}</p>
+<p class="p1">.pack-card{width:100%;aspect-ratio:3/4;border-radius:11px;border:1px solid var(--border);padding:12px;display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer;position:relative;overflow:hidden;}</p>
+<p class="p1">.pack-card:hover{transform:translateY(-5px);box-shadow:0 0 14px rgba(245,166,35,0.3);border-color:var(--accent);}</p>
+<p class="p1">.pack-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;opacity:0.8;}</p>
+<p class="p1">.pack-content{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;}</p>
+<p class="p1">.pack-image-area{flex:1;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:rgba(0,0,0,0.3);border-radius:7px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.1);}</p>
+<p class="p1">.pack-title{font-weight:bold;font-size:1rem;margin-bottom:4px;text-align:center;}</p>
+<p class="p1">.pack-desc{font-size:11px;color:#ccc;margin-bottom:4px;text-align:center;}</p>
+<p class="p1">.pack-rarity{font-size:11px;font-weight:bold;text-align:center;margin-bottom:10px;}</p>
+<p class="p1">.pack-price{font-size:12px;margin-bottom:5px;}</p>
+<p class="p1">.btn-buy-pack{background:var(--bg-main);border:1px solid var(--border);color:#fff;padding:7px;border-radius:6px;text-align:center;font-weight:bold;cursor:pointer;font-size:12px;}</p>
+<p class="p1">.btn-buy-pack:hover{background:var(--border);}</p>
+<p class="p1">.collection-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;}</p>
+<p class="p1">.collection-card{width:100%;aspect-ratio:140/196;background:var(--bg-card);border-radius:7px;border:2px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform 0.2s;cursor:pointer;}</p>
+<p class="p1">.collection-card:hover{transform:scale(1.05);z-index:10;}</p>
+<p class="p1">.collection-card.rarity-EPIC{border-color:var(--accent);}</p>
+<p class="p1">.collection-card.rarity-RARE{border-color:#58a6ff;}</p>
+<p class="p1">.collection-card.rarity-UNCOMMON{border-color:#7c3aed;}</p>
+<p class="p1">.new-badge{position:absolute;top:-4px;right:-4px;background:var(--live);color:#fff;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:9px;}</p>
+<p class="p1">.card-emoji{font-size:2.5rem;margin-bottom:4px;}</p>
+<p class="p1">.card-name{font-weight:bold;font-size:12px;}</p>
+<p class="p1">.card-rarity{font-size:10px;color:var(--text-sub);}</p>
+<p class="p1">.btn-exchange{background:var(--bg-main);border:1px solid var(--accent);color:var(--accent);padding:6px 12px;border-radius:6px;cursor:pointer;transition:all 0.2s;font-size:12px;}</p>
+<p class="p1">.btn-exchange:hover{background:var(--accent);color:#000;}</p>
+<p class="p1">.exchange-list{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem;}</p>
+<p class="p1">.exchange-item{background:var(--bg-card);border:1px solid var(--border);border-radius:7px;padding:12px;display:flex;justify-content:space-between;align-items:center;}</p>
+<p class="p1">.exchange-card-name{font-weight:bold;font-size:14px;margin-bottom:3px;}</p>
+<p class="p1">.exchange-user{font-size:11px;color:var(--text-sub);}</p>
+<p class="p1">.exchange-req{font-size:12px;color:#58a6ff;margin-top:2px;}</p>
+<p class="p1">.btn-add-exchange{display:block;width:100%;padding:12px;text-align:center;background:transparent;border:2px dashed var(--border);color:var(--text-sub);border-radius:7px;cursor:pointer;font-weight:bold;font-size:13px;}</p>
+<p class="p1">.btn-add-exchange:hover{border-color:var(--text-main);color:var(--text-main);}</p>
+<p class="p1">.open-pack-area{display:flex;gap:10px;justify-content:center;margin-bottom:1.5rem;perspective:1000px;flex-wrap:wrap;}</p>
+<p class="p1">.flip-card{width:95px;height:133px;position:relative;transform-style:preserve-3d;transition:transform 0.6s;cursor:pointer;}</p>
+<p class="p1">.flip-card.flipped{transform:rotateY(180deg);}</p>
+<p class="p1">.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:7px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);}</p>
+<p class="p1">.flip-card-front{background:linear-gradient(135deg,#2a2a2a,#1a1a1a);color:var(--accent);font-size:1.8rem;}</p>
+<p class="p1">.flip-card-back{background:var(--bg-main);transform:rotateY(180deg);flex-direction:column;padding:6px;text-align:center;}</p>
+<p class="p1">.flip-card-back .emoji{font-size:1.8rem;margin-bottom:4px;}</p>
+<p class="p1">.flip-card-back .name{font-size:11px;font-weight:bold;}</p>
+<p class="p1">.flip-card-back .rarity{font-size:9px;color:var(--text-sub);}</p>
+<p class="p2"><br></p>
+<p class="p1">.mission-card{background:var(--bg-card);border:1px solid var(--border);border-radius:7px;padding:12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}</p>
+<p class="p1">.mission-card.done{border-color:#238636;}</p>
+<p class="p1">.mission-card-info{flex:1;}</p>
+<p class="p1">.mission-name{font-weight:bold;margin-bottom:3px;font-size:13px;}</p>
+<p class="p1">.mission-progress-bar-bg{width:60px;height:3px;background:var(--bg-main);border-radius:2px;overflow:hidden;display:inline-block;}</p>
+<p class="p1">.mission-progress-bar-fill{height:100%;background:var(--accent);}</p>
+<p class="p1">.mission-reward-text{font-weight:bold;font-family:var(--font-m);color:var(--accent);font-size:12px;}</p>
+<p class="p1">.mission-reward-text.done{color:#3fb950;}</p>
+<p class="p2"><br></p>
+<p class="p1">.modal-bet-detail .modal-content{max-width:460px;max-height:80vh;overflow-y:auto;background:#161b22;border:1px solid #30363d;border-radius:11px;}</p>
+<p class="p1">.bet-detail-header{padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:10px;}</p>
+<p class="p1">.bet-detail-title{font-size:1.1rem;font-weight:bold;margin-bottom:4px;display:flex;align-items:center;gap:5px;}</p>
+<p class="p1">.bet-detail-amount{font-size:13px;font-family:var(--font-m);color:var(--text-sub);}</p>
+<p class="p1">.bet-detail-section{margin-bottom:1.25rem;}</p>
+<p class="p1">.bet-detail-section-title{font-size:13px;font-weight:bold;margin-bottom:5px;display:flex;align-items:center;gap:5px;}</p>
+<p class="p1">.bet-detail-text{font-size:12px;line-height:1.5;color:var(--text-main);background:var(--bg-main);padding:10px;border-radius:7px;border:1px solid var(--border);white-space:pre-wrap;}</p>
+<p class="p1">.bet-detail-choices{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;}</p>
+<p class="p1">.bet-detail-choice{border:1px solid var(--border);border-radius:7px;padding:10px;background:var(--bg-main);font-size:12px;}</p>
+<p class="p1">.bet-detail-choice.my-choice-won{background:#1c2a1c;border-color:#3fb950;}</p>
+<p class="p1">.bet-detail-choice.my-choice-lost{background:#2a1c1c;border-color:#ff6b6b;}</p>
+<p class="p1">.bet-detail-choice.my-choice-pending{background:#2d2d2d;border-color:var(--accent);}</p>
+<p class="p1">.choice-label{font-weight:bold;margin-bottom:2px;}</p>
+<p class="p1">.choice-odds{color:var(--accent);font-family:var(--font-m);font-size:11px;margin-bottom:2px;}</p>
+<p class="p1">.choice-votes{font-size:10px;color:var(--text-sub);}</p>
+<p class="p1">.bet-news-list{display:flex;flex-direction:column;gap:6px;}</p>
+<p class="p1">.bet-news-item{display:block;padding:9px;background:var(--bg-main);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text-main);transition:all 0.2s;font-size:12px;}</p>
+<p class="p1">.bet-news-item:hover{border-color:var(--accent);color:var(--accent);}</p>
+<p class="p1">.bet-news-title{font-weight:bold;margin-bottom:2px;display:flex;align-items:center;gap:4px;}</p>
+<p class="p1">.bet-news-meta{font-size:10px;color:var(--text-sub);}</p>
+<p class="p2"><br></p>
+<p class="p1">@keyframes sparkleAnim{0%,100%{opacity:0;transform:scale(0.5)}50%{opacity:1;transform:scale(1.3)}}</p>
+<p class="p1">@keyframes cardFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-7px) rotate(-2deg)}}</p>
+<p class="p1">@keyframes bannerGlow{0%,100%{box-shadow:0 0 18px 4px rgba(80,140,255,0.5)}50%{box-shadow:0 0 28px 8px rgba(100,180,255,0.7)}}</p>
+<p class="p1">@keyframes rarePulse{0%,100%{text-shadow:0 0 8px #58f}50%{text-shadow:0 0 16px #8af,0 0 30px #48c}}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1">&lt;div style="display:flex;flex-direction:column;min-height:100vh;"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;header class="header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="header-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="logo" onclick="switchView('home')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/&gt;&lt;path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/&gt;&lt;path d="M4 22h16"/&gt;&lt;path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/&gt;&lt;path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/&gt;&lt;path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>B.E.A.T</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="header-divider"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="header-tab" data-tab="mypage" onclick="showScreen('mypage')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="htab-icon"&gt;👤&lt;/span&gt;&lt;span class="htab-label"&gt;マイページ&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="header-tab active" data-tab="home" onclick="switchView('home')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="htab-icon"&gt;🔴&lt;/span&gt;&lt;span class="htab-label"&gt;ライブ&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="live-dot"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="header-tab" data-tab="mission" onclick="switchView('mission')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="htab-icon"&gt;🎯&lt;/span&gt;&lt;span class="htab-label"&gt;ミッション&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="header-tab" data-tab="cards" onclick="switchView('cards')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="htab-icon"&gt;📦&lt;/span&gt;&lt;span class="htab-label"&gt;カードパック&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="header-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="balance" id="header-balance"&gt;10,000pt&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="main-content"&gt;</p>
+<p class="p1">&lt;div class="content-area"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- HOME --&gt;</p>
+<p class="p1">&lt;div id="view-home" class="view-section active"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="studio-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="studio-hd"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="studio-hd-title"&gt;🎙️ B.E.A.T STUDIO&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="studio-live-badge"&gt;🔴 LIVE&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="studio-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="studio-char-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="studio-char"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="studio-desk"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="ai-caster"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="ai-head"&gt;&lt;div&gt;🤖&lt;/div&gt;&lt;div class="ai-headset"&gt;🎧&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="ai-body"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="studio-nameplate"&gt;BEAT-1&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="studio-speech-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="studio-bubble"&gt;&lt;span id="studioCommentText"&gt;日本が3回に追加点！山本由伸は今日も完璧なピッチングを見せています。&lt;/span&gt;&lt;span class="speech-cursor"&gt;|&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="studio-tag" id="studioTag"&gt;🎙️ AI解説&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="studio-actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="studio-btn active" id="sbtn-live" onclick="studioSelect('live')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="studio-btn-icon"&gt;🔴&lt;/span&gt;&lt;span class="studio-btn-label"&gt;ライブ&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="studio-btn" id="sbtn-result" onclick="studioSelect('result')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="studio-btn-icon"&gt;🎯&lt;/span&gt;&lt;span class="studio-btn-label"&gt;予想結果&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="studio-btn" id="sbtn-news" onclick="studioSelect('news')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="studio-btn-icon"&gt;📰&lt;/span&gt;&lt;span class="studio-btn-label"&gt;ニュース&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="studio-btn" id="sbtn-comment" onclick="studioSelect('comment')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="studio-btn-icon"&gt;💬&lt;/span&gt;&lt;span class="studio-btn-label"&gt;ユーザコメント&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="studio-panel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sp-live" class="studio-panel-inner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-live-row"&gt;&lt;span class="sp-live-badge live"&gt;LIVE&lt;/span&gt;&lt;span class="sp-live-teams"&gt;🇯🇵 日本 vs 🇹🇼 台北&lt;/span&gt;&lt;span class="sp-live-score"&gt;3-1&lt;/span&gt;&lt;span class="sp-live-arrow"&gt;›&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-live-row"&gt;&lt;span class="sp-live-badge live"&gt;LIVE&lt;/span&gt;&lt;span class="sp-live-teams"&gt;⭐ DeNA vs 🐯 阪神&lt;/span&gt;&lt;span class="sp-live-score"&gt;4-2&lt;/span&gt;&lt;span class="sp-live-arrow"&gt;›&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-live-row"&gt;&lt;span class="sp-live-badge fin"&gt;終了&lt;/span&gt;&lt;span class="sp-live-teams"&gt;🇺🇸 USA vs 🇩🇴 DOM&lt;/span&gt;&lt;span class="sp-live-score"&gt;5-3&lt;/span&gt;&lt;span class="sp-live-arrow"&gt;›&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sp-result" class="studio-panel-inner" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-result-row"&gt;&lt;span class="sp-result-icon"&gt;✅&lt;/span&gt;&lt;span class="sp-result-label"&gt;日本 勝利&lt;/span&gt;&lt;span class="sp-result-pt won"&gt;+225pt&lt;/span&gt;&lt;span class="sp-live-arrow"&gt;›&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-result-row"&gt;&lt;span class="sp-result-icon"&gt;⏳&lt;/span&gt;&lt;span class="sp-result-label"&gt;東京V 勝利&lt;/span&gt;&lt;span class="sp-result-pt pending"&gt;進行中&lt;/span&gt;&lt;span class="sp-live-arrow"&gt;›&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-result-row"&gt;&lt;span class="sp-result-icon"&gt;❌&lt;/span&gt;&lt;span class="sp-result-label"&gt;マーリンズ 勝利&lt;/span&gt;&lt;span class="sp-result-pt lost"&gt;-300pt&lt;/span&gt;&lt;span class="sp-live-arrow"&gt;›&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-result-row"&gt;&lt;span class="sp-result-icon"&gt;✅&lt;/span&gt;&lt;span class="sp-result-label"&gt;仙台 勝利&lt;/span&gt;&lt;span class="sp-result-pt won"&gt;+800pt&lt;/span&gt;&lt;span class="sp-live-arrow"&gt;›&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sp-news" class="studio-panel-inner" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-news-row"&gt;&lt;span class="sp-news-icon"&gt;⚾&lt;/span&gt;&lt;div class="sp-news-info"&gt;&lt;div class="sp-news-title"&gt;山本由伸、6回1失点で今大会初勝利&lt;/div&gt;&lt;div class="sp-news-meta"&gt;スポーツナビ • 3時間前&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-news-row"&gt;&lt;span class="sp-news-icon"&gt;🏆&lt;/span&gt;&lt;div class="sp-news-info"&gt;&lt;div class="sp-news-title"&gt;WBC 日本が台北に快勝、グループ2連勝&lt;/div&gt;&lt;div class="sp-news-meta"&gt;NHK • 4時間前&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-news-row"&gt;&lt;span class="sp-news-icon"&gt;⚽&lt;/span&gt;&lt;div class="sp-news-info"&gt;&lt;div class="sp-news-title"&gt;東京V 町田戦、前半1-0でリード&lt;/div&gt;&lt;div class="sp-news-meta"&gt;Jリーグ公式 • 30分前&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-news-row"&gt;&lt;span class="sp-news-icon"&gt;🏀&lt;/span&gt;&lt;div class="sp-news-info"&gt;&lt;div class="sp-news-title"&gt;仙台89ERS ホームで名古屋Dに快勝&lt;/div&gt;&lt;div class="sp-news-meta"&gt;Bリーグ公式 • 2時間前&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sp-comment" class="studio-panel-inner" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-comment-input-row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" id="studioCommentInput" class="sp-comment-input" placeholder="コメントを入力..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="sp-comment-send" onclick="postStudioComment()"&gt;送信&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sp-comment-list" id="studioCommentList"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="sp-comment-item"&gt;&lt;span class="sp-comment-avatar"&gt;😎&lt;/span&gt;&lt;div class="sp-comment-bubble"&gt;&lt;div class="sp-comment-name"&gt;Taro K.&lt;/div&gt;日本絶対勝つ！🔥&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="sp-comment-item"&gt;&lt;span class="sp-comment-avatar"&gt;🌸&lt;/span&gt;&lt;div class="sp-comment-bubble"&gt;&lt;div class="sp-comment-name"&gt;Hana M.&lt;/div&gt;大谷が打ちそうな予感&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="sp-comment-item"&gt;&lt;span class="sp-comment-avatar"&gt;🦊&lt;/span&gt;&lt;div class="sp-comment-bubble"&gt;&lt;div class="sp-comment-name"&gt;Ken W.&lt;/div&gt;山本が崩れなければ楽勝&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="sp-comment-item"&gt;&lt;span class="sp-comment-avatar"&gt;🎃&lt;/span&gt;&lt;div class="sp-comment-bubble"&gt;&lt;div class="sp-comment-name"&gt;Yuki T.&lt;/div&gt;WBC最高に盛り上がってる！&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="info-bar-league" onclick="showScreen('rankingDetail')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span style="display:flex;align-items:center;gap:8px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="lib-league"&gt;🏆 Sリーグ 3部&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="lib-rank"&gt;3位&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="lib-diff"&gt;（2位まで -15pt）&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span style="color:#8b949e;font-size:11px;"&gt;残り &lt;span class="lib-timer" id="leagueTimerDisp"&gt;1d 24h 50m&lt;/span&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="info-bar-ticker"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span style="font-size:13px;flex-shrink:0;"&gt;💬&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="ticker-track-wrap"&gt;&lt;span class="ticker-track" id="userTickerTrack"&gt;Taro K.が日本 勝利を予想 • Hana M.が大谷HR予想で+500pt獲得 • Ken W.がWBCパック開封 → 大谷EPIC獲得！&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="home-matches-container"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="player-cards-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="section-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span&gt;🃏 選手カード&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="see-more-btn" onclick="switchView('cards')"&gt;すべて見る ›&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="player-card-scroll" id="playerCardScroll"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- WBC DETAIL --&gt;</p>
+<p class="p1">&lt;div id="view-wbc" class="view-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="match-detail-topbar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="md-back-btn" id="matchDetailBackBtn" onclick="switchView('home')"&gt;← ホームに戻る&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="live-header-card" id="live-header-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="live-status-bar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="live-status-left"&gt;WBC 2026 • 横浜スタジアム&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="live-status-right"&gt;&lt;span class="live-badge-anim"&gt;●&lt;/span&gt; LIVE 5回裏&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="live-teams-score"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="live-team"&gt;&lt;div class="live-team-flag"&gt;🇯🇵&lt;/div&gt;&lt;div class="live-team-name"&gt;日本&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="live-score-area"&gt;&lt;span&gt;3&lt;/span&gt;&lt;span style="font-size:20px;color:#8b949e;"&gt;-&lt;/span&gt;&lt;span&gt;1&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="live-team"&gt;&lt;div class="live-team-flag"&gt;🇹🇼&lt;/div&gt;&lt;div class="live-team-name"&gt;台北&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="tabs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab active" onclick="switchTab('match')"&gt;予想する&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab" onclick="switchTab('stats')"&gt;データ&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab" onclick="switchTab('h2h')"&gt;過去の成績&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab" onclick="switchTab('lineup')"&gt;出場選手&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="tab-content-match"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="market-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="market-header"&gt;&lt;div class="market-title"&gt;✅ どちらが勝つ？&lt;span class="difficulty-badge easy"&gt;かんたん&lt;/span&gt;&lt;span class="tooltip-icon" data-tooltip="勝ったチームを予想するだけ！"&gt;❓&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="odds-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="odds-btn" data-id="ml-jp" data-market="どちらが勝つ？" data-selection="日本" data-odds="1.45"&gt;&lt;span class="odds-label"&gt;日本&lt;/span&gt;&lt;span class="odds-value"&gt;1.45&lt;/span&gt;&lt;div class="popular-tag"&gt;82%&lt;/div&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="odds-btn" data-id="ml-tpe" data-market="どちらが勝つ？" data-selection="チャイニーズ台北" data-odds="2.80"&gt;&lt;span class="odds-label"&gt;チャイニーズ台北&lt;/span&gt;&lt;span class="odds-value"&gt;2.80&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="market-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="market-header"&gt;&lt;div class="market-title"&gt;🔢 合計得点（7.5点基準）&lt;span class="difficulty-badge medium"&gt;ふつう&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="odds-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="odds-btn" data-id="ou-over" data-market="合計得点" data-selection="オーバー" data-odds="1.90"&gt;&lt;span class="odds-label"&gt;多い（8点以上）&lt;/span&gt;&lt;span class="odds-value"&gt;1.90&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="odds-btn" data-id="ou-under" data-market="合計得点" data-selection="アンダー" data-odds="1.90"&gt;&lt;span class="odds-label"&gt;少ない（7点以下）&lt;/span&gt;&lt;span class="odds-value"&gt;1.90&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="market-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="market-header" onclick="toggleAccordion('pitcher-props')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="market-title"&gt;⚾ 先発投手の奪三振数&lt;span class="difficulty-badge medium"&gt;ふつう&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg class="chevron" id="chevron-pitcher-props" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="pitcher-props" class="accordion-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="odds-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="odds-btn" data-id="so-over" data-market="先発投手三振" data-selection="7奪三振以上" data-odds="1.80"&gt;&lt;span class="odds-label"&gt;7奪三振以上&lt;/span&gt;&lt;span class="odds-value"&gt;1.80&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="odds-btn" data-id="so-under" data-market="先発投手三振" data-selection="6奪三振以下" data-odds="2.00"&gt;&lt;span class="odds-label"&gt;6奪三振以下&lt;/span&gt;&lt;span class="odds-value"&gt;2.00&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="market-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="market-header" onclick="toggleAccordion('special-props')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="market-title"&gt;🌟 大谷翔平 選手予想&lt;span class="difficulty-badge easy"&gt;かんたん&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg class="chevron" id="chevron-special-props" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="special-props" class="accordion-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="odds-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="odds-btn" data-id="ohtani-hit" data-market="大谷翔平" data-selection="ヒットを打つ" data-odds="1.30"&gt;&lt;span class="odds-label"&gt;ヒットを打つ 🟢&lt;/span&gt;&lt;span class="odds-value"&gt;1.30&lt;/span&gt;&lt;div class="popular-tag"&gt;95%&lt;/div&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="odds-btn" data-id="ohtani-no-hit" data-market="大谷翔平" data-selection="ヒットを打たない" data-odds="3.20"&gt;&lt;span class="odds-label"&gt;ヒットを打たない&lt;/span&gt;&lt;span class="odds-value"&gt;3.20&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="odds-btn" data-id="ohtani-hr" data-market="大谷翔平" data-selection="ホームラン" data-odds="3.50"&gt;&lt;span class="odds-label"&gt;ホームランを打つ&lt;/span&gt;&lt;span class="odds-value"&gt;3.50&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="odds-btn" data-id="ohtani-sb" data-market="大谷翔平" data-selection="盗塁" data-odds="4.00"&gt;&lt;span class="odds-label"&gt;盗塁を決める&lt;/span&gt;&lt;span class="odds-value"&gt;4.00&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="tab-content-stats" style="display:none;text-align:center;padding:2rem;color:var(--text-sub);"&gt;統計データは現在利用できません。&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="tab-content-h2h" style="display:none;text-align:center;padding:2rem;color:var(--text-sub);"&gt;過去の対戦データはありません。&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="tab-content-lineup" style="display:none;text-align:center;padding:2rem;color:var(--text-sub);"&gt;ラインナップは試合開始1時間前に発表されます。&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- MYPAGE --&gt;</p>
+<p class="p1">&lt;div id="view-mypage" class="view-section" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="studio-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="studio-hd"&gt;&lt;div class="studio-hd-title"&gt;🎙️ B.E.A.T STUDIO&lt;/div&gt;&lt;div class="studio-live-badge"&gt;🔴 LIVE&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="studio-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="studio-char-wrap"&gt;&lt;div class="studio-char"&gt;&lt;div class="studio-desk"&gt;&lt;/div&gt;&lt;div class="ai-caster"&gt;&lt;div class="ai-head"&gt;&lt;div&gt;🤖&lt;/div&gt;&lt;div class="ai-headset"&gt;🎧&lt;/div&gt;&lt;/div&gt;&lt;div class="ai-body"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="studio-nameplate"&gt;BEAT-1&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="studio-speech-wrap"&gt;&lt;div class="studio-bubble"&gt;&lt;span id="mpStudioCommentText"&gt;こんにちは！マイページへようこそ。&lt;/span&gt;&lt;span class="speech-cursor"&gt;|&lt;/span&gt;&lt;/div&gt;&lt;div class="studio-tag"&gt;🎙️ AI解説&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="studio-actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="studio-btn active" onclick="mpStudioAction('commentary')"&gt;&lt;span class="studio-btn-icon"&gt;🎙️&lt;/span&gt;&lt;span class="studio-btn-label"&gt;解説を聞く&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="studio-btn" onclick="mpStudioAction('data')"&gt;&lt;span class="studio-btn-icon"&gt;📊&lt;/span&gt;&lt;span class="studio-btn-label"&gt;データを見る&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="studio-btn" onclick="mpStudioAction('question')"&gt;&lt;span class="studio-btn-icon"&gt;💬&lt;/span&gt;&lt;span class="studio-btn-label"&gt;質問する&lt;/span&gt;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="mp-chat-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mp-chat-history" id="mpChatHistory"&gt;&lt;div class="mp-chat-msg ai"&gt;&lt;span class="mp-chat-avatar"&gt;🤖&lt;/span&gt;&lt;span class="mp-chat-bubble"&gt;こんにちは！予想や試合について何でも聞いてください。&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mp-chat-input-row"&gt;&lt;input type="text" id="mpChatInput" class="mp-chat-input" placeholder="AIに質問する..."&gt;&lt;button class="mp-chat-send" onclick="mpSendChat()"&gt;送信&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="mp-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mp-section-title"&gt;📊 あなたの成績&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mp-stats-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="mp-stat-card"&gt;&lt;div class="mp-stat-label"&gt;今月のポイント&lt;/div&gt;&lt;div class="mp-stat-main"&gt;&lt;span class="mp-stat-pt positive"&gt;+3,240pt&lt;/span&gt;&lt;span class="mp-stat-sep"&gt; : &lt;/span&gt;&lt;span class="mp-stat-rank"&gt;3位/20人&lt;/span&gt;&lt;/div&gt;&lt;div class="mp-stat-sub"&gt;2位まで -15pt&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="mp-stat-card"&gt;&lt;div class="mp-stat-label"&gt;的中率&lt;/div&gt;&lt;div class="mp-stat-main"&gt;&lt;span class="mp-stat-pt positive"&gt;58%&lt;/span&gt;&lt;/div&gt;&lt;div class="mp-stat-sub"&gt;12戦 7勝 5敗&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mp-progress-wrap"&gt;&lt;div class="mp-progress-bar" style="width:68%"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mp-progress-label"&gt;順位アップまで 5pt&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="mp-section"&gt;&lt;div class="mp-section-header"&gt;&lt;span class="mp-section-title"&gt;🎯 直近の予想&lt;/span&gt;&lt;button class="mp-link-btn"&gt;すべて見る ›&lt;/button&gt;&lt;/div&gt;&lt;div id="mpBetList"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="mp-section"&gt;&lt;div class="mp-section-title"&gt;⚾ 予想中の試合&lt;/div&gt;&lt;div id="mpActiveBets"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="mp-section"&gt;&lt;div class="mp-section-title"&gt;👥 フレンドの予想&lt;/div&gt;&lt;div id="mpFriendList"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="mp-section"&gt;&lt;div class="mp-section-header"&gt;&lt;span class="mp-section-title"&gt;🏆 リーグランキング&lt;/span&gt;&lt;span class="mp-league-badge"&gt;Sリーグ 3部 &amp;nbsp; 残り 3日&lt;/span&gt;&lt;/div&gt;&lt;div class="league-ranking-wrap" style="margin-top:8px;"&gt;&lt;div id="mpLeagueList"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- CARDS --&gt;</p>
+<p class="p1">&lt;div id="view-cards" class="view-section" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="cards-tab-nav"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cards-tab active" onclick="switchCardTab('buy',event)"&gt;📦 パックを買う&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cards-tab" onclick="switchCardTab('collection',event)"&gt;🗂️ マイコレクション&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cards-tab" onclick="switchCardTab('exchange',event)"&gt;🔄 カード交換&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="card-tab-buy"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="coin-bar"&gt;&lt;div class="coin-balances"&gt;&lt;span class="coin-paid"&gt;💰 有償 &lt;span id="coin-paid-display"&gt;3,200&lt;/span&gt;&lt;/span&gt;&lt;span&gt;／&lt;/span&gt;&lt;span class="coin-free"&gt;🪙 無償 &lt;span id="coin-free-display"&gt;800&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;button class="btn-buy-coin" disabled&gt;コインを購入 →&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="pack-grid" id="pack-grid"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="card-tab-collection" style="display:none;"&gt;&lt;div class="collection-grid" id="collection-grid"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="card-tab-exchange" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="exchange-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="exchange-item"&gt;&lt;div&gt;&lt;div class="exchange-card-name"&gt;⚾ 三笘薫 &lt;span style="color:var(--accent);font-size:11px;"&gt;EPIC&lt;/span&gt;&lt;/div&gt;&lt;div class="exchange-user"&gt;出品者: user_abc123&lt;/div&gt;&lt;div class="exchange-req"&gt;希望: RARE以上のWBCカード&lt;/div&gt;&lt;/div&gt;&lt;button class="btn-exchange" onclick="alert('交換申請を送りました！')"&gt;申し込む&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="exchange-item"&gt;&lt;div&gt;&lt;div class="exchange-card-name"&gt;⚽ 久保建英 &lt;span style="color:#58a6ff;font-size:11px;"&gt;RARE&lt;/span&gt;&lt;/div&gt;&lt;div class="exchange-user"&gt;出品者: user_xyz987&lt;/div&gt;&lt;div class="exchange-req"&gt;希望: NPBカード（レアリティ不問）&lt;/div&gt;&lt;/div&gt;&lt;button class="btn-exchange" onclick="alert('交換申請を送りました！')"&gt;申し込む&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-add-exchange" onclick="alert('出品モーダル（ダミー）')"&gt;+ 自分のカードを出品する&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- MISSION --&gt;</p>
+<p class="p1">&lt;div id="view-mission" class="view-section" style="display:none;"&gt;&lt;div id="mission-container"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- RANKING DETAIL --&gt;</p>
+<p class="p1">&lt;div id="rankingDetail" class="view-section" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="rd-header"&gt;&lt;button class="rd-back" onclick="showScreen('home')"&gt;← 戻る&lt;/button&gt;&lt;span class="rd-title"&gt;🏆 Sリーグ 3部 ランキング&lt;/span&gt;&lt;span class="rd-timer"&gt;残り &lt;span id="rdTimerDisp"&gt;1d 24h 50m&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="rd-trophy-row"&gt;&lt;div class="rd-trophy"&gt;🥇&lt;/div&gt;&lt;div class="rd-trophy"&gt;🥈&lt;/div&gt;&lt;div class="rd-trophy"&gt;🏆&lt;/div&gt;&lt;div class="rd-trophy locked"&gt;🔒&lt;/div&gt;&lt;div class="rd-trophy locked"&gt;🔒&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="rd-zone-up"&gt;▲ 昇格ゾーン&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="rankingDetailList"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- BETSLIP --&gt;</p>
+<p class="p1">&lt;div id="betslip-panel" class="betslip-panel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="betslip-header" onclick="toggleMobileBetslip()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="betslip-title"&gt;予想カート&lt;div id="betslip-count" class="betslip-count"&gt;0&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="m6 9 6 6 6-6"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="betslip-body" id="betslip-items"&gt;&lt;div class="empty-betslip"&gt;&lt;p&gt;予想が選択されていません&lt;/p&gt;&lt;p style="margin-top:6px;font-size:11px;"&gt;倍率をタップして予想を追加してください&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="betslip-footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="total-row"&gt;&lt;span&gt;参加金額:&lt;/span&gt;&lt;span id="total-stake"&gt;0pt&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="total-row big"&gt;&lt;span&gt;受取額:&lt;/span&gt;&lt;span id="total-return"&gt;0pt&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button id="place-bet-btn" class="btn-place" disabled&gt;この予想で参加する&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="mobile-toggle" class="betslip-toggle" onclick="toggleMobileBetslip()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="betslip-title"&gt;予想カート&lt;div id="mobile-count" class="betslip-count"&gt;0&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;span style="font-size:13px;color:var(--accent);"&gt;展開する ↑&lt;/span&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- MODALS --&gt;</p>
+<p class="p1">&lt;div id="modal-buy-pack" class="modal-overlay"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-close" onclick="closeModal('modal-buy-pack')"&gt;✕&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-title" id="buy-modal-title"&gt;パックを購入&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="radio-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;label class="radio-label"&gt;&lt;input type="radio" name="coin-type" value="paid" id="radio-paid" checked onchange="updateBuyModal()"&gt;&lt;span class="coin-paid"&gt;💰 有償コイン &lt;span id="buy-cost-paid"&gt;1500&lt;/span&gt;&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;label class="radio-label"&gt;&lt;input type="radio" name="coin-type" value="free" id="radio-free" onchange="updateBuyModal()"&gt;&lt;span class="coin-free"&gt;🪙 無償コイン &lt;span id="buy-cost-free"&gt;300&lt;/span&gt;&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="balance-calc"&gt;&lt;div style="margin-bottom:6px;"&gt;現在の残高:&lt;/div&gt;&lt;div id="buy-balance-calc" style="font-weight:bold;"&gt;💰 3,200 → 購入後: 1,700&lt;/div&gt;&lt;div id="buy-error" style="color:#ff3b30;font-size:11px;margin-top:5px;display:none;"&gt;コインが足りません&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-actions"&gt;&lt;button class="btn-cancel" onclick="closeModal('modal-buy-pack')"&gt;キャンセル&lt;/button&gt;&lt;button class="btn-confirm" id="btn-confirm-buy" onclick="confirmBuyPack()"&gt;購入確定&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div id="modal-open-pack" class="modal-overlay"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal-content" style="max-width:560px;text-align:center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-title"&gt;パック開封&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="open-pack-area" id="open-pack-area"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="open-pack-msg" style="margin-bottom:1.25rem;font-weight:bold;color:var(--success);display:none;"&gt;マイコレクションに追加されました ✅&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-confirm" id="btn-open-all" onclick="openAllCards()"&gt;タップして開封する&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-cancel" id="btn-close-open" style="display:none;margin:0 auto;" onclick="closeModal('modal-open-pack')"&gt;閉じる&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div id="modal-card-detail" class="modal-overlay"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal-content" style="text-align:center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-close" onclick="closeModal('modal-card-detail')"&gt;✕&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="detail-card-visual" style="width:130px;height:182px;margin:0 auto 1.25rem;border-radius:8px;border:2px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-main);"&gt;&lt;div id="detail-emoji" style="font-size:3.5rem;"&gt;⚾&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-title" id="detail-name" style="margin-bottom:4px;"&gt;大谷翔平&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div style="color:var(--text-sub);margin-bottom:4px;font-size:13px;" id="detail-team"&gt;日本代表 (WBC)&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div style="font-weight:bold;margin-bottom:1.25rem;font-size:13px;" id="detail-rarity"&gt;EPIC&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-exchange" style="width:100%;" onclick="alert('交換に出す（ダミー）')"&gt;交換に出す&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div id="modal-bet-detail" class="modal-overlay modal-bet-detail"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-close" onclick="closeModal('modal-bet-detail')"&gt;✕&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="bet-detail-header"&gt;&lt;div class="bet-detail-title" id="bet-detail-title"&gt;&lt;/div&gt;&lt;div class="bet-detail-amount" id="bet-detail-amount"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="bet-detail-question-container"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="bet-detail-section"&gt;&lt;div class="bet-detail-section-title" id="bet-detail-analysis-title"&gt;&lt;/div&gt;&lt;div class="bet-detail-text" id="bet-detail-analysis-text"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="bet-detail-section" id="bet-detail-hint-section" style="display:none;"&gt;&lt;div class="bet-detail-section-title"&gt;💡 次回へのヒント&lt;/div&gt;&lt;div class="bet-detail-text" id="bet-detail-hint-text"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="bet-detail-section"&gt;&lt;div class="bet-detail-section-title"&gt;📰 関連ニュース&lt;/div&gt;&lt;div class="bet-news-list" id="bet-detail-news-list"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">// DATA</p>
+<p class="p1">const matches = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{sport:'NPB',id:'dena-1',status:'live',venue:'横浜スタジアム',homeTeam:{name:'横浜DeNA',flag:'⭐',score:4},awayTeam:{name:'阪神',flag:'🐯',score:2},info:'5回裏 攻撃中',participants:3421,deadlineSeconds:0,isHot:true,myBet:{status:'placed',label:'横浜 勝利'}},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{sport:'NPB',id:'dena-2',status:'upcoming',venue:'横浜スタジアム',homeTeam:{name:'横浜DeNA',flag:'⭐',score:null},awayTeam:{name:'巨人',flag:'🐰',score:null},info:'18:00 プレイボール',participants:1205,deadlineSeconds:43200,isHot:false,myBet:{status:'open',label:null}},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{sport:'NPB',id:'dena-3',status:'finished',venue:'横浜スタジアム',homeTeam:{name:'横浜DeNA',flag:'⭐',score:5},awayTeam:{name:'ヤクルト',flag:'🐧',score:3},info:'試合終了',participants:5632,deadlineSeconds:0,isHot:false,myBet:{status:'won',label:'横浜 勝利'}},</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">const playerCardsData = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:1,name:'宮﨑 敏朗',number:'51',team:'横浜DeNA',sport:'NPB',rarity:'RARE',emoji:'⚾',bg:'linear-gradient(160deg,#020220,#0d1f6a)',isNew:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:2,name:'大谷 翔平',number:'17',team:'日本代表',sport:'WBC',rarity:'EPIC',emoji:'⚾',bg:'linear-gradient(160deg,#1a0a00,#6a2a00)',isNew:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:3,name:'山本 由伸',number:'18',team:'日本代表',sport:'WBC',rarity:'RARE',emoji:'⚾',bg:'linear-gradient(160deg,#001a10,#006a3a)',isNew:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:4,name:'村上 宗隆',number:'55',team:'日本代表',sport:'WBC',rarity:'RARE',emoji:'⚾',bg:'linear-gradient(160deg,#1a0020,#6a0060)',isNew:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:5,name:'牧 秀悟',number:'2',team:'横浜DeNA',sport:'NPB',rarity:'UNCOMMON',emoji:'⚾',bg:'linear-gradient(160deg,#001020,#003a6a)',isNew:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:6,name:'三笘 薫',number:'7',team:'Jリーグ',sport:'Soccer',rarity:'EPIC',emoji:'⚽',bg:'linear-gradient(160deg,#0a1a00,#2a5a00)',isNew:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:7,name:'久保 建英',number:'10',team:'Jリーグ',sport:'Soccer',rarity:'RARE',emoji:'⚽',bg:'linear-gradient(160deg,#1a0a00,#5a2000)',isNew:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:8,name:'吉田 正尚',number:'34',team:'日本代表',sport:'WBC',rarity:'UNCOMMON',emoji:'⚾',bg:'linear-gradient(160deg,#001a1a,#006060)',isNew:false},</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">const leagueRankingData = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{rank:1,avatar:'😎',name:'Taro K.',pts:4120,isMe:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{rank:2,avatar:'🌸',name:'Hana M.',pts:3255,isMe:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{rank:3,avatar:'🦊',name:'あなた',pts:3240,isMe:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{rank:4,avatar:'🎃',name:'Yuki T.',pts:3190,isMe:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{rank:18,avatar:'😴',name:'user_abc',pts:980,isMe:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{rank:19,avatar:'🐶',name:'user_def',pts:750,isMe:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{rank:20,avatar:'🐱',name:'user_ghi',pts:420,isMe:false},</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">const myBets = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{status:'won',sport:'WBC',prediction:'日本 勝利',odds:1.45,stake:500,payout:725,question:'どちらが勝つ？',choices:[{label:'🇯🇵 日本',odds:1.45,votes:1023,pct:82,isMyChoice:true},{label:'🇹🇼 台北',odds:2.80,votes:221,pct:18,isMyChoice:false}],analysis:{summary:'山本由伸が6回1失点の好投。日本が快勝しました。',hint:null,news:[{title:'山本由伸、6回1失点で今大会初勝利',source:'スポーツナビ',time:'3時間前',url:'#'}]}},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{status:'pending',sport:'Jリーグ',prediction:'東京V 勝利',odds:2.10,stake:1000,payout:null,question:'どちらが勝つ？',choices:[{label:'東京V 勝利',odds:2.10,votes:850,pct:45,isMyChoice:true},{label:'引分',odds:3.20,votes:400,pct:21,isMyChoice:false},{label:'町田 勝利',odds:3.50,votes:640,pct:34,isMyChoice:false}],analysis:{summary:'前半を1-0でリード中。',hint:null,news:[{title:'東京V 前半終了 1-0',source:'Jリーグ公式',time:'30分前',url:'#'}]}},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{status:'lost',sport:'NPB',prediction:'マーリンズ 勝利',odds:2.10,stake:300,payout:0,question:'どちらが勝つ？',choices:[{label:'マーリンズ',odds:2.10,votes:320,pct:42,isMyChoice:true},{label:'アストロズ',odds:1.75,votes:436,pct:58,isMyChoice:false}],analysis:{summary:'アストロズ先発が8回完封。',hint:'先発投手の直近ERCを確認しましょう。',news:[{title:'アリゲッティが8回完封',source:'MLB.jp',time:'5時間前',url:'#'}]}},</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">const packs = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'wbc',name:'WBCスターパック',desc:'大谷翔平・山本由伸 ほか',rarity:'★★★★☆ EPIC',costPaid:1500,costFree:300,bg:'linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'npb',name:'NPBレジェンドパック',desc:'イチロー・松井秀喜 ほか',rarity:'★★★☆☆ RARE',costPaid:800,costFree:160,bg:'linear-gradient(135deg,#1a2a1a,#0d3b1a)'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'jl',name:'Jリーグパック',desc:'三笘薫・久保建英 ほか',rarity:'★★☆☆☆ UNCOMMON',costPaid:400,costFree:80,bg:'linear-gradient(135deg,#1a1a1a,#2d1b4e)'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'daily',name:'デイリーパック',desc:'本日出場選手からランダム',rarity:'★☆☆☆☆ NORMAL',costPaid:200,costFree:40,bg:'linear-gradient(135deg,#1c1c1c,#2a2a2a)'},</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">let coins = {paid:3200,free:800};</p>
+<p class="p1">let myCollection = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:1,name:'大谷翔平',team:'日本代表',sport:'WBC',rarity:'EPIC',emoji:'⚾',isNew:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:2,name:'山本由伸',team:'日本代表',sport:'WBC',rarity:'RARE',emoji:'⚾',isNew:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:3,name:'宮﨑敏朗',team:'横浜DeNA',sport:'NPB',rarity:'RARE',emoji:'⚾',isNew:true},</p>
+<p class="p1">];</p>
+<p class="p1">let currentSelectedPack = null;</p>
+<p class="p1">const missions = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>daily:[</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{title:'WBCの試合に予想する',reward:50,done:true,progress:{current:1,total:1}},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{title:'3試合連続で予想する',reward:150,done:false,progress:{current:1,total:3}},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{title:'高オッズ（2.5倍以上）で的中する',reward:200,done:false,progress:{current:0,total:1}},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>],</p>
+<p class="p1"><span class="Apple-converted-space">  </span>weekly:[</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{title:'今週5試合以上予想する',reward:500,done:false,progress:{current:3,total:5}},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{title:'的中率60%以上を維持する',reward:300,done:false,progress:{current:0,total:1}},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>],</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">// BETSLIP</p>
+<p class="p1">const state = {bets:[],balance:10000};</p>
+<p class="p1">const betslipItemsEl = document.getElementById('betslip-items');</p>
+<p class="p1">const betslipCountEl = document.getElementById('betslip-count');</p>
+<p class="p1">const mobileCountEl<span class="Apple-converted-space">  </span>= document.getElementById('mobile-count');</p>
+<p class="p1">const totalStakeEl <span class="Apple-converted-space">  </span>= document.getElementById('total-stake');</p>
+<p class="p1">const totalReturnEl<span class="Apple-converted-space">  </span>= document.getElementById('total-return');</p>
+<p class="p1">const placeBetBtn<span class="Apple-converted-space">    </span>= document.getElementById('place-bet-btn');</p>
+<p class="p1">const mobileToggleEl = document.getElementById('mobile-toggle');</p>
+<p class="p1">const betslipPanelEl = document.getElementById('betslip-panel');</p>
+<p class="p2"><br></p>
+<p class="p1">document.querySelectorAll('.odds-btn').forEach(btn =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.addEventListener('click', function(){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>toggleBet(this.dataset.id, this.dataset.market, this.dataset.selection, parseFloat(this.dataset.odds));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">function toggleBet(id,market,selection,odds){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const idx=state.bets.findIndex(b=&gt;b.id===id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(idx&gt;=0){state.bets.splice(idx,1);document.querySelector(`.odds-btn[data-id="${id}"]`)?.classList.remove('selected');}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else{state.bets.push({id,market,selection,odds,stake:0});document.querySelector(`.odds-btn[data-id="${id}"]`)?.classList.add('selected');if(window.innerWidth&lt;=1024&amp;&amp;state.bets.length===1){betslipPanelEl.classList.add('open');mobileToggleEl.classList.add('hidden');}}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderBetslip();</p>
+<p class="p1">}</p>
+<p class="p1">function renderBetslip(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>betslipCountEl.textContent=state.bets.length;mobileCountEl.textContent=state.bets.length;placeBetBtn.disabled=state.bets.length===0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(state.bets.length===0){betslipItemsEl.innerHTML='&lt;div class="empty-betslip"&gt;&lt;p&gt;予想が選択されていません&lt;/p&gt;&lt;p style="margin-top:6px;font-size:11px;"&gt;倍率をタップして予想を追加&lt;/p&gt;&lt;/div&gt;';updateTotals();return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>betslipItemsEl.innerHTML='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>state.bets.forEach(bet=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const item=document.createElement('div');item.className='bet-item';item.id=`bet-item-${bet.id}`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>item.innerHTML=`&lt;div style="display:flex;justify-content:space-between;margin-bottom:5px;"&gt;&lt;div&gt;&lt;div class="bet-selection"&gt;${bet.selection}&lt;/div&gt;&lt;div class="bet-market"&gt;${bet.market}&lt;/div&gt;&lt;/div&gt;&lt;div class="bet-odds-badge"&gt;${bet.odds.toFixed(2)}&lt;/div&gt;&lt;/div&gt;&lt;button class="btn-remove" onclick="removeBet('${bet.id}')"&gt;✕&lt;/button&gt;&lt;div style="position:relative;"&gt;&lt;span class="stake-sym"&gt;pt&lt;/span&gt;&lt;input type="number" id="input-${bet.id}" class="stake-input" placeholder="参加ポイント" value="${bet.stake&gt;0?bet.stake:''}" oninput="handleInput('${bet.id}',this.value)"&gt;&lt;/div&gt;&lt;div class="quick-stakes"&gt;&lt;button class="btn-quick" onclick="addStake('${bet.id}',500)"&gt;+500&lt;/button&gt;&lt;button class="btn-quick" onclick="addStake('${bet.id}',1000)"&gt;+1k&lt;/button&gt;&lt;button class="btn-quick" onclick="addStake('${bet.id}',5000)"&gt;+5k&lt;/button&gt;&lt;button class="btn-quick" onclick="addStake('${bet.id}','MAX')"&gt;MAX&lt;/button&gt;&lt;/div&gt;&lt;div class="potential-return"&gt;&lt;span&gt;受取額:&lt;/span&gt;&lt;span id="return-${bet.id}" class="return-amount"&gt;${Math.floor(bet.stake*bet.odds).toLocaleString()}pt&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>betslipItemsEl.appendChild(item);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>updateTotals();</p>
+<p class="p1">}</p>
+<p class="p1">window.removeBet=id=&gt;{document.querySelector(`.odds-btn[data-id="${id}"]`)?.classList.remove('selected');const i=state.bets.findIndex(b=&gt;b.id===id);if(i&gt;=0)state.bets.splice(i,1);renderBetslip();};</p>
+<p class="p1">window.handleInput=(id,v)=&gt;{const bet=state.bets.find(b=&gt;b.id===id);if(bet){bet.stake=parseInt(v)||0;const r=document.getElementById(`return-${id}`);if(r)r.textContent=`${Math.floor(bet.stake*bet.odds).toLocaleString()}pt`;updateTotals();}};</p>
+<p class="p1">window.addStake=(id,a)=&gt;{const bet=state.bets.find(b=&gt;b.id===id);if(bet){bet.stake=a==='MAX'?state.balance:(bet.stake+a);const inp=document.getElementById(`input-${id}`);if(inp)inp.value=bet.stake;const r=document.getElementById(`return-${id}`);if(r)r.textContent=`${Math.floor(bet.stake*bet.odds).toLocaleString()}pt`;updateTotals();}};</p>
+<p class="p1">function updateTotals(){const ts=state.bets.reduce((s,b)=&gt;s+b.stake,0),tr=state.bets.reduce((s,b)=&gt;s+(b.stake*b.odds),0);totalStakeEl.textContent=`${ts.toLocaleString()}pt`;totalReturnEl.textContent=`${Math.floor(tr).toLocaleString()}pt`;}</p>
+<p class="p1">function toggleMobileBetslip(){if(window.innerWidth&gt;1024)return;betslipPanelEl.classList.toggle('open');mobileToggleEl.classList.toggle('hidden');}</p>
+<p class="p2"><br></p>
+<p class="p1">// VIEW SWITCHING</p>
+<p class="p1">function setActiveTab(tabId){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.header-tab').forEach(t=&gt;t.classList.toggle('active',t.dataset.tab===tabId));</p>
+<p class="p1">}</p>
+<p class="p1">function switchView(viewId){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.view-section').forEach(el=&gt;{el.classList.remove('active');el.style.display='none';});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t=document.getElementById('view-'+viewId);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t){t.classList.add('active');t.style.display='block';}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const tabMap={home:'home',mypage:'mypage',mission:'mission',cards:'cards',wbc:'home'};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>setActiveTab(tabMap[viewId]||'home');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(viewId==='mission') renderMissionSection();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(viewId==='cards'){renderPackGrid();renderCollectionGrid();document.getElementById('header-balance').style.display='none';}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else document.getElementById('header-balance').style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>window.scrollTo(0,0);</p>
+<p class="p1">}</p>
+<p class="p1">function showScreen(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(id==='home'){switchView('home');}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else if(id==='mypage'){switchView('mypage');setActiveTab('mypage');renderMpBets();renderMpActiveBets();renderMpFriends();renderMpLeague();}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else if(id==='rankingDetail'){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.view-section').forEach(el=&gt;{el.classList.remove('active');el.style.display='none';});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const t=document.getElementById('rankingDetail');if(t){t.classList.add('active');t.style.display='block';}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>renderRankingDetail();window.scrollTo(0,0);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// STUDIO</p>
+<p class="p1">function studioSelect(tab){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>['live','result','news','comment'].forEach(t=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('sbtn-'+t)?.classList.toggle('active',t===tab);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const p=document.getElementById('sp-'+t);if(p)p.style.display=t===tab?'block':'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const comments={live:'日本が3回に追加点！山本由伸は今日も完璧なピッチングを見せています。',result:'本日の予想結果をお届けします。的中おめでとうございます！',news:'最新スポーツニュースをお届けします。',comment:'ユーザーコメントを表示中です。'};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const tags={live:'🎙️ AI解説',result:'🎯 予想結果',news:'📰 ニュース',comment:'💬 コメント'};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('studioCommentText').textContent=comments[tab];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('studioTag').textContent=tags[tab];</p>
+<p class="p1">}</p>
+<p class="p1">function postStudioComment(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const inp=document.getElementById('studioCommentInput');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!inp.value.trim())return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const list=document.getElementById('studioCommentList');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const item=document.createElement('div');item.className='sp-comment-item';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>item.innerHTML=`&lt;span class="sp-comment-avatar"&gt;😊&lt;/span&gt;&lt;div class="sp-comment-bubble"&gt;&lt;div class="sp-comment-name"&gt;あなた&lt;/div&gt;${inp.value}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>list.prepend(item);inp.value='';list.scrollTop=0;</p>
+<p class="p1">}</p>
+<p class="p1">function mpStudioAction(a){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const msgs={commentary:'現在の試合状況を分析中...あなたの予想は好調です！',data:'今月の的中率は58%。平均より高いパフォーマンスです。',question:'何でも質問してください！'};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('mpStudioCommentText').textContent=msgs[a];</p>
+<p class="p1">}</p>
+<p class="p1">function mpSendChat(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const inp=document.getElementById('mpChatInput');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!inp.value.trim())return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const hist=document.getElementById('mpChatHistory');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const userMsg=document.createElement('div');userMsg.className='mp-chat-msg user';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>userMsg.innerHTML=`&lt;span class="mp-chat-avatar"&gt;😊&lt;/span&gt;&lt;span class="mp-chat-bubble"&gt;${inp.value}&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>hist.appendChild(userMsg);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const q=inp.value;inp.value='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>setTimeout(()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const aiMsg=document.createElement('div');aiMsg.className='mp-chat-msg ai';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>aiMsg.innerHTML=`&lt;span class="mp-chat-avatar"&gt;🤖&lt;/span&gt;&lt;span class="mp-chat-bubble"&gt;「${q}」についてですね。現在のデータをもとに分析します！&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>hist.appendChild(aiMsg);hist.scrollTop=hist.scrollHeight;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},800);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>hist.scrollTop=hist.scrollHeight;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// HOME MATCHES</p>
+<p class="p1">function renderHomeMatches(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const c=document.getElementById('home-matches-container');if(!c)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html=`&lt;div style="margin-bottom:2rem;"&gt;&lt;div class="section-header"&gt;&lt;span&gt;⚾ 横浜DeNAベイスターズ&lt;/span&gt;&lt;button class="see-more-btn"&gt;もっと見る ›&lt;/button&gt;&lt;/div&gt;&lt;div class="match-card-list"&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>matches.forEach((m,i)=&gt;{html+=createMatchCardHtml(m,i);});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html+=`&lt;/div&gt;&lt;/div&gt;`;c.innerHTML=html;</p>
+<p class="p1">}</p>
+<p class="p1">function createMatchCardHtml(m,idx){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const hotClass=m.isHot?'is-hot':'';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const hotBadge=m.isHot?'&lt;div class="hot-badge"&gt;🔥 HOT&lt;/div&gt;':'&lt;div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let sb='',st='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(m.status==='live'){sb='status-live';st='LIVE';}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else if(m.status==='upcoming'){sb=m.deadlineSeconds&lt;3600?'status-closing':'status-upcoming';st=m.deadlineSeconds&lt;3600?'⚠️締切間近':'19:00';}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else{sb='status-finished';st='終了';}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cd=m.status==='live'||m.status==='finished'?'&lt;span style="color:#8b949e;"&gt;予想締切済み&lt;/span&gt;':`&lt;span&gt;受付中&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let scoreHtml='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(m.status==='live'||m.status==='finished'){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>scoreHtml=`&lt;div class="csr-row"&gt;&lt;span class="csr-home"&gt;&lt;span class="csr-flag"&gt;${m.homeTeam.flag}&lt;/span&gt;&lt;span class="csr-name"&gt;${m.homeTeam.name}&lt;/span&gt;&lt;/span&gt;&lt;span class="csr-center"&gt;&lt;span class="csr-num"&gt;${m.homeTeam.score}&lt;/span&gt;&lt;span class="csr-sep"&gt; - &lt;/span&gt;&lt;span class="csr-num"&gt;${m.awayTeam.score}&lt;/span&gt;&lt;/span&gt;&lt;span class="csr-away"&gt;&lt;span class="csr-name"&gt;${m.awayTeam.name}&lt;/span&gt;&lt;span class="csr-flag"&gt;${m.awayTeam.flag}&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>scoreHtml=`&lt;div class="csr-row"&gt;&lt;span class="csr-home"&gt;&lt;span class="csr-flag"&gt;${m.homeTeam.flag}&lt;/span&gt;&lt;span class="csr-name"&gt;${m.homeTeam.name}&lt;/span&gt;&lt;/span&gt;&lt;span style="font-size:12px;color:#8b949e;flex-shrink:0;"&gt;VS&lt;/span&gt;&lt;span class="csr-away"&gt;&lt;span class="csr-name"&gt;${m.awayTeam.name}&lt;/span&gt;&lt;span class="csr-flag"&gt;${m.awayTeam.flag}&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let myBetHtml='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(m.myBet?.status==='placed')myBetHtml=`&lt;div class="part-bar part-done"&gt;✅ 予想済み：&lt;strong&gt;${m.myBet.label}&lt;/strong&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else if(m.myBet?.status==='open')myBetHtml=`&lt;div class="part-bar part-open"&gt;💡 まだ予想していません&lt;button class="part-btn" onclick="openMatchDetail(${idx});event.stopPropagation();"&gt;予想する →&lt;/button&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else if(m.myBet?.status==='won')myBetHtml=`&lt;div class="part-bar part-won"&gt;✅ 的中：&lt;strong&gt;${m.myBet.label}&lt;/strong&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return `&lt;div class="home-match-card ${hotClass}" onclick="openMatchDetail(${idx})"&gt;&lt;div class="card-top-row"&gt;${hotBadge}&lt;div class="status-badge ${sb}"&gt;${st}&lt;/div&gt;&lt;/div&gt;${scoreHtml}&lt;div class="card-divider"&gt;&lt;/div&gt;&lt;div class="card-meta-section"&gt;&lt;div class="meta-row ${m.isHot?'text-amber':''}"&gt;&lt;span&gt;👥&lt;/span&gt;&lt;span&gt;${m.participants.toLocaleString()}人が予想中&lt;/span&gt;&lt;/div&gt;&lt;div class="meta-row"&gt;&lt;span&gt;⏰&lt;/span&gt;&lt;span&gt;締切まで ${cd}&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;${myBetHtml}&lt;/div&gt;`;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// PLAYER CARDS</p>
+<p class="p1">function renderPlayerCards(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const c=document.getElementById('playerCardScroll');if(!c)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.innerHTML=playerCardsData.map(p=&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="pcard rarity-${p.rarity}" onclick="showCardDetail(${p.id})"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>${p.isNew?'&lt;div class="pcard-new"&gt;NEW&lt;/div&gt;':''}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pcard-img"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pcard-bg" style="background:${p.bg};"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pcard-number"&gt;${p.number}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pcard-rarity-badge ${p.rarity}"&gt;${p.rarity}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pcard-emoji"&gt;${p.emoji}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pcard-info"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pcard-name"&gt;${p.name}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pcard-team"&gt;${p.team}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`).join('');</p>
+<p class="p1">}</p>
+<p class="p1">function showCardDetail(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const c=playerCardsData.find(p=&gt;p.id===id);if(!c)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('detail-emoji').textContent=c.emoji;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('detail-name').textContent=c.name;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('detail-team').textContent=`${c.team} (${c.sport})`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('detail-rarity').textContent=c.rarity;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-card-detail').classList.add('active');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// MATCH DETAIL</p>
+<p class="p1">function openMatchDetail(idx){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>switchView('wbc');</p>
+<p class="p1">}</p>
+<p class="p1">window.switchTab=tabName=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const map=['match','stats','h2h','lineup'];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('#view-wbc .tab').forEach((t,i)=&gt;t.classList.toggle('active',map[i]===tabName));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>map.forEach(p=&gt;{const e=document.getElementById('tab-content-'+p);if(e)e.style.display=p===tabName?'block':'none';});</p>
+<p class="p1">};</p>
+<p class="p1">function toggleAccordion(id){document.getElementById(id)?.classList.toggle('open');document.getElementById('chevron-'+id)?.classList.toggle('open');}</p>
+<p class="p2"><br></p>
+<p class="p1">// MYPAGE</p>
+<p class="p1">function renderMpBets(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('mpBetList');if(!el)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.innerHTML=myBets.map((b,i)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const statusIcon=b.status==='won'?'✅':b.status==='lost'?'❌':'⏳';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const ptClass=b.status==='won'?'won':b.status==='lost'?'lost':'pending';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const pt=b.status==='won'?`+${(b.payout-b.stake).toLocaleString()}pt`:b.status==='lost'?`-${b.stake.toLocaleString()}pt`:'進行中';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return `&lt;div class="lb-row" onclick="openBetDetail(${i})"&gt;&lt;span class="lb-status"&gt;${statusIcon}&lt;/span&gt;&lt;span class="lb-label"&gt;${b.sport} • ${b.prediction}&lt;/span&gt;&lt;span class="lb-pt ${ptClass}"&gt;${pt}&lt;/span&gt;&lt;span class="lb-arrow"&gt;›&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}).join('');</p>
+<p class="p1">}</p>
+<p class="p1">function renderMpActiveBets(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('mpActiveBets');if(!el)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const active=myBets.filter(b=&gt;b.status==='pending');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.innerHTML=active.map(b=&gt;`&lt;div class="mp-active-bet-card"&gt;&lt;span class="mp-active-sport"&gt;⚽&lt;/span&gt;&lt;div class="mp-active-info"&gt;&lt;div class="mp-active-match"&gt;${b.sport}&lt;/div&gt;&lt;div class="mp-active-my"&gt;予想: ${b.prediction} (${b.odds}倍)&lt;/div&gt;&lt;/div&gt;&lt;span class="mp-active-status live"&gt;LIVE&lt;/span&gt;&lt;/div&gt;`).join('');</p>
+<p class="p1">}</p>
+<p class="p1">function renderMpFriends(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('mpFriendList');if(!el)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const friends=[{name:'Taro K.',avatar:'😎',bet:'日本 勝利',result:'won',pt:'+225pt'},{name:'Hana M.',avatar:'🌸',bet:'大谷HR',result:'pending',pt:'進行中'},{name:'Yuki T.',avatar:'🎃',bet:'DeNA 勝利',result:'lost',pt:'-300pt'}];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.innerHTML=friends.map(f=&gt;`&lt;div class="mp-friend-row"&gt;&lt;span class="mp-friend-avatar"&gt;${f.avatar}&lt;/span&gt;&lt;div class="mp-friend-info"&gt;&lt;div class="mp-friend-name"&gt;${f.name}&lt;/div&gt;&lt;div class="mp-friend-bet"&gt;${f.bet}&lt;/div&gt;&lt;/div&gt;&lt;span class="mp-friend-result ${f.result}"&gt;${f.pt}&lt;/span&gt;&lt;/div&gt;`).join('');</p>
+<p class="p1">}</p>
+<p class="p1">function renderMpLeague(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('mpLeagueList');if(!el)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.innerHTML=leagueRankingData.map(r=&gt;`&lt;div class="lr-row${r.isMe?' me':''}"&gt;&lt;span class="lr-rank"&gt;${r.rank}&lt;/span&gt;&lt;span class="lr-avatar"&gt;${r.avatar}&lt;/span&gt;&lt;span class="lr-name${r.isMe?' me-name':''}"&gt;${r.name}&lt;/span&gt;&lt;span class="lr-pts${r.isMe?' me-pts':''}"&gt;${r.pts.toLocaleString()}pt&lt;/span&gt;&lt;/div&gt;`).join('');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// RANKING DETAIL</p>
+<p class="p1">function renderRankingDetail(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('rankingDetailList');if(!el)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.innerHTML=leagueRankingData.map(r=&gt;`&lt;div class="lr-row${r.isMe?' me':''}"&gt;&lt;span class="lr-rank"&gt;${r.rank}&lt;/span&gt;&lt;span class="lr-avatar"&gt;${r.avatar}&lt;/span&gt;&lt;span class="lr-name${r.isMe?' me-name':''}"&gt;${r.name}&lt;/span&gt;&lt;span class="lr-pts${r.isMe?' me-pts':''}"&gt;${r.pts.toLocaleString()}pt&lt;/span&gt;&lt;/div&gt;`).join('');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// BET DETAIL</p>
+<p class="p1">function openBetDetail(i){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const b=myBets[i];if(!b)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const statusMap={won:'✅ 的中',lost:'❌ ハズレ',pending:'⏳ 進行中'};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('bet-detail-title').innerHTML=`${statusMap[b.status]} ${b.sport}`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const ptText=b.status==='won'?`賭け:${b.stake}pt → 獲得:${b.payout}pt`:b.status==='lost'?`賭け:${b.stake}pt → 没収`:`賭け:${b.stake}pt 進行中`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('bet-detail-amount').textContent=ptText;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const qc=document.getElementById('bet-detail-question-container');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>qc.innerHTML=`&lt;div class="bet-detail-section"&gt;&lt;div class="bet-detail-section-title"&gt;❓ ${b.question}&lt;/div&gt;&lt;div class="bet-detail-choices"&gt;${b.choices.map(c=&gt;{const cls=c.isMyChoice?(b.status==='won'?'my-choice-won':b.status==='lost'?'my-choice-lost':'my-choice-pending'):'';return `&lt;div class="bet-detail-choice ${cls}"&gt;&lt;div class="choice-label"&gt;${c.isMyChoice?'✓ ':''} ${c.label}&lt;/div&gt;&lt;div class="choice-odds"&gt;${c.odds}倍&lt;/div&gt;&lt;div class="choice-votes"&gt;${c.pct}% (${c.votes.toLocaleString()}票)&lt;/div&gt;&lt;/div&gt;`}).join('')}&lt;/div&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const atitle=b.status==='pending'?'📊 現在の状況':'📊 試合の振り返り';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('bet-detail-analysis-title').textContent=atitle;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('bet-detail-analysis-text').textContent=b.analysis.summary;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const hs=document.getElementById('bet-detail-hint-section');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(b.analysis.hint){hs.style.display='block';document.getElementById('bet-detail-hint-text').textContent=b.analysis.hint;}else hs.style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('bet-detail-news-list').innerHTML=b.analysis.news.map(n=&gt;`&lt;a class="bet-news-item" href="${n.url}"&gt;&lt;div class="bet-news-title"&gt;📰 ${n.title}&lt;/div&gt;&lt;div class="bet-news-meta"&gt;${n.source} • ${n.time}&lt;/div&gt;&lt;/a&gt;`).join('');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-bet-detail').classList.add('active');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// CARDS</p>
+<p class="p1">function renderPackGrid(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('pack-grid');if(!el)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.innerHTML=packs.map(p=&gt;`&lt;div class="pack-card" onclick="openBuyModal('${p.id}')"&gt;&lt;div class="pack-bg" style="background:${p.bg};"&gt;&lt;/div&gt;&lt;div class="pack-content"&gt;&lt;div class="pack-image-area"&gt;📦&lt;/div&gt;&lt;div class="pack-title"&gt;${p.name}&lt;/div&gt;&lt;div class="pack-desc"&gt;${p.desc}&lt;/div&gt;&lt;div class="pack-rarity"&gt;${p.rarity}&lt;/div&gt;&lt;div class="pack-price"&gt;&lt;span class="coin-paid"&gt;💰 ${p.costPaid}&lt;/span&gt; / &lt;span class="coin-free"&gt;🪙 ${p.costFree}&lt;/span&gt;&lt;/div&gt;&lt;div class="btn-buy-pack"&gt;購入する&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`).join('');</p>
+<p class="p1">}</p>
+<p class="p1">function renderCollectionGrid(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('collection-grid');if(!el)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.innerHTML=myCollection.map(c=&gt;`&lt;div class="collection-card rarity-${c.rarity}" onclick="showCollectionCardDetail(${c.id})"&gt;${c.isNew?'&lt;div class="new-badge"&gt;NEW&lt;/div&gt;':''}&lt;div class="card-emoji"&gt;${c.emoji}&lt;/div&gt;&lt;div class="card-name"&gt;${c.name}&lt;/div&gt;&lt;div class="card-rarity"&gt;${c.rarity}&lt;/div&gt;&lt;/div&gt;`).join('');</p>
+<p class="p1">}</p>
+<p class="p1">function showCollectionCardDetail(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const c=myCollection.find(x=&gt;x.id===id);if(!c)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('detail-emoji').textContent=c.emoji;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('detail-name').textContent=c.name;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('detail-team').textContent=`${c.team} (${c.sport})`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('detail-rarity').textContent=c.rarity;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-card-detail').classList.add('active');</p>
+<p class="p1">}</p>
+<p class="p1">function openBuyModal(packId){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>currentSelectedPack=packs.find(p=&gt;p.id===packId);if(!currentSelectedPack)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('buy-modal-title').textContent=`📦 ${currentSelectedPack.name}`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('buy-cost-paid').textContent=currentSelectedPack.costPaid;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('buy-cost-free').textContent=currentSelectedPack.costFree;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('radio-paid').checked=true;updateBuyModal();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-buy-pack').classList.add('active');</p>
+<p class="p1">}</p>
+<p class="p1">function updateBuyModal(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const isPaid=document.getElementById('radio-paid').checked;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cost=isPaid?currentSelectedPack.costPaid:currentSelectedPack.costFree;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const bal=isPaid?coins.paid:coins.free;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const after=bal-cost;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const type=isPaid?'💰':'🪙';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('buy-balance-calc').textContent=`${type} ${bal.toLocaleString()} → 購入後: ${after.toLocaleString()}`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const err=after&lt;0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('buy-error').style.display=err?'block':'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('btn-confirm-buy').disabled=err;</p>
+<p class="p1">}</p>
+<p class="p1">function confirmBuyPack(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const isPaid=document.getElementById('radio-paid').checked;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cost=isPaid?currentSelectedPack.costPaid:currentSelectedPack.costFree;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(isPaid)coins.paid-=cost;else coins.free-=cost;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('coin-paid-display').textContent=coins.paid.toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('coin-free-display').textContent=coins.free.toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>closeModal('modal-buy-pack');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>openPackModal();</p>
+<p class="p1">}</p>
+<p class="p1">function openPackModal(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const area=document.getElementById('open-pack-area');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>area.innerHTML=Array(5).fill(0).map(()=&gt;`&lt;div class="flip-card"&gt;&lt;div class="flip-card-front"&gt;🎴&lt;/div&gt;&lt;div class="flip-card-back"&gt;&lt;div class="emoji"&gt;⚾&lt;/div&gt;&lt;div class="name"&gt;???&lt;/div&gt;&lt;div class="rarity"&gt;RARE&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`).join('');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('open-pack-msg').style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('btn-open-all').style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('btn-close-open').style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-open-pack').classList.add('active');</p>
+<p class="p1">}</p>
+<p class="p1">function openAllCards(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.flip-card').forEach((c,i)=&gt;{setTimeout(()=&gt;c.classList.add('flipped'),i*200);});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>setTimeout(()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('open-pack-msg').style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('btn-open-all').style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('btn-close-open').style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},1500);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// MISSION</p>
+<p class="p1">function renderMissionSection(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('mission-container');if(!el)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const renderGroup=(title,list)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html+=`&lt;div style="margin-bottom:1.5rem;"&gt;&lt;div class="section-header"&gt;&lt;span&gt;${title}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>list.forEach(m=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const pct=Math.round(m.progress.current/m.progress.total*100);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>html+=`&lt;div class="mission-card${m.done?' done':''}"&gt;&lt;div class="mission-card-info"&gt;&lt;div class="mission-name"&gt;${m.done?'✅ ':''}${m.title}&lt;/div&gt;&lt;div style="display:flex;align-items:center;gap:6px;margin-top:4px;"&gt;&lt;div class="mission-progress-bar-bg"&gt;&lt;div class="mission-progress-bar-fill" style="width:${pct}%"&gt;&lt;/div&gt;&lt;/div&gt;&lt;span style="font-size:10px;color:#8b949e;"&gt;${m.progress.current}/${m.progress.total}&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="mission-reward-text${m.done?' done':''}"&gt;+${m.reward}pt&lt;/div&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html+='&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderGroup('📅 デイリーミッション',missions.daily);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderGroup('📆 ウィークリーミッション',missions.weekly);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.innerHTML=html;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// MODAL</p>
+<p class="p1">function closeModal(id){document.getElementById(id)?.classList.remove('active');}</p>
+<p class="p2"><br></p>
+<p class="p1">// INIT</p>
+<p class="p1">renderHomeMatches();</p>
+<p class="p1">renderPlayerCards();</p>
+<p class="p1">renderPackGrid();</p>
+<p class="p1">renderCollectionGrid();</p>
+<p class="p2"><br></p>
+<p class="p1">// ODDS UPDATE</p>
+<p class="p1">setInterval(()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const btns=document.querySelectorAll('.odds-btn');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!btns.length)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const btn=btns[Math.floor(Math.random()*btns.length)];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let o=parseFloat(btn.dataset.odds)+((Math.random()*0.1)-0.05);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(o&lt;1.01)o=1.01;o=Math.round(o*100)/100;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.querySelector('.odds-value').textContent=o.toFixed(2);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const prev=parseFloat(btn.dataset.odds);btn.dataset.odds=o.toFixed(2);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.classList.remove('flash-up','flash-down');void btn.offsetWidth;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.classList.add(o&gt;prev?'flash-up':'flash-down');</p>
+<p class="p1">},3000);</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
