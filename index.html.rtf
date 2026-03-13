@@ -1,0 +1,1139 @@
+{\rtf1\ansi\ansicpg932\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="ja">\
+<head>\
+<meta charset="UTF-8">\
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\
+<title>B.E.A.T</title>\
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">\
+<style>\
+:root \{\
+  --bg-main:#0d1117; --bg-card:#161b22; --bg-sidebar:#1c2128;\
+  --accent:#f5a623; --text-main:#e6edf3; --text-sub:#8b949e;\
+  --live:#ff3b30; --success:#238636; --border:#30363d;\
+  --font-h:'Barlow Condensed',sans-serif; --font-b:'Noto Sans JP',sans-serif; --font-m:'Roboto Mono',monospace;\
+\}\
+*\{box-sizing:border-box;margin:0;padding:0;\}\
+body\{font-family:var(--font-b);background:var(--bg-main);color:var(--text-main);overflow-x:hidden;\}\
+a\{text-decoration:none;color:inherit;\}\
+\
+.header\{background:var(--bg-sidebar);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;justify-content:space-between;align-items:stretch;position:sticky;top:0;z-index:100;height:56px;\}\
+.header-left\{display:flex;align-items:stretch;gap:0;\}\
+.logo\{font-family:var(--font-h);font-size:1.4rem;font-weight:700;color:var(--accent);letter-spacing:1px;display:flex;align-items:center;gap:6px;padding:0 16px 0 0;border:none;background:none;cursor:pointer;white-space:nowrap;\}\
+.logo:hover\{opacity:0.85;\}\
+.logo svg\{flex-shrink:0;\}\
+.header-divider\{width:1px;background:var(--border);margin:10px 0;\}\
+.header-tab\{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 16px;background:none;border:none;border-bottom:3px solid transparent;color:var(--text-sub);cursor:pointer;font-family:var(--font-b);font-size:11px;height:100%;position:relative;transition:all 0.2s;white-space:nowrap;\}\
+.header-tab:hover\{color:var(--text-main);background:rgba(255,255,255,0.04);\}\
+.header-tab.active\{color:var(--accent);border-bottom-color:var(--accent);background:rgba(245,166,35,0.07);\}\
+.htab-icon\{font-size:15px;line-height:1;\}\
+.htab-label\{font-size:10px;font-weight:500;\}\
+.live-dot\{position:absolute;top:10px;right:12px;width:6px;height:6px;background:var(--live);border-radius:50%;border:1px solid var(--bg-sidebar);animation:pulseDot 1s infinite;\}\
+@keyframes pulseDot\{0%,100%\{opacity:1\}50%\{opacity:0.4\}\}\
+.header-right\{display:flex;align-items:center;gap:8px;\}\
+.balance\{font-family:var(--font-m);font-size:13px;color:var(--text-main);background:var(--bg-main);padding:4px 10px;border-radius:4px;border:1px solid var(--border);\}\
+@media(max-width:600px)\{.htab-label\{display:none;\}.header-tab\{padding:0 11px;\}.logo\{font-size:1.1rem;padding-right:8px;\}\}\
+\
+.main-content\{display:flex;flex:1;position:relative;\}\
+.content-area\{flex:1;padding:1rem;padding-bottom:100px;\}\
+.view-section\{display:none;\}\
+.view-section.active\{display:block;animation:fadeIn 0.25s ease-out;\}\
+@keyframes fadeIn\{from\{opacity:0;transform:translateY(8px)\}to\{opacity:1;transform:translateY(0)\}\}\
+\
+.studio-wrap\{position:relative;background:linear-gradient(160deg,#0a0a0a 0%,#1a0000 40%,#0d0d1a 100%);border:2px solid #cc0000;border-radius:10px 10px 0 0;overflow:hidden;margin-bottom:0;\}\
+.studio-wrap::after\{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,rgba(200,0,0,0.25) 0%,transparent 8%),linear-gradient(270deg,rgba(200,0,0,0.25) 0%,transparent 8%);pointer-events:none;\}\
+.studio-hd\{background:linear-gradient(90deg,#cc0000,#880000);padding:5px 14px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;\}\
+.studio-hd-title\{font-size:13px;font-weight:bold;color:#fff;letter-spacing:2px;\}\
+.studio-live-badge\{background:#ff0000;color:#fff;font-size:10px;font-weight:bold;padding:2px 7px;border-radius:3px;animation:liveBlink 1s infinite;letter-spacing:1px;\}\
+@keyframes liveBlink\{0%,100%\{opacity:1\}50%\{opacity:0.5\}\}\
+.studio-body\{display:flex;align-items:flex-end;gap:14px;padding:10px 14px 0;position:relative;z-index:1;\}\
+.studio-char-wrap\{flex-shrink:0;text-align:center;\}\
+.studio-char\{position:relative;width:76px;height:86px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;\}\
+.ai-caster\{display:flex;flex-direction:column;align-items:center;\}\
+.ai-head\{position:relative;font-size:34px;line-height:1;filter:drop-shadow(0 0 8px rgba(255,100,0,0.6));\}\
+.ai-headset\{position:absolute;top:-6px;right:-10px;font-size:15px;\}\
+.ai-body\{width:38px;height:28px;background:linear-gradient(180deg,#1a3a6a,#0d1f3c);border-radius:8px 8px 0 0;margin-top:3px;border:1px solid #2a4a8a;\}\
+.studio-desk\{position:absolute;bottom:0;width:76px;height:13px;background:linear-gradient(180deg,#333,#1a1a1a);border-top:2px solid #cc0000;border-radius:2px;z-index:2;\}\
+.studio-nameplate\{font-size:9px;color:#cc0000;font-weight:bold;letter-spacing:2px;margin-top:3px;font-family:monospace;\}\
+.studio-speech-wrap\{flex:1;padding-bottom:14px;\}\
+.studio-bubble\{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:12px 12px 12px 0;padding:10px 13px;font-size:13px;color:#e6edf3;line-height:1.6;min-height:56px;\}\
+.speech-cursor\{display:inline-block;color:var(--accent);animation:cur 0.8s step-end infinite;font-weight:bold;\}\
+@keyframes cur\{0%,100%\{opacity:1\}50%\{opacity:0\}\}\
+.studio-tag\{font-size:10px;color:var(--text-sub);margin-top:5px;padding-left:3px;\}\
+\
+.studio-actions\{display:flex;gap:0;padding:0;border-top:1px solid rgba(200,0,0,0.3);background:rgba(0,0,0,0.3);position:relative;z-index:1;border-radius:0 0 0 0;overflow:hidden;\}\
+.studio-btn\{flex:1;background:rgba(255,255,255,0.04);border:none;border-right:1px solid rgba(255,255,255,0.06);color:var(--text-sub);padding:8px 4px;font-size:11px;font-family:var(--font-b);cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:2px;\}\
+.studio-btn:last-child\{border-right:none;\}\
+.studio-btn:hover,.studio-btn.active\{background:rgba(204,0,0,0.2);color:#e6edf3;\}\
+.studio-btn.active\{border-bottom:2px solid #cc0000;\}\
+.studio-btn-icon\{font-size:14px;\}\
+.studio-btn-label\{font-size:9px;\}\
+\
+.studio-panel\{background:#0d1117;border:1px solid #30363d;border-top:none;border-radius:0 0 10px 10px;margin-bottom:14px;overflow:hidden;\}\
+.studio-panel-inner\{padding:12px 14px;\}\
+\
+.sp-live-row\{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #21262d;\}\
+.sp-live-row:last-child\{border-bottom:none;\}\
+.sp-live-badge\{font-size:9px;font-weight:bold;padding:2px 6px;border-radius:10px;flex-shrink:0;\}\
+.sp-live-badge.live\{background:#ff3b30;color:#fff;animation:pulseDot 1s infinite;\}\
+.sp-live-badge.fin\{background:#21262d;color:#8b949e;\}\
+.sp-live-teams\{flex:1;font-size:12px;color:#e6edf3;\}\
+.sp-live-score\{font-size:14px;font-weight:bold;font-family:var(--font-m);color:#e6edf3;flex-shrink:0;\}\
+.sp-live-arrow\{font-size:10px;color:#30363d;\}\
+\
+.sp-result-row\{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #21262d;cursor:pointer;transition:background 0.15s;\}\
+.sp-result-row:last-child\{border-bottom:none;\}\
+.sp-result-row:hover\{background:rgba(255,255,255,0.03);\}\
+.sp-result-icon\{font-size:14px;flex-shrink:0;\}\
+.sp-result-label\{flex:1;font-size:12px;color:#e6edf3;\}\
+.sp-result-pt\{font-size:12px;font-weight:bold;flex-shrink:0;\}\
+.sp-result-pt.won\{color:#3fb950;\}.sp-result-pt.lost\{color:#ff6b6b;\}.sp-result-pt.pending\{color:#f5a623;\}\
+\
+.sp-news-row\{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #21262d;cursor:pointer;transition:background 0.15s;\}\
+.sp-news-row:last-child\{border-bottom:none;\}\
+.sp-news-row:hover\{background:rgba(255,255,255,0.03);\}\
+.sp-news-icon\{font-size:18px;flex-shrink:0;\}\
+.sp-news-info\{flex:1;\}\
+.sp-news-title\{font-size:12px;color:#e6edf3;font-weight:bold;margin-bottom:2px;\}\
+.sp-news-meta\{font-size:10px;color:#8b949e;\}\
+\
+.sp-comment-input-row\{display:flex;gap:8px;margin-bottom:10px;\}\
+.sp-comment-input\{flex:1;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:7px 10px;font-size:12px;color:#e6edf3;outline:none;font-family:var(--font-b);\}\
+.sp-comment-input:focus\{border-color:var(--accent);\}\
+.sp-comment-send\{background:var(--accent);color:#000;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:bold;cursor:pointer;\}\
+.sp-comment-list\{display:flex;flex-direction:column;gap:6px;max-height:140px;overflow-y:auto;\}\
+.sp-comment-item\{display:flex;gap:8px;align-items:flex-start;\}\
+.sp-comment-avatar\{font-size:16px;flex-shrink:0;\}\
+.sp-comment-bubble\{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:5px 9px;font-size:12px;color:#e6edf3;line-height:1.4;\}\
+.sp-comment-name\{font-size:10px;color:#f5a623;font-weight:bold;margin-bottom:1px;\}\
+\
+.info-bar-league\{display:flex;justify-content:space-between;align-items:center;background:#0d1117;border:1px solid #30363d;border-top:none;padding:6px 14px;font-size:12px;cursor:pointer;\}\
+.info-bar-league:hover\{background:#161b22;\}\
+.lib-league\{color:#7c3aed;font-weight:bold;\}.lib-rank\{color:var(--accent);font-weight:bold;\}.lib-diff\{color:#ff6b6b;font-size:11px;\}.lib-timer\{color:var(--accent);font-weight:bold;\}\
+.info-bar-ticker\{display:flex;align-items:center;gap:8px;background:#161b22;border:1px solid #30363d;border-top:none;padding:5px 14px;overflow:hidden;margin-bottom:14px;border-radius:0 0 10px 10px;\}\
+.ticker-track-wrap\{overflow:hidden;flex:1;\}\
+.ticker-track\{display:inline-block;white-space:nowrap;font-size:12px;color:#8b949e;animation:tickerMove 30s linear infinite;\}\
+@keyframes tickerMove\{from\{transform:translateX(100vw)\}to\{transform:translateX(-100%)\}\}\
+\
+.section-header\{display:flex;justify-content:space-between;align-items:center;padding:6px 0;margin-bottom:10px;border-bottom:1px solid var(--border);font-size:14px;font-weight:bold;\}\
+.see-more-btn\{background:none;border:none;color:var(--text-sub);font-size:12px;cursor:pointer;padding:4px 8px;\}\
+.see-more-btn:hover\{color:var(--accent);\}\
+\
+.match-card-list\{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;\}\
+@media(max-width:768px)\{.match-card-list\{display:flex;overflow-x:auto;padding-bottom:1rem;scroll-snap-type:x mandatory;\}.home-match-card\{min-width:270px;scroll-snap-align:start;\}\}\
+.home-match-card\{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.25s;display:flex;flex-direction:column;cursor:pointer;\}\
+.home-match-card:hover\{border-color:var(--text-sub);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.4);\}\
+.home-match-card.is-hot\{border-color:#ff6b00;animation:glowOrange 2s infinite alternate;\}\
+@keyframes glowOrange\{from\{box-shadow:0 0 5px rgba(255,107,0,0.2)\}to\{box-shadow:0 0 15px rgba(255,107,0,0.5)\}\}\
+.card-top-row\{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 10px 4px;\}\
+.hot-badge\{background:#ff6b00;color:#fff;font-size:10px;font-weight:bold;padding:2px 6px;border-radius:4px;\}\
+.status-badge\{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:bold;margin-left:auto;\}\
+.status-live\{background:var(--live);color:#fff;animation:pulseDot 1s infinite;\}\
+.status-upcoming\{background:#30363d;color:#fff;\}\
+.status-finished\{background:#21262d;color:#8b949e;\}\
+.status-closing\{background:var(--accent);color:#000;\}\
+.card-divider\{height:1px;background:var(--border);\}\
+.card-meta-section\{padding:6px 10px;display:flex;flex-direction:column;gap:3px;\}\
+.meta-row\{display:flex;align-items:center;gap:5px;font-size:11px;color:#8b949e;\}\
+.text-amber\{color:var(--accent);\}.text-orange\{color:#ff6b00;\}.text-red\{color:var(--live);\}\
+.blink\{animation:blinkTxt 1s infinite;\}\
+@keyframes blinkTxt\{50%\{opacity:0\}\}\
+.part-bar\{padding:5px 10px;font-size:11px;border-top:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;border-radius:0 0 6px 6px;\}\
+.part-done\{background:#1a2a1a;color:#3fb950;\}.part-open\{background:#1c2128;color:#8b949e;\}.part-won\{background:#1a2a1a;color:#3fb950;\}\
+.part-btn\{background:var(--accent);color:#000;border:none;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:bold;cursor:pointer;\}\
+.csr-row\{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;gap:4px;\}\
+.csr-home\{display:flex;align-items:center;gap:4px;flex:1;\}\
+.csr-away\{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end;\}\
+.csr-flag\{font-size:17px;\}.csr-name\{font-size:12px;white-space:nowrap;\}\
+.csr-center\{display:flex;align-items:center;gap:3px;flex-shrink:0;\}\
+.csr-num\{font-size:20px;font-weight:bold;font-family:var(--font-m);\}.csr-sep\{font-size:14px;color:#8b949e;\}\
+\
+.player-cards-section\{margin-top:24px;\}\
+.player-card-scroll\{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;\}\
+.player-card-scroll::-webkit-scrollbar\{height:4px;\}\
+.player-card-scroll::-webkit-scrollbar-track\{background:#161b22;\}\
+.player-card-scroll::-webkit-scrollbar-thumb\{background:#30363d;border-radius:2px;\}\
+.pcard\{flex-shrink:0;width:110px;scroll-snap-align:start;cursor:pointer;border-radius:10px;overflow:hidden;border:2px solid var(--border);background:var(--bg-card);transition:all 0.25s;position:relative;\}\
+.pcard:hover\{transform:translateY(-4px) scale(1.03);z-index:10;\}\
+.pcard.rarity-EPIC\{border-color:#f5a623;box-shadow:0 0 10px rgba(245,166,35,0.3);\}\
+.pcard.rarity-RARE\{border-color:#58a6ff;box-shadow:0 0 10px rgba(88,166,255,0.3);\}\
+.pcard.rarity-UNCOMMON\{border-color:#7c3aed;\}\
+.pcard.rarity-NORMAL\{border-color:#30363d;\}\
+.pcard-img\{width:100%;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;\}\
+.pcard-bg\{position:absolute;inset:0;\}\
+.pcard-emoji\{font-size:36px;position:relative;z-index:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6));\}\
+.pcard-number\{position:absolute;top:5px;left:7px;font-size:11px;font-weight:bold;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.8);z-index:2;\}\
+.pcard-rarity-badge\{position:absolute;top:4px;right:4px;font-size:8px;font-weight:bold;padding:2px 5px;border-radius:8px;z-index:2;\}\
+.pcard-rarity-badge.EPIC\{background:linear-gradient(135deg,#f5a623,#c87800);color:#000;\}\
+.pcard-rarity-badge.RARE\{background:linear-gradient(135deg,#58a6ff,#1a5fa8);color:#fff;\}\
+.pcard-rarity-badge.UNCOMMON\{background:#7c3aed;color:#fff;\}\
+.pcard-rarity-badge.NORMAL\{background:#30363d;color:#8b949e;\}\
+.pcard-info\{padding:6px 7px;\}\
+.pcard-name\{font-size:11px;font-weight:bold;color:#e6edf3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\}\
+.pcard-team\{font-size:9px;color:#8b949e;margin-top:1px;\}\
+.pcard-new\{position:absolute;top:-4px;right:-4px;background:var(--live);color:#fff;font-size:9px;font-weight:bold;padding:2px 5px;border-radius:8px;z-index:3;\}\
+\
+.betslip-panel\{width:300px;background:var(--bg-card);border-left:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:56px;height:calc(100vh - 56px);z-index:90;\}\
+.betslip-header\{padding:1rem;border-bottom:1px solid var(--border);background:var(--bg-sidebar);display:flex;justify-content:space-between;align-items:center;cursor:pointer;\}\
+.betslip-title\{font-family:var(--font-h);font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:6px;\}\
+.betslip-count\{background:var(--accent);color:#000;font-size:11px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;justify-content:center;align-items:center;\}\
+.betslip-body\{flex:1;overflow-y:auto;padding:1rem;\}\
+.empty-betslip\{text-align:center;color:var(--text-sub);padding-top:2rem;font-size:13px;\}\
+.bet-item\{background:var(--bg-main);border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:10px;position:relative;\}\
+.bet-selection\{font-weight:700;color:var(--accent);font-size:13px;\}\
+.bet-market\{font-size:11px;color:var(--text-sub);\}\
+.bet-odds-badge\{font-family:var(--font-m);font-weight:700;background:var(--bg-card);padding:2px 6px;border-radius:4px;font-size:12px;\}\
+.btn-remove\{position:absolute;top:8px;right:8px;color:var(--text-sub);cursor:pointer;background:none;border:none;font-size:14px;\}\
+.btn-remove:hover\{color:var(--live);\}\
+.stake-input\{width:100%;background:var(--bg-card);border:1px solid var(--border);color:var(--text-main);padding:6px 6px 6px 22px;border-radius:4px;font-family:var(--font-m);font-size:13px;margin-top:6px;\}\
+.stake-input:focus\{outline:none;border-color:var(--accent);\}\
+.stake-sym\{position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--text-sub);font-size:12px;pointer-events:none;\}\
+.quick-stakes\{display:flex;gap:4px;margin-top:5px;\}\
+.btn-quick\{flex:1;background:var(--bg-card);border:1px solid var(--border);color:var(--text-sub);font-size:10px;padding:3px;border-radius:4px;cursor:pointer;\}\
+.btn-quick:hover\{background:var(--border);color:var(--text-main);\}\
+.potential-return\{display:flex;justify-content:space-between;margin-top:5px;font-size:11px;color:var(--text-sub);\}\
+.return-amount\{color:var(--success);font-weight:700;font-family:var(--font-m);\}\
+.betslip-footer\{padding:1rem;border-top:1px solid var(--border);background:var(--bg-sidebar);\}\
+.total-row\{display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;\}\
+.total-row.big\{font-weight:700;font-size:1rem;color:var(--success);margin-bottom:10px;\}\
+.btn-place\{width:100%;background:var(--success);color:#fff;border:none;padding:12px;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer;text-transform:uppercase;\}\
+.btn-place:hover\{background:#1c6b2b;\}\
+.btn-place:disabled\{background:var(--border);color:var(--text-sub);cursor:not-allowed;\}\
+@keyframes flashGreen\{0%\{background:var(--success);color:#fff\}100%\{background:var(--bg-card)\}\}\
+@keyframes flashRed\{0%\{background:var(--live);color:#fff\}100%\{background:var(--bg-card)\}\}\
+.flash-up\{animation:flashGreen 1s ease-out;\}\
+.flash-down\{animation:flashRed 1s ease-out;\}\
+@media(max-width:1024px)\{\
+  .betslip-panel\{position:fixed;bottom:0;top:auto;left:0;width:100%;height:auto;max-height:80vh;border-left:none;border-top:1px solid var(--border);transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:0 -4px 20px rgba(0,0,0,0.5);\}\
+  .betslip-panel.open\{transform:translateY(0);\}\
+  .betslip-toggle\{display:flex;position:fixed;bottom:0;left:0;width:100%;background:var(--bg-sidebar);padding:12px 1rem;border-top:1px solid var(--border);justify-content:space-between;align-items:center;z-index:100;cursor:pointer;\}\
+  .betslip-toggle.hidden\{display:none;\}\
+\}\
+@media(min-width:1025px)\{.betslip-toggle\{display:none;\}\}\
+\
+.match-detail-topbar\{padding:7px 14px;border-bottom:1px solid #30363d;background:#0d1117;position:sticky;top:56px;z-index:50;\}\
+.md-back-btn\{background:none;border:none;color:var(--accent);font-size:13px;cursor:pointer;padding:4px 0;display:flex;align-items:center;gap:4px;\}\
+.md-back-btn:hover\{text-decoration:underline;\}\
+.tabs\{display:flex;gap:1rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem;overflow-x:auto;white-space:nowrap;\}\
+.tab\{padding:10px 0;color:var(--text-sub);cursor:pointer;position:relative;font-weight:500;font-size:13px;transition:color 0.2s;\}\
+.tab.active\{color:var(--accent);\}\
+.tab.active::after\{content:'';position:absolute;bottom:-1px;left:0;width:100%;height:2px;background:var(--accent);\}\
+.market-group\{margin-bottom:1.25rem;\}\
+.market-header\{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;cursor:pointer;\}\
+.market-title\{font-size:14px;font-weight:700;color:var(--text-main);display:flex;align-items:center;gap:6px;flex-wrap:wrap;\}\
+.odds-grid\{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;\}\
+.odds-btn\{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.2s;position:relative;\}\
+.odds-btn:hover\{border-color:var(--text-sub);background:#1f252e;\}\
+.odds-btn.selected\{background:rgba(245,166,35,0.15);border-color:var(--accent);\}\
+.odds-label\{font-size:12px;color:var(--text-main);\}\
+.odds-value\{font-family:var(--font-m);font-weight:700;color:var(--accent);font-size:13px;\}\
+.popular-tag\{font-size:10px;color:var(--text-sub);background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:3px;margin-top:3px;\}\
+.difficulty-badge\{font-size:9px;padding:2px 6px;border-radius:8px;font-weight:bold;\}\
+.difficulty-badge.easy\{background:#1a3a2a;color:#3fb950;\}\
+.difficulty-badge.medium\{background:#3a2e0a;color:var(--accent);\}\
+.difficulty-badge.hard\{background:#3a1a1a;color:#ff6b6b;\}\
+.tooltip-icon\{cursor:help;font-size:12px;color:#8b949e;position:relative;\}\
+.tooltip-icon::after\{content:attr(data-tooltip);position:absolute;bottom:125%;left:50%;transform:translateX(-50%);background:#21262d;color:#e6edf3;font-size:10px;padding:5px 8px;border-radius:5px;white-space:nowrap;border:1px solid #30363d;opacity:0;pointer-events:none;transition:opacity 0.2s;z-index:100;\}\
+.tooltip-icon:hover::after\{opacity:1;\}\
+.accordion-content\{display:none;\}\
+.accordion-content.open\{display:block;\}\
+.chevron\{transition:transform 0.3s;\}\
+.chevron.open\{transform:rotate(180deg);\}\
+\
+.live-header-card\{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:1rem;display:flex;flex-direction:column;gap:5px;\}\
+.live-status-bar\{display:flex;justify-content:space-between;align-items:center;font-size:12px;\}\
+.live-status-left\{color:var(--text-sub);\}\
+.live-status-right\{display:flex;align-items:center;gap:6px;font-weight:bold;color:#fff;\}\
+.live-badge-anim\{color:var(--live);animation:pulseDot 1s infinite;\}\
+.live-teams-score\{display:flex;justify-content:space-between;align-items:center;padding:0 8px;\}\
+.live-team\{display:flex;flex-direction:column;align-items:center;gap:4px;\}\
+.live-team-flag\{font-size:28px;line-height:1;\}\
+.live-team-name\{font-size:11px;color:var(--text-sub);\}\
+.live-score-area\{display:flex;align-items:center;gap:8px;font-size:36px;font-weight:bold;color:#fff;\}\
+\
+.mp-chat-wrap\{background:#0d1117;border:1px solid #30363d;border-top:none;padding:10px 14px;\}\
+.mp-chat-history\{max-height:110px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;margin-bottom:7px;\}\
+.mp-chat-msg\{display:flex;align-items:flex-start;gap:7px;\}\
+.mp-chat-msg.user\{flex-direction:row-reverse;\}\
+.mp-chat-avatar\{font-size:16px;flex-shrink:0;\}\
+.mp-chat-bubble\{background:#161b22;border:1px solid #30363d;border-radius:9px;padding:5px 9px;font-size:11px;color:#e6edf3;max-width:75%;line-height:1.4;\}\
+.mp-chat-msg.user .mp-chat-bubble\{background:#1a2a3a;border-color:var(--accent);color:var(--accent);\}\
+.mp-chat-input-row\{display:flex;gap:7px;\}\
+.mp-chat-input\{flex:1;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px 9px;font-size:11px;color:#e6edf3;outline:none;\}\
+.mp-chat-input:focus\{border-color:var(--accent);\}\
+.mp-chat-send\{background:var(--accent);color:#000;border:none;border-radius:6px;padding:6px 12px;font-size:11px;font-weight:bold;cursor:pointer;\}\
+.mp-section\{padding:12px 14px;border-bottom:1px solid #30363d;\}\
+.mp-section-title\{font-size:13px;font-weight:bold;color:#e6edf3;margin-bottom:9px;\}\
+.mp-stats-grid\{display:grid;grid-template-columns:1fr 1fr;gap:7px;\}\
+.mp-stat-card\{background:#1c2128;border:1px solid #30363d;border-radius:7px;padding:9px 11px;\}\
+.mp-stat-label\{font-size:10px;color:#8b949e;margin-bottom:3px;\}\
+.mp-stat-main\{display:flex;align-items:baseline;gap:5px;\}\
+.mp-stat-pt\{font-size:18px;font-weight:bold;\}\
+.mp-stat-pt.positive\{color:#3fb950;\}.mp-stat-pt.negative\{color:#ff6b6b;\}\
+.mp-stat-sep\{color:#8b949e;font-size:13px;\}\
+.mp-stat-rank\{font-size:15px;font-weight:bold;color:#e6edf3;\}\
+.mp-stat-sub\{font-size:10px;color:#8b949e;margin-top:2px;\}\
+.mp-progress-wrap\{height:5px;background:#21262d;border-radius:3px;margin:9px 0 3px;\}\
+.mp-progress-bar\{height:100%;background:#3fb950;border-radius:3px;transition:width 0.5s ease;\}\
+.mp-progress-label\{font-size:10px;color:#3fb950;text-align:right;\}\
+.mp-section-header\{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;\}\
+.mp-league-badge\{font-size:10px;color:#8b949e;\}\
+.mp-link-btn\{background:none;border:none;color:var(--accent);font-size:11px;cursor:pointer;\}\
+.lb-row\{display:flex;align-items:center;padding:9px 14px;border-bottom:1px solid #21262d;cursor:pointer;gap:8px;transition:background 0.15s;\}\
+.lb-row:last-child\{border-bottom:none;\}\
+.lb-row:hover\{background:#1c2128;\}\
+.lb-status\{font-size:13px;flex-shrink:0;\}\
+.lb-label\{flex:1;font-size:12px;color:#e6edf3;\}\
+.lb-pt\{font-size:12px;font-weight:bold;flex-shrink:0;\}\
+.lb-pt.won\{color:#3fb950;\}.lb-pt.lost\{color:#ff6b6b;\}.lb-pt.pending\{color:var(--accent);\}\
+.lb-arrow\{font-size:10px;color:#30363d;flex-shrink:0;\}\
+.mp-active-bet-card\{display:flex;align-items:center;background:#1c2128;border:1px solid #30363d;border-radius:7px;padding:9px 11px;margin-bottom:7px;gap:9px;cursor:pointer;\}\
+.mp-active-bet-card:hover\{border-color:var(--accent);\}\
+.mp-active-sport\{font-size:17px;flex-shrink:0;\}\
+.mp-active-info\{flex:1;\}\
+.mp-active-match\{font-size:12px;color:#e6edf3;font-weight:bold;\}\
+.mp-active-my\{font-size:10px;color:var(--accent);margin-top:2px;\}\
+.mp-active-status\{font-size:10px;font-weight:bold;flex-shrink:0;padding:2px 7px;border-radius:9px;\}\
+.mp-active-status.live\{background:var(--live);color:#fff;\}\
+.mp-active-status.pending\{background:#3a2e0a;color:var(--accent);\}\
+.mp-friend-row\{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid #21262d;gap:9px;\}\
+.mp-friend-row:last-child\{border-bottom:none;\}\
+.mp-friend-avatar\{font-size:20px;flex-shrink:0;\}\
+.mp-friend-info\{flex:1;\}\
+.mp-friend-name\{font-size:12px;color:#e6edf3;font-weight:bold;\}\
+.mp-friend-bet\{font-size:10px;color:#8b949e;margin-top:1px;\}\
+.mp-friend-result\{font-size:11px;font-weight:bold;flex-shrink:0;\}\
+.mp-friend-result.won\{color:#3fb950;\}.mp-friend-result.pending\{color:var(--accent);\}.mp-friend-result.lost\{color:#ff6b6b;\}\
+.lr-row\{display:flex;align-items:center;padding:8px 12px;gap:9px;border-bottom:1px solid #21262d;\}\
+.lr-row.me\{background:#1c2820;border-left:3px solid var(--accent);\}\
+.lr-rank\{width:20px;font-size:11px;color:#8b949e;text-align:center;flex-shrink:0;\}\
+.lr-avatar\{font-size:20px;flex-shrink:0;\}\
+.lr-name\{flex:1;font-size:12px;color:#e6edf3;\}\
+.lr-name.me-name\{color:var(--accent);font-weight:bold;\}\
+.lr-pts\{font-size:12px;color:#8b949e;font-weight:bold;\}\
+.lr-pts.me-pts\{color:#3fb950;\}\
+.league-ranking-wrap\{background:#161b22;border:1px solid #30363d;border-radius:7px;margin-top:10px;overflow:hidden;\}\
+\
+.rd-header\{display:flex;align-items:center;gap:7px;padding:11px 13px;border-bottom:1px solid #30363d;background:#161b22;\}\
+.rd-back\{background:none;border:none;color:var(--accent);font-size:13px;cursor:pointer;\}\
+.rd-title\{flex:1;font-size:13px;font-weight:bold;color:#e6edf3;\}\
+.rd-timer\{font-size:10px;color:#8b949e;\}\
+.rd-trophy-row\{display:flex;gap:9px;padding:13px 15px;overflow-x:auto;border-bottom:1px solid #30363d;\}\
+.rd-trophy\{font-size:26px;flex-shrink:0;filter:drop-shadow(0 0 5px rgba(245,166,35,0.5));\}\
+.rd-trophy.locked\{filter:grayscale(1) opacity(0.3);\}\
+.rd-zone-up\{font-size:10px;color:#3fb950;text-align:center;padding:4px;border-top:1px solid #3fb950;border-bottom:1px solid #3fb950;margin:3px 0;\}\
+\
+.modal-overlay\{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:none;justify-content:center;align-items:center;z-index:1000;\}\
+.modal-overlay.active\{display:flex;\}\
+.modal-content\{background:var(--bg-card);border:1px solid var(--border);border-radius:11px;padding:1.25rem;width:90%;max-width:380px;position:relative;\}\
+.modal-close\{position:absolute;top:12px;right:12px;cursor:pointer;color:var(--text-sub);\}\
+.modal-title\{font-size:1.1rem;font-weight:bold;margin-bottom:1.25rem;\}\
+.radio-group\{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem;\}\
+.radio-label\{display:flex;align-items:center;gap:6px;cursor:pointer;\}\
+.balance-calc\{background:var(--bg-main);padding:10px;border-radius:7px;margin-bottom:1.25rem;font-size:13px;\}\
+.modal-actions\{display:flex;gap:10px;justify-content:flex-end;\}\
+.btn-cancel\{background:transparent;border:1px solid var(--border);color:#fff;padding:6px 14px;border-radius:6px;cursor:pointer;\}\
+.btn-confirm\{background:var(--accent);border:none;color:#000;padding:6px 14px;border-radius:6px;font-weight:bold;cursor:pointer;\}\
+.btn-confirm:disabled\{background:var(--border);color:var(--text-sub);cursor:not-allowed;\}\
+\
+.coin-paid\{color:var(--accent);\}.coin-free\{color:#58a6ff;\}\
+.cards-tab-nav\{display:flex;gap:1rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem;\}\
+.cards-tab\{padding:10px 1rem;color:var(--text-sub);cursor:pointer;font-weight:bold;border-bottom:2px solid transparent;font-size:13px;\}\
+.cards-tab.active\{color:var(--accent);border-bottom-color:var(--accent);\}\
+.coin-bar\{background:var(--bg-card);border:1px solid var(--border);border-radius:7px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;\}\
+.coin-balances\{display:flex;gap:1.25rem;font-weight:bold;font-size:13px;\}\
+.btn-buy-coin\{background:transparent;border:1px solid var(--border);color:var(--text-sub);padding:5px 10px;border-radius:4px;font-size:12px;cursor:not-allowed;\}\
+.pack-grid\{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;\}\
+.pack-card\{width:100%;aspect-ratio:3/4;border-radius:11px;border:1px solid var(--border);padding:12px;display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer;position:relative;overflow:hidden;\}\
+.pack-card:hover\{transform:translateY(-5px);box-shadow:0 0 14px rgba(245,166,35,0.3);border-color:var(--accent);\}\
+.pack-bg\{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;opacity:0.8;\}\
+.pack-content\{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;\}\
+.pack-image-area\{flex:1;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:rgba(0,0,0,0.3);border-radius:7px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.1);\}\
+.pack-title\{font-weight:bold;font-size:1rem;margin-bottom:4px;text-align:center;\}\
+.pack-desc\{font-size:11px;color:#ccc;margin-bottom:4px;text-align:center;\}\
+.pack-rarity\{font-size:11px;font-weight:bold;text-align:center;margin-bottom:10px;\}\
+.pack-price\{font-size:12px;margin-bottom:5px;\}\
+.btn-buy-pack\{background:var(--bg-main);border:1px solid var(--border);color:#fff;padding:7px;border-radius:6px;text-align:center;font-weight:bold;cursor:pointer;font-size:12px;\}\
+.btn-buy-pack:hover\{background:var(--border);\}\
+.collection-grid\{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;\}\
+.collection-card\{width:100%;aspect-ratio:140/196;background:var(--bg-card);border-radius:7px;border:2px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform 0.2s;cursor:pointer;\}\
+.collection-card:hover\{transform:scale(1.05);z-index:10;\}\
+.collection-card.rarity-EPIC\{border-color:var(--accent);\}\
+.collection-card.rarity-RARE\{border-color:#58a6ff;\}\
+.collection-card.rarity-UNCOMMON\{border-color:#7c3aed;\}\
+.new-badge\{position:absolute;top:-4px;right:-4px;background:var(--live);color:#fff;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:9px;\}\
+.card-emoji\{font-size:2.5rem;margin-bottom:4px;\}\
+.card-name\{font-weight:bold;font-size:12px;\}\
+.card-rarity\{font-size:10px;color:var(--text-sub);\}\
+.btn-exchange\{background:var(--bg-main);border:1px solid var(--accent);color:var(--accent);padding:6px 12px;border-radius:6px;cursor:pointer;transition:all 0.2s;font-size:12px;\}\
+.btn-exchange:hover\{background:var(--accent);color:#000;\}\
+.exchange-list\{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem;\}\
+.exchange-item\{background:var(--bg-card);border:1px solid var(--border);border-radius:7px;padding:12px;display:flex;justify-content:space-between;align-items:center;\}\
+.exchange-card-name\{font-weight:bold;font-size:14px;margin-bottom:3px;\}\
+.exchange-user\{font-size:11px;color:var(--text-sub);\}\
+.exchange-req\{font-size:12px;color:#58a6ff;margin-top:2px;\}\
+.btn-add-exchange\{display:block;width:100%;padding:12px;text-align:center;background:transparent;border:2px dashed var(--border);color:var(--text-sub);border-radius:7px;cursor:pointer;font-weight:bold;font-size:13px;\}\
+.btn-add-exchange:hover\{border-color:var(--text-main);color:var(--text-main);\}\
+.open-pack-area\{display:flex;gap:10px;justify-content:center;margin-bottom:1.5rem;perspective:1000px;flex-wrap:wrap;\}\
+.flip-card\{width:95px;height:133px;position:relative;transform-style:preserve-3d;transition:transform 0.6s;cursor:pointer;\}\
+.flip-card.flipped\{transform:rotateY(180deg);\}\
+.flip-card-front,.flip-card-back\{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:7px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);\}\
+.flip-card-front\{background:linear-gradient(135deg,#2a2a2a,#1a1a1a);color:var(--accent);font-size:1.8rem;\}\
+.flip-card-back\{background:var(--bg-main);transform:rotateY(180deg);flex-direction:column;padding:6px;text-align:center;\}\
+.flip-card-back .emoji\{font-size:1.8rem;margin-bottom:4px;\}\
+.flip-card-back .name\{font-size:11px;font-weight:bold;\}\
+.flip-card-back .rarity\{font-size:9px;color:var(--text-sub);\}\
+\
+.mission-card\{background:var(--bg-card);border:1px solid var(--border);border-radius:7px;padding:12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;\}\
+.mission-card.done\{border-color:#238636;\}\
+.mission-card-info\{flex:1;\}\
+.mission-name\{font-weight:bold;margin-bottom:3px;font-size:13px;\}\
+.mission-progress-bar-bg\{width:60px;height:3px;background:var(--bg-main);border-radius:2px;overflow:hidden;display:inline-block;\}\
+.mission-progress-bar-fill\{height:100%;background:var(--accent);\}\
+.mission-reward-text\{font-weight:bold;font-family:var(--font-m);color:var(--accent);font-size:12px;\}\
+.mission-reward-text.done\{color:#3fb950;\}\
+\
+.modal-bet-detail .modal-content\{max-width:460px;max-height:80vh;overflow-y:auto;background:#161b22;border:1px solid #30363d;border-radius:11px;\}\
+.bet-detail-header\{padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:10px;\}\
+.bet-detail-title\{font-size:1.1rem;font-weight:bold;margin-bottom:4px;display:flex;align-items:center;gap:5px;\}\
+.bet-detail-amount\{font-size:13px;font-family:var(--font-m);color:var(--text-sub);\}\
+.bet-detail-section\{margin-bottom:1.25rem;\}\
+.bet-detail-section-title\{font-size:13px;font-weight:bold;margin-bottom:5px;display:flex;align-items:center;gap:5px;\}\
+.bet-detail-text\{font-size:12px;line-height:1.5;color:var(--text-main);background:var(--bg-main);padding:10px;border-radius:7px;border:1px solid var(--border);white-space:pre-wrap;\}\
+.bet-detail-choices\{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;\}\
+.bet-detail-choice\{border:1px solid var(--border);border-radius:7px;padding:10px;background:var(--bg-main);font-size:12px;\}\
+.bet-detail-choice.my-choice-won\{background:#1c2a1c;border-color:#3fb950;\}\
+.bet-detail-choice.my-choice-lost\{background:#2a1c1c;border-color:#ff6b6b;\}\
+.bet-detail-choice.my-choice-pending\{background:#2d2d2d;border-color:var(--accent);\}\
+.choice-label\{font-weight:bold;margin-bottom:2px;\}\
+.choice-odds\{color:var(--accent);font-family:var(--font-m);font-size:11px;margin-bottom:2px;\}\
+.choice-votes\{font-size:10px;color:var(--text-sub);\}\
+.bet-news-list\{display:flex;flex-direction:column;gap:6px;\}\
+.bet-news-item\{display:block;padding:9px;background:var(--bg-main);border:1px solid var(--border);border-radius:7px;text-decoration:none;color:var(--text-main);transition:all 0.2s;font-size:12px;\}\
+.bet-news-item:hover\{border-color:var(--accent);color:var(--accent);\}\
+.bet-news-title\{font-weight:bold;margin-bottom:2px;display:flex;align-items:center;gap:4px;\}\
+.bet-news-meta\{font-size:10px;color:var(--text-sub);\}\
+\
+@keyframes sparkleAnim\{0%,100%\{opacity:0;transform:scale(0.5)\}50%\{opacity:1;transform:scale(1.3)\}\}\
+@keyframes cardFloat\{0%,100%\{transform:translateY(0) rotate(-2deg)\}50%\{transform:translateY(-7px) rotate(-2deg)\}\}\
+@keyframes bannerGlow\{0%,100%\{box-shadow:0 0 18px 4px rgba(80,140,255,0.5)\}50%\{box-shadow:0 0 28px 8px rgba(100,180,255,0.7)\}\}\
+@keyframes rarePulse\{0%,100%\{text-shadow:0 0 8px #58f\}50%\{text-shadow:0 0 16px #8af,0 0 30px #48c\}\}\
+</style>\
+</head>\
+<body>\
+<div style="display:flex;flex-direction:column;min-height:100vh;">\
+\
+<header class="header">\
+  <div class="header-left">\
+    <button class="logo" onclick="switchView('home')">\
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>\
+      B.E.A.T\
+    </button>\
+    <div class="header-divider"></div>\
+    <button class="header-tab" data-tab="mypage" onclick="showScreen('mypage')">\
+      <span class="htab-icon">\uc0\u55357 \u56420 </span><span class="htab-label">\u12510 \u12452 \u12506 \u12540 \u12472 </span>\
+    </button>\
+    <button class="header-tab active" data-tab="home" onclick="switchView('home')">\
+      <span class="htab-icon">\uc0\u55357 \u56628 </span><span class="htab-label">\u12521 \u12452 \u12502 </span>\
+      <span class="live-dot"></span>\
+    </button>\
+    <button class="header-tab" data-tab="mission" onclick="switchView('mission')">\
+      <span class="htab-icon">\uc0\u55356 \u57263 </span><span class="htab-label">\u12511 \u12483 \u12471 \u12519 \u12531 </span>\
+    </button>\
+    <button class="header-tab" data-tab="cards" onclick="switchView('cards')">\
+      <span class="htab-icon">\uc0\u55357 \u56550 </span><span class="htab-label">\u12459 \u12540 \u12489 \u12497 \u12483 \u12463 </span>\
+    </button>\
+  </div>\
+  <div class="header-right">\
+    <div class="balance" id="header-balance">10,000pt</div>\
+  </div>\
+</header>\
+\
+<div class="main-content">\
+<div class="content-area">\
+\
+<!-- HOME -->\
+<div id="view-home" class="view-section active">\
+  <div class="studio-wrap">\
+    <div class="studio-hd">\
+      <div class="studio-hd-title">\uc0\u55356 \u57241 \u65039  B.E.A.T STUDIO</div>\
+      <div class="studio-live-badge">\uc0\u55357 \u56628  LIVE</div>\
+    </div>\
+    <div class="studio-body">\
+      <div class="studio-char-wrap">\
+        <div class="studio-char">\
+          <div class="studio-desk"></div>\
+          <div class="ai-caster">\
+            <div class="ai-head"><div>\uc0\u55358 \u56598 </div><div class="ai-headset">\u55356 \u57255 </div></div>\
+            <div class="ai-body"></div>\
+          </div>\
+        </div>\
+        <div class="studio-nameplate">BEAT-1</div>\
+      </div>\
+      <div class="studio-speech-wrap">\
+        <div class="studio-bubble"><span id="studioCommentText">\uc0\u26085 \u26412 \u12364 3\u22238 \u12395 \u36861 \u21152 \u28857 \u65281 \u23665 \u26412 \u30001 \u20280 \u12399 \u20170 \u26085 \u12418 \u23436 \u29863 \u12394 \u12500 \u12483 \u12481 \u12531 \u12464 \u12434 \u35211 \u12379 \u12390 \u12356 \u12414 \u12377 \u12290 </span><span class="speech-cursor">|</span></div>\
+        <div class="studio-tag" id="studioTag">\uc0\u55356 \u57241 \u65039  AI\u35299 \u35500 </div>\
+      </div>\
+    </div>\
+    <div class="studio-actions">\
+      <button class="studio-btn active" id="sbtn-live" onclick="studioSelect('live')">\
+        <span class="studio-btn-icon">\uc0\u55357 \u56628 </span><span class="studio-btn-label">\u12521 \u12452 \u12502 </span>\
+      </button>\
+      <button class="studio-btn" id="sbtn-result" onclick="studioSelect('result')">\
+        <span class="studio-btn-icon">\uc0\u55356 \u57263 </span><span class="studio-btn-label">\u20104 \u24819 \u32080 \u26524 </span>\
+      </button>\
+      <button class="studio-btn" id="sbtn-news" onclick="studioSelect('news')">\
+        <span class="studio-btn-icon">\uc0\u55357 \u56560 </span><span class="studio-btn-label">\u12491 \u12517 \u12540 \u12473 </span>\
+      </button>\
+      <button class="studio-btn" id="sbtn-comment" onclick="studioSelect('comment')">\
+        <span class="studio-btn-icon">\uc0\u55357 \u56492 </span><span class="studio-btn-label">\u12518 \u12540 \u12470 \u12467 \u12513 \u12531 \u12488 </span>\
+      </button>\
+    </div>\
+  </div>\
+\
+  <div class="studio-panel">\
+    <div id="sp-live" class="studio-panel-inner">\
+      <div class="sp-live-row"><span class="sp-live-badge live">LIVE</span><span class="sp-live-teams">\uc0\u55356 \u56815 \u55356 \u56821  \u26085 \u26412  vs \u55356 \u56825 \u55356 \u56828  \u21488 \u21271 </span><span class="sp-live-score">3-1</span><span class="sp-live-arrow">\'9b</span></div>\
+      <div class="sp-live-row"><span class="sp-live-badge live">LIVE</span><span class="sp-live-teams">\uc0\u11088  DeNA vs \u55357 \u56367  \u38442 \u31070 </span><span class="sp-live-score">4-2</span><span class="sp-live-arrow">\'9b</span></div>\
+      <div class="sp-live-row"><span class="sp-live-badge fin">\uc0\u32066 \u20102 </span><span class="sp-live-teams">\u55356 \u56826 \u55356 \u56824  USA vs \u55356 \u56809 \u55356 \u56820  DOM</span><span class="sp-live-score">5-3</span><span class="sp-live-arrow">\'9b</span></div>\
+    </div>\
+    <div id="sp-result" class="studio-panel-inner" style="display:none;">\
+      <div class="sp-result-row"><span class="sp-result-icon">\uc0\u9989 </span><span class="sp-result-label">\u26085 \u26412  \u21213 \u21033 </span><span class="sp-result-pt won">+225pt</span><span class="sp-live-arrow">\'9b</span></div>\
+      <div class="sp-result-row"><span class="sp-result-icon">\uc0\u9203 </span><span class="sp-result-label">\u26481 \u20140 V \u21213 \u21033 </span><span class="sp-result-pt pending">\u36914 \u34892 \u20013 </span><span class="sp-live-arrow">\'9b</span></div>\
+      <div class="sp-result-row"><span class="sp-result-icon">\uc0\u10060 </span><span class="sp-result-label">\u12510 \u12540 \u12522 \u12531 \u12474  \u21213 \u21033 </span><span class="sp-result-pt lost">-300pt</span><span class="sp-live-arrow">\'9b</span></div>\
+      <div class="sp-result-row"><span class="sp-result-icon">\uc0\u9989 </span><span class="sp-result-label">\u20185 \u21488  \u21213 \u21033 </span><span class="sp-result-pt won">+800pt</span><span class="sp-live-arrow">\'9b</span></div>\
+    </div>\
+    <div id="sp-news" class="studio-panel-inner" style="display:none;">\
+      <div class="sp-news-row"><span class="sp-news-icon">\uc0\u9918 </span><div class="sp-news-info"><div class="sp-news-title">\u23665 \u26412 \u30001 \u20280 \u12289 6\u22238 1\u22833 \u28857 \u12391 \u20170 \u22823 \u20250 \u21021 \u21213 \u21033 </div><div class="sp-news-meta">\u12473 \u12509 \u12540 \u12484 \u12490 \u12499  \'95 3\u26178 \u38291 \u21069 </div></div></div>\
+      <div class="sp-news-row"><span class="sp-news-icon">\uc0\u55356 \u57286 </span><div class="sp-news-info"><div class="sp-news-title">WBC \u26085 \u26412 \u12364 \u21488 \u21271 \u12395 \u24555 \u21213 \u12289 \u12464 \u12523 \u12540 \u12503 2\u36899 \u21213 </div><div class="sp-news-meta">NHK \'95 4\u26178 \u38291 \u21069 </div></div></div>\
+      <div class="sp-news-row"><span class="sp-news-icon">\uc0\u9917 </span><div class="sp-news-info"><div class="sp-news-title">\u26481 \u20140 V \u30010 \u30000 \u25126 \u12289 \u21069 \u21322 1-0\u12391 \u12522 \u12540 \u12489 </div><div class="sp-news-meta">J\u12522 \u12540 \u12464 \u20844 \u24335  \'95 30\u20998 \u21069 </div></div></div>\
+      <div class="sp-news-row"><span class="sp-news-icon">\uc0\u55356 \u57280 </span><div class="sp-news-info"><div class="sp-news-title">\u20185 \u21488 89ERS \u12507 \u12540 \u12512 \u12391 \u21517 \u21476 \u23627 D\u12395 \u24555 \u21213 </div><div class="sp-news-meta">B\u12522 \u12540 \u12464 \u20844 \u24335  \'95 2\u26178 \u38291 \u21069 </div></div></div>\
+    </div>\
+    <div id="sp-comment" class="studio-panel-inner" style="display:none;">\
+      <div class="sp-comment-input-row">\
+        <input type="text" id="studioCommentInput" class="sp-comment-input" placeholder="\uc0\u12467 \u12513 \u12531 \u12488 \u12434 \u20837 \u21147 ...">\
+        <button class="sp-comment-send" onclick="postStudioComment()">\uc0\u36865 \u20449 </button>\
+      </div>\
+      <div class="sp-comment-list" id="studioCommentList">\
+        <div class="sp-comment-item"><span class="sp-comment-avatar">\uc0\u55357 \u56846 </span><div class="sp-comment-bubble"><div class="sp-comment-name">Taro K.</div>\u26085 \u26412 \u32118 \u23550 \u21213 \u12388 \u65281 \u55357 \u56613 </div></div>\
+        <div class="sp-comment-item"><span class="sp-comment-avatar">\uc0\u55356 \u57144 </span><div class="sp-comment-bubble"><div class="sp-comment-name">Hana M.</div>\u22823 \u35895 \u12364 \u25171 \u12385 \u12381 \u12358 \u12394 \u20104 \u24863 </div></div>\
+        <div class="sp-comment-item"><span class="sp-comment-avatar">\uc0\u55358 \u56714 </span><div class="sp-comment-bubble"><div class="sp-comment-name">Ken W.</div>\u23665 \u26412 \u12364 \u23849 \u12428 \u12394 \u12369 \u12428 \u12400 \u27005 \u21213 </div></div>\
+        <div class="sp-comment-item"><span class="sp-comment-avatar">\uc0\u55356 \u57219 </span><div class="sp-comment-bubble"><div class="sp-comment-name">Yuki T.</div>WBC\u26368 \u39640 \u12395 \u30427 \u12426 \u19978 \u12364 \u12387 \u12390 \u12427 \u65281 </div></div>\
+      </div>\
+    </div>\
+  </div>\
+\
+  <div class="info-bar-league" onclick="showScreen('rankingDetail')">\
+    <span style="display:flex;align-items:center;gap:8px;">\
+      <span class="lib-league">\uc0\u55356 \u57286  S\u12522 \u12540 \u12464  3\u37096 </span>\
+      <span class="lib-rank">3\uc0\u20301 </span>\
+      <span class="lib-diff">\uc0\u65288 2\u20301 \u12414 \u12391  -15pt\u65289 </span>\
+    </span>\
+    <span style="color:#8b949e;font-size:11px;">\uc0\u27531 \u12426  <span class="lib-timer" id="leagueTimerDisp">1d 24h 50m</span></span>\
+  </div>\
+  <div class="info-bar-ticker">\
+    <span style="font-size:13px;flex-shrink:0;">\uc0\u55357 \u56492 </span>\
+    <div class="ticker-track-wrap"><span class="ticker-track" id="userTickerTrack">Taro K.\uc0\u12364 \u26085 \u26412  \u21213 \u21033 \u12434 \u20104 \u24819  \'95 Hana M.\u12364 \u22823 \u35895 HR\u20104 \u24819 \u12391 +500pt\u29554 \u24471  \'95 Ken W.\u12364 WBC\u12497 \u12483 \u12463 \u38283 \u23553  \u8594  \u22823 \u35895 EPIC\u29554 \u24471 \u65281 </span></div>\
+  </div>\
+\
+  <div id="home-matches-container"></div>\
+\
+  <div class="player-cards-section">\
+    <div class="section-header">\
+      <span>\uc0\u55356 \u56527  \u36984 \u25163 \u12459 \u12540 \u12489 </span>\
+      <button class="see-more-btn" onclick="switchView('cards')">\uc0\u12377 \u12409 \u12390 \u35211 \u12427  \'9b</button>\
+    </div>\
+    <div class="player-card-scroll" id="playerCardScroll"></div>\
+  </div>\
+</div>\
+\
+<!-- WBC DETAIL -->\
+<div id="view-wbc" class="view-section">\
+  <div class="match-detail-topbar">\
+    <button class="md-back-btn" id="matchDetailBackBtn" onclick="switchView('home')">\uc0\u8592  \u12507 \u12540 \u12512 \u12395 \u25147 \u12427 </button>\
+  </div>\
+  <div class="live-header-card" id="live-header-card">\
+    <div class="live-status-bar">\
+      <span class="live-status-left">WBC 2026 \'95 \uc0\u27178 \u27996 \u12473 \u12479 \u12472 \u12450 \u12512 </span>\
+      <span class="live-status-right"><span class="live-badge-anim">\uc0\u9679 </span> LIVE 5\u22238 \u35023 </span>\
+    </div>\
+    <div class="live-teams-score">\
+      <div class="live-team"><div class="live-team-flag">\uc0\u55356 \u56815 \u55356 \u56821 </div><div class="live-team-name">\u26085 \u26412 </div></div>\
+      <div class="live-score-area"><span>3</span><span style="font-size:20px;color:#8b949e;">-</span><span>1</span></div>\
+      <div class="live-team"><div class="live-team-flag">\uc0\u55356 \u56825 \u55356 \u56828 </div><div class="live-team-name">\u21488 \u21271 </div></div>\
+    </div>\
+  </div>\
+  <div class="tabs">\
+    <div class="tab active" onclick="switchTab('match')">\uc0\u20104 \u24819 \u12377 \u12427 </div>\
+    <div class="tab" onclick="switchTab('stats')">\uc0\u12487 \u12540 \u12479 </div>\
+    <div class="tab" onclick="switchTab('h2h')">\uc0\u36942 \u21435 \u12398 \u25104 \u32318 </div>\
+    <div class="tab" onclick="switchTab('lineup')">\uc0\u20986 \u22580 \u36984 \u25163 </div>\
+  </div>\
+  <div id="tab-content-match">\
+    <div class="market-group">\
+      <div class="market-header"><div class="market-title">\uc0\u9989  \u12393 \u12385 \u12425 \u12364 \u21213 \u12388 \u65311 <span class="difficulty-badge easy">\u12363 \u12435 \u12383 \u12435 </span><span class="tooltip-icon" data-tooltip="\u21213 \u12387 \u12383 \u12481 \u12540 \u12512 \u12434 \u20104 \u24819 \u12377 \u12427 \u12384 \u12369 \u65281 ">\u10067 </span></div></div>\
+      <div class="odds-grid">\
+        <button class="odds-btn" data-id="ml-jp" data-market="\uc0\u12393 \u12385 \u12425 \u12364 \u21213 \u12388 \u65311 " data-selection="\u26085 \u26412 " data-odds="1.45"><span class="odds-label">\u26085 \u26412 </span><span class="odds-value">1.45</span><div class="popular-tag">82%</div></button>\
+        <button class="odds-btn" data-id="ml-tpe" data-market="\uc0\u12393 \u12385 \u12425 \u12364 \u21213 \u12388 \u65311 " data-selection="\u12481 \u12515 \u12452 \u12491 \u12540 \u12474 \u21488 \u21271 " data-odds="2.80"><span class="odds-label">\u12481 \u12515 \u12452 \u12491 \u12540 \u12474 \u21488 \u21271 </span><span class="odds-value">2.80</span></button>\
+      </div>\
+    </div>\
+    <div class="market-group">\
+      <div class="market-header"><div class="market-title">\uc0\u55357 \u56610  \u21512 \u35336 \u24471 \u28857 \u65288 7.5\u28857 \u22522 \u28310 \u65289 <span class="difficulty-badge medium">\u12405 \u12388 \u12358 </span></div></div>\
+      <div class="odds-grid">\
+        <button class="odds-btn" data-id="ou-over" data-market="\uc0\u21512 \u35336 \u24471 \u28857 " data-selection="\u12458 \u12540 \u12496 \u12540 " data-odds="1.90"><span class="odds-label">\u22810 \u12356 \u65288 8\u28857 \u20197 \u19978 \u65289 </span><span class="odds-value">1.90</span></button>\
+        <button class="odds-btn" data-id="ou-under" data-market="\uc0\u21512 \u35336 \u24471 \u28857 " data-selection="\u12450 \u12531 \u12480 \u12540 " data-odds="1.90"><span class="odds-label">\u23569 \u12394 \u12356 \u65288 7\u28857 \u20197 \u19979 \u65289 </span><span class="odds-value">1.90</span></button>\
+      </div>\
+    </div>\
+    <div class="market-group">\
+      <div class="market-header" onclick="toggleAccordion('pitcher-props')">\
+        <div class="market-title">\uc0\u9918  \u20808 \u30330 \u25237 \u25163 \u12398 \u22890 \u19977 \u25391 \u25968 <span class="difficulty-badge medium">\u12405 \u12388 \u12358 </span></div>\
+        <svg class="chevron" id="chevron-pitcher-props" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>\
+      </div>\
+      <div id="pitcher-props" class="accordion-content">\
+        <div class="odds-grid">\
+          <button class="odds-btn" data-id="so-over" data-market="\uc0\u20808 \u30330 \u25237 \u25163 \u19977 \u25391 " data-selection="7\u22890 \u19977 \u25391 \u20197 \u19978 " data-odds="1.80"><span class="odds-label">7\u22890 \u19977 \u25391 \u20197 \u19978 </span><span class="odds-value">1.80</span></button>\
+          <button class="odds-btn" data-id="so-under" data-market="\uc0\u20808 \u30330 \u25237 \u25163 \u19977 \u25391 " data-selection="6\u22890 \u19977 \u25391 \u20197 \u19979 " data-odds="2.00"><span class="odds-label">6\u22890 \u19977 \u25391 \u20197 \u19979 </span><span class="odds-value">2.00</span></button>\
+        </div>\
+      </div>\
+    </div>\
+    <div class="market-group">\
+      <div class="market-header" onclick="toggleAccordion('special-props')">\
+        <div class="market-title">\uc0\u55356 \u57119  \u22823 \u35895 \u32724 \u24179  \u36984 \u25163 \u20104 \u24819 <span class="difficulty-badge easy">\u12363 \u12435 \u12383 \u12435 </span></div>\
+        <svg class="chevron" id="chevron-special-props" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>\
+      </div>\
+      <div id="special-props" class="accordion-content">\
+        <div class="odds-grid">\
+          <button class="odds-btn" data-id="ohtani-hit" data-market="\uc0\u22823 \u35895 \u32724 \u24179 " data-selection="\u12498 \u12483 \u12488 \u12434 \u25171 \u12388 " data-odds="1.30"><span class="odds-label">\u12498 \u12483 \u12488 \u12434 \u25171 \u12388  \u55357 \u57314 </span><span class="odds-value">1.30</span><div class="popular-tag">95%</div></button>\
+          <button class="odds-btn" data-id="ohtani-no-hit" data-market="\uc0\u22823 \u35895 \u32724 \u24179 " data-selection="\u12498 \u12483 \u12488 \u12434 \u25171 \u12383 \u12394 \u12356 " data-odds="3.20"><span class="odds-label">\u12498 \u12483 \u12488 \u12434 \u25171 \u12383 \u12394 \u12356 </span><span class="odds-value">3.20</span></button>\
+          <button class="odds-btn" data-id="ohtani-hr" data-market="\uc0\u22823 \u35895 \u32724 \u24179 " data-selection="\u12507 \u12540 \u12512 \u12521 \u12531 " data-odds="3.50"><span class="odds-label">\u12507 \u12540 \u12512 \u12521 \u12531 \u12434 \u25171 \u12388 </span><span class="odds-value">3.50</span></button>\
+          <button class="odds-btn" data-id="ohtani-sb" data-market="\uc0\u22823 \u35895 \u32724 \u24179 " data-selection="\u30423 \u22593 " data-odds="4.00"><span class="odds-label">\u30423 \u22593 \u12434 \u27770 \u12417 \u12427 </span><span class="odds-value">4.00</span></button>\
+        </div>\
+      </div>\
+    </div>\
+  </div>\
+  <div id="tab-content-stats" style="display:none;text-align:center;padding:2rem;color:var(--text-sub);">\uc0\u32113 \u35336 \u12487 \u12540 \u12479 \u12399 \u29694 \u22312 \u21033 \u29992 \u12391 \u12365 \u12414 \u12379 \u12435 \u12290 </div>\
+  <div id="tab-content-h2h" style="display:none;text-align:center;padding:2rem;color:var(--text-sub);">\uc0\u36942 \u21435 \u12398 \u23550 \u25126 \u12487 \u12540 \u12479 \u12399 \u12354 \u12426 \u12414 \u12379 \u12435 \u12290 </div>\
+  <div id="tab-content-lineup" style="display:none;text-align:center;padding:2rem;color:var(--text-sub);">\uc0\u12521 \u12452 \u12531 \u12490 \u12483 \u12503 \u12399 \u35430 \u21512 \u38283 \u22987 1\u26178 \u38291 \u21069 \u12395 \u30330 \u34920 \u12373 \u12428 \u12414 \u12377 \u12290 </div>\
+</div>\
+\
+<!-- MYPAGE -->\
+<div id="view-mypage" class="view-section" style="display:none;">\
+  <div class="studio-wrap">\
+    <div class="studio-hd"><div class="studio-hd-title">\uc0\u55356 \u57241 \u65039  B.E.A.T STUDIO</div><div class="studio-live-badge">\u55357 \u56628  LIVE</div></div>\
+    <div class="studio-body">\
+      <div class="studio-char-wrap"><div class="studio-char"><div class="studio-desk"></div><div class="ai-caster"><div class="ai-head"><div>\uc0\u55358 \u56598 </div><div class="ai-headset">\u55356 \u57255 </div></div><div class="ai-body"></div></div></div><div class="studio-nameplate">BEAT-1</div></div>\
+      <div class="studio-speech-wrap"><div class="studio-bubble"><span id="mpStudioCommentText">\uc0\u12371 \u12435 \u12395 \u12385 \u12399 \u65281 \u12510 \u12452 \u12506 \u12540 \u12472 \u12408 \u12424 \u12358 \u12371 \u12381 \u12290 </span><span class="speech-cursor">|</span></div><div class="studio-tag">\u55356 \u57241 \u65039  AI\u35299 \u35500 </div></div>\
+    </div>\
+    <div class="studio-actions">\
+      <button class="studio-btn active" onclick="mpStudioAction('commentary')"><span class="studio-btn-icon">\uc0\u55356 \u57241 \u65039 </span><span class="studio-btn-label">\u35299 \u35500 \u12434 \u32862 \u12367 </span></button>\
+      <button class="studio-btn" onclick="mpStudioAction('data')"><span class="studio-btn-icon">\uc0\u55357 \u56522 </span><span class="studio-btn-label">\u12487 \u12540 \u12479 \u12434 \u35211 \u12427 </span></button>\
+      <button class="studio-btn" onclick="mpStudioAction('question')"><span class="studio-btn-icon">\uc0\u55357 \u56492 </span><span class="studio-btn-label">\u36074 \u21839 \u12377 \u12427 </span></button>\
+    </div>\
+  </div>\
+  <div class="mp-chat-wrap">\
+    <div class="mp-chat-history" id="mpChatHistory"><div class="mp-chat-msg ai"><span class="mp-chat-avatar">\uc0\u55358 \u56598 </span><span class="mp-chat-bubble">\u12371 \u12435 \u12395 \u12385 \u12399 \u65281 \u20104 \u24819 \u12420 \u35430 \u21512 \u12395 \u12388 \u12356 \u12390 \u20309 \u12391 \u12418 \u32862 \u12356 \u12390 \u12367 \u12384 \u12373 \u12356 \u12290 </span></div></div>\
+    <div class="mp-chat-input-row"><input type="text" id="mpChatInput" class="mp-chat-input" placeholder="AI\uc0\u12395 \u36074 \u21839 \u12377 \u12427 ..."><button class="mp-chat-send" onclick="mpSendChat()">\u36865 \u20449 </button></div>\
+  </div>\
+  <div class="mp-section">\
+    <div class="mp-section-title">\uc0\u55357 \u56522  \u12354 \u12394 \u12383 \u12398 \u25104 \u32318 </div>\
+    <div class="mp-stats-grid">\
+      <div class="mp-stat-card"><div class="mp-stat-label">\uc0\u20170 \u26376 \u12398 \u12509 \u12452 \u12531 \u12488 </div><div class="mp-stat-main"><span class="mp-stat-pt positive">+3,240pt</span><span class="mp-stat-sep"> : </span><span class="mp-stat-rank">3\u20301 /20\u20154 </span></div><div class="mp-stat-sub">2\u20301 \u12414 \u12391  -15pt</div></div>\
+      <div class="mp-stat-card"><div class="mp-stat-label">\uc0\u30340 \u20013 \u29575 </div><div class="mp-stat-main"><span class="mp-stat-pt positive">58%</span></div><div class="mp-stat-sub">12\u25126  7\u21213  5\u25943 </div></div>\
+    </div>\
+    <div class="mp-progress-wrap"><div class="mp-progress-bar" style="width:68%"></div></div>\
+    <div class="mp-progress-label">\uc0\u38918 \u20301 \u12450 \u12483 \u12503 \u12414 \u12391  5pt</div>\
+  </div>\
+  <div class="mp-section"><div class="mp-section-header"><span class="mp-section-title">\uc0\u55356 \u57263  \u30452 \u36817 \u12398 \u20104 \u24819 </span><button class="mp-link-btn">\u12377 \u12409 \u12390 \u35211 \u12427  \'9b</button></div><div id="mpBetList"></div></div>\
+  <div class="mp-section"><div class="mp-section-title">\uc0\u9918  \u20104 \u24819 \u20013 \u12398 \u35430 \u21512 </div><div id="mpActiveBets"></div></div>\
+  <div class="mp-section"><div class="mp-section-title">\uc0\u55357 \u56421  \u12501 \u12524 \u12531 \u12489 \u12398 \u20104 \u24819 </div><div id="mpFriendList"></div></div>\
+  <div class="mp-section"><div class="mp-section-header"><span class="mp-section-title">\uc0\u55356 \u57286  \u12522 \u12540 \u12464 \u12521 \u12531 \u12461 \u12531 \u12464 </span><span class="mp-league-badge">S\u12522 \u12540 \u12464  3\u37096  &nbsp; \u27531 \u12426  3\u26085 </span></div><div class="league-ranking-wrap" style="margin-top:8px;"><div id="mpLeagueList"></div></div></div>\
+</div>\
+\
+<!-- CARDS -->\
+<div id="view-cards" class="view-section" style="display:none;">\
+  <div class="cards-tab-nav">\
+    <div class="cards-tab active" onclick="switchCardTab('buy',event)">\uc0\u55357 \u56550  \u12497 \u12483 \u12463 \u12434 \u36023 \u12358 </div>\
+    <div class="cards-tab" onclick="switchCardTab('collection',event)">\uc0\u55357 \u56770 \u65039  \u12510 \u12452 \u12467 \u12524 \u12463 \u12471 \u12519 \u12531 </div>\
+    <div class="cards-tab" onclick="switchCardTab('exchange',event)">\uc0\u55357 \u56580  \u12459 \u12540 \u12489 \u20132 \u25563 </div>\
+  </div>\
+  <div id="card-tab-buy">\
+    <div class="coin-bar"><div class="coin-balances"><span class="coin-paid">\uc0\u55357 \u56496  \u26377 \u20767  <span id="coin-paid-display">3,200</span></span><span>\u65295 </span><span class="coin-free">\u55358 \u56985  \u28961 \u20767  <span id="coin-free-display">800</span></span></div><button class="btn-buy-coin" disabled>\u12467 \u12452 \u12531 \u12434 \u36092 \u20837  \u8594 </button></div>\
+    <div class="pack-grid" id="pack-grid"></div>\
+  </div>\
+  <div id="card-tab-collection" style="display:none;"><div class="collection-grid" id="collection-grid"></div></div>\
+  <div id="card-tab-exchange" style="display:none;">\
+    <div class="exchange-list">\
+      <div class="exchange-item"><div><div class="exchange-card-name">\uc0\u9918  \u19977 \u31512 \u34219  <span style="color:var(--accent);font-size:11px;">EPIC</span></div><div class="exchange-user">\u20986 \u21697 \u32773 : user_abc123</div><div class="exchange-req">\u24076 \u26395 : RARE\u20197 \u19978 \u12398 WBC\u12459 \u12540 \u12489 </div></div><button class="btn-exchange" onclick="alert('\u20132 \u25563 \u30003 \u35531 \u12434 \u36865 \u12426 \u12414 \u12375 \u12383 \u65281 ')">\u30003 \u12375 \u36796 \u12416 </button></div>\
+      <div class="exchange-item"><div><div class="exchange-card-name">\uc0\u9917  \u20037 \u20445 \u24314 \u33521  <span style="color:#58a6ff;font-size:11px;">RARE</span></div><div class="exchange-user">\u20986 \u21697 \u32773 : user_xyz987</div><div class="exchange-req">\u24076 \u26395 : NPB\u12459 \u12540 \u12489 \u65288 \u12524 \u12450 \u12522 \u12486 \u12451 \u19981 \u21839 \u65289 </div></div><button class="btn-exchange" onclick="alert('\u20132 \u25563 \u30003 \u35531 \u12434 \u36865 \u12426 \u12414 \u12375 \u12383 \u65281 ')">\u30003 \u12375 \u36796 \u12416 </button></div>\
+    </div>\
+    <button class="btn-add-exchange" onclick="alert('\uc0\u20986 \u21697 \u12514 \u12540 \u12480 \u12523 \u65288 \u12480 \u12511 \u12540 \u65289 ')">+ \u33258 \u20998 \u12398 \u12459 \u12540 \u12489 \u12434 \u20986 \u21697 \u12377 \u12427 </button>\
+  </div>\
+</div>\
+\
+<!-- MISSION -->\
+<div id="view-mission" class="view-section" style="display:none;"><div id="mission-container"></div></div>\
+\
+<!-- RANKING DETAIL -->\
+<div id="rankingDetail" class="view-section" style="display:none;">\
+  <div class="rd-header"><button class="rd-back" onclick="showScreen('home')">\uc0\u8592  \u25147 \u12427 </button><span class="rd-title">\u55356 \u57286  S\u12522 \u12540 \u12464  3\u37096  \u12521 \u12531 \u12461 \u12531 \u12464 </span><span class="rd-timer">\u27531 \u12426  <span id="rdTimerDisp">1d 24h 50m</span></span></div>\
+  <div class="rd-trophy-row"><div class="rd-trophy">\uc0\u55358 \u56647 </div><div class="rd-trophy">\u55358 \u56648 </div><div class="rd-trophy">\u55356 \u57286 </div><div class="rd-trophy locked">\u55357 \u56594 </div><div class="rd-trophy locked">\u55357 \u56594 </div></div>\
+  <div class="rd-zone-up">\uc0\u9650  \u26119 \u26684 \u12478 \u12540 \u12531 </div>\
+  <div id="rankingDetailList"></div>\
+</div>\
+\
+</div>\
+\
+<!-- BETSLIP -->\
+<div id="betslip-panel" class="betslip-panel">\
+  <div class="betslip-header" onclick="toggleMobileBetslip()">\
+    <div class="betslip-title">\uc0\u20104 \u24819 \u12459 \u12540 \u12488 <div id="betslip-count" class="betslip-count">0</div></div>\
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>\
+  </div>\
+  <div class="betslip-body" id="betslip-items"><div class="empty-betslip"><p>\uc0\u20104 \u24819 \u12364 \u36984 \u25246 \u12373 \u12428 \u12390 \u12356 \u12414 \u12379 \u12435 </p><p style="margin-top:6px;font-size:11px;">\u20493 \u29575 \u12434 \u12479 \u12483 \u12503 \u12375 \u12390 \u20104 \u24819 \u12434 \u36861 \u21152 \u12375 \u12390 \u12367 \u12384 \u12373 \u12356 </p></div></div>\
+  <div class="betslip-footer">\
+    <div class="total-row"><span>\uc0\u21442 \u21152 \u37329 \u38989 :</span><span id="total-stake">0pt</span></div>\
+    <div class="total-row big"><span>\uc0\u21463 \u21462 \u38989 :</span><span id="total-return">0pt</span></div>\
+    <button id="place-bet-btn" class="btn-place" disabled>\uc0\u12371 \u12398 \u20104 \u24819 \u12391 \u21442 \u21152 \u12377 \u12427 </button>\
+  </div>\
+</div>\
+</div>\
+\
+<div id="mobile-toggle" class="betslip-toggle" onclick="toggleMobileBetslip()">\
+  <div class="betslip-title">\uc0\u20104 \u24819 \u12459 \u12540 \u12488 <div id="mobile-count" class="betslip-count">0</div></div>\
+  <span style="font-size:13px;color:var(--accent);">\uc0\u23637 \u38283 \u12377 \u12427  \u8593 </span>\
+</div>\
+\
+<!-- MODALS -->\
+<div id="modal-buy-pack" class="modal-overlay">\
+  <div class="modal-content">\
+    <div class="modal-close" onclick="closeModal('modal-buy-pack')">\uc0\u10005 </div>\
+    <div class="modal-title" id="buy-modal-title">\uc0\u12497 \u12483 \u12463 \u12434 \u36092 \u20837 </div>\
+    <div class="radio-group">\
+      <label class="radio-label"><input type="radio" name="coin-type" value="paid" id="radio-paid" checked onchange="updateBuyModal()"><span class="coin-paid">\uc0\u55357 \u56496  \u26377 \u20767 \u12467 \u12452 \u12531  <span id="buy-cost-paid">1500</span></span></label>\
+      <label class="radio-label"><input type="radio" name="coin-type" value="free" id="radio-free" onchange="updateBuyModal()"><span class="coin-free">\uc0\u55358 \u56985  \u28961 \u20767 \u12467 \u12452 \u12531  <span id="buy-cost-free">300</span></span></label>\
+    </div>\
+    <div class="balance-calc"><div style="margin-bottom:6px;">\uc0\u29694 \u22312 \u12398 \u27531 \u39640 :</div><div id="buy-balance-calc" style="font-weight:bold;">\u55357 \u56496  3,200 \u8594  \u36092 \u20837 \u24460 : 1,700</div><div id="buy-error" style="color:#ff3b30;font-size:11px;margin-top:5px;display:none;">\u12467 \u12452 \u12531 \u12364 \u36275 \u12426 \u12414 \u12379 \u12435 </div></div>\
+    <div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-buy-pack')">\uc0\u12461 \u12515 \u12531 \u12475 \u12523 </button><button class="btn-confirm" id="btn-confirm-buy" onclick="confirmBuyPack()">\u36092 \u20837 \u30906 \u23450 </button></div>\
+  </div>\
+</div>\
+<div id="modal-open-pack" class="modal-overlay">\
+  <div class="modal-content" style="max-width:560px;text-align:center;">\
+    <div class="modal-title">\uc0\u12497 \u12483 \u12463 \u38283 \u23553 </div>\
+    <div class="open-pack-area" id="open-pack-area"></div>\
+    <div id="open-pack-msg" style="margin-bottom:1.25rem;font-weight:bold;color:var(--success);display:none;">\uc0\u12510 \u12452 \u12467 \u12524 \u12463 \u12471 \u12519 \u12531 \u12395 \u36861 \u21152 \u12373 \u12428 \u12414 \u12375 \u12383  \u9989 </div>\
+    <button class="btn-confirm" id="btn-open-all" onclick="openAllCards()">\uc0\u12479 \u12483 \u12503 \u12375 \u12390 \u38283 \u23553 \u12377 \u12427 </button>\
+    <button class="btn-cancel" id="btn-close-open" style="display:none;margin:0 auto;" onclick="closeModal('modal-open-pack')">\uc0\u38281 \u12376 \u12427 </button>\
+  </div>\
+</div>\
+<div id="modal-card-detail" class="modal-overlay">\
+  <div class="modal-content" style="text-align:center;">\
+    <div class="modal-close" onclick="closeModal('modal-card-detail')">\uc0\u10005 </div>\
+    <div id="detail-card-visual" style="width:130px;height:182px;margin:0 auto 1.25rem;border-radius:8px;border:2px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-main);"><div id="detail-emoji" style="font-size:3.5rem;">\uc0\u9918 </div></div>\
+    <div class="modal-title" id="detail-name" style="margin-bottom:4px;">\uc0\u22823 \u35895 \u32724 \u24179 </div>\
+    <div style="color:var(--text-sub);margin-bottom:4px;font-size:13px;" id="detail-team">\uc0\u26085 \u26412 \u20195 \u34920  (WBC)</div>\
+    <div style="font-weight:bold;margin-bottom:1.25rem;font-size:13px;" id="detail-rarity">EPIC</div>\
+    <button class="btn-exchange" style="width:100%;" onclick="alert('\uc0\u20132 \u25563 \u12395 \u20986 \u12377 \u65288 \u12480 \u12511 \u12540 \u65289 ')">\u20132 \u25563 \u12395 \u20986 \u12377 </button>\
+  </div>\
+</div>\
+<div id="modal-bet-detail" class="modal-overlay modal-bet-detail">\
+  <div class="modal-content">\
+    <div class="modal-close" onclick="closeModal('modal-bet-detail')">\uc0\u10005 </div>\
+    <div class="bet-detail-header"><div class="bet-detail-title" id="bet-detail-title"></div><div class="bet-detail-amount" id="bet-detail-amount"></div></div>\
+    <div id="bet-detail-question-container"></div>\
+    <div class="bet-detail-section"><div class="bet-detail-section-title" id="bet-detail-analysis-title"></div><div class="bet-detail-text" id="bet-detail-analysis-text"></div></div>\
+    <div class="bet-detail-section" id="bet-detail-hint-section" style="display:none;"><div class="bet-detail-section-title">\uc0\u55357 \u56481  \u27425 \u22238 \u12408 \u12398 \u12498 \u12531 \u12488 </div><div class="bet-detail-text" id="bet-detail-hint-text"></div></div>\
+    <div class="bet-detail-section"><div class="bet-detail-section-title">\uc0\u55357 \u56560  \u38306 \u36899 \u12491 \u12517 \u12540 \u12473 </div><div class="bet-news-list" id="bet-detail-news-list"></div></div>\
+  </div>\
+</div>\
+\
+</div>\
+\
+<script>\
+// DATA\
+const matches = [\
+  \{sport:'NPB',id:'dena-1',status:'live',venue:'\uc0\u27178 \u27996 \u12473 \u12479 \u12472 \u12450 \u12512 ',homeTeam:\{name:'\u27178 \u27996 DeNA',flag:'\u11088 ',score:4\},awayTeam:\{name:'\u38442 \u31070 ',flag:'\u55357 \u56367 ',score:2\},info:'5\u22238 \u35023  \u25915 \u25731 \u20013 ',participants:3421,deadlineSeconds:0,isHot:true,myBet:\{status:'placed',label:'\u27178 \u27996  \u21213 \u21033 '\}\},\
+  \{sport:'NPB',id:'dena-2',status:'upcoming',venue:'\uc0\u27178 \u27996 \u12473 \u12479 \u12472 \u12450 \u12512 ',homeTeam:\{name:'\u27178 \u27996 DeNA',flag:'\u11088 ',score:null\},awayTeam:\{name:'\u24040 \u20154 ',flag:'\u55357 \u56368 ',score:null\},info:'18:00 \u12503 \u12524 \u12452 \u12508 \u12540 \u12523 ',participants:1205,deadlineSeconds:43200,isHot:false,myBet:\{status:'open',label:null\}\},\
+  \{sport:'NPB',id:'dena-3',status:'finished',venue:'\uc0\u27178 \u27996 \u12473 \u12479 \u12472 \u12450 \u12512 ',homeTeam:\{name:'\u27178 \u27996 DeNA',flag:'\u11088 ',score:5\},awayTeam:\{name:'\u12516 \u12463 \u12523 \u12488 ',flag:'\u55357 \u56359 ',score:3\},info:'\u35430 \u21512 \u32066 \u20102 ',participants:5632,deadlineSeconds:0,isHot:false,myBet:\{status:'won',label:'\u27178 \u27996  \u21213 \u21033 '\}\},\
+];\
+\
+const playerCardsData = [\
+  \{id:1,name:'\uc0\u23470 \u64017  \u25935 \u26391 ',number:'51',team:'\u27178 \u27996 DeNA',sport:'NPB',rarity:'RARE',emoji:'\u9918 ',bg:'linear-gradient(160deg,#020220,#0d1f6a)',isNew:true\},\
+  \{id:2,name:'\uc0\u22823 \u35895  \u32724 \u24179 ',number:'17',team:'\u26085 \u26412 \u20195 \u34920 ',sport:'WBC',rarity:'EPIC',emoji:'\u9918 ',bg:'linear-gradient(160deg,#1a0a00,#6a2a00)',isNew:false\},\
+  \{id:3,name:'\uc0\u23665 \u26412  \u30001 \u20280 ',number:'18',team:'\u26085 \u26412 \u20195 \u34920 ',sport:'WBC',rarity:'RARE',emoji:'\u9918 ',bg:'linear-gradient(160deg,#001a10,#006a3a)',isNew:false\},\
+  \{id:4,name:'\uc0\u26449 \u19978  \u23447 \u38534 ',number:'55',team:'\u26085 \u26412 \u20195 \u34920 ',sport:'WBC',rarity:'RARE',emoji:'\u9918 ',bg:'linear-gradient(160deg,#1a0020,#6a0060)',isNew:true\},\
+  \{id:5,name:'\uc0\u29287  \u31168 \u24735 ',number:'2',team:'\u27178 \u27996 DeNA',sport:'NPB',rarity:'UNCOMMON',emoji:'\u9918 ',bg:'linear-gradient(160deg,#001020,#003a6a)',isNew:false\},\
+  \{id:6,name:'\uc0\u19977 \u31512  \u34219 ',number:'7',team:'J\u12522 \u12540 \u12464 ',sport:'Soccer',rarity:'EPIC',emoji:'\u9917 ',bg:'linear-gradient(160deg,#0a1a00,#2a5a00)',isNew:false\},\
+  \{id:7,name:'\uc0\u20037 \u20445  \u24314 \u33521 ',number:'10',team:'J\u12522 \u12540 \u12464 ',sport:'Soccer',rarity:'RARE',emoji:'\u9917 ',bg:'linear-gradient(160deg,#1a0a00,#5a2000)',isNew:true\},\
+  \{id:8,name:'\uc0\u21513 \u30000  \u27491 \u23578 ',number:'34',team:'\u26085 \u26412 \u20195 \u34920 ',sport:'WBC',rarity:'UNCOMMON',emoji:'\u9918 ',bg:'linear-gradient(160deg,#001a1a,#006060)',isNew:false\},\
+];\
+\
+const leagueRankingData = [\
+  \{rank:1,avatar:'\uc0\u55357 \u56846 ',name:'Taro K.',pts:4120,isMe:false\},\
+  \{rank:2,avatar:'\uc0\u55356 \u57144 ',name:'Hana M.',pts:3255,isMe:false\},\
+  \{rank:3,avatar:'\uc0\u55358 \u56714 ',name:'\u12354 \u12394 \u12383 ',pts:3240,isMe:true\},\
+  \{rank:4,avatar:'\uc0\u55356 \u57219 ',name:'Yuki T.',pts:3190,isMe:false\},\
+  \{rank:18,avatar:'\uc0\u55357 \u56884 ',name:'user_abc',pts:980,isMe:false\},\
+  \{rank:19,avatar:'\uc0\u55357 \u56374 ',name:'user_def',pts:750,isMe:false\},\
+  \{rank:20,avatar:'\uc0\u55357 \u56369 ',name:'user_ghi',pts:420,isMe:false\},\
+];\
+\
+const myBets = [\
+  \{status:'won',sport:'WBC',prediction:'\uc0\u26085 \u26412  \u21213 \u21033 ',odds:1.45,stake:500,payout:725,question:'\u12393 \u12385 \u12425 \u12364 \u21213 \u12388 \u65311 ',choices:[\{label:'\u55356 \u56815 \u55356 \u56821  \u26085 \u26412 ',odds:1.45,votes:1023,pct:82,isMyChoice:true\},\{label:'\u55356 \u56825 \u55356 \u56828  \u21488 \u21271 ',odds:2.80,votes:221,pct:18,isMyChoice:false\}],analysis:\{summary:'\u23665 \u26412 \u30001 \u20280 \u12364 6\u22238 1\u22833 \u28857 \u12398 \u22909 \u25237 \u12290 \u26085 \u26412 \u12364 \u24555 \u21213 \u12375 \u12414 \u12375 \u12383 \u12290 ',hint:null,news:[\{title:'\u23665 \u26412 \u30001 \u20280 \u12289 6\u22238 1\u22833 \u28857 \u12391 \u20170 \u22823 \u20250 \u21021 \u21213 \u21033 ',source:'\u12473 \u12509 \u12540 \u12484 \u12490 \u12499 ',time:'3\u26178 \u38291 \u21069 ',url:'#'\}]\}\},\
+  \{status:'pending',sport:'J\uc0\u12522 \u12540 \u12464 ',prediction:'\u26481 \u20140 V \u21213 \u21033 ',odds:2.10,stake:1000,payout:null,question:'\u12393 \u12385 \u12425 \u12364 \u21213 \u12388 \u65311 ',choices:[\{label:'\u26481 \u20140 V \u21213 \u21033 ',odds:2.10,votes:850,pct:45,isMyChoice:true\},\{label:'\u24341 \u20998 ',odds:3.20,votes:400,pct:21,isMyChoice:false\},\{label:'\u30010 \u30000  \u21213 \u21033 ',odds:3.50,votes:640,pct:34,isMyChoice:false\}],analysis:\{summary:'\u21069 \u21322 \u12434 1-0\u12391 \u12522 \u12540 \u12489 \u20013 \u12290 ',hint:null,news:[\{title:'\u26481 \u20140 V \u21069 \u21322 \u32066 \u20102  1-0',source:'J\u12522 \u12540 \u12464 \u20844 \u24335 ',time:'30\u20998 \u21069 ',url:'#'\}]\}\},\
+  \{status:'lost',sport:'NPB',prediction:'\uc0\u12510 \u12540 \u12522 \u12531 \u12474  \u21213 \u21033 ',odds:2.10,stake:300,payout:0,question:'\u12393 \u12385 \u12425 \u12364 \u21213 \u12388 \u65311 ',choices:[\{label:'\u12510 \u12540 \u12522 \u12531 \u12474 ',odds:2.10,votes:320,pct:42,isMyChoice:true\},\{label:'\u12450 \u12473 \u12488 \u12525 \u12474 ',odds:1.75,votes:436,pct:58,isMyChoice:false\}],analysis:\{summary:'\u12450 \u12473 \u12488 \u12525 \u12474 \u20808 \u30330 \u12364 8\u22238 \u23436 \u23553 \u12290 ',hint:'\u20808 \u30330 \u25237 \u25163 \u12398 \u30452 \u36817 ERC\u12434 \u30906 \u35469 \u12375 \u12414 \u12375 \u12423 \u12358 \u12290 ',news:[\{title:'\u12450 \u12522 \u12466 \u12483 \u12486 \u12451 \u12364 8\u22238 \u23436 \u23553 ',source:'MLB.jp',time:'5\u26178 \u38291 \u21069 ',url:'#'\}]\}\},\
+];\
+\
+const packs = [\
+  \{id:'wbc',name:'WBC\uc0\u12473 \u12479 \u12540 \u12497 \u12483 \u12463 ',desc:'\u22823 \u35895 \u32724 \u24179 \u12539 \u23665 \u26412 \u30001 \u20280  \u12411 \u12363 ',rarity:'\u9733 \u9733 \u9733 \u9733 \u9734  EPIC',costPaid:1500,costFree:300,bg:'linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)'\},\
+  \{id:'npb',name:'NPB\uc0\u12524 \u12472 \u12455 \u12531 \u12489 \u12497 \u12483 \u12463 ',desc:'\u12452 \u12481 \u12525 \u12540 \u12539 \u26494 \u20117 \u31168 \u21916  \u12411 \u12363 ',rarity:'\u9733 \u9733 \u9733 \u9734 \u9734  RARE',costPaid:800,costFree:160,bg:'linear-gradient(135deg,#1a2a1a,#0d3b1a)'\},\
+  \{id:'jl',name:'J\uc0\u12522 \u12540 \u12464 \u12497 \u12483 \u12463 ',desc:'\u19977 \u31512 \u34219 \u12539 \u20037 \u20445 \u24314 \u33521  \u12411 \u12363 ',rarity:'\u9733 \u9733 \u9734 \u9734 \u9734  UNCOMMON',costPaid:400,costFree:80,bg:'linear-gradient(135deg,#1a1a1a,#2d1b4e)'\},\
+  \{id:'daily',name:'\uc0\u12487 \u12452 \u12522 \u12540 \u12497 \u12483 \u12463 ',desc:'\u26412 \u26085 \u20986 \u22580 \u36984 \u25163 \u12363 \u12425 \u12521 \u12531 \u12480 \u12512 ',rarity:'\u9733 \u9734 \u9734 \u9734 \u9734  NORMAL',costPaid:200,costFree:40,bg:'linear-gradient(135deg,#1c1c1c,#2a2a2a)'\},\
+];\
+\
+let coins = \{paid:3200,free:800\};\
+let myCollection = [\
+  \{id:1,name:'\uc0\u22823 \u35895 \u32724 \u24179 ',team:'\u26085 \u26412 \u20195 \u34920 ',sport:'WBC',rarity:'EPIC',emoji:'\u9918 ',isNew:false\},\
+  \{id:2,name:'\uc0\u23665 \u26412 \u30001 \u20280 ',team:'\u26085 \u26412 \u20195 \u34920 ',sport:'WBC',rarity:'RARE',emoji:'\u9918 ',isNew:false\},\
+  \{id:3,name:'\uc0\u23470 \u64017 \u25935 \u26391 ',team:'\u27178 \u27996 DeNA',sport:'NPB',rarity:'RARE',emoji:'\u9918 ',isNew:true\},\
+];\
+let currentSelectedPack = null;\
+const missions = \{\
+  daily:[\
+    \{title:'WBC\uc0\u12398 \u35430 \u21512 \u12395 \u20104 \u24819 \u12377 \u12427 ',reward:50,done:true,progress:\{current:1,total:1\}\},\
+    \{title:'3\uc0\u35430 \u21512 \u36899 \u32154 \u12391 \u20104 \u24819 \u12377 \u12427 ',reward:150,done:false,progress:\{current:1,total:3\}\},\
+    \{title:'\uc0\u39640 \u12458 \u12483 \u12474 \u65288 2.5\u20493 \u20197 \u19978 \u65289 \u12391 \u30340 \u20013 \u12377 \u12427 ',reward:200,done:false,progress:\{current:0,total:1\}\},\
+  ],\
+  weekly:[\
+    \{title:'\uc0\u20170 \u36913 5\u35430 \u21512 \u20197 \u19978 \u20104 \u24819 \u12377 \u12427 ',reward:500,done:false,progress:\{current:3,total:5\}\},\
+    \{title:'\uc0\u30340 \u20013 \u29575 60%\u20197 \u19978 \u12434 \u32173 \u25345 \u12377 \u12427 ',reward:300,done:false,progress:\{current:0,total:1\}\},\
+  ],\
+\};\
+\
+// BETSLIP\
+const state = \{bets:[],balance:10000\};\
+const betslipItemsEl = document.getElementById('betslip-items');\
+const betslipCountEl = document.getElementById('betslip-count');\
+const mobileCountEl  = document.getElementById('mobile-count');\
+const totalStakeEl   = document.getElementById('total-stake');\
+const totalReturnEl  = document.getElementById('total-return');\
+const placeBetBtn    = document.getElementById('place-bet-btn');\
+const mobileToggleEl = document.getElementById('mobile-toggle');\
+const betslipPanelEl = document.getElementById('betslip-panel');\
+\
+document.querySelectorAll('.odds-btn').forEach(btn => \{\
+  btn.addEventListener('click', function()\{\
+    toggleBet(this.dataset.id, this.dataset.market, this.dataset.selection, parseFloat(this.dataset.odds));\
+  \});\
+\});\
+\
+function toggleBet(id,market,selection,odds)\{\
+  const idx=state.bets.findIndex(b=>b.id===id);\
+  if(idx>=0)\{state.bets.splice(idx,1);document.querySelector(`.odds-btn[data-id="$\{id\}"]`)?.classList.remove('selected');\}\
+  else\{state.bets.push(\{id,market,selection,odds,stake:0\});document.querySelector(`.odds-btn[data-id="$\{id\}"]`)?.classList.add('selected');if(window.innerWidth<=1024&&state.bets.length===1)\{betslipPanelEl.classList.add('open');mobileToggleEl.classList.add('hidden');\}\}\
+  renderBetslip();\
+\}\
+function renderBetslip()\{\
+  betslipCountEl.textContent=state.bets.length;mobileCountEl.textContent=state.bets.length;placeBetBtn.disabled=state.bets.length===0;\
+  if(state.bets.length===0)\{betslipItemsEl.innerHTML='<div class="empty-betslip"><p>\uc0\u20104 \u24819 \u12364 \u36984 \u25246 \u12373 \u12428 \u12390 \u12356 \u12414 \u12379 \u12435 </p><p style="margin-top:6px;font-size:11px;">\u20493 \u29575 \u12434 \u12479 \u12483 \u12503 \u12375 \u12390 \u20104 \u24819 \u12434 \u36861 \u21152 </p></div>';updateTotals();return;\}\
+  betslipItemsEl.innerHTML='';\
+  state.bets.forEach(bet=>\{\
+    const item=document.createElement('div');item.className='bet-item';item.id=`bet-item-$\{bet.id\}`;\
+    item.innerHTML=`<div style="display:flex;justify-content:space-between;margin-bottom:5px;"><div><div class="bet-selection">$\{bet.selection\}</div><div class="bet-market">$\{bet.market\}</div></div><div class="bet-odds-badge">$\{bet.odds.toFixed(2)\}</div></div><button class="btn-remove" onclick="removeBet('$\{bet.id\}')">\uc0\u10005 </button><div style="position:relative;"><span class="stake-sym">pt</span><input type="number" id="input-$\{bet.id\}" class="stake-input" placeholder="\u21442 \u21152 \u12509 \u12452 \u12531 \u12488 " value="$\{bet.stake>0?bet.stake:''\}" oninput="handleInput('$\{bet.id\}',this.value)"></div><div class="quick-stakes"><button class="btn-quick" onclick="addStake('$\{bet.id\}',500)">+500</button><button class="btn-quick" onclick="addStake('$\{bet.id\}',1000)">+1k</button><button class="btn-quick" onclick="addStake('$\{bet.id\}',5000)">+5k</button><button class="btn-quick" onclick="addStake('$\{bet.id\}','MAX')">MAX</button></div><div class="potential-return"><span>\u21463 \u21462 \u38989 :</span><span id="return-$\{bet.id\}" class="return-amount">$\{Math.floor(bet.stake*bet.odds).toLocaleString()\}pt</span></div>`;\
+    betslipItemsEl.appendChild(item);\
+  \});\
+  updateTotals();\
+\}\
+window.removeBet=id=>\{document.querySelector(`.odds-btn[data-id="$\{id\}"]`)?.classList.remove('selected');const i=state.bets.findIndex(b=>b.id===id);if(i>=0)state.bets.splice(i,1);renderBetslip();\};\
+window.handleInput=(id,v)=>\{const bet=state.bets.find(b=>b.id===id);if(bet)\{bet.stake=parseInt(v)||0;const r=document.getElementById(`return-$\{id\}`);if(r)r.textContent=`$\{Math.floor(bet.stake*bet.odds).toLocaleString()\}pt`;updateTotals();\}\};\
+window.addStake=(id,a)=>\{const bet=state.bets.find(b=>b.id===id);if(bet)\{bet.stake=a==='MAX'?state.balance:(bet.stake+a);const inp=document.getElementById(`input-$\{id\}`);if(inp)inp.value=bet.stake;const r=document.getElementById(`return-$\{id\}`);if(r)r.textContent=`$\{Math.floor(bet.stake*bet.odds).toLocaleString()\}pt`;updateTotals();\}\};\
+function updateTotals()\{const ts=state.bets.reduce((s,b)=>s+b.stake,0),tr=state.bets.reduce((s,b)=>s+(b.stake*b.odds),0);totalStakeEl.textContent=`$\{ts.toLocaleString()\}pt`;totalReturnEl.textContent=`$\{Math.floor(tr).toLocaleString()\}pt`;\}\
+function toggleMobileBetslip()\{if(window.innerWidth>1024)return;betslipPanelEl.classList.toggle('open');mobileToggleEl.classList.toggle('hidden');\}\
+\
+// VIEW SWITCHING\
+function setActiveTab(tabId)\{\
+  document.querySelectorAll('.header-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tabId));\
+\}\
+function switchView(viewId)\{\
+  document.querySelectorAll('.view-section').forEach(el=>\{el.classList.remove('active');el.style.display='none';\});\
+  const t=document.getElementById('view-'+viewId);\
+  if(t)\{t.classList.add('active');t.style.display='block';\}\
+  const tabMap=\{home:'home',mypage:'mypage',mission:'mission',cards:'cards',wbc:'home'\};\
+  setActiveTab(tabMap[viewId]||'home');\
+  if(viewId==='mission') renderMissionSection();\
+  if(viewId==='cards')\{renderPackGrid();renderCollectionGrid();document.getElementById('header-balance').style.display='none';\}\
+  else document.getElementById('header-balance').style.display='block';\
+  window.scrollTo(0,0);\
+\}\
+function showScreen(id)\{\
+  if(id==='home')\{switchView('home');\}\
+  else if(id==='mypage')\{switchView('mypage');setActiveTab('mypage');renderMpBets();renderMpActiveBets();renderMpFriends();renderMpLeague();\}\
+  else if(id==='rankingDetail')\{\
+    document.querySelectorAll('.view-section').forEach(el=>\{el.classList.remove('active');el.style.display='none';\});\
+    const t=document.getElementById('rankingDetail');if(t)\{t.classList.add('active');t.style.display='block';\}\
+    renderRankingDetail();window.scrollTo(0,0);\
+  \}\
+\}\
+\
+// STUDIO\
+function studioSelect(tab)\{\
+  ['live','result','news','comment'].forEach(t=>\{\
+    document.getElementById('sbtn-'+t)?.classList.toggle('active',t===tab);\
+    const p=document.getElementById('sp-'+t);if(p)p.style.display=t===tab?'block':'none';\
+  \});\
+  const comments=\{live:'\uc0\u26085 \u26412 \u12364 3\u22238 \u12395 \u36861 \u21152 \u28857 \u65281 \u23665 \u26412 \u30001 \u20280 \u12399 \u20170 \u26085 \u12418 \u23436 \u29863 \u12394 \u12500 \u12483 \u12481 \u12531 \u12464 \u12434 \u35211 \u12379 \u12390 \u12356 \u12414 \u12377 \u12290 ',result:'\u26412 \u26085 \u12398 \u20104 \u24819 \u32080 \u26524 \u12434 \u12362 \u23626 \u12369 \u12375 \u12414 \u12377 \u12290 \u30340 \u20013 \u12362 \u12417 \u12391 \u12392 \u12358 \u12372 \u12374 \u12356 \u12414 \u12377 \u65281 ',news:'\u26368 \u26032 \u12473 \u12509 \u12540 \u12484 \u12491 \u12517 \u12540 \u12473 \u12434 \u12362 \u23626 \u12369 \u12375 \u12414 \u12377 \u12290 ',comment:'\u12518 \u12540 \u12470 \u12540 \u12467 \u12513 \u12531 \u12488 \u12434 \u34920 \u31034 \u20013 \u12391 \u12377 \u12290 '\};\
+  const tags=\{live:'\uc0\u55356 \u57241 \u65039  AI\u35299 \u35500 ',result:'\u55356 \u57263  \u20104 \u24819 \u32080 \u26524 ',news:'\u55357 \u56560  \u12491 \u12517 \u12540 \u12473 ',comment:'\u55357 \u56492  \u12467 \u12513 \u12531 \u12488 '\};\
+  document.getElementById('studioCommentText').textContent=comments[tab];\
+  document.getElementById('studioTag').textContent=tags[tab];\
+\}\
+function postStudioComment()\{\
+  const inp=document.getElementById('studioCommentInput');\
+  if(!inp.value.trim())return;\
+  const list=document.getElementById('studioCommentList');\
+  const item=document.createElement('div');item.className='sp-comment-item';\
+  item.innerHTML=`<span class="sp-comment-avatar">\uc0\u55357 \u56842 </span><div class="sp-comment-bubble"><div class="sp-comment-name">\u12354 \u12394 \u12383 </div>$\{inp.value\}</div>`;\
+  list.prepend(item);inp.value='';list.scrollTop=0;\
+\}\
+function mpStudioAction(a)\{\
+  const msgs=\{commentary:'\uc0\u29694 \u22312 \u12398 \u35430 \u21512 \u29366 \u27841 \u12434 \u20998 \u26512 \u20013 ...\u12354 \u12394 \u12383 \u12398 \u20104 \u24819 \u12399 \u22909 \u35519 \u12391 \u12377 \u65281 ',data:'\u20170 \u26376 \u12398 \u30340 \u20013 \u29575 \u12399 58%\u12290 \u24179 \u22343 \u12424 \u12426 \u39640 \u12356 \u12497 \u12501 \u12457 \u12540 \u12510 \u12531 \u12473 \u12391 \u12377 \u12290 ',question:'\u20309 \u12391 \u12418 \u36074 \u21839 \u12375 \u12390 \u12367 \u12384 \u12373 \u12356 \u65281 '\};\
+  document.getElementById('mpStudioCommentText').textContent=msgs[a];\
+\}\
+function mpSendChat()\{\
+  const inp=document.getElementById('mpChatInput');\
+  if(!inp.value.trim())return;\
+  const hist=document.getElementById('mpChatHistory');\
+  const userMsg=document.createElement('div');userMsg.className='mp-chat-msg user';\
+  userMsg.innerHTML=`<span class="mp-chat-avatar">\uc0\u55357 \u56842 </span><span class="mp-chat-bubble">$\{inp.value\}</span>`;\
+  hist.appendChild(userMsg);\
+  const q=inp.value;inp.value='';\
+  setTimeout(()=>\{\
+    const aiMsg=document.createElement('div');aiMsg.className='mp-chat-msg ai';\
+    aiMsg.innerHTML=`<span class="mp-chat-avatar">\uc0\u55358 \u56598 </span><span class="mp-chat-bubble">\u12300 $\{q\}\u12301 \u12395 \u12388 \u12356 \u12390 \u12391 \u12377 \u12397 \u12290 \u29694 \u22312 \u12398 \u12487 \u12540 \u12479 \u12434 \u12418 \u12392 \u12395 \u20998 \u26512 \u12375 \u12414 \u12377 \u65281 </span>`;\
+    hist.appendChild(aiMsg);hist.scrollTop=hist.scrollHeight;\
+  \},800);\
+  hist.scrollTop=hist.scrollHeight;\
+\}\
+\
+// HOME MATCHES\
+function renderHomeMatches()\{\
+  const c=document.getElementById('home-matches-container');if(!c)return;\
+  let html=`<div style="margin-bottom:2rem;"><div class="section-header"><span>\uc0\u9918  \u27178 \u27996 DeNA\u12505 \u12452 \u12473 \u12479 \u12540 \u12474 </span><button class="see-more-btn">\u12418 \u12387 \u12392 \u35211 \u12427  \'9b</button></div><div class="match-card-list">`;\
+  matches.forEach((m,i)=>\{html+=createMatchCardHtml(m,i);\});\
+  html+=`</div></div>`;c.innerHTML=html;\
+\}\
+function createMatchCardHtml(m,idx)\{\
+  const hotClass=m.isHot?'is-hot':'';\
+  const hotBadge=m.isHot?'<div class="hot-badge">\uc0\u55357 \u56613  HOT</div>':'<div></div>';\
+  let sb='',st='';\
+  if(m.status==='live')\{sb='status-live';st='LIVE';\}\
+  else if(m.status==='upcoming')\{sb=m.deadlineSeconds<3600?'status-closing':'status-upcoming';st=m.deadlineSeconds<3600?'\uc0\u9888 \u65039 \u32224 \u20999 \u38291 \u36817 ':'19:00';\}\
+  else\{sb='status-finished';st='\uc0\u32066 \u20102 ';\}\
+  const cd=m.status==='live'||m.status==='finished'?'<span style="color:#8b949e;">\uc0\u20104 \u24819 \u32224 \u20999 \u28168 \u12415 </span>':`<span>\u21463 \u20184 \u20013 </span>`;\
+  let scoreHtml='';\
+  if(m.status==='live'||m.status==='finished')\{\
+    scoreHtml=`<div class="csr-row"><span class="csr-home"><span class="csr-flag">$\{m.homeTeam.flag\}</span><span class="csr-name">$\{m.homeTeam.name\}</span></span><span class="csr-center"><span class="csr-num">$\{m.homeTeam.score\}</span><span class="csr-sep"> - </span><span class="csr-num">$\{m.awayTeam.score\}</span></span><span class="csr-away"><span class="csr-name">$\{m.awayTeam.name\}</span><span class="csr-flag">$\{m.awayTeam.flag\}</span></span></div>`;\
+  \} else \{\
+    scoreHtml=`<div class="csr-row"><span class="csr-home"><span class="csr-flag">$\{m.homeTeam.flag\}</span><span class="csr-name">$\{m.homeTeam.name\}</span></span><span style="font-size:12px;color:#8b949e;flex-shrink:0;">VS</span><span class="csr-away"><span class="csr-name">$\{m.awayTeam.name\}</span><span class="csr-flag">$\{m.awayTeam.flag\}</span></span></div>`;\
+  \}\
+  let myBetHtml='';\
+  if(m.myBet?.status==='placed')myBetHtml=`<div class="part-bar part-done">\uc0\u9989  \u20104 \u24819 \u28168 \u12415 \u65306 <strong>$\{m.myBet.label\}</strong></div>`;\
+  else if(m.myBet?.status==='open')myBetHtml=`<div class="part-bar part-open">\uc0\u55357 \u56481  \u12414 \u12384 \u20104 \u24819 \u12375 \u12390 \u12356 \u12414 \u12379 \u12435 <button class="part-btn" onclick="openMatchDetail($\{idx\});event.stopPropagation();">\u20104 \u24819 \u12377 \u12427  \u8594 </button></div>`;\
+  else if(m.myBet?.status==='won')myBetHtml=`<div class="part-bar part-won">\uc0\u9989  \u30340 \u20013 \u65306 <strong>$\{m.myBet.label\}</strong></div>`;\
+  return `<div class="home-match-card $\{hotClass\}" onclick="openMatchDetail($\{idx\})"><div class="card-top-row">$\{hotBadge\}<div class="status-badge $\{sb\}">$\{st\}</div></div>$\{scoreHtml\}<div class="card-divider"></div><div class="card-meta-section"><div class="meta-row $\{m.isHot?'text-amber':''\}"><span>\uc0\u55357 \u56421 </span><span>$\{m.participants.toLocaleString()\}\u20154 \u12364 \u20104 \u24819 \u20013 </span></div><div class="meta-row"><span>\u9200 </span><span>\u32224 \u20999 \u12414 \u12391  $\{cd\}</span></div></div>$\{myBetHtml\}</div>`;\
+\}\
+\
+// PLAYER CARDS\
+function renderPlayerCards()\{\
+  const c=document.getElementById('playerCardScroll');if(!c)return;\
+  c.innerHTML=playerCardsData.map(p=>`\
+    <div class="pcard rarity-$\{p.rarity\}" onclick="showCardDetail($\{p.id\})">\
+      $\{p.isNew?'<div class="pcard-new">NEW</div>':''\}\
+      <div class="pcard-img">\
+        <div class="pcard-bg" style="background:$\{p.bg\};"></div>\
+        <div class="pcard-number">$\{p.number\}</div>\
+        <div class="pcard-rarity-badge $\{p.rarity\}">$\{p.rarity\}</div>\
+        <div class="pcard-emoji">$\{p.emoji\}</div>\
+      </div>\
+      <div class="pcard-info">\
+        <div class="pcard-name">$\{p.name\}</div>\
+        <div class="pcard-team">$\{p.team\}</div>\
+      </div>\
+    </div>`).join('');\
+\}\
+function showCardDetail(id)\{\
+  const c=playerCardsData.find(p=>p.id===id);if(!c)return;\
+  document.getElementById('detail-emoji').textContent=c.emoji;\
+  document.getElementById('detail-name').textContent=c.name;\
+  document.getElementById('detail-team').textContent=`$\{c.team\} ($\{c.sport\})`;\
+  document.getElementById('detail-rarity').textContent=c.rarity;\
+  document.getElementById('modal-card-detail').classList.add('active');\
+\}\
+\
+// MATCH DETAIL\
+function openMatchDetail(idx)\{\
+  switchView('wbc');\
+\}\
+window.switchTab=tabName=>\{\
+  const map=['match','stats','h2h','lineup'];\
+  document.querySelectorAll('#view-wbc .tab').forEach((t,i)=>t.classList.toggle('active',map[i]===tabName));\
+  map.forEach(p=>\{const e=document.getElementById('tab-content-'+p);if(e)e.style.display=p===tabName?'block':'none';\});\
+\};\
+function toggleAccordion(id)\{document.getElementById(id)?.classList.toggle('open');document.getElementById('chevron-'+id)?.classList.toggle('open');\}\
+\
+// MYPAGE\
+function renderMpBets()\{\
+  const el=document.getElementById('mpBetList');if(!el)return;\
+  el.innerHTML=myBets.map((b,i)=>\{\
+    const statusIcon=b.status==='won'?'\uc0\u9989 ':b.status==='lost'?'\u10060 ':'\u9203 ';\
+    const ptClass=b.status==='won'?'won':b.status==='lost'?'lost':'pending';\
+    const pt=b.status==='won'?`+$\{(b.payout-b.stake).toLocaleString()\}pt`:b.status==='lost'?`-$\{b.stake.toLocaleString()\}pt`:'\uc0\u36914 \u34892 \u20013 ';\
+    return `<div class="lb-row" onclick="openBetDetail($\{i\})"><span class="lb-status">$\{statusIcon\}</span><span class="lb-label">$\{b.sport\} \'95 $\{b.prediction\}</span><span class="lb-pt $\{ptClass\}">$\{pt\}</span><span class="lb-arrow">\'9b</span></div>`;\
+  \}).join('');\
+\}\
+function renderMpActiveBets()\{\
+  const el=document.getElementById('mpActiveBets');if(!el)return;\
+  const active=myBets.filter(b=>b.status==='pending');\
+  el.innerHTML=active.map(b=>`<div class="mp-active-bet-card"><span class="mp-active-sport">\uc0\u9917 </span><div class="mp-active-info"><div class="mp-active-match">$\{b.sport\}</div><div class="mp-active-my">\u20104 \u24819 : $\{b.prediction\} ($\{b.odds\}\u20493 )</div></div><span class="mp-active-status live">LIVE</span></div>`).join('');\
+\}\
+function renderMpFriends()\{\
+  const el=document.getElementById('mpFriendList');if(!el)return;\
+  const friends=[\{name:'Taro K.',avatar:'\uc0\u55357 \u56846 ',bet:'\u26085 \u26412  \u21213 \u21033 ',result:'won',pt:'+225pt'\},\{name:'Hana M.',avatar:'\u55356 \u57144 ',bet:'\u22823 \u35895 HR',result:'pending',pt:'\u36914 \u34892 \u20013 '\},\{name:'Yuki T.',avatar:'\u55356 \u57219 ',bet:'DeNA \u21213 \u21033 ',result:'lost',pt:'-300pt'\}];\
+  el.innerHTML=friends.map(f=>`<div class="mp-friend-row"><span class="mp-friend-avatar">$\{f.avatar\}</span><div class="mp-friend-info"><div class="mp-friend-name">$\{f.name\}</div><div class="mp-friend-bet">$\{f.bet\}</div></div><span class="mp-friend-result $\{f.result\}">$\{f.pt\}</span></div>`).join('');\
+\}\
+function renderMpLeague()\{\
+  const el=document.getElementById('mpLeagueList');if(!el)return;\
+  el.innerHTML=leagueRankingData.map(r=>`<div class="lr-row$\{r.isMe?' me':''\}"><span class="lr-rank">$\{r.rank\}</span><span class="lr-avatar">$\{r.avatar\}</span><span class="lr-name$\{r.isMe?' me-name':''\}">$\{r.name\}</span><span class="lr-pts$\{r.isMe?' me-pts':''\}">$\{r.pts.toLocaleString()\}pt</span></div>`).join('');\
+\}\
+\
+// RANKING DETAIL\
+function renderRankingDetail()\{\
+  const el=document.getElementById('rankingDetailList');if(!el)return;\
+  el.innerHTML=leagueRankingData.map(r=>`<div class="lr-row$\{r.isMe?' me':''\}"><span class="lr-rank">$\{r.rank\}</span><span class="lr-avatar">$\{r.avatar\}</span><span class="lr-name$\{r.isMe?' me-name':''\}">$\{r.name\}</span><span class="lr-pts$\{r.isMe?' me-pts':''\}">$\{r.pts.toLocaleString()\}pt</span></div>`).join('');\
+\}\
+\
+// BET DETAIL\
+function openBetDetail(i)\{\
+  const b=myBets[i];if(!b)return;\
+  const statusMap=\{won:'\uc0\u9989  \u30340 \u20013 ',lost:'\u10060  \u12495 \u12474 \u12524 ',pending:'\u9203  \u36914 \u34892 \u20013 '\};\
+  document.getElementById('bet-detail-title').innerHTML=`$\{statusMap[b.status]\} $\{b.sport\}`;\
+  const ptText=b.status==='won'?`\uc0\u36077 \u12369 :$\{b.stake\}pt \u8594  \u29554 \u24471 :$\{b.payout\}pt`:b.status==='lost'?`\u36077 \u12369 :$\{b.stake\}pt \u8594  \u27809 \u21454 `:`\u36077 \u12369 :$\{b.stake\}pt \u36914 \u34892 \u20013 `;\
+  document.getElementById('bet-detail-amount').textContent=ptText;\
+  const qc=document.getElementById('bet-detail-question-container');\
+  qc.innerHTML=`<div class="bet-detail-section"><div class="bet-detail-section-title">\uc0\u10067  $\{b.question\}</div><div class="bet-detail-choices">$\{b.choices.map(c=>\{const cls=c.isMyChoice?(b.status==='won'?'my-choice-won':b.status==='lost'?'my-choice-lost':'my-choice-pending'):'';return `<div class="bet-detail-choice $\{cls\}"><div class="choice-label">$\{c.isMyChoice?'\u10003  ':''\} $\{c.label\}</div><div class="choice-odds">$\{c.odds\}\u20493 </div><div class="choice-votes">$\{c.pct\}% ($\{c.votes.toLocaleString()\}\u31080 )</div></div>`\}).join('')\}</div></div>`;\
+  const atitle=b.status==='pending'?'\uc0\u55357 \u56522  \u29694 \u22312 \u12398 \u29366 \u27841 ':'\u55357 \u56522  \u35430 \u21512 \u12398 \u25391 \u12426 \u36820 \u12426 ';\
+  document.getElementById('bet-detail-analysis-title').textContent=atitle;\
+  document.getElementById('bet-detail-analysis-text').textContent=b.analysis.summary;\
+  const hs=document.getElementById('bet-detail-hint-section');\
+  if(b.analysis.hint)\{hs.style.display='block';document.getElementById('bet-detail-hint-text').textContent=b.analysis.hint;\}else hs.style.display='none';\
+  document.getElementById('bet-detail-news-list').innerHTML=b.analysis.news.map(n=>`<a class="bet-news-item" href="$\{n.url\}"><div class="bet-news-title">\uc0\u55357 \u56560  $\{n.title\}</div><div class="bet-news-meta">$\{n.source\} \'95 $\{n.time\}</div></a>`).join('');\
+  document.getElementById('modal-bet-detail').classList.add('active');\
+\}\
+\
+// CARDS\
+function renderPackGrid()\{\
+  const el=document.getElementById('pack-grid');if(!el)return;\
+  el.innerHTML=packs.map(p=>`<div class="pack-card" onclick="openBuyModal('$\{p.id\}')"><div class="pack-bg" style="background:$\{p.bg\};"></div><div class="pack-content"><div class="pack-image-area">\uc0\u55357 \u56550 </div><div class="pack-title">$\{p.name\}</div><div class="pack-desc">$\{p.desc\}</div><div class="pack-rarity">$\{p.rarity\}</div><div class="pack-price"><span class="coin-paid">\u55357 \u56496  $\{p.costPaid\}</span> / <span class="coin-free">\u55358 \u56985  $\{p.costFree\}</span></div><div class="btn-buy-pack">\u36092 \u20837 \u12377 \u12427 </div></div></div>`).join('');\
+\}\
+function renderCollectionGrid()\{\
+  const el=document.getElementById('collection-grid');if(!el)return;\
+  el.innerHTML=myCollection.map(c=>`<div class="collection-card rarity-$\{c.rarity\}" onclick="showCollectionCardDetail($\{c.id\})">$\{c.isNew?'<div class="new-badge">NEW</div>':''\}<div class="card-emoji">$\{c.emoji\}</div><div class="card-name">$\{c.name\}</div><div class="card-rarity">$\{c.rarity\}</div></div>`).join('');\
+\}\
+function showCollectionCardDetail(id)\{\
+  const c=myCollection.find(x=>x.id===id);if(!c)return;\
+  document.getElementById('detail-emoji').textContent=c.emoji;\
+  document.getElementById('detail-name').textContent=c.name;\
+  document.getElementById('detail-team').textContent=`$\{c.team\} ($\{c.sport\})`;\
+  document.getElementById('detail-rarity').textContent=c.rarity;\
+  document.getElementById('modal-card-detail').classList.add('active');\
+\}\
+function openBuyModal(packId)\{\
+  currentSelectedPack=packs.find(p=>p.id===packId);if(!currentSelectedPack)return;\
+  document.getElementById('buy-modal-title').textContent=`\uc0\u55357 \u56550  $\{currentSelectedPack.name\}`;\
+  document.getElementById('buy-cost-paid').textContent=currentSelectedPack.costPaid;\
+  document.getElementById('buy-cost-free').textContent=currentSelectedPack.costFree;\
+  document.getElementById('radio-paid').checked=true;updateBuyModal();\
+  document.getElementById('modal-buy-pack').classList.add('active');\
+\}\
+function updateBuyModal()\{\
+  const isPaid=document.getElementById('radio-paid').checked;\
+  const cost=isPaid?currentSelectedPack.costPaid:currentSelectedPack.costFree;\
+  const bal=isPaid?coins.paid:coins.free;\
+  const after=bal-cost;\
+  const type=isPaid?'\uc0\u55357 \u56496 ':'\u55358 \u56985 ';\
+  document.getElementById('buy-balance-calc').textContent=`$\{type\} $\{bal.toLocaleString()\} \uc0\u8594  \u36092 \u20837 \u24460 : $\{after.toLocaleString()\}`;\
+  const err=after<0;\
+  document.getElementById('buy-error').style.display=err?'block':'none';\
+  document.getElementById('btn-confirm-buy').disabled=err;\
+\}\
+function confirmBuyPack()\{\
+  const isPaid=document.getElementById('radio-paid').checked;\
+  const cost=isPaid?currentSelectedPack.costPaid:currentSelectedPack.costFree;\
+  if(isPaid)coins.paid-=cost;else coins.free-=cost;\
+  document.getElementById('coin-paid-display').textContent=coins.paid.toLocaleString();\
+  document.getElementById('coin-free-display').textContent=coins.free.toLocaleString();\
+  closeModal('modal-buy-pack');\
+  openPackModal();\
+\}\
+function openPackModal()\{\
+  const area=document.getElementById('open-pack-area');\
+  area.innerHTML=Array(5).fill(0).map(()=>`<div class="flip-card"><div class="flip-card-front">\uc0\u55356 \u57268 </div><div class="flip-card-back"><div class="emoji">\u9918 </div><div class="name">???</div><div class="rarity">RARE</div></div></div>`).join('');\
+  document.getElementById('open-pack-msg').style.display='none';\
+  document.getElementById('btn-open-all').style.display='block';\
+  document.getElementById('btn-close-open').style.display='none';\
+  document.getElementById('modal-open-pack').classList.add('active');\
+\}\
+function openAllCards()\{\
+  document.querySelectorAll('.flip-card').forEach((c,i)=>\{setTimeout(()=>c.classList.add('flipped'),i*200);\});\
+  setTimeout(()=>\{\
+    document.getElementById('open-pack-msg').style.display='block';\
+    document.getElementById('btn-open-all').style.display='none';\
+    document.getElementById('btn-close-open').style.display='block';\
+  \},1500);\
+\}\
+\
+// MISSION\
+function renderMissionSection()\{\
+  const el=document.getElementById('mission-container');if(!el)return;\
+  let html='';\
+  const renderGroup=(title,list)=>\{\
+    html+=`<div style="margin-bottom:1.5rem;"><div class="section-header"><span>$\{title\}</span></div>`;\
+    list.forEach(m=>\{\
+      const pct=Math.round(m.progress.current/m.progress.total*100);\
+      html+=`<div class="mission-card$\{m.done?' done':''\}"><div class="mission-card-info"><div class="mission-name">$\{m.done?'\uc0\u9989  ':''\}$\{m.title\}</div><div style="display:flex;align-items:center;gap:6px;margin-top:4px;"><div class="mission-progress-bar-bg"><div class="mission-progress-bar-fill" style="width:$\{pct\}%"></div></div><span style="font-size:10px;color:#8b949e;">$\{m.progress.current\}/$\{m.progress.total\}</span></div></div><div class="mission-reward-text$\{m.done?' done':''\}">+$\{m.reward\}pt</div></div>`;\
+    \});\
+    html+='</div>';\
+  \};\
+  renderGroup('\uc0\u55357 \u56517  \u12487 \u12452 \u12522 \u12540 \u12511 \u12483 \u12471 \u12519 \u12531 ',missions.daily);\
+  renderGroup('\uc0\u55357 \u56518  \u12454 \u12451 \u12540 \u12463 \u12522 \u12540 \u12511 \u12483 \u12471 \u12519 \u12531 ',missions.weekly);\
+  el.innerHTML=html;\
+\}\
+\
+// MODAL\
+function closeModal(id)\{document.getElementById(id)?.classList.remove('active');\}\
+\
+// INIT\
+renderHomeMatches();\
+renderPlayerCards();\
+renderPackGrid();\
+renderCollectionGrid();\
+\
+// ODDS UPDATE\
+setInterval(()=>\{\
+  const btns=document.querySelectorAll('.odds-btn');\
+  if(!btns.length)return;\
+  const btn=btns[Math.floor(Math.random()*btns.length)];\
+  let o=parseFloat(btn.dataset.odds)+((Math.random()*0.1)-0.05);\
+  if(o<1.01)o=1.01;o=Math.round(o*100)/100;\
+  btn.querySelector('.odds-value').textContent=o.toFixed(2);\
+  const prev=parseFloat(btn.dataset.odds);btn.dataset.odds=o.toFixed(2);\
+  btn.classList.remove('flash-up','flash-down');void btn.offsetWidth;\
+  btn.classList.add(o>prev?'flash-up':'flash-down');\
+\},3000);\
+</script>\
+</body>\
+</html>}
