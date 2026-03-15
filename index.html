@@ -1,5 +1,4 @@
-const liveMatches = [
-  {id:<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -15,39 +14,37 @@ const liveMatches = [
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color:var(--text-main);overflow:hidden;}
-a{text-decoration:none;color:inherit;}
 #phone{width:390px;height:844px;background:var(--bg-main);margin:0 auto;display:flex;flex-direction:column;position:relative;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,0.8);}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:0.4}}
+@keyframes liveBlink{0%,100%{opacity:1}50%{opacity:0.5}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes flashGreen{0%{background:rgba(63,185,80,0.4)}100%{background:transparent}}
+@keyframes flashAmber{0%{background:rgba(245,166,35,0.4)}100%{background:transparent}}
+@keyframes cur{0%,100%{opacity:1}50%{opacity:0}}
 
 /* HEADER */
 .header{background:var(--bg-sidebar);border-bottom:1px solid var(--border);padding:0 10px;display:flex;justify-content:space-between;align-items:stretch;height:48px;flex-shrink:0;z-index:100;}
-.header-left{display:flex;align-items:stretch;}
-.logo{font-family:var(--font-h);font-size:1.2rem;font-weight:700;color:var(--accent);letter-spacing:1px;display:flex;align-items:center;gap:5px;padding:0 10px 0 0;border:none;background:none;cursor:pointer;white-space:nowrap;}
-.logo svg{width:18px;height:18px;flex-shrink:0;}
+.logo{font-family:var(--font-h);font-size:1.2rem;font-weight:700;color:var(--accent);letter-spacing:1px;display:flex;align-items:center;gap:5px;padding:0 10px 0 0;border:none;background:none;cursor:pointer;}
+.logo svg{width:18px;height:18px;}
 .header-divider{width:1px;background:var(--border);margin:8px 0;}
 .header-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:0 12px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-sub);cursor:pointer;font-family:var(--font-b);height:100%;position:relative;transition:all 0.2s;white-space:nowrap;}
 .header-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(245,166,35,0.07);}
 .htab-icon{font-size:14px;line-height:1;}
 .htab-label{font-size:9px;font-weight:500;}
 .live-dot{position:absolute;top:8px;right:6px;width:5px;height:5px;background:var(--live);border-radius:50%;animation:pulseDot 1s infinite;}
-@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:0.4}}
-.header-right{display:flex;align-items:center;}
 .balance{font-family:var(--font-m);font-size:11px;color:var(--text-main);background:var(--bg-main);padding:3px 8px;border-radius:4px;border:1px solid var(--border);}
 
 /* SCROLL */
 .scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:60px;}
 .scroll-area::-webkit-scrollbar{display:none;}
-
-/* VIEWS */
 .view-section{display:none;padding:10px;}
 .view-section.active{display:block;animation:fadeIn 0.2s ease-out;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* STUDIO */
+/* HOME STUDIO */
 .studio-wrap{background:linear-gradient(160deg,#0a0a0a,#1a0000 50%,#0d0d1a);border:1.5px solid #cc0000;border-radius:8px 8px 0 0;overflow:hidden;}
 .studio-hd{background:linear-gradient(90deg,#cc0000,#880000);padding:4px 10px;display:flex;align-items:center;justify-content:space-between;}
 .studio-hd-title{font-size:11px;font-weight:bold;color:#fff;letter-spacing:1px;}
 .studio-live-badge{background:#ff0000;color:#fff;font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;animation:liveBlink 1s infinite;}
-@keyframes liveBlink{0%,100%{opacity:1}50%{opacity:0.5}}
 .studio-body{display:flex;align-items:flex-end;gap:10px;padding:8px 10px 0;}
 .studio-char-wrap{flex-shrink:0;text-align:center;}
 .studio-char{position:relative;width:60px;height:68px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;}
@@ -60,7 +57,6 @@ a{text-decoration:none;color:inherit;}
 .studio-speech-wrap{flex:1;padding-bottom:10px;}
 .studio-bubble{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px 10px 10px 0;padding:8px 10px;font-size:11px;color:#e6edf3;line-height:1.5;min-height:44px;}
 .speech-cursor{display:inline-block;color:var(--accent);animation:cur 0.8s step-end infinite;font-weight:bold;}
-@keyframes cur{0%,100%{opacity:1}50%{opacity:0}}
 .studio-tag{font-size:9px;color:var(--text-sub);margin-top:3px;padding-left:2px;}
 .studio-actions{display:flex;border-top:1px solid rgba(200,0,0,0.3);background:rgba(0,0,0,0.3);}
 .studio-btn{flex:1;background:rgba(255,255,255,0.04);border:none;border-right:1px solid rgba(255,255,255,0.06);color:var(--text-sub);padding:6px 2px;font-size:10px;font-family:var(--font-b);cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:1px;}
@@ -68,8 +64,6 @@ a{text-decoration:none;color:inherit;}
 .studio-btn.active{background:rgba(204,0,0,0.2);color:#e6edf3;border-bottom:2px solid #cc0000;}
 .studio-btn-icon{font-size:12px;}
 .studio-btn-label{font-size:8px;}
-
-/* STUDIO PANEL */
 .studio-panel{background:#0d1117;border:1px solid #30363d;border-top:none;border-radius:0 0 8px 8px;margin-bottom:10px;}
 .studio-panel-inner{padding:8px 10px;}
 .sp-live-row{display:flex;flex-direction:column;gap:3px;padding:6px 0;border-bottom:1px solid #21262d;cursor:pointer;}
@@ -80,30 +74,24 @@ a{text-decoration:none;color:inherit;}
 .sp-live-badge.upcoming{background:#30363d;color:#8b949e;}
 .sp-live-badge.fin{background:#21262d;color:#8b949e;}
 .sp-live-teams{flex:1;font-size:11px;color:#e6edf3;}
-.sp-live-score{font-size:12px;font-weight:bold;font-family:var(--font-m);color:#e6edf3;flex-shrink:0;}
 .sp-live-participants{font-size:9px;color:#8b949e;padding-left:2px;}
 .sp-more-btn{width:100%;background:none;border:none;color:var(--accent);font-size:10px;padding:6px 0 2px;cursor:pointer;text-align:center;}
-
 .sp-result-row{display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid #21262d;}
 .sp-result-row:last-child{border-bottom:none;}
 .sp-result-icon{font-size:12px;flex-shrink:0;}
 .sp-result-label{flex:1;font-size:11px;color:#e6edf3;}
 .sp-result-pt{font-size:11px;font-weight:bold;flex-shrink:0;}
 .sp-result-pt.won{color:#3fb950;}.sp-result-pt.lost{color:#ff6b6b;}.sp-result-pt.pending{color:#f5a623;}
-
 .sp-news-row{display:flex;gap:6px;padding:6px 0;border-bottom:1px solid #21262d;}
 .sp-news-row:last-child{border-bottom:none;}
 .sp-news-icon{font-size:15px;flex-shrink:0;}
-.sp-news-info{flex:1;}
 .sp-news-title{font-size:11px;color:#e6edf3;font-weight:bold;margin-bottom:1px;}
 .sp-news-meta{font-size:9px;color:#8b949e;}
-
 .sp-ucomment-list{display:flex;flex-direction:column;gap:5px;max-height:130px;overflow-y:auto;}
 .sp-ucomment-item{display:flex;gap:6px;align-items:flex-start;}
 .sp-ucomment-avatar{font-size:13px;flex-shrink:0;}
 .sp-ucomment-bubble{background:#161b22;border:1px solid #30363d;border-radius:7px;padding:4px 8px;font-size:11px;color:#e6edf3;line-height:1.4;}
 .sp-ucomment-name{font-size:9px;color:#f5a623;font-weight:bold;margin-bottom:1px;}
-
 .sp-chat-history{display:flex;flex-direction:column;gap:5px;max-height:120px;overflow-y:auto;margin-bottom:7px;}
 .sp-chat-msg{display:flex;gap:6px;align-items:flex-start;}
 .sp-chat-msg.user{flex-direction:row-reverse;}
@@ -123,21 +111,18 @@ a{text-decoration:none;color:inherit;}
 .ticker-track{display:inline-block;white-space:nowrap;font-size:10px;color:#8b949e;animation:tickerMove 25s linear infinite;}
 @keyframes tickerMove{from{transform:translateX(390px)}to{transform:translateX(-100%)}}
 
-/* SECTION HEADER */
+/* SECTION / PLAYER CARDS */
 .section-header{display:flex;justify-content:space-between;align-items:center;padding:4px 0;margin-bottom:8px;border-bottom:1px solid var(--border);font-size:12px;font-weight:bold;}
 .see-more-btn{background:none;border:none;color:var(--text-sub);font-size:10px;cursor:pointer;}
-
-/* PLAYER CARDS (home) */
 .player-cards-section{margin-top:14px;}
 .player-card-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory;}
 .player-card-scroll::-webkit-scrollbar{display:none;}
-.pcard{flex-shrink:0;width:90px;scroll-snap-align:start;cursor:pointer;border-radius:10px;overflow:hidden;border:none;background:transparent;position:relative;transition:transform 0.2s;}
-.pcard:active{transform:scale(0.95);}
+.pcard{flex-shrink:0;width:90px;scroll-snap-align:start;cursor:pointer;border-radius:10px;overflow:hidden;border:none;background:transparent;position:relative;}
 .pcard-inner{border-radius:10px;overflow:hidden;position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;}
 .pcard.rarity-EPIC .pcard-inner{background:linear-gradient(160deg,#c87800,#f5a623);box-shadow:0 4px 14px rgba(245,166,35,0.5);}
 .pcard.rarity-RARE .pcard-inner{background:linear-gradient(160deg,#0d4a1a,#1a8a35);box-shadow:0 4px 14px rgba(30,180,80,0.4);}
 .pcard.rarity-UNCOMMON .pcard-inner{background:linear-gradient(160deg,#0a1a50,#1a3a9a);box-shadow:0 4px 14px rgba(60,100,220,0.4);}
-.pcard.rarity-NORMAL .pcard-inner{background:linear-gradient(160deg,#2a1a4a,#5a2a9a);box-shadow:0 4px 14px rgba(120,60,200,0.4);}
+.pcard.rarity-NORMAL .pcard-inner{background:linear-gradient(160deg,#2a1a4a,#5a2a9a);}
 .pcard-top{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 6px 0;}
 .pcard-number{font-size:11px;font-weight:bold;color:rgba(255,255,255,0.9);font-family:var(--font-m);}
 .pcard-rbadge{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:bold;}
@@ -179,26 +164,81 @@ a{text-decoration:none;color:inherit;}
 .betslip-toggle{display:flex;position:absolute;bottom:0;left:0;width:100%;background:var(--bg-sidebar);padding:10px 14px;border-top:1px solid var(--border);justify-content:space-between;align-items:center;z-index:150;cursor:pointer;}
 .betslip-toggle.hidden{display:none;}
 
-/* WBC DETAIL */
+/* MATCH DETAIL */
 .match-detail-topbar{padding:6px 10px;border-bottom:1px solid #30363d;background:#0d1117;position:sticky;top:0;z-index:50;}
 .md-back-btn{background:none;border:none;color:var(--accent);font-size:12px;cursor:pointer;}
-.live-header-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:8px 10px;margin-bottom:10px;}
-.live-status-bar{display:flex;justify-content:space-between;align-items:center;font-size:10px;margin-bottom:4px;}
+
+/* SCORE CARD */
+.score-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:0;}
+.score-card-meta{display:flex;justify-content:space-between;align-items:center;font-size:10px;margin-bottom:6px;}
 .live-badge-anim{color:var(--live);animation:pulseDot 1s infinite;}
-.live-teams-score{display:flex;justify-content:space-between;align-items:center;padding:0 4px;}
-.live-team{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.live-team-flag{font-size:22px;}
-.live-team-name{font-size:10px;color:var(--text-sub);}
-.live-score-area{font-size:28px;font-weight:bold;color:#fff;display:flex;align-items:center;gap:6px;}
+.score-teams-row{display:flex;justify-content:space-between;align-items:center;padding:2px 4px;margin-bottom:6px;}
+.score-team{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:60px;}
+.score-team-flag{font-size:20px;}
+.score-team-name{font-size:10px;color:var(--text-sub);}
+.score-center{display:flex;align-items:center;gap:8px;}
+.score-num{font-size:32px;font-weight:bold;color:#fff;font-family:var(--font-m);}
+.score-sep{font-size:18px;color:#8b949e;}
+.score-meta-bottom{display:flex;align-items:center;gap:8px;padding-top:6px;border-top:1px solid #30363d;font-size:9px;color:#8b949e;}
+
+/* BSO */
+.bso-row{display:flex;gap:10px;background:#0d1117;border-radius:6px;padding:6px 10px;font-size:10px;}
+.bso-item{display:flex;align-items:center;gap:3px;}
+.bso-label{color:#8b949e;width:10px;font-size:9px;}
+.bso-dot{width:9px;height:9px;border-radius:50%;background:#21262d;}
+.bso-dot.on-b{background:#3fb950;}
+.bso-dot.on-s{background:#f5a623;}
+.bso-dot.on-o{background:#ff3b30;}
+
+/* SCOREBOARD TABLE */
+.sb-wrap{overflow-x:auto;border:1px solid #30363d;border-radius:6px;}
+.sb-table{width:100%;border-collapse:collapse;font-size:9px;text-align:center;white-space:nowrap;}
+.sb-table th,.sb-table td{border:1px solid #21262d;padding:3px 5px;}
+.sb-table th{background:#161b22;color:#8b949e;font-weight:normal;}
+.sb-table td:first-child,.sb-table th:first-child{text-align:left;padding-left:8px;background:#161b22;position:sticky;left:0;z-index:1;}
+.sb-table .cur-inn{background:#1c2820;}
+.sb-table .total-col{border-left:2px solid #30363d;font-weight:bold;}
+.sb-flash{animation:flashGreen 0.8s ease-out;}
+
+/* PITCHER-BATTER */
+.pb-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.pb-card{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px 8px;}
+.pb-label{font-size:8px;color:#8b949e;margin-bottom:2px;}
+.pb-name{font-size:11px;font-weight:bold;color:#e6edf3;}
+.pb-sub{font-size:9px;color:#8b949e;}
+
+/* PITCH LOG */
+.pitch-row{display:flex;gap:6px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #21262d;}
+.pitch-row:last-child{border-bottom:none;}
+.pitch-num{font-size:9px;color:#8b949e;width:14px;flex-shrink:0;padding-top:3px;font-family:var(--font-m);}
+.pitch-ball{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;flex-shrink:0;}
+.pitch-ball.s{background:#f5a623;color:#000;}
+.pitch-ball.b{background:#3fb950;color:#000;}
+.pitch-ball.f{background:#30363d;color:#8b949e;}
+.pitch-ball.hit{background:#58a6ff;color:#000;}
+.pitch-ball.out{background:#ff3b30;color:#fff;}
+.pitch-ball.hr{background:linear-gradient(135deg,#ff6b00,#f5a623);color:#000;}
+.pitch-ball.walk{background:#7c3aed;color:#fff;}
+.pitch-info{flex:1;}
+.pitch-type{font-size:10px;color:#e6edf3;font-weight:bold;}
+.pitch-detail{font-size:9px;color:#8b949e;margin-top:1px;}
+.pitch-note{background:rgba(245,166,35,0.08);border-left:2px solid var(--accent);padding:4px 8px;border-radius:3px;}
+.pitch-note-inn{color:var(--accent);font-size:9px;font-weight:bold;}
+.pitch-note-txt{font-size:10px;color:#e6edf3;}
+.pitch-event{background:rgba(255,59,48,0.1);border-left:2px solid var(--live);padding:4px 8px;border-radius:3px;}
+.pitch-event-txt{font-size:10px;color:#ff8080;font-weight:bold;}
+
+/* TABS */
 .tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:10px;overflow-x:auto;}
 .tabs::-webkit-scrollbar{display:none;}
 .tab{flex:1;padding:8px 4px;color:var(--text-sub);cursor:pointer;position:relative;font-size:11px;text-align:center;white-space:nowrap;}
 .tab.active{color:var(--accent);}
 .tab.active::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;height:2px;background:var(--accent);}
+
+/* ODDS */
 .market-group{margin-bottom:12px;}
-.market-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;cursor:pointer;}
+.market-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
 .market-title{font-size:12px;font-weight:700;color:var(--text-main);display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
-.odds-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;}
 .odds-btn{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.2s;}
 .odds-btn.selected{background:rgba(245,166,35,0.15);border-color:var(--accent);}
 .odds-label{font-size:11px;color:var(--text-main);}
@@ -206,12 +246,20 @@ a{text-decoration:none;color:inherit;}
 .difficulty-badge{font-size:8px;padding:1px 5px;border-radius:6px;font-weight:bold;}
 .difficulty-badge.easy{background:#1a3a2a;color:#3fb950;}
 .difficulty-badge.medium{background:#3a2e0a;color:var(--accent);}
-.accordion-content{display:none;}
-.accordion-content.open{display:block;}
-.chevron{transition:transform 0.3s;}
-.chevron.open{transform:rotate(180deg);}
 
-/* MYPAGE */
+/* BASES DIAMOND */
+.bases-wrap{display:flex;align-items:center;justify-content:center;width:48px;height:48px;position:relative;flex-shrink:0;}
+.base-diamond{position:absolute;width:14px;height:14px;border:2px solid #30363d;background:#0d1117;transform:rotate(45deg);transition:background 0.3s,border-color 0.3s,box-shadow 0.3s;}
+.base-diamond.on{background:var(--accent);border-color:var(--accent);box-shadow:0 0 6px rgba(245,166,35,0.7);}
+.base-2b{top:2px;left:50%;transform:translateX(-50%) rotate(45deg);}
+.base-1b{top:50%;right:2px;transform:translateY(-50%) rotate(45deg);}
+.base-3b{top:50%;left:2px;transform:translateY(-50%) rotate(45deg);}
+.advance-btn-wrap{position:sticky;bottom:0;padding:8px 10px;background:linear-gradient(180deg,transparent,var(--bg-main) 40%);z-index:10;}
+.advance-btn{width:100%;background:var(--live);color:#fff;border:none;border-radius:8px;padding:12px;font-size:12px;font-weight:bold;cursor:pointer;font-family:var(--font-b);display:flex;align-items:center;justify-content:space-between;}
+.advance-btn:disabled{background:var(--border);color:var(--text-sub);cursor:not-allowed;}
+.advance-btn-sub{font-size:9px;opacity:0.8;margin-top:2px;}
+
+/* MYPAGE / CARDS / MISSION */
 .mp-section{padding:10px;border-bottom:1px solid #30363d;}
 .mp-section-title{font-size:12px;font-weight:bold;color:#e6edf3;margin-bottom:7px;}
 .mp-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
@@ -223,8 +271,6 @@ a{text-decoration:none;color:inherit;}
 .mp-progress-wrap{height:4px;background:#21262d;border-radius:2px;margin:7px 0 2px;}
 .mp-progress-bar{height:100%;background:#3fb950;border-radius:2px;}
 .mp-progress-label{font-size:9px;color:#3fb950;text-align:right;}
-.mp-section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
-.mp-link-btn{background:none;border:none;color:var(--accent);font-size:10px;cursor:pointer;}
 .lb-row{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid #21262d;gap:6px;cursor:pointer;}
 .lb-row:last-child{border-bottom:none;}
 .lb-status{font-size:12px;flex-shrink:0;}
@@ -232,21 +278,6 @@ a{text-decoration:none;color:inherit;}
 .lb-pt{font-size:11px;font-weight:bold;flex-shrink:0;}
 .lb-pt.won{color:#3fb950;}.lb-pt.lost{color:#ff6b6b;}.lb-pt.pending{color:var(--accent);}
 .lb-arrow{font-size:9px;color:#30363d;}
-.mp-active-bet-card{display:flex;align-items:center;background:#1c2128;border:1px solid #30363d;border-radius:6px;padding:7px 9px;margin-bottom:5px;gap:7px;}
-.mp-active-sport{font-size:15px;flex-shrink:0;}
-.mp-active-info{flex:1;}
-.mp-active-match{font-size:11px;color:#e6edf3;font-weight:bold;}
-.mp-active-my{font-size:9px;color:var(--accent);margin-top:1px;}
-.mp-active-status{font-size:9px;font-weight:bold;flex-shrink:0;padding:2px 6px;border-radius:8px;}
-.mp-active-status.live{background:var(--live);color:#fff;}
-.mp-friend-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid #21262d;gap:7px;}
-.mp-friend-row:last-child{border-bottom:none;}
-.mp-friend-avatar{font-size:17px;flex-shrink:0;}
-.mp-friend-info{flex:1;}
-.mp-friend-name{font-size:11px;color:#e6edf3;font-weight:bold;}
-.mp-friend-bet{font-size:9px;color:#8b949e;}
-.mp-friend-result{font-size:10px;font-weight:bold;flex-shrink:0;}
-.mp-friend-result.won{color:#3fb950;}.mp-friend-result.pending{color:var(--accent);}.mp-friend-result.lost{color:#ff6b6b;}
 .lr-row{display:flex;align-items:center;padding:6px 10px;gap:7px;border-bottom:1px solid #21262d;}
 .lr-row.me{background:#1c2820;border-left:3px solid var(--accent);}
 .lr-rank{width:18px;font-size:10px;color:#8b949e;text-align:center;flex-shrink:0;}
@@ -256,17 +287,12 @@ a{text-decoration:none;color:inherit;}
 .lr-pts{font-size:11px;color:#8b949e;font-weight:bold;}
 .lr-pts.me-pts{color:#3fb950;}
 .league-ranking-wrap{background:#161b22;border:1px solid #30363d;border-radius:6px;margin-top:8px;overflow:hidden;}
-
-/* CARDS */
-.card-nav-tab{flex:1;padding:10px 4px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-sub);font-family:var(--font-b);font-size:11px;font-weight:bold;cursor:pointer;text-align:center;}
-.card-nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(245,166,35,0.06);}
 .coin-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:9px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .coin-balances{display:flex;gap:10px;font-weight:bold;font-size:11px;}
 .coin-paid{color:var(--accent);}.coin-free{color:#58a6ff;}
 .btn-buy-coin{background:transparent;border:1px solid var(--border);color:var(--text-sub);padding:4px 8px;border-radius:4px;font-size:10px;cursor:not-allowed;}
 .pack-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .pack-card{border-radius:8px;border:1px solid var(--border);padding:9px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;overflow:hidden;aspect-ratio:3/4;}
-.pack-card:hover{border-color:var(--accent);}
 .pack-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;opacity:0.8;}
 .pack-content{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;}
 .pack-image-area{flex:1;display:flex;align-items:center;justify-content:center;font-size:2rem;background:rgba(0,0,0,0.3);border-radius:5px;margin-bottom:7px;}
@@ -275,17 +301,16 @@ a{text-decoration:none;color:inherit;}
 .pack-rarity{font-size:9px;font-weight:bold;text-align:center;margin-bottom:6px;}
 .pack-price{font-size:10px;margin-bottom:4px;text-align:center;}
 .btn-buy-pack{background:var(--bg-main);border:1px solid var(--border);color:#fff;padding:5px;border-radius:5px;text-align:center;font-weight:bold;cursor:pointer;font-size:10px;}
-
-/* CARD LIST GRID */
+.card-nav-tab{flex:1;padding:10px 4px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-sub);font-family:var(--font-b);font-size:11px;font-weight:bold;cursor:pointer;text-align:center;}
+.card-nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(245,166,35,0.06);}
 .card-list-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.cl-card{border-radius:10px;overflow:visible;cursor:pointer;position:relative;transition:transform 0.2s;}
-.cl-card:active{transform:scale(0.95);}
+.cl-card{border-radius:10px;overflow:visible;cursor:pointer;position:relative;}
 .cl-card-inner{border-radius:10px;overflow:hidden;position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;}
-.cl-card.rarity-EPIC .cl-card-inner{background:linear-gradient(160deg,#c87800,#f5a623);box-shadow:0 4px 14px rgba(245,166,35,0.5);}
-.cl-card.rarity-RARE .cl-card-inner{background:linear-gradient(160deg,#0d4a1a,#1a8a35);box-shadow:0 4px 14px rgba(30,180,80,0.4);}
-.cl-card.rarity-UNCOMMON .cl-card-inner{background:linear-gradient(160deg,#0a1a50,#1a3a9a);box-shadow:0 4px 14px rgba(60,100,220,0.4);}
-.cl-card.rarity-NORMAL .cl-card-inner{background:linear-gradient(160deg,#2a1a4a,#5a2a9a);box-shadow:0 4px 14px rgba(120,60,200,0.4);}
-.cl-card-top{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 6px 0;}
+.cl-card.rarity-EPIC .cl-card-inner{background:linear-gradient(160deg,#c87800,#f5a623);}
+.cl-card.rarity-RARE .cl-card-inner{background:linear-gradient(160deg,#0d4a1a,#1a8a35);}
+.cl-card.rarity-UNCOMMON .cl-card-inner{background:linear-gradient(160deg,#0a1a50,#1a3a9a);}
+.cl-card.rarity-NORMAL .cl-card-inner{background:linear-gradient(160deg,#2a1a4a,#5a2a9a);}
+.cl-card-top{display:flex;justify-content:space-between;padding:6px 6px 0;}
 .cl-card-num{font-size:11px;font-weight:bold;color:rgba(255,255,255,0.9);font-family:var(--font-m);}
 .cl-card-rbadge{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:bold;}
 .cl-card-rbadge.EPIC{background:#fff;color:#c87800;}
@@ -298,12 +323,8 @@ a{text-decoration:none;color:inherit;}
 .cl-card-name{font-size:9px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .cl-card-team{font-size:7px;color:rgba(255,255,255,0.65);margin-top:1px;}
 .cl-card-new{position:absolute;top:-3px;right:-3px;background:var(--live);color:#fff;font-size:7px;font-weight:bold;padding:1px 4px;border-radius:6px;z-index:3;}
-
-/* FILTER CHIP */
 .filter-chip{flex-shrink:0;padding:3px 10px;border-radius:12px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-sub);font-size:9px;cursor:pointer;white-space:nowrap;}
 .filter-chip.active{background:rgba(245,166,35,0.15);border-color:var(--accent);color:var(--accent);}
-
-/* MISSION */
 .mission-card{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:9px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;}
 .mission-card.done{border-color:#238636;}
 .mission-card-info{flex:1;}
@@ -312,8 +333,6 @@ a{text-decoration:none;color:inherit;}
 .mission-progress-bar-fill{height:100%;background:var(--accent);}
 .mission-reward-text{font-weight:bold;font-family:var(--font-m);color:var(--accent);font-size:11px;}
 .mission-reward-text.done{color:#3fb950;}
-
-/* RANKING */
 .rd-header{display:flex;align-items:center;gap:6px;padding:9px 10px;border-bottom:1px solid #30363d;background:#161b22;}
 .rd-back{background:none;border:none;color:var(--accent);font-size:12px;cursor:pointer;}
 .rd-title{flex:1;font-size:12px;font-weight:bold;color:#e6edf3;}
@@ -322,8 +341,6 @@ a{text-decoration:none;color:inherit;}
 .rd-trophy{font-size:22px;flex-shrink:0;}
 .rd-trophy.locked{filter:grayscale(1) opacity(0.3);}
 .rd-zone-up{font-size:9px;color:#3fb950;text-align:center;padding:3px;border-top:1px solid #3fb950;border-bottom:1px solid #3fb950;margin:2px 0;}
-
-/* MODAL */
 .modal-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:none;justify-content:center;align-items:center;z-index:300;}
 .modal-overlay.active{display:flex;}
 .modal-content{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:16px;width:90%;max-width:340px;position:relative;max-height:80%;overflow-y:auto;}
@@ -345,40 +362,7 @@ a{text-decoration:none;color:inherit;}
 .flip-card-back .emoji{font-size:1.4rem;margin-bottom:3px;}
 .flip-card-back .name{font-size:9px;font-weight:bold;}
 .flip-card-back .rarity{font-size:7px;color:var(--text-sub);}
-.bet-detail-header{padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px;}
-.bet-detail-title{font-size:14px;font-weight:bold;margin-bottom:3px;}
-.bet-detail-amount{font-size:11px;color:var(--text-sub);}
-.bet-detail-section{margin-bottom:10px;}
-.bet-detail-section-title{font-size:11px;font-weight:bold;margin-bottom:4px;}
-.bet-detail-text{font-size:10px;line-height:1.5;background:var(--bg-main);padding:8px;border-radius:6px;border:1px solid var(--border);}
-.bet-detail-choices{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px;}
-.bet-detail-choice{border:1px solid var(--border);border-radius:6px;padding:7px;background:var(--bg-main);font-size:10px;}
-.bet-detail-choice.my-choice-won{background:#1c2a1c;border-color:#3fb950;}
-.bet-detail-choice.my-choice-lost{background:#2a1c1c;border-color:#ff6b6b;}
-.bet-detail-choice.my-choice-pending{background:#2d2d2d;border-color:var(--accent);}
-.choice-label{font-weight:bold;margin-bottom:1px;}
-.choice-odds{color:var(--accent);font-family:var(--font-m);font-size:9px;}
-.choice-votes{font-size:9px;color:var(--text-sub);}
-.bet-news-list{display:flex;flex-direction:column;gap:5px;}
-.bet-news-item{display:block;padding:7px;background:var(--bg-main);border:1px solid var(--border);border-radius:6px;color:var(--text-main);font-size:10px;}
-.bet-news-title{font-weight:bold;margin-bottom:1px;}
-.bet-news-meta{font-size:9px;color:var(--text-sub);}
-.match-studio-btn{flex:1;background:rgba(255,255,255,0.04);border:none;border-right:1px solid rgba(255,255,255,0.06);color:var(--text-sub);padding:6px 2px;font-family:var(--font-b);cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:1px;}
-.match-studio-btn:last-child{border-right:none;}
-.match-studio-btn.active{background:rgba(204,0,0,0.2);color:#e6edf3;border-bottom:2px solid #cc0000;}
-.pitch-row{display:flex;gap:6px;align-items:flex-start;padding:4px 0;border-bottom:1px solid #21262d;}
-.pitch-row:last-child{border-bottom:none;}
-.pitch-num{font-size:9px;color:#8b949e;width:14px;flex-shrink:0;padding-top:1px;font-family:var(--font-m);}
-.pitch-ball{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;flex-shrink:0;}
-.pitch-ball.s{background:#f5a623;color:#000;}
-.pitch-ball.b{background:#3fb950;color:#000;}
-.pitch-ball.f{background:#30363d;color:#8b949e;}
-.pitch-ball.hit{background:#58a6ff;color:#000;}
-.pitch-ball.hr{background:linear-gradient(135deg,#ff6b00,#f5a623);color:#000;}
-.pitch-ball.out{background:#ff3b30;color:#fff;}
-.pitch-info{flex:1;}
-.pitch-type{font-size:10px;color:#e6edf3;font-weight:bold;}
-.pitch-detail{font-size:9px;color:#8b949e;margin-top:1px;}{0%{background:rgba(63,185,80,0.3)}100%{background:transparent}}
+@keyframes flashGreen{0%{background:rgba(63,185,80,0.3)}100%{background:transparent}}
 @keyframes flashRed{0%{background:rgba(255,59,48,0.3)}100%{background:transparent}}
 .flash-up{animation:flashGreen 1s ease-out;}
 .flash-down{animation:flashRed 1s ease-out;}
@@ -386,31 +370,19 @@ a{text-decoration:none;color:inherit;}
 </head>
 <body>
 <div id="phone">
-
-<header class="header">
-  <div class="header-left">
+<header class="header" style="display:flex;align-items:stretch;">
+  <div style="display:flex;align-items:stretch;">
     <button class="logo" onclick="switchView('home')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
       B.E.A.T
     </button>
     <div class="header-divider"></div>
-    <button class="header-tab" data-tab="mypage" onclick="showScreen('mypage')">
-      <span class="htab-icon">👤</span><span class="htab-label">マイページ</span>
-    </button>
-    <button class="header-tab active" data-tab="home" onclick="switchView('home')">
-      <span class="htab-icon">🔴</span><span class="htab-label">ライブ</span>
-      <span class="live-dot"></span>
-    </button>
-    <button class="header-tab" data-tab="mission" onclick="switchView('mission')">
-      <span class="htab-icon">🎯</span><span class="htab-label">ミッション</span>
-    </button>
-    <button class="header-tab" data-tab="cards" onclick="switchView('cards')">
-      <span class="htab-icon">📦</span><span class="htab-label">カード</span>
-    </button>
+    <button class="header-tab" data-tab="mypage" onclick="showScreen('mypage')"><span class="htab-icon">👤</span><span class="htab-label">マイページ</span></button>
+    <button class="header-tab active" data-tab="home" onclick="switchView('home')"><span class="htab-icon">🔴</span><span class="htab-label">ライブ</span><span class="live-dot"></span></button>
+    <button class="header-tab" data-tab="mission" onclick="switchView('mission')"><span class="htab-icon">🎯</span><span class="htab-label">ミッション</span></button>
+    <button class="header-tab" data-tab="cards" onclick="switchView('cards')"><span class="htab-icon">📦</span><span class="htab-label">カード</span></button>
   </div>
-  <div class="header-right">
-    <div class="balance" id="header-balance">10,000pt</div>
-  </div>
+  <div style="display:flex;align-items:center;margin-left:auto;"><div class="balance" id="header-balance">10,000pt</div></div>
 </header>
 
 <div class="scroll-area">
@@ -418,42 +390,17 @@ a{text-decoration:none;color:inherit;}
 <!-- HOME -->
 <div id="view-home" class="view-section active">
   <div class="studio-wrap">
-    <div class="studio-hd">
-      <div class="studio-hd-title">🎙️ B.E.A.T STUDIO</div>
-      <div class="studio-live-badge">🔴 LIVE</div>
-    </div>
+    <div class="studio-hd"><div class="studio-hd-title">🎙️ B.E.A.T STUDIO</div><div class="studio-live-badge">🔴 LIVE</div></div>
     <div class="studio-body">
-      <div class="studio-char-wrap">
-        <div class="studio-char">
-          <div class="studio-desk"></div>
-          <div class="ai-caster">
-            <div class="ai-head"><div>🤖</div><div class="ai-headset">🎧</div></div>
-            <div class="ai-body"></div>
-          </div>
-        </div>
-        <div class="studio-nameplate">BEAT-1</div>
-      </div>
-      <div class="studio-speech-wrap">
-        <div class="studio-bubble"><span id="studioCommentText">日本が3回に追加点！山本由伸は今日も完璧なピッチングを見せています。</span><span class="speech-cursor">|</span></div>
-        <div class="studio-tag" id="studioTag">🎙️ AI解説</div>
-      </div>
+      <div class="studio-char-wrap"><div class="studio-char"><div class="studio-desk"></div><div class="ai-caster"><div class="ai-head"><div>🤖</div><div class="ai-headset">🎧</div></div><div class="ai-body"></div></div></div><div class="studio-nameplate">BEAT-1</div></div>
+      <div class="studio-speech-wrap"><div class="studio-bubble"><span id="studioCommentText">横浜スタジアム！藤浪晋太郎がNPB復帰登板。満員のスタンドが沸いています。</span><span class="speech-cursor">|</span></div><div class="studio-tag" id="studioTag">🎙️ AI解説</div></div>
     </div>
     <div class="studio-actions">
-      <button class="studio-btn active" id="sbtn-live" onclick="studioSelect('live')">
-        <span class="studio-btn-icon">🔴</span><span class="studio-btn-label">ライブ</span>
-      </button>
-      <button class="studio-btn" id="sbtn-result" onclick="studioSelect('result')">
-        <span class="studio-btn-icon">🎯</span><span class="studio-btn-label">予想結果</span>
-      </button>
-      <button class="studio-btn" id="sbtn-news" onclick="studioSelect('news')">
-        <span class="studio-btn-icon">📰</span><span class="studio-btn-label">ニュース</span>
-      </button>
-      <button class="studio-btn" id="sbtn-ucomment" onclick="studioSelect('ucomment')">
-        <span class="studio-btn-icon">💬</span><span class="studio-btn-label">コメント</span>
-      </button>
-      <button class="studio-btn" id="sbtn-chat" onclick="studioSelect('chat')">
-        <span class="studio-btn-icon">🤖</span><span class="studio-btn-label">AIチャット</span>
-      </button>
+      <button class="studio-btn active" id="sbtn-live" onclick="studioSelect('live')"><span class="studio-btn-icon">🔴</span><span class="studio-btn-label">ライブ</span></button>
+      <button class="studio-btn" id="sbtn-result" onclick="studioSelect('result')"><span class="studio-btn-icon">🎯</span><span class="studio-btn-label">予想結果</span></button>
+      <button class="studio-btn" id="sbtn-news" onclick="studioSelect('news')"><span class="studio-btn-icon">📰</span><span class="studio-btn-label">ニュース</span></button>
+      <button class="studio-btn" id="sbtn-ucomment" onclick="studioSelect('ucomment')"><span class="studio-btn-icon">💬</span><span class="studio-btn-label">コメント</span></button>
+      <button class="studio-btn" id="sbtn-chat" onclick="studioSelect('chat')"><span class="studio-btn-icon">🤖</span><span class="studio-btn-label">AIチャット</span></button>
     </div>
   </div>
   <div class="studio-panel">
@@ -462,425 +409,232 @@ a{text-decoration:none;color:inherit;}
       <button id="sp-live-more" class="sp-more-btn" onclick="spLiveShowMore()" style="display:none;">もっと見る ›</button>
     </div>
     <div id="sp-result" class="studio-panel-inner" style="display:none;">
-      <div class="sp-result-row"><span class="sp-result-icon">✅</span><span class="sp-result-label">日本 勝利</span><span class="sp-result-pt won">+225pt</span></div>
-      <div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">東京V 勝利</span><span class="sp-result-pt pending">進行中</span></div>
-      <div class="sp-result-row"><span class="sp-result-icon">❌</span><span class="sp-result-label">マーリンズ 勝利</span><span class="sp-result-pt lost">-300pt</span></div>
-      <div class="sp-result-row"><span class="sp-result-icon">✅</span><span class="sp-result-label">仙台 勝利</span><span class="sp-result-pt won">+800pt</span></div>
+      <div class="sp-result-row"><span class="sp-result-icon">✅</span><span class="sp-result-label">DeNA 勝利</span><span class="sp-result-pt won">+180pt</span></div>
+      <div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">藤浪 5奪三振以上</span><span class="sp-result-pt pending">進行中</span></div>
     </div>
     <div id="sp-news" class="studio-panel-inner" style="display:none;">
-      <div class="sp-news-row"><span class="sp-news-icon">⚾</span><div class="sp-news-info"><div class="sp-news-title">山本由伸、6回1失点で今大会初勝利</div><div class="sp-news-meta">スポーツナビ • 3時間前</div></div></div>
-      <div class="sp-news-row"><span class="sp-news-icon">🏆</span><div class="sp-news-info"><div class="sp-news-title">WBC 日本が台北に快勝、グループ2連勝</div><div class="sp-news-meta">NHK • 4時間前</div></div></div>
-      <div class="sp-news-row"><span class="sp-news-icon">⚽</span><div class="sp-news-info"><div class="sp-news-title">東京V 町田戦、前半1-0でリード</div><div class="sp-news-meta">Jリーグ公式 • 30分前</div></div></div>
+      <div class="sp-news-row"><span class="sp-news-icon">⚾</span><div><div class="sp-news-title">藤浪晋太郎、NPB3年ぶり復帰登板</div><div class="sp-news-meta">スポーツナビ • 本日</div></div></div>
+      <div class="sp-news-row"><span class="sp-news-icon">⚾</span><div><div class="sp-news-title">ビシエド、DeNA移籍後初打席</div><div class="sp-news-meta">横浜DeNA公式 • 本日</div></div></div>
     </div>
     <div id="sp-ucomment" class="studio-panel-inner" style="display:none;">
       <div class="sp-ucomment-list">
-        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">😎</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Taro K.</div>日本絶対勝つ！🔥</div></div>
-        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🌸</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Hana M.</div>大谷が打ちそうな予感</div></div>
-        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🦊</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Ken W.</div>山本が崩れなければ楽勝</div></div>
-        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🎃</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Yuki T.</div>WBC最高に盛り上がってる！</div></div>
-        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🐻</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Masa R.</div>村上の第3打席が鍵だと思う</div></div>
+        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">😎</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Taro K.</div>藤浪復帰登板！テンション上がる🔥</div></div>
+        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🌸</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Hana M.</div>ビシエドのDeNA初打席が見たい！</div></div>
+        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🦊</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Ken W.</div>筒香も出てきた。ハマの大砲復活なるか</div></div>
       </div>
     </div>
     <div id="sp-chat" class="studio-panel-inner" style="display:none;">
       <div class="sp-chat-history" id="homeChatHistory">
         <div class="sp-chat-msg"><span class="sp-chat-avatar">🤖</span><div class="sp-chat-bubble"><div class="sp-chat-name" style="color:#58a6ff;">BEAT-1</div>こんにちは！試合の予想や選手情報など、何でも聞いてください。</div></div>
       </div>
-      <div class="sp-chat-input-row">
-        <input type="text" id="homeChatInput" class="sp-chat-input" placeholder="AIに質問する...">
-        <button class="sp-chat-send" onclick="sendHomeChat()">送信</button>
-      </div>
+      <div class="sp-chat-input-row"><input type="text" id="homeChatInput" class="sp-chat-input" placeholder="AIに質問する..."><button class="sp-chat-send" onclick="sendHomeChat()">送信</button></div>
     </div>
   </div>
   <div class="info-bar-league" onclick="showScreen('rankingDetail')">
-    <span style="display:flex;align-items:center;gap:6px;">
-      <span style="color:#7c3aed;font-weight:bold;font-size:10px;">🏆 Sリーグ 3部</span>
-      <span style="color:var(--accent);font-weight:bold;font-size:10px;">3位</span>
-      <span style="color:#ff6b6b;font-size:9px;">(-15pt)</span>
-    </span>
-    <span style="color:#8b949e;font-size:9px;">残り 1d 24h ›</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="color:#7c3aed;font-weight:bold;font-size:10px;">🏆 Sリーグ 3部</span><span style="color:var(--accent);font-weight:bold;font-size:10px;">3位</span><span style="color:#ff6b6b;font-size:9px;">(-15pt)</span></span>
+    <span style="color:#8b949e;font-size:9px;">残り 1d ›</span>
   </div>
   <div class="info-bar-ticker">
     <span style="font-size:11px;flex-shrink:0;">💬</span>
-    <div class="ticker-track-wrap"><span class="ticker-track">Taro K.が日本 勝利を予想 • Hana M.が大谷HR予想で+500pt獲得 • Ken W.がWBCパック開封 → 大谷EPIC獲得！</span></div>
+    <div class="ticker-track-wrap"><span class="ticker-track">Taro K.が藤浪 5奪三振以上を予想 • Hana M.がビシエド安打予想 • Ken W.がDeNA勝利予想で+320pt獲得！</span></div>
   </div>
   <div class="player-cards-section">
-    <div class="section-header">
-      <span>🃏 選手カード</span>
-      <button class="see-more-btn" onclick="switchView('cards')">すべて見る ›</button>
-    </div>
+    <div class="section-header"><span>🃏 選手カード</span><button class="see-more-btn" onclick="switchView('cards')">すべて見る ›</button></div>
     <div class="player-card-scroll" id="playerCardScroll"></div>
   </div>
 </div>
 
-<!-- WBC DETAIL -->
-<div id="view-wbc" class="view-section" style="display:none;padding:0;">
+<!-- MATCH DETAIL: DeNA vs ロッテ -->
+<div id="view-match" class="view-section" style="display:none;padding:0;">
   <div class="match-detail-topbar">
     <button class="md-back-btn" onclick="switchView('home')">← ホームに戻る</button>
   </div>
-  <div style="padding:10px;">
-    <!-- ライブヘッダ -->
-    <div class="live-header-card">
-      <div class="live-status-bar">
-        <span style="color:var(--text-sub);" id="wbc-meta">WBC2026 準々決勝 • ローンデポ・パーク</span>
-        <span style="display:flex;align-items:center;gap:4px;font-weight:bold;color:#fff;"><span class="live-badge-anim">●</span> <span id="wbc-inning">LIVE 5回表</span></span>
+
+  <!-- スコアカード -->
+  <div style="padding:10px 10px 8px;">
+    <div class="score-card">
+      <div class="score-card-meta">
+        <span style="color:var(--text-sub);">NPB 2回戦 • 横浜スタジアム</span>
+        <span style="display:flex;align-items:center;gap:4px;font-weight:bold;color:#fff;font-size:10px;"><span class="live-badge-anim">●</span><span id="match-inning-label">試合前</span></span>
       </div>
-      <div class="live-teams-score">
-        <div class="live-team"><div class="live-team-flag" id="wbc-home-flag">🇯🇵</div><div class="live-team-name" id="wbc-home-name">日本</div></div>
-        <div class="live-score-area"><span id="wbc-home-score">2</span><span style="font-size:16px;color:#8b949e;">-</span><span id="wbc-away-score">1</span></div>
-        <div class="live-team"><div class="live-team-flag" id="wbc-away-flag">🇻🇪</div><div class="live-team-name" id="wbc-away-name">ベネズエラ</div></div>
+      <div class="score-teams-row">
+        <div class="score-team">
+          <div class="score-team-flag">⭐</div>
+          <div class="score-team-name">横浜DeNA</div>
+        </div>
+        <div class="score-center">
+          <span class="score-num" id="score-home">0</span>
+          <span class="score-sep">-</span>
+          <span class="score-num" id="score-away">0</span>
+        </div>
+        <div class="score-team">
+          <div class="score-team-flag">🦁</div>
+          <div class="score-team-name">千葉ロッテ</div>
+        </div>
       </div>
-      <!-- 配信情報 -->
-      <div style="display:flex;align-items:center;gap:6px;margin-top:6px;padding-top:6px;border-top:1px solid #30363d;">
-        <span style="background:#e50914;color:#fff;font-size:8px;font-weight:bold;padding:2px 7px;border-radius:3px;">N Netflix</span>
-        <span style="font-size:9px;color:#8b949e;">ライブ配信中</span>
-        <span style="font-size:9px;color:#8b949e;margin-left:auto;">👥 <span id="wbc-participants">8,821</span>人が予想中</span>
+      <!-- BSO + 塁 -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <div class="bso-row" style="flex:1;" id="bso-row">
+          <div class="bso-item"><span class="bso-label">B</span><span class="bso-dot" id="b1"></span><span class="bso-dot" id="b2"></span><span class="bso-dot" id="b3"></span></div>
+          <div class="bso-item"><span class="bso-label">S</span><span class="bso-dot" id="s1"></span><span class="bso-dot" id="s2"></span></div>
+          <div class="bso-item"><span class="bso-label">O</span><span class="bso-dot" id="o1"></span><span class="bso-dot" id="o2"></span></div>
+        </div>
+        <!-- ダイヤモンド塁表示 -->
+        <div class="bases-wrap">
+          <div class="base-diamond base-2b" id="base-2b"></div>
+          <div class="base-diamond base-1b" id="base-1b"></div>
+          <div class="base-diamond base-3b" id="base-3b"></div>
+        </div>
+        <div style="font-size:9px;color:#8b949e;min-width:40px;text-align:right;" id="match-runners">走者なし</div>
+      </div>
+      <!-- スコアボード -->
+      <div class="sb-wrap">
+        <table class="sb-table" id="scoreboard"></table>
       </div>
     </div>
+  </div>
 
+  <!-- AI STUDIO -->
+  <div style="padding:0 10px 8px;">
+    <div class="studio-wrap">
+      <div class="studio-hd"><div class="studio-hd-title">🎙️ B.E.A.T STUDIO</div><div class="studio-live-badge">🔴 LIVE</div></div>
+      <div class="studio-body">
+        <div class="studio-char-wrap"><div class="studio-char"><div class="studio-desk"></div><div class="ai-caster"><div class="ai-head"><div>🤖</div><div class="ai-headset">🎧</div></div><div class="ai-body"></div></div></div><div class="studio-nameplate">BEAT-1</div></div>
+        <div class="studio-speech-wrap"><div class="studio-bubble"><span id="matchStudioText">横浜スタジアム満員！藤浪晋太郎がNPB3年ぶり復帰登板。先頭は和田康士朗。</span><span class="speech-cursor">|</span></div><div class="studio-tag" id="matchStudioTag">🎙️ 実況</div></div>
+      </div>
+      <div style="display:flex;border-top:1px solid rgba(200,0,0,0.3);background:rgba(0,0,0,0.3);">
+        <button class="studio-btn active" id="msbtn-live" onclick="matchStudioTab('live')"><span class="studio-btn-icon">🔴</span><span class="studio-btn-label">実況</span></button>
+        <button class="studio-btn" id="msbtn-result" onclick="matchStudioTab('result')"><span class="studio-btn-icon">🎯</span><span class="studio-btn-label">予想結果</span></button>
+        <button class="studio-btn" id="msbtn-ucomment" onclick="matchStudioTab('ucomment')"><span class="studio-btn-icon">💬</span><span class="studio-btn-label">コメント</span></button>
+        <button class="studio-btn" id="msbtn-chat" onclick="matchStudioTab('chat')"><span class="studio-btn-icon">🤖</span><span class="studio-btn-label">AIチャット</span></button>
+      </div>
+    </div>
+    <div style="background:#0d1117;border:1px solid #30363d;border-top:none;border-radius:0 0 8px 8px;">
+      <!-- 実況パネル -->
+      <div id="msp-live" style="padding:8px 10px;">
+        <div style="font-size:9px;color:#8b949e;margin-bottom:6px;">⚾ 1球速報</div>
+        <div id="pitch-log" style="display:flex;flex-direction:column;gap:4px;max-height:160px;overflow-y:auto;">
+          <div style="font-size:10px;color:#8b949e;text-align:center;padding:8px;">「試合を進める」ボタンを押してください</div>
+        </div>
+      </div>
+      <div id="msp-result" style="display:none;padding:8px 10px;">
+        <div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">DeNA 勝利予想</span><span class="sp-result-pt pending">進行中</span></div>
+        <div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">藤浪 5奪三振以上</span><span class="sp-result-pt pending">進行中</span></div>
+      </div>
+      <div id="msp-ucomment" style="display:none;padding:8px 10px;">
+        <div class="sp-ucomment-list">
+          <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">😎</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Taro K.</div>藤浪152km/h！さすがメジャー帰り🔥</div></div>
+          <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🌸</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Hana M.</div>ビシエドDeNA初打席楽しみ！</div></div>
+          <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🦊</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Ken W.</div>筒香の応援歌いいなぁ</div></div>
+        </div>
+      </div>
+      <div id="msp-chat" style="display:none;padding:8px 10px;">
+        <div class="sp-chat-history" id="matchChatHistory">
+          <div class="sp-chat-msg"><span class="sp-chat-avatar">🤖</span><div class="sp-chat-bubble"><div class="sp-chat-name" style="color:#58a6ff;">BEAT-1</div>試合について何でも聞いてください！</div></div>
+        </div>
+        <div class="sp-chat-input-row" style="margin-top:7px;">
+          <input type="text" id="matchChatInput" class="sp-chat-input" placeholder="試合について質問する...">
+          <button class="sp-chat-send" onclick="sendMatchChat()">送信</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- タブ -->
+  <div style="padding:0 10px;">
     <div class="tabs">
-      <div class="tab active" onclick="switchTab('match')">予想する</div>
-      <div class="tab" onclick="switchTab('stats')">データ</div>
-      <div class="tab" onclick="switchTab('h2h')">過去の成績</div>
-      <div class="tab" onclick="switchTab('lineup')">出場選手</div>
+      <div class="tab active" onclick="matchTab('predict')">予想する</div>
+      <div class="tab" onclick="matchTab('data')">データ</div>
+      <div class="tab" onclick="matchTab('lineup')">出場選手</div>
     </div>
-
-    <div id="tab-content-match">
-      <!-- ⭐ ライブ予想 -->
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
-        <span style="background:var(--live);color:#fff;font-size:8px;font-weight:bold;padding:2px 7px;border-radius:3px;animation:pulseDot 1s infinite;">LIVE</span>
-        <span style="font-size:12px;font-weight:bold;color:#e6edf3;">⭐ ライブ予想</span>
-        <span style="font-size:9px;color:#8b949e;margin-left:auto;">リアルタイム更新中</span>
-      </div>
-
-      <div class="market-group" style="background:rgba(255,59,48,0.05);border:1px solid rgba(255,59,48,0.25);border-radius:8px;padding:10px;margin-bottom:14px;">
-        <div class="market-header" style="margin-bottom:8px;">
-          <div class="market-title">🏟️ 大谷の打席結果は？<span class="difficulty-badge easy">ライブ</span></div>
+    <!-- 予想タブ -->
+    <div id="mt-predict">
+      <div class="market-group">
+        <div class="market-header"><div class="market-title">🏆 勝敗予想<span class="difficulty-badge easy">かんたん</span></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+          <button class="odds-btn" data-id="m-dena" data-market="勝敗" data-selection="DeNA勝利" data-odds="1.85"><span class="odds-label">⭐ DeNA勝利</span><span class="odds-value">1.85</span></button>
+          <button class="odds-btn" data-id="m-lotte" data-market="勝敗" data-selection="ロッテ勝利" data-odds="1.95"><span class="odds-label">🦁 ロッテ勝利</span><span class="odds-value">1.95</span></button>
         </div>
+      </div>
+      <div class="market-group">
+        <div class="market-header"><div class="market-title">⚾ 藤浪奪三振数<span class="difficulty-badge medium">ふつう</span></div></div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
-          <button class="odds-btn" data-id="live-so"   data-market="大谷打席結果" data-selection="三振"     data-odds="2.32">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">三振</span><span class="odds-value">2.32</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="live-gb"   data-market="大谷打席結果" data-selection="内野ゴロ"  data-odds="1.23">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">内野ゴロ</span><span class="odds-value">1.23</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="live-fb"   data-market="大谷打席結果" data-selection="外野フライ" data-odds="1.23">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">外野フライ</span><span class="odds-value">1.23</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="live-hit"  data-market="大谷打席結果" data-selection="ヒット"    data-odds="2.12">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">ヒット</span><span class="odds-value">2.12</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="live-2b"   data-market="大谷打席結果" data-selection="二塁打"    data-odds="2.32">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">二塁打</span><span class="odds-value">2.32</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="live-hr"   data-market="大谷打席結果" data-selection="ホームラン" data-odds="3.43">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">ホームラン</span><span class="odds-value" style="color:#ff6b00;">3.43</span>
-            </div>
-          </button>
+          <button class="odds-btn" data-id="fj-k0" data-market="藤浪三振" data-selection="0-2個" data-odds="3.20"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">0-2個</span><span class="odds-value" style="font-size:11px;">3.20</span></div></button>
+          <button class="odds-btn" data-id="fj-k3" data-market="藤浪三振" data-selection="3-5個" data-odds="1.65"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">3-5個</span><span class="odds-value" style="font-size:11px;">1.65</span></div></button>
+          <button class="odds-btn" data-id="fj-k6" data-market="藤浪三振" data-selection="6個以上" data-odds="2.10"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">6個〜</span><span class="odds-value" style="font-size:11px;">2.10</span></div></button>
         </div>
       </div>
-
-      <!-- ⭐ 事前予想 -->
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
-        <span style="font-size:12px;font-weight:bold;color:#e6edf3;">⭐ 事前予想</span>
-      </div>
-
-      <!-- 勝敗予想 -->
       <div class="market-group">
-        <div class="market-header">
-          <div class="market-title">🏆 勝敗予想<span class="difficulty-badge easy">かんたん</span></div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
-          <button class="odds-btn" data-id="ven-jp-win" data-market="勝敗予想" data-selection="日本勝利" data-odds="1.55">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">日本勝利</span><span class="odds-value">1.55</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="ven-draw"   data-market="勝敗予想" data-selection="引き分け" data-odds="9.0">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">引き分け</span><span class="odds-value">9.00</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="ven-ve-win" data-market="勝敗予想" data-selection="ベネズエラ勝利" data-odds="2.87">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">ベネズエラ</span><span class="odds-value">2.87</span>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      <!-- スコア差 -->
-      <div class="market-group">
-        <div class="market-header">
-          <div class="market-title">📊 スコア差<span class="difficulty-badge medium">ふつう</span></div>
-        </div>
-        <div class="odds-grid">
-          <button class="odds-btn" data-id="ven-jp-5up"  data-market="スコア差" data-selection="日本 5点差以上"       data-odds="4.3">
-            <div style="display:flex;flex-direction:column;gap:2px;width:100%;">
-              <span class="odds-label">🇯🇵 5点差以上</span><span class="odds-value">4.30</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="ven-ve-4in"  data-market="スコア差" data-selection="ベネズエラ 4点差以内"   data-odds="1.2">
-            <div style="display:flex;flex-direction:column;gap:2px;width:100%;">
-              <span class="odds-label">🇻🇪 4点差以内</span><span class="odds-value">1.20</span>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      <!-- 1〜5回 -->
-      <div class="market-group">
-        <div class="market-header">
-          <div class="market-title">⚾ 1〜5回 優勢チーム<span class="difficulty-badge medium">ふつう</span></div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
-          <button class="odds-btn" data-id="ven-jp-h1"   data-market="1〜5回優勢" data-selection="日本優勢"       data-odds="1.66">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">🇯🇵 日本</span><span class="odds-value">1.66</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="ven-draw-h1" data-market="1〜5回優勢" data-selection="引き分け"        data-odds="5.5">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">引き分け</span><span class="odds-value">5.50</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="ven-ve-h1"   data-market="1〜5回優勢" data-selection="ベネズエラ優勢"   data-odds="3.0">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">🇻🇪 VEN</span><span class="odds-value">3.00</span>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      <!-- 大谷安打数 -->
-      <div class="market-group">
-        <div class="market-header">
-          <div class="market-title">🏅 大谷安打数<span class="difficulty-badge medium">ふつう</span></div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">
-          <button class="odds-btn" data-id="ohtani-h0" data-market="大谷安打数" data-selection="0本" data-odds="2.12">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">0本</span><span class="odds-value" style="font-size:11px;">2.12</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="ohtani-h1" data-market="大谷安打数" data-selection="1本" data-odds="1.75">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">1本</span><span class="odds-value" style="font-size:11px;">1.75</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="ohtani-h2" data-market="大谷安打数" data-selection="2本" data-odds="2.30">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">2本</span><span class="odds-value" style="font-size:11px;">2.30</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="ohtani-h3" data-market="大谷安打数" data-selection="3本以上" data-odds="3.23">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">3本〜</span><span class="odds-value" style="font-size:11px;">3.23</span>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      <!-- 山本奪三振数 -->
-      <div class="market-group">
-        <div class="market-header">
-          <div class="market-title">🔥 山本奪三振数<span class="difficulty-badge medium">ふつう</span></div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">
-          <button class="odds-btn" data-id="yama-k0" data-market="山本奪三振数" data-selection="0-2個" data-odds="2.12">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">0-2個</span><span class="odds-value" style="font-size:11px;">2.12</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="yama-k3" data-market="山本奪三振数" data-selection="3-5個" data-odds="1.32">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">3-5個</span><span class="odds-value" style="font-size:11px;">1.32</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="yama-k6" data-market="山本奪三振数" data-selection="6-8個" data-odds="1.43">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">6-8個</span><span class="odds-value" style="font-size:11px;">1.43</span>
-            </div>
-          </button>
-          <button class="odds-btn" data-id="yama-k9" data-market="山本奪三振数" data-selection="9個以上" data-odds="2.23">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;">
-              <span style="font-size:9px;color:var(--text-sub);">9個〜</span><span class="odds-value" style="font-size:11px;">2.23</span>
-            </div>
-          </button>
+        <div class="market-header"><div class="market-title">🦸 ビシエド 初打席<span class="difficulty-badge easy">注目</span></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+          <button class="odds-btn" data-id="bv-hit" data-market="ビシエド初打席" data-selection="安打" data-odds="2.40"><span class="odds-label">安打を打つ</span><span class="odds-value">2.40</span></button>
+          <button class="odds-btn" data-id="bv-nohit" data-market="ビシエド初打席" data-selection="凡退" data-odds="1.55"><span class="odds-label">凡退する</span><span class="odds-value">1.55</span></button>
         </div>
       </div>
     </div>
+    <!-- データタブ -->
+    <div id="mt-data" style="display:none;">
+      <div class="pb-grid" style="margin-bottom:10px;">
+        <div class="pb-card"><div class="pb-label">投手</div><div class="pb-name" id="cur-pitcher">藤浪 晋太郎</div><div class="pb-sub" id="cur-pitcher-sub">NPB復帰登板</div></div>
+        <div class="pb-card"><div class="pb-label">打者</div><div class="pb-name" id="cur-batter">—</div><div class="pb-sub" id="cur-batter-sub">試合前</div></div>
+      </div>
+      <div style="font-size:10px;color:#8b949e;margin-bottom:6px;">事前情報</div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:10px;font-size:10px;color:#8b949e;line-height:1.8;">
+        ☀️ 天気：晴れ、気温36度、ライト→レフトへ強風<br>
+        🏟️ 横浜スタジアム満員・立ち見あり<br>
+        🎯 千葉ロッテ首位、2位Gとゲーム差1<br>
+        ⭐ DeNA：35勝49敗 現在6位<br>
+        👤 藤浪晋太郎：メジャー後NPB3年ぶり復帰<br>
+        👤 ビシエド：中日から移籍、本日DeNA初打席
+      </div>
+    </div>
+    <!-- 出場選手タブ -->
+    <div id="mt-lineup" style="display:none;">
+      <div style="font-size:10px;color:#8b949e;margin-bottom:6px;">🦁 千葉ロッテ打順</div>
+      <table style="width:100%;border-collapse:collapse;font-size:10px;margin-bottom:10px;">
+        <thead><tr style="background:var(--bg-sidebar);"><th style="padding:5px 6px;text-align:center;width:22px;color:#8b949e;font-weight:normal;">#</th><th style="padding:5px 6px;text-align:center;width:22px;color:#8b949e;font-weight:normal;">守</th><th style="padding:5px 6px;text-align:left;color:#8b949e;font-weight:normal;">選手</th></tr></thead>
+        <tbody>
+          ${[['1','中','和田 康士朗'],['2','捕','佐藤 都志也'],['3','内','谷村 剛'],['4','指','角中 勝也'],['5','遊','茶谷 健太'],['6','外','山口 航輝'],['7','外','石川 慎吾'],['8','外','松石 信八'],['9','内','藤田 和樹']].map(([n,p,nm])=>`<tr style="border-bottom:1px solid #21262d;"><td style="padding:6px;text-align:center;color:#8b949e;">${n}</td><td style="padding:6px;text-align:center;color:#f5a623;font-weight:bold;">${p}</td><td style="padding:6px;color:#58a6ff;font-weight:bold;">${nm}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      <div style="font-size:10px;color:#8b949e;margin-bottom:6px;">⭐ 横浜DeNA打順</div>
+      <table style="width:100%;border-collapse:collapse;font-size:10px;">
+        <thead><tr style="background:var(--bg-sidebar);"><th style="padding:5px 6px;text-align:center;width:22px;color:#8b949e;font-weight:normal;">#</th><th style="padding:5px 6px;text-align:center;width:22px;color:#8b949e;font-weight:normal;">守</th><th style="padding:5px 6px;text-align:left;color:#8b949e;font-weight:normal;">選手</th></tr></thead>
+        <tbody>
+          ${[['1','外','梶原 昂希'],['2','外','度会 隆輝'],['3','一','ビシエド'],['4','捕','筒香 嘉智'],['5','外','加藤 響'],['6','捕','伊藤 光'],['7','外','東妻 純平'],['8','内','西巻 賢二'],['9','内','田内 真翔']].map(([n,p,nm])=>`<tr style="border-bottom:1px solid #21262d;"><td style="padding:6px;text-align:center;color:#8b949e;">${n}</td><td style="padding:6px;text-align:center;color:#f5a623;font-weight:bold;">${p}</td><td style="padding:6px;color:#58a6ff;font-weight:bold;">${nm}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-    <div id="tab-content-stats" style="display:none;padding:0;">
-      <!-- 試合状況 -->
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;">
-        <div style="font-size:11px;font-weight:bold;color:#e6edf3;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
-          <span style="background:var(--live);color:#fff;font-size:8px;font-weight:bold;padding:1px 5px;border-radius:3px;animation:pulseDot 1s infinite;">LIVE</span>
-          3回裏 — ノーアウト 走者なし
-        </div>
-        <!-- BSO -->
-        <div style="display:flex;gap:12px;background:#0d1117;border-radius:6px;padding:7px 10px;margin-bottom:8px;font-size:10px;">
-          <div style="display:flex;align-items:center;gap:4px;"><span style="color:#8b949e;width:12px;">B</span><span style="width:9px;height:9px;border-radius:50%;background:#3fb950;display:inline-block;"></span><span style="width:9px;height:9px;border-radius:50%;background:#21262d;display:inline-block;"></span><span style="width:9px;height:9px;border-radius:50%;background:#21262d;display:inline-block;"></span></div>
-          <div style="display:flex;align-items:center;gap:4px;"><span style="color:#8b949e;width:12px;">S</span><span style="width:9px;height:9px;border-radius:50%;background:#f5a623;display:inline-block;"></span><span style="width:9px;height:9px;border-radius:50%;background:#21262d;display:inline-block;"></span></div>
-          <div style="display:flex;align-items:center;gap:4px;"><span style="color:#8b949e;width:12px;">O</span><span style="width:9px;height:9px;border-radius:50%;background:#21262d;display:inline-block;"></span><span style="width:9px;height:9px;border-radius:50%;background:#21262d;display:inline-block;"></span></div>
-        </div>
-        <!-- 投打 -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
-          <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px 8px;">
-            <div style="font-size:8px;color:#8b949e;margin-bottom:2px;">投手（日本）</div>
-            <div style="font-size:11px;font-weight:bold;color:#e6edf3;">山本 由伸</div>
-            <div style="font-size:9px;color:#8b949e;">2回 防御率 4.50</div>
-          </div>
-          <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px 8px;">
-            <div style="font-size:8px;color:#8b949e;margin-bottom:2px;">打者（ベネズエラ）</div>
-            <div style="font-size:11px;font-weight:bold;color:#e6edf3;">R.アクーニャJr.</div>
-            <div style="font-size:9px;color:#8b949e;">1番 右 .294</div>
-          </div>
-        </div>
-        <!-- スコアボード -->
-        <div style="overflow-x:auto;border:1px solid #30363d;border-radius:6px;">
-          <table style="width:100%;border-collapse:collapse;font-size:9px;text-align:center;white-space:nowrap;">
-            <thead>
-              <tr style="background:#161b22;color:#8b949e;">
-                <th style="text-align:left;padding:4px 8px;border-right:1px solid #30363d;">チーム</th>
-                <th style="padding:4px 5px;border-right:1px solid #30363d;">1</th>
-                <th style="padding:4px 5px;border-right:1px solid #30363d;">2</th>
-                <th style="padding:4px 5px;border-right:1px solid #30363d;background:#1c2820;">3</th>
-                <th style="padding:4px 5px;border-right:2px solid #30363d;"></th>
-                <th style="padding:4px 5px;border-right:1px solid #30363d;font-weight:bold;color:#e6edf3;">R</th>
-                <th style="padding:4px 5px;border-right:1px solid #30363d;">H</th>
-                <th style="padding:4px 5px;">E</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="color:#e6edf3;border-top:1px solid #21262d;">
-                <td style="text-align:left;padding:4px 8px;border-right:1px solid #30363d;">🇯🇵 日本</td>
-                <td style="padding:4px 5px;border-right:1px solid #30363d;">1</td>
-                <td style="padding:4px 5px;border-right:1px solid #30363d;">0</td>
-                <td style="padding:4px 5px;border-right:1px solid #30363d;background:#1c2820;">—</td>
-                <td style="border-right:2px solid #30363d;"></td>
-                <td style="padding:4px 5px;border-right:1px solid #30363d;font-weight:bold;color:#3fb950;">1</td>
-                <td style="padding:4px 5px;border-right:1px solid #30363d;">3</td>
-                <td style="padding:4px 5px;">0</td>
-              </tr>
-              <tr style="color:#e6edf3;border-top:1px solid #21262d;">
-                <td style="text-align:left;padding:4px 8px;border-right:1px solid #30363d;">🇻🇪 VEN</td>
-                <td style="padding:4px 5px;border-right:1px solid #30363d;">1</td>
-                <td style="padding:4px 5px;border-right:1px solid #30363d;">1</td>
-                <td style="padding:4px 5px;border-right:1px solid #30363d;background:#1c2820;">—</td>
-                <td style="border-right:2px solid #30363d;"></td>
-                <td style="padding:4px 5px;border-right:1px solid #30363d;font-weight:bold;color:#f5a623;">2</td>
-                <td style="padding:4px 5px;border-right:1px solid #30363d;">5</td>
-                <td style="padding:4px 5px;">0</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <!-- 試合進行ボタン（スティッキー） -->
+  <div class="advance-btn-wrap">
+    <button class="advance-btn" id="advance-btn" onclick="advancePitch()">
+      <div>
+        <div>▶ 試合を進める</div>
+        <div class="advance-btn-sub" id="advance-btn-sub">1回表 先頭：和田 康士朗</div>
       </div>
-    </div>
-    <div id="tab-content-h2h" style="display:none;padding:1rem 0;">
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px;">
-        <div style="font-size:11px;font-weight:bold;color:#e6edf3;margin-bottom:8px;">🇯🇵 日本 vs 🇻🇪 ベネズエラ 直近対戦</div>
-        <div style="font-size:10px;color:#8b949e;line-height:1.8;">
-          2023 WBC 準決勝 — 日本 6-5 ベネズエラ（延長10回）<br>
-          2021 オリンピック — ベネズエラ 3-1 日本<br>
-          2017 WBC — 日本 6-3 ベネズエラ
-        </div>
-      </div>
-    </div>
-    <div id="tab-content-lineup" style="display:none;padding:0;">
-      <!-- チーム切替 -->
-      <div style="display:flex;border-bottom:1px solid var(--border);background:var(--bg-sidebar);">
-        <button onclick="showLineup('jp')" id="ltab-jp" style="flex:1;padding:8px 4px;background:none;border:none;border-bottom:2px solid var(--accent);color:var(--accent);font-size:11px;font-weight:bold;cursor:pointer;">🇯🇵 日本</button>
-        <button onclick="showLineup('ven')" id="ltab-ven" style="flex:1;padding:8px 4px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-sub);font-size:11px;cursor:pointer;">🇻🇪 ベネズエラ</button>
-      </div>
-      <!-- 日本 -->
-      <div id="lineup-jp" style="padding:0;">
-        <table style="width:100%;border-collapse:collapse;">
-          <thead>
-            <tr style="background:var(--bg-sidebar);">
-              <th style="padding:7px 8px;font-size:10px;color:#8b949e;font-weight:normal;text-align:center;width:24px;"></th>
-              <th style="padding:7px 8px;font-size:10px;color:#8b949e;font-weight:normal;text-align:center;width:24px;"></th>
-              <th style="padding:7px 8px;font-size:10px;color:#8b949e;font-weight:normal;text-align:left;">選手名</th>
-              <th style="padding:7px 8px;font-size:10px;color:#8b949e;font-weight:normal;text-align:center;width:28px;"></th>
-              <th style="padding:7px 8px;font-size:10px;color:#8b949e;font-weight:normal;text-align:right;width:46px;">打率</th>
-            </tr>
-          </thead>
-          <tbody id="lineup-jp-body"></tbody>
-        </table>
-      </div>
-      <!-- ベネズエラ -->
-      <div id="lineup-ven" style="display:none;padding:0;">
-        <table style="width:100%;border-collapse:collapse;">
-          <thead>
-            <tr style="background:var(--bg-sidebar);">
-              <th style="padding:7px 8px;font-size:10px;color:#8b949e;font-weight:normal;text-align:center;width:24px;"></th>
-              <th style="padding:7px 8px;font-size:10px;color:#8b949e;font-weight:normal;text-align:center;width:24px;"></th>
-              <th style="padding:7px 8px;font-size:10px;color:#8b949e;font-weight:normal;text-align:left;">選手名</th>
-              <th style="padding:7px 8px;font-size:10px;color:#8b949e;font-weight:normal;text-align:center;width:28px;"></th>
-              <th style="padding:7px 8px;font-size:10px;color:#8b949e;font-weight:normal;text-align:right;width:46px;">打率</th>
-            </tr>
-          </thead>
-          <tbody id="lineup-ven-body"></tbody>
-        </table>
-      </div>
-    </div>
+      <div style="font-size:18px;">⚾</div>
+    </button>
   </div>
 </div>
 
 <!-- MYPAGE -->
 <div id="view-mypage" class="view-section" style="display:none;padding:0;">
-  <div style="background:linear-gradient(160deg,#0a0a0a,#1a0000 50%,#0d0d1a);border-bottom:1px solid #cc0000;padding:16px 14px 0;">
+  <div style="background:linear-gradient(160deg,#0a0a0a,#1a0000 50%,#0d0d1a);border-bottom:1px solid #cc0000;padding:16px 14px 12px;">
     <div style="display:flex;align-items:flex-end;gap:14px;margin-bottom:10px;">
-      <div style="flex-shrink:0;text-align:center;">
-        <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#1a3a6a,#0d1f3c);border:3px solid #cc0000;display:flex;align-items:center;justify-content:center;font-size:36px;filter:drop-shadow(0 0 10px rgba(255,80,0,0.5));margin-bottom:4px;">🤖</div>
-        <div style="font-size:8px;color:#cc0000;font-weight:bold;letter-spacing:2px;font-family:monospace;">BEAT-1</div>
-      </div>
-      <div style="flex:1;padding-bottom:6px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:1px;">BEAT-1</span>
-          <span style="background:#cc0000;color:#fff;font-size:8px;font-weight:bold;padding:1px 6px;border-radius:3px;animation:liveBlink 1s infinite;">AI</span>
-        </div>
-        <div style="font-size:10px;color:#8b949e;margin-bottom:6px;">スポーツ予想AIアナリスト</div>
-        <div style="font-size:11px;color:#e6edf3;line-height:1.5;">試合データ・選手情報をリアルタイムで分析。あなたの予想を強力にサポートします。</div>
-      </div>
+      <div style="flex-shrink:0;text-align:center;"><div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#1a3a6a,#0d1f3c);border:3px solid #cc0000;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:4px;">🤖</div><div style="font-size:8px;color:#cc0000;font-weight:bold;letter-spacing:2px;font-family:monospace;">BEAT-1</div></div>
+      <div style="flex:1;padding-bottom:6px;"><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;">BEAT-1</span><span style="background:#cc0000;color:#fff;font-size:8px;font-weight:bold;padding:1px 6px;border-radius:3px;animation:liveBlink 1s infinite;">AI</span></div><div style="font-size:10px;color:#8b949e;margin-bottom:6px;">スポーツ予想AIアナリスト</div><div style="font-size:11px;color:#e6edf3;line-height:1.5;">試合データ・選手情報をリアルタイムで分析。</div></div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#30363d;border-radius:8px;overflow:hidden;margin-bottom:10px;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#30363d;border-radius:8px;overflow:hidden;">
       <div style="background:#0d1117;padding:8px;text-align:center;"><div style="font-size:15px;font-weight:bold;color:#f5a623;font-family:'Roboto Mono',monospace;">12,840</div><div style="font-size:8px;color:#8b949e;margin-top:2px;">解析試合数</div></div>
       <div style="background:#0d1117;padding:8px;text-align:center;"><div style="font-size:15px;font-weight:bold;color:#3fb950;font-family:'Roboto Mono',monospace;">73.2%</div><div style="font-size:8px;color:#8b949e;margin-top:2px;">予想的中率</div></div>
-      <div style="background:#0d1117;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:bold;color:#58a6ff;font-family:'Roboto Mono',monospace;">NPB/WBC</div><div style="font-size:8px;color:#8b949e;margin-top:2px;">得意ジャンル</div></div>
+      <div style="background:#0d1117;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:bold;color:#58a6ff;font-family:'Roboto Mono',monospace;">NPB</div><div style="font-size:8px;color:#8b949e;margin-top:2px;">得意ジャンル</div></div>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;">
-      <span style="background:#1a2a3a;border:1px solid #58a6ff;color:#58a6ff;font-size:9px;padding:2px 7px;border-radius:10px;">⚾ 野球分析</span>
-      <span style="background:#1a2a1a;border:1px solid #3fb950;color:#3fb950;font-size:9px;padding:2px 7px;border-radius:10px;">📊 データ解説</span>
-      <span style="background:#2a1a00;border:1px solid #f5a623;color:#f5a623;font-size:9px;padding:2px 7px;border-radius:10px;">🎯 予想サポート</span>
-      <span style="background:#1a001a;border:1px solid #7c3aed;color:#7c3aed;font-size:9px;padding:2px 7px;border-radius:10px;">🌟 選手情報</span>
-    </div>
-    <div style="height:4px;"></div>
   </div>
-  <div class="mp-section">
-    <div class="mp-section-title">📊 あなたの成績</div>
-    <div class="mp-stats-grid">
-      <div class="mp-stat-card"><div class="mp-stat-label">今月のポイント</div><div><span class="mp-stat-pt positive">+3,240pt</span></div><div class="mp-stat-sub">3位/20人</div></div>
-      <div class="mp-stat-card"><div class="mp-stat-label">的中率</div><div><span class="mp-stat-pt positive">58%</span></div><div class="mp-stat-sub">12戦 7勝 5敗</div></div>
-    </div>
-    <div class="mp-progress-wrap"><div class="mp-progress-bar" style="width:68%"></div></div>
-    <div class="mp-progress-label">順位アップまで 5pt</div>
-  </div>
-  <div class="mp-section"><div class="mp-section-header"><span class="mp-section-title">🎯 直近の予想</span><button class="mp-link-btn">すべて見る ›</button></div><div id="mpBetList"></div></div>
-  <div class="mp-section"><div class="mp-section-title">⚾ 予想中の試合</div><div id="mpActiveBets"></div></div>
-  <div class="mp-section"><div class="mp-section-title">👥 フレンドの予想</div><div id="mpFriendList"></div></div>
-  <div class="mp-section"><div class="mp-section-header"><span class="mp-section-title">🏆 リーグランキング</span><span style="font-size:9px;color:#8b949e;">Sリーグ 3部 残り 3日</span></div><div class="league-ranking-wrap" style="margin-top:6px;"><div id="mpLeagueList"></div></div></div>
+  <div class="mp-section"><div class="mp-section-title">📊 あなたの成績</div><div class="mp-stats-grid"><div class="mp-stat-card"><div class="mp-stat-label">今月のポイント</div><div><span class="mp-stat-pt positive">+3,240pt</span></div><div class="mp-stat-sub">3位/20人</div></div><div class="mp-stat-card"><div class="mp-stat-label">的中率</div><div><span class="mp-stat-pt positive">58%</span></div><div class="mp-stat-sub">12戦 7勝 5敗</div></div></div><div class="mp-progress-wrap"><div class="mp-progress-bar" style="width:68%"></div></div><div class="mp-progress-label">順位アップまで 5pt</div></div>
+  <div class="mp-section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;"><span class="mp-section-title">🎯 直近の予想</span><button style="background:none;border:none;color:var(--accent);font-size:10px;cursor:pointer;">すべて見る ›</button></div><div id="mpBetList"></div></div>
+  <div class="mp-section"><div class="mp-section-title">🏆 リーグランキング</div><div class="league-ranking-wrap" style="margin-top:6px;"><div id="mpLeagueList"></div></div></div>
 </div>
 
 <!-- CARDS -->
@@ -901,14 +655,12 @@ a{text-decoration:none;color:inherit;}
 </div>
 
 <!-- MISSION -->
-<div id="view-mission" class="view-section" style="display:none;padding:10px;">
-  <div id="mission-container"></div>
-</div>
+<div id="view-mission" class="view-section" style="display:none;padding:10px;"><div id="mission-container"></div></div>
 
 <!-- RANKING DETAIL -->
 <div id="rankingDetail" class="view-section" style="display:none;padding:0;">
-  <div class="rd-header"><button class="rd-back" onclick="showScreen('home')">← 戻る</button><span class="rd-title">🏆 Sリーグ 3部 ランキング</span><span class="rd-timer">残り 1d 24h</span></div>
-  <div class="rd-trophy-row"><div class="rd-trophy">🥇</div><div class="rd-trophy">🥈</div><div class="rd-trophy">🏆</div><div class="rd-trophy locked">🔒</div><div class="rd-trophy locked">🔒</div></div>
+  <div class="rd-header"><button class="rd-back" onclick="showScreen('home')">← 戻る</button><span class="rd-title">🏆 Sリーグ 3部</span><span class="rd-timer">残り 1d</span></div>
+  <div class="rd-trophy-row"><div class="rd-trophy">🥇</div><div class="rd-trophy">🥈</div><div class="rd-trophy">🏆</div><div class="rd-trophy locked">🔒</div></div>
   <div class="rd-zone-up">▲ 昇格ゾーン</div>
   <div id="rankingDetailList"></div>
 </div>
@@ -917,10 +669,7 @@ a{text-decoration:none;color:inherit;}
 
 <!-- BETSLIP -->
 <div id="betslip-panel" class="betslip-panel">
-  <div class="betslip-header" onclick="toggleBetslip()">
-    <div class="betslip-title">予想カート<div id="betslip-count" class="betslip-count">0</div></div>
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-  </div>
+  <div class="betslip-header" onclick="toggleBetslip()"><div class="betslip-title">予想カート<div id="betslip-count" class="betslip-count">0</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
   <div class="betslip-body" id="betslip-items"><div class="empty-betslip"><p>予想が選択されていません</p></div></div>
   <div class="betslip-footer">
     <div class="total-row"><span>参加金額:</span><span id="total-stake">0pt</span></div>
@@ -934,767 +683,483 @@ a{text-decoration:none;color:inherit;}
 </div>
 
 <!-- MODALS -->
-<div id="modal-buy-pack" class="modal-overlay">
-  <div class="modal-content">
-    <div class="modal-close" onclick="closeModal('modal-buy-pack')">✕</div>
-    <div class="modal-title" id="buy-modal-title">パックを購入</div>
-    <div class="radio-group">
-      <label class="radio-label"><input type="radio" name="coin-type" value="paid" id="radio-paid" checked onchange="updateBuyModal()"><span class="coin-paid">💰 有償コイン <span id="buy-cost-paid">1500</span></span></label>
-      <label class="radio-label"><input type="radio" name="coin-type" value="free" id="radio-free" onchange="updateBuyModal()"><span class="coin-free">🪙 無償コイン <span id="buy-cost-free">300</span></span></label>
-    </div>
-    <div class="balance-calc"><div style="margin-bottom:4px;">現在の残高:</div><div id="buy-balance-calc" style="font-weight:bold;"></div><div id="buy-error" style="color:#ff3b30;font-size:10px;margin-top:4px;display:none;">コインが足りません</div></div>
-    <div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-buy-pack')">キャンセル</button><button class="btn-confirm" id="btn-confirm-buy" onclick="confirmBuyPack()">購入確定</button></div>
-  </div>
-</div>
-<div id="modal-open-pack" class="modal-overlay">
-  <div class="modal-content" style="text-align:center;">
-    <div class="modal-title">パック開封</div>
-    <div class="open-pack-area" id="open-pack-area"></div>
-    <div id="open-pack-msg" style="margin-bottom:10px;font-weight:bold;color:var(--success);font-size:12px;display:none;">マイコレクションに追加されました ✅</div>
-    <button class="btn-confirm" id="btn-open-all" onclick="openAllCards()">タップして開封する</button>
-    <button class="btn-cancel" id="btn-close-open" style="display:none;margin:8px auto 0;" onclick="closeModal('modal-open-pack')">閉じる</button>
-  </div>
-</div>
-<div id="modal-card-detail" class="modal-overlay">
-  <div class="modal-content" style="text-align:center;">
-    <div class="modal-close" onclick="closeModal('modal-card-detail')">✕</div>
-    <div style="width:100px;height:140px;margin:0 auto 10px;border-radius:8px;display:flex;align-items:center;justify-content:center;" id="detail-card-preview"></div>
-    <div class="modal-title" id="detail-name" style="margin-bottom:3px;"></div>
-    <div style="color:var(--text-sub);margin-bottom:3px;font-size:11px;" id="detail-team"></div>
-    <div style="font-weight:bold;margin-bottom:10px;font-size:11px;" id="detail-rarity"></div>
-  </div>
-</div>
-<div id="modal-bet-detail" class="modal-overlay">
-  <div class="modal-content">
-    <div class="modal-close" onclick="closeModal('modal-bet-detail')">✕</div>
-    <div class="bet-detail-header"><div class="bet-detail-title" id="bet-detail-title"></div><div class="bet-detail-amount" id="bet-detail-amount"></div></div>
-    <div id="bet-detail-question-container"></div>
-    <div class="bet-detail-section"><div class="bet-detail-section-title" id="bet-detail-analysis-title"></div><div class="bet-detail-text" id="bet-detail-analysis-text"></div></div>
-    <div class="bet-detail-section" id="bet-detail-hint-section" style="display:none;"><div class="bet-detail-section-title">💡 次回へのヒント</div><div class="bet-detail-text" id="bet-detail-hint-text"></div></div>
-    <div class="bet-detail-section"><div class="bet-detail-section-title">📰 関連ニュース</div><div class="bet-news-list" id="bet-detail-news-list"></div></div>
-  </div>
-</div>
+<div id="modal-buy-pack" class="modal-overlay"><div class="modal-content"><div class="modal-close" onclick="closeModal('modal-buy-pack')">✕</div><div class="modal-title" id="buy-modal-title">パックを購入</div><div class="radio-group"><label class="radio-label"><input type="radio" name="coin-type" value="paid" id="radio-paid" checked onchange="updateBuyModal()"><span class="coin-paid">💰 有償 <span id="buy-cost-paid">1500</span></span></label><label class="radio-label"><input type="radio" name="coin-type" value="free" id="radio-free" onchange="updateBuyModal()"><span class="coin-free">🪙 無償 <span id="buy-cost-free">300</span></span></label></div><div class="balance-calc"><div style="margin-bottom:4px;">残高:</div><div id="buy-balance-calc" style="font-weight:bold;"></div><div id="buy-error" style="color:#ff3b30;font-size:10px;margin-top:4px;display:none;">コインが足りません</div></div><div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-buy-pack')">キャンセル</button><button class="btn-confirm" id="btn-confirm-buy" onclick="confirmBuyPack()">購入確定</button></div></div></div>
+<div id="modal-open-pack" class="modal-overlay"><div class="modal-content" style="text-align:center;"><div class="modal-title">パック開封</div><div class="open-pack-area" id="open-pack-area"></div><div id="open-pack-msg" style="margin-bottom:10px;font-weight:bold;color:var(--success);font-size:12px;display:none;">コレクションに追加 ✅</div><button class="btn-confirm" id="btn-open-all" onclick="openAllCards()">タップして開封</button><button class="btn-cancel" id="btn-close-open" style="display:none;margin:8px auto 0;" onclick="closeModal('modal-open-pack')">閉じる</button></div></div>
+<div id="modal-card-detail" class="modal-overlay"><div class="modal-content" style="text-align:center;"><div class="modal-close" onclick="closeModal('modal-card-detail')">✕</div><div style="width:100px;height:140px;margin:0 auto 10px;border-radius:8px;display:flex;align-items:center;justify-content:center;" id="detail-card-preview"></div><div class="modal-title" id="detail-name"></div><div style="color:var(--text-sub);font-size:11px;" id="detail-team"></div><div style="font-weight:bold;font-size:11px;margin-top:4px;" id="detail-rarity"></div></div></div>
 
 </div><!-- /phone -->
-
 <script>
-// ── DATA ──────────────────────────────
-const allPlayerCards = [
-  {id:1, name:'宮﨑 敏朗', number:'51', team:'横浜DeNA', sport:'NPB', rarity:'RARE',     emoji:'⚾', isNew:true},
-  {id:2, name:'大谷 翔平', number:'17', team:'日本代表',  sport:'WBC', rarity:'EPIC',     emoji:'⚾', isNew:false},
-  {id:3, name:'山本 由伸', number:'18', team:'日本代表',  sport:'WBC', rarity:'RARE',     emoji:'⚾', isNew:false},
-  {id:4, name:'村上 宗隆', number:'55', team:'日本代表',  sport:'WBC', rarity:'RARE',     emoji:'⚾', isNew:true},
-  {id:5, name:'牧 秀悟',   number:'2',  team:'横浜DeNA', sport:'NPB', rarity:'UNCOMMON', emoji:'⚾', isNew:false},
-  {id:6, name:'三笘 薫',   number:'7',  team:'Jリーグ',  sport:'Soccer', rarity:'EPIC',  emoji:'⚽', isNew:false},
-  {id:7, name:'久保 建英', number:'10', team:'Jリーグ',  sport:'Soccer', rarity:'RARE',  emoji:'⚽', isNew:true},
-  {id:8, name:'吉田 正尚', number:'34', team:'日本代表',  sport:'WBC', rarity:'UNCOMMON', emoji:'⚾', isNew:false},
-  {id:9, name:'佐野 恵太', number:'10', team:'横浜DeNA', sport:'NPB', rarity:'NORMAL',   emoji:'⚾', isNew:false},
-  {id:10,name:'伊藤 光',   number:'39', team:'横浜DeNA', sport:'NPB', rarity:'NORMAL',   emoji:'⚾', isNew:false},
-  {id:11,name:'東 克樹',   number:'21', team:'横浜DeNA', sport:'NPB', rarity:'UNCOMMON', emoji:'⚾', isNew:true},
-  {id:12,name:'近藤 健介', number:'7',  team:'日本代表',  sport:'WBC', rarity:'RARE',     emoji:'⚾', isNew:false},
+// ── 1球速報データ (DeNA vs ロッテ) ────────────────
+// play types: note/inning_end/ball/strike/foul/hit/double/triple/hr/out/strikeout/walk/error
+const pitchData = [
+  // ===== 1回表 ロッテ攻撃 =====
+  {inn:1,half:'表',num:0,  pit:'藤浪 晋太郎',bat:'和田 康士朗', type:null,  spd:null, play:'note',      desc:'先頭・和田。藤浪との対戦成績は3打数1安打。横浜スタジアム満員！',  balls:0,strikes:0,outs:0,runners:[]},
+  {inn:1,half:'表',num:1,  pit:'藤浪 晋太郎',bat:'和田 康士朗', type:'ストレート',spd:152,play:'foul',     desc:'152km/h！初球から打ちに行く。一塁側へファール。',              balls:0,strikes:1,outs:0,runners:[]},
+  {inn:1,half:'表',num:2,  pit:'藤浪 晋太郎',bat:'和田 康士朗', type:'スプリット',spd:null,play:'strike',   desc:'変化球外いっぱい。見逃しストライク。2球で追い込む。',           balls:0,strikes:2,outs:0,runners:[]},
+  {inn:1,half:'表',num:3,  pit:'藤浪 晋太郎',bat:'和田 康士朗', type:'スプリット',spd:null,play:'out',      desc:'ちょこんと当てた打球。左飛！1アウト。',                        balls:0,strikes:2,outs:1,runners:[]},
+  {inn:1,half:'表',num:0,  pit:'藤浪 晋太郎',bat:'佐藤 都志也', type:null,  spd:null, play:'note',      desc:'佐藤都志也。春先に親指骨折で出遅れ。2番打者。',                balls:0,strikes:0,outs:1,runners:[]},
+  {inn:1,half:'表',num:1,  pit:'藤浪 晋太郎',bat:'佐藤 都志也', type:'ストレート',spd:null,play:'out',      desc:'バットの根本、詰まった打球。レフトライン際の左飛。2アウト。', balls:0,strikes:1,outs:2,runners:[]},
+  {inn:1,half:'表',num:0,  pit:'藤浪 晋太郎',bat:'谷村 剛',    type:null,  spd:null, play:'note',      desc:'3番・谷村。簡単にツーアウト。',                                balls:0,strikes:0,outs:2,runners:[]},
+  {inn:1,half:'表',num:1,  pit:'藤浪 晋太郎',bat:'谷村 剛',    type:'ストレート',spd:null,play:'out',      desc:'初球打ち。ライト前、度会が前に出て捕球。3アウト！',             balls:0,strikes:1,outs:3,runners:[]},
+  {inn:1,half:'表',num:null,pit:'藤浪 晋太郎',bat:null,         type:null,  spd:null, play:'inning_end',desc:'1回表終了。三者凡退。藤浪、帽子を取り一礼。大きな拍手！',       balls:0,strikes:0,outs:0,runners:[],score:[0,0]},
+  // ===== 1回裏 DeNA攻撃 =====
+  {inn:1,half:'裏',num:0,  pit:'吉川 悠斗',  bat:'梶原 昂希',  type:null,  spd:null, play:'note',      desc:'DeNA先頭・梶原。吉川今季5勝2敗 防御率4.04。',                 balls:0,strikes:0,outs:0,runners:[]},
+  {inn:1,half:'裏',num:1,  pit:'吉川 悠斗',  bat:'梶原 昂希',  type:'ストレート',spd:144,play:'ball',     desc:'外角低め、迷いなく見逃し。',                                   balls:1,strikes:0,outs:0,runners:[]},
+  {inn:1,half:'裏',num:2,  pit:'吉川 悠斗',  bat:'梶原 昂希',  type:'ストレート',spd:143,play:'double',   desc:'レフトポール際フェンス直撃！梶原、二塁打！',                   balls:1,strikes:0,outs:0,runners:[2]},
+  {inn:1,half:'裏',num:0,  pit:'吉川 悠斗',  bat:'度会 隆輝',  type:null,  spd:null, play:'note',      desc:'2番・度会。一軍71試合打率.224。最近調子上向き。',              balls:0,strikes:0,outs:0,runners:[2]},
+  {inn:1,half:'裏',num:5,  pit:'吉川 悠斗',  bat:'度会 隆輝',  type:'ストレート',spd:142,play:'out',      desc:'右中間フライ。センター捕球。2アウト（タッチアップ不可）。',    balls:3,strikes:2,outs:2,runners:[2]},
+  {inn:1,half:'裏',num:0,  pit:'吉川 悠斗',  bat:'ビシエド',   type:null,  spd:null, play:'note',      desc:'3番・ビシエド！DeNA移籍後初打席！ファーム72試合打率3割。',    balls:0,strikes:0,outs:2,runners:[2]},
+  {inn:1,half:'裏',num:4,  pit:'吉川 悠斗',  bat:'ビシエド',   type:'ストレート',spd:146,play:'out',      desc:'バットの根本。投手→一塁。梶原走れず。3アウト！',               balls:2,strikes:2,outs:3,runners:[2]},
+  {inn:1,half:'裏',num:null,pit:'吉川 悠斗',  bat:null,         type:null,  spd:null, play:'inning_end',desc:'1回裏終了。梶原二塁打も後続なく無得点。0-0。',                  balls:0,strikes:0,outs:0,runners:[],score:[0,0]},
+  // ===== 2回表 ロッテ攻撃 =====
+  {inn:2,half:'表',num:0,  pit:'藤浪 晋太郎',bat:'角中 勝也',  type:null,  spd:null, play:'note',      desc:'4番・角中。ベテラン巧打者。',                                  balls:0,strikes:0,outs:0,runners:[]},
+  {inn:2,half:'表',num:6,  pit:'藤浪 晋太郎',bat:'角中 勝也',  type:'カットボール',spd:140,play:'out',  desc:'捕飛。捕手、一塁ベンチ前で捕球。1アウト。',                   balls:3,strikes:2,outs:1,runners:[]},
+  {inn:2,half:'表',num:0,  pit:'藤浪 晋太郎',bat:'藤田 和樹',  type:null,  spd:null, play:'note',      desc:'9番・藤田。今季2割9分、安打はまだ少ない。',                   balls:0,strikes:0,outs:1,runners:[]},
+  {inn:2,half:'表',num:3,  pit:'藤浪 晋太郎',bat:'藤田 和樹',  type:'ナックルカーブ',spd:121,play:'hit', desc:'変化球をうまく捉え三遊間を抜ける！左安！一塁ベースでガッツポーズ。',balls:1,strikes:2,outs:1,runners:[1]},
+  {inn:2,half:'表',num:3,  pit:'藤浪 晋太郎',bat:'茶谷 健太',  type:null,  spd:null, play:'note',      desc:'1番に戻り・茶谷。ファーム打率.234。',                          balls:0,strikes:0,outs:1,runners:[1]},
+  {inn:2,half:'表',num:3,  pit:'藤浪 晋太郎',bat:'茶谷 健太',  type:'ツーシーム', spd:141,play:'strikeout',desc:'見逃し三振！三塁手の逆シングルキャッチ。2アウト。',           balls:0,strikes:3,outs:2,runners:[1]},
+  {inn:2,half:'表',num:0,  pit:'藤浪 晋太郎',bat:'山口 航輝',  type:null,  spd:null, play:'note',      desc:'6番・山口航輝。',                                              balls:0,strikes:0,outs:2,runners:[1]},
+  {inn:2,half:'表',num:1,  pit:'藤浪 晋太郎',bat:'山口 航輝',  type:'ストレート',spd:141,play:'error',   desc:'三塁手、逆シングルでキャッチするも一塁に送球しボール落球！内野安打。一二塁。',balls:0,strikes:1,outs:2,runners:[1,2]},
+  {inn:2,half:'表',num:0,  pit:'藤浪 晋太郎',bat:'石川 慎吾',  type:null,  spd:null, play:'note',      desc:'7番・石川慎吾。ファーム打率.384と当たっている。一二塁のピンチ！',balls:0,strikes:0,outs:2,runners:[1,2]},
+  {inn:2,half:'表',num:1,  pit:'藤浪 晋太郎',bat:'石川 慎吾',  type:'ツーシーム', spd:141,play:'out',   desc:'詰まった遊ゴロ。遊撃手が二塁にトスしてアウト！ピンチ脱出！',  balls:0,strikes:1,outs:3,runners:[1,2]},
+  {inn:2,half:'表',num:null,pit:'藤浪 晋太郎',bat:null,         type:null,  spd:null, play:'inning_end',desc:'2回表終了。ピンチを切り抜けた藤浪！0-0継続。',                 balls:0,strikes:0,outs:0,runners:[],score:[0,0]},
+  // ===== 2回裏 DeNA攻撃 =====
+  {inn:2,half:'裏',num:0,  pit:'吉川 悠斗',  bat:'筒香 嘉智',  type:null,  spd:null, play:'note',      desc:'4番・筒香！ハマの大砲！ファーム打率.490。スタンドから大声援！', balls:0,strikes:0,outs:0,runners:[]},
+  {inn:2,half:'裏',num:6,  pit:'吉川 悠斗',  bat:'筒香 嘉智',  type:'ストレート',spd:146,play:'strikeout',desc:'低めいっぱい！筒香ハーフスイング、一塁に歩き出すも審判の手が上がる。見逃し三振！',balls:3,strikes:3,outs:1,runners:[]},
+  {inn:2,half:'裏',num:0,  pit:'吉川 悠斗',  bat:'加藤 響',   type:null,  spd:null, play:'note',      desc:'5番・加藤響。今季打率.225 本塁打4本。',                       balls:0,strikes:0,outs:1,runners:[]},
+  {inn:2,half:'裏',num:5,  pit:'吉川 悠斗',  bat:'加藤 響',   type:'ストレート',spd:144,play:'out',     desc:'左中間へ高いフライ。センター前に出て捕球。2アウト。',           balls:2,strikes:2,outs:2,runners:[]},
+  {inn:2,half:'裏',num:0,  pit:'吉川 悠斗',  bat:'伊藤 光',   type:null,  spd:null, play:'note',      desc:'6番・伊藤光。ファーム打率.333。',                              balls:0,strikes:0,outs:2,runners:[]},
+  {inn:2,half:'裏',num:4,  pit:'吉川 悠斗',  bat:'伊藤 光',   type:'ストレート',spd:144,play:'out',     desc:'セカンドへ高いフライ。2回裏も無得点。',                        balls:2,strikes:2,outs:3,runners:[]},
+  {inn:2,half:'裏',num:null,pit:'吉川 悠斗',  bat:null,         type:null,  spd:null, play:'inning_end',desc:'2回裏終了。筒香三振も含めスリーアウト。0-0。',                  balls:0,strikes:0,outs:0,runners:[],score:[0,0]},
+  // ===== 3回表 ロッテ攻撃 =====
+  {inn:3,half:'表',num:0,  pit:'森 唯斗',    bat:'松石 信八',  type:null,  spd:null, play:'note',      desc:'3回から森唯斗が登板！今季25試合目。ロッテ先頭・松石。',       balls:0,strikes:0,outs:0,runners:[]},
+  {inn:3,half:'表',num:4,  pit:'森 唯斗',    bat:'松石 信八',  type:'フォーク',   spd:126,play:'strikeout',desc:'タイミング合わず空振り三振！1アウト。',                         balls:1,strikes:3,outs:1,runners:[]},
+  {inn:3,half:'表',num:5,  pit:'森 唯斗',    bat:'和田 康士朗', type:'カットボール',spd:139,play:'out',  desc:'センター、一歩も動かず捕球。2アウト。',                        balls:3,strikes:2,outs:2,runners:[]},
+  {inn:3,half:'表',num:3,  pit:'森 唯斗',    bat:'佐藤 都志也', type:'カットボール',spd:139,play:'out',  desc:'ライトへ右飛。鈍い音。3アウト！',                              balls:1,strikes:2,outs:3,runners:[]},
+  {inn:3,half:'表',num:null,pit:'森 唯斗',    bat:null,          type:null, spd:null, play:'inning_end',desc:'3回表終了。森も三者凡退。引き続き0-0。',                          balls:0,strikes:0,outs:0,runners:[],score:[0,0]},
+  // ===== 3回裏 DeNA攻撃 =====
+  {inn:3,half:'裏',num:0,  pit:'吉川 悠斗',  bat:'田内 真翔',  type:null,  spd:null, play:'note',      desc:'DeNA3回裏。先頭・田内。',                                     balls:0,strikes:0,outs:0,runners:[]},
+  {inn:3,half:'裏',num:5,  pit:'吉川 悠斗',  bat:'田内 真翔',  type:'カットボール',spd:null,play:'out',  desc:'三ゴロ。一塁まで全力疾走。1アウト。',                          balls:1,strikes:2,outs:1,runners:[]},
+  {inn:3,half:'裏',num:3,  pit:'吉川 悠斗',  bat:'梶原 昂希',  type:'ストレート',spd:null,play:'strikeout',desc:'空振り三振！2アウト。',                                          balls:1,strikes:3,outs:2,runners:[]},
+  {inn:3,half:'裏',num:2,  pit:'吉川 悠斗',  bat:'度会 隆輝',  type:'カットボール',spd:null,play:'hit',  desc:'ショートやや寄りに守っていた。三遊間を抜ける左安！コーチャーとグータッチ。',balls:0,strikes:1,outs:2,runners:[1]},
+  {inn:3,half:'裏',num:1,  pit:'吉川 悠斗',  bat:'ビシエド',   type:'チェンジアップ',spd:null,play:'out', desc:'バットの先でセンターへフライ。2試合目のDeNA初打席も凡退。3アウト！',balls:0,strikes:1,outs:3,runners:[1]},
+  {inn:3,half:'裏',num:null,pit:'吉川 悠斗',  bat:null,          type:null, spd:null, play:'inning_end',desc:'3回裏終了。0-0で中盤へ。試合は緊迫した展開が続く！',              balls:0,strikes:0,outs:0,runners:[],score:[0,0]},
 ];
 
-const rarityOrder = {EPIC:0, RARE:1, UNCOMMON:2, NORMAL:3};
-const rarityLabel = {EPIC:'E', RARE:'R', UNCOMMON:'U', NORMAL:'N'};
-const rarityBg = {
-  EPIC:     'linear-gradient(160deg,#c87800,#f5a623)',
-  RARE:     'linear-gradient(160deg,#0d4a1a,#1a8a35)',
-  UNCOMMON: 'linear-gradient(160deg,#0a1a50,#1a3a9a)',
-  NORMAL:   'linear-gradient(160deg,#2a1a4a,#5a2a9a)',
+// ── ゲームステート ────────────────────────────
+let pitchIdx = 0;
+const MAX_INNINGS = 9;
+// スコアボードデータ: [home(DeNA), away(Lotte)] per inning
+const scoreBoard = {
+  home: Array(MAX_INNINGS).fill(null),
+  away: Array(MAX_INNINGS).fill(null),
+  homeR:0, homeH:0, homeE:0,
+  awayR:0, awayH:0, awayE:0,
 };
-
-const liveMatches = [
-  {id:0, status:'live', home:{flag:'🇯🇵',name:'日本'},  away:{flag:'🇻🇪',name:'ベネズエラ'}, homeScore:1, awayScore:2, participants:8821,
-   detail:{title:'WBC2026 準々決勝', inning:'3回裏', venue:'ローンデポ・パーク（マイアミ）', stream:'Netflix', date:'2026年3月15日（日）'}},
-  {id:1, status:'live', home:{flag:'🇯🇵',name:'日本'},  away:{flag:'🇹🇼',name:'台北'},   homeScore:3, awayScore:1, participants:2221,
-   detail:{title:'WBC2026', inning:'3回裏', venue:'横浜スタジアム', stream:null, date:'2026年3月15日'}},
-  {id:2, status:'live', home:{flag:'⭐',name:'DeNA'},   away:{flag:'🐯',name:'阪神'},    homeScore:4, awayScore:2, participants:1233,
-   detail:{title:'NPB 公式戦', inning:'5回裏', venue:'横浜スタジアム', stream:null, date:'2026年3月15日'}},
-  {id:3, status:'live', home:{flag:'🇺🇸',name:'USA'},   away:{flag:'🇩🇴',name:'DOM'},    homeScore:5, awayScore:3, participants:987,
-   detail:{title:'WBC2026', inning:'7回表', venue:'ドジャースタジアム', stream:null, date:'2026年3月15日'}},
-  {id:4, status:'upcoming', home:{flag:'🐰',name:'巨人'}, away:{flag:'🐧',name:'ヤクルト'}, homeScore:null, awayScore:null, participants:654,
-   detail:{title:'NPB 公式戦', inning:null, venue:'東京ドーム', stream:null, date:'2026年3月15日'}},
-  {id:5, status:'upcoming', home:{flag:'🦁',name:'西武'}, away:{flag:'🦅',name:'ロッテ'},  homeScore:null, awayScore:null, participants:421,
-   detail:{title:'NPB 公式戦', inning:null, venue:'ベルーナドーム', stream:null, date:'2026年3月15日'}},
-  {id:6, status:'fin', home:{flag:'🦊',name:'広島'},   away:{flag:'🐉',name:'中日'},    homeScore:2, awayScore:0, participants:1102,
-   detail:{title:'NPB 公式戦', inning:'試合終了', venue:'マツダスタジアム', stream:null, date:'2026年3月15日'}},
-];
-
-const leagueRankingData = [
-  {rank:1, avatar:'😎', name:'Taro K.',  pts:4120, isMe:false},
-  {rank:2, avatar:'🌸', name:'Hana M.',  pts:3255, isMe:false},
-  {rank:3, avatar:'🦊', name:'あなた',   pts:3240, isMe:true},
-  {rank:4, avatar:'🎃', name:'Yuki T.',  pts:3190, isMe:false},
-  {rank:18,avatar:'😴', name:'user_abc', pts:980,  isMe:false},
-  {rank:19,avatar:'🐶', name:'user_def', pts:750,  isMe:false},
-  {rank:20,avatar:'🐱', name:'user_ghi', pts:420,  isMe:false},
-];
-
-const myBets = [
-  {status:'won',  sport:'WBC',    prediction:'日本 勝利',      odds:1.45, stake:500,  payout:725, question:'どちらが勝つ？',
-   choices:[{label:'🇯🇵 日本',odds:1.45,votes:1023,pct:82,isMyChoice:true},{label:'🇹🇼 台北',odds:2.80,votes:221,pct:18,isMyChoice:false}],
-   analysis:{summary:'山本由伸が6回1失点の好投。日本が快勝しました。',hint:null,news:[{title:'山本由伸、6回1失点で今大会初勝利',source:'スポーツナビ',time:'3時間前'}]}},
-  {status:'pending',sport:'Jリーグ',prediction:'東京V 勝利',  odds:2.10, stake:1000, payout:null,question:'どちらが勝つ？',
-   choices:[{label:'東京V',odds:2.10,votes:850,pct:45,isMyChoice:true},{label:'引分',odds:3.20,votes:400,pct:21,isMyChoice:false},{label:'町田',odds:3.50,votes:640,pct:34,isMyChoice:false}],
-   analysis:{summary:'前半を1-0でリード中。',hint:null,news:[{title:'東京V 前半終了 1-0',source:'Jリーグ公式',time:'30分前'}]}},
-  {status:'lost', sport:'NPB',    prediction:'マーリンズ 勝利',odds:2.10, stake:300,  payout:0,   question:'どちらが勝つ？',
-   choices:[{label:'マーリンズ',odds:2.10,votes:320,pct:42,isMyChoice:true},{label:'アストロズ',odds:1.75,votes:436,pct:58,isMyChoice:false}],
-   analysis:{summary:'アストロズ先発が8回完封。',hint:'先発投手の直近ERCを確認しましょう。',news:[{title:'アリゲッティが8回完封',source:'MLB.jp',time:'5時間前'}]}},
-];
-
-const packs = [
-  {id:'wbc',   name:'WBCスターパック', desc:'大谷・山本 ほか', rarity:'EPIC',     costPaid:1500, costFree:300, bg:'linear-gradient(135deg,#1a1a2e,#0f3460)'},
-  {id:'npb',   name:'NPBレジェンド',   desc:'イチロー・松井 ほか', rarity:'RARE', costPaid:800,  costFree:160, bg:'linear-gradient(135deg,#1a2a1a,#0d3b1a)'},
-  {id:'jl',    name:'Jリーグパック',   desc:'三笘・久保 ほか', rarity:'UNCOMMON', costPaid:400,  costFree:80,  bg:'linear-gradient(135deg,#1a1a1a,#2d1b4e)'},
-  {id:'daily', name:'デイリーパック',  desc:'本日選手からランダム',rarity:'NORMAL',costPaid:200,  costFree:40,  bg:'linear-gradient(135deg,#1c1c1c,#2a2a2a)'},
-];
-
-const missions = {
-  daily:[
-    {title:'WBCの試合に予想する',        reward:50,  done:true,  progress:{current:1,total:1}},
-    {title:'3試合連続で予想する',          reward:150, done:false, progress:{current:1,total:3}},
-    {title:'高オッズ（2.5倍以上）で的中する',reward:200, done:false, progress:{current:0,total:1}},
-  ],
-  weekly:[
-    {title:'今週5試合以上予想する',  reward:500, done:false, progress:{current:3,total:5}},
-    {title:'的中率60%以上を維持する',reward:300, done:false, progress:{current:0,total:1}},
-  ],
-};
-
-const aiReplies = [
-  '山本由伸は今日7奪三振ペースです。奪三振オーバーが狙い目ですよ！',
-  '大谷翔平の対左投手打率は.412。今日の相手は左腕なので注目です！',
-  '日本代表はここ5試合で平均6.2得点。高得点の可能性が高いです。',
-  '横浜DeNAは今月ホームで8勝2敗。ホームチームの勝利が安定しています。',
-  'WBCでは1番打者の出塁率が高いチームが勝率72%というデータがあります。',
-];
-
-let coins = {paid:3200, free:800};
-let currentSelectedPack = null;
-let activeCardFilter = 'ALL';
+let curInning = 1, curHalf = '表', curOuts = 0;
 let spLiveExpanded = false;
-let aiReplyIdx = 0;
 
-// ── BETSLIP ──────────────────────────
-const state = {bets:[], balance:10000};
+// イニング終了時スコア反映ルール (data.score = [DeNA得点, ロッテ得点] 累計ではなくイニング得点)
+const inningScores = {
+  '1表':[0,0],'1裏':[0,0],'2表':[0,0],'2裏':[0,0],'3表':[0,0],'3裏':[0,0],
+};
 
-function toggleBet(id, market, selection, odds) {
-  const idx = state.bets.findIndex(b => b.id === id);
-  if (idx >= 0) {
-    state.bets.splice(idx, 1);
-    document.querySelector(`.odds-btn[data-id="${id}"]`)?.classList.remove('selected');
+// ── スコアボード描画 ────────────────────────────
+function renderScoreboard() {
+  const t = document.getElementById('scoreboard');
+  if (!t) return;
+  const maxInn = Math.max(3, curInning);
+  let head = '<thead><tr><th style="text-align:left;padding:3px 6px;position:sticky;left:0;background:#161b22;z-index:2;border-right:1px solid #30363d;"></th>';
+  for (let i = 1; i <= maxInn; i++) {
+    const isCur = (i === curInning);
+    head += `<th style="padding:3px 5px;border-right:1px solid #21262d;${isCur?'background:#1c2820;color:var(--accent);':''}">${i}</th>`;
+  }
+  head += '<th class="total-col" style="padding:3px 5px;border-left:2px solid #30363d;">R</th><th style="padding:3px 5px;">H</th><th style="padding:3px 5px;">E</th></tr></thead>';
+
+  const rowHome = (team, flag, scores, r, h, e, id) => {
+    let cells = `<td style="text-align:left;padding:3px 6px;position:sticky;left:0;background:#161b22;z-index:1;border-right:1px solid #30363d;font-size:9px;">${flag} ${team}</td>`;
+    for (let i = 0; i < maxInn; i++) {
+      const isCur = (i+1 === curInning);
+      const val = scores[i] !== null ? scores[i] : '—';
+      cells += `<td id="${id}-inn-${i+1}" style="padding:3px 5px;border-right:1px solid #21262d;${isCur?'background:#1c2820;':''}">${val}</td>`;
+    }
+    cells += `<td class="total-col" id="${id}-r" style="padding:3px 5px;border-left:2px solid #30363d;font-weight:bold;color:${r>0?'#3fb950':'#e6edf3'};">${r}</td><td id="${id}-h" style="padding:3px 5px;">${h}</td><td id="${id}-e" style="padding:3px 5px;">${e}</td>`;
+    return `<tr style="border-top:1px solid #21262d;">${cells}</tr>`;
+  };
+
+  t.innerHTML = head + '<tbody>'
+    + rowHome('DeNA','⭐', scoreBoard.home, scoreBoard.homeR, scoreBoard.homeH, scoreBoard.homeE, 'sb-home')
+    + rowHome('ロッテ','🦁', scoreBoard.away, scoreBoard.awayR, scoreBoard.awayH, scoreBoard.awayE, 'sb-away')
+    + '</tbody>';
+}
+
+// ── スコアカード更新 ────────────────────────────
+function updateScoreCard(p) {
+  // イニング表示
+  const inningLabel = document.getElementById('match-inning-label');
+  if (inningLabel) {
+    if (p.play === 'inning_end' || !p.bat) {
+      inningLabel.textContent = `LIVE ${p.inn}回${p.half} 終了`;
+    } else {
+      inningLabel.textContent = `LIVE ${p.inn}回${p.half}`;
+    }
+  }
+
+  // スコア
+  document.getElementById('score-home').textContent = scoreBoard.homeR;
+  document.getElementById('score-away').textContent = scoreBoard.awayR;
+
+  // BSO
+  const balls = p.balls || 0, strikes = p.strikes || 0, outs = p.outs || 0;
+  ['b1','b2','b3'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    if (el) { el.className = 'bso-dot' + (i < balls ? ' on-b' : ''); }
+  });
+  ['s1','s2'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    if (el) { el.className = 'bso-dot' + (i < strikes ? ' on-s' : ''); }
+  });
+  ['o1','o2'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    if (el) { el.className = 'bso-dot' + (i < outs ? ' on-o' : ''); }
+  });
+
+  // 走者ランプ更新
+  const runners = p.runners || [];
+  document.getElementById('base-1b').classList.toggle('on', runners.includes(1));
+  document.getElementById('base-2b').classList.toggle('on', runners.includes(2));
+  document.getElementById('base-3b').classList.toggle('on', runners.includes(3));
+
+  // 走者テキスト
+  const runnerEl = document.getElementById('match-runners');
+  if (runnerEl) {
+    if (runners.length === 0) runnerEl.textContent = '走者なし';
+    else {
+      const pos = {1:'一',2:'二',3:'三'};
+      runnerEl.textContent = runners.map(r => pos[r]+'塁').join('・');
+    }
+  }
+
+  // 投打表示
+  const pitEl = document.getElementById('cur-pitcher');
+  const batEl = document.getElementById('cur-batter');
+  if (pitEl && p.pit) pitEl.textContent = p.pit;
+  if (batEl) batEl.textContent = p.bat || '—';
+
+  const pitSubEl = document.getElementById('cur-pitcher-sub');
+  const batSubEl = document.getElementById('cur-batter-sub');
+  if (pitSubEl) pitSubEl.textContent = `${p.inn}回${p.half} 登板中`;
+  if (batSubEl) batSubEl.textContent = p.bat ? `${p.inn}回${p.half} 打席` : '—';
+
+  // イニング終了時スコア反映
+  if (p.play === 'inning_end' && p.score) {
+    const innIdx = p.inn - 1;
+    // home = DeNA(裏攻撃), away = ロッテ(表攻撃)
+    if (p.half === '表') {
+      scoreBoard.away[innIdx] = p.score[1];
+      scoreBoard.awayR += p.score[1];
+      scoreBoard.awayH += (p.score[1] > 0 ? 1 : 0);
+    } else {
+      scoreBoard.home[innIdx] = p.score[0];
+      scoreBoard.homeR += p.score[0];
+      scoreBoard.homeH += (p.score[0] > 0 ? 1 : 0);
+    }
+    // エラー
+    scoreBoard.homeE += (p.play === 'error' ? 1 : 0);
+    document.getElementById('score-home').textContent = scoreBoard.homeR;
+    document.getElementById('score-away').textContent = scoreBoard.awayR;
+    renderScoreboard();
+  }
+}
+
+// ── ピッチログ描画 ────────────────────────────
+function renderPitchEntry(p) {
+  const el = document.getElementById('pitch-log');
+  if (!el) return;
+
+  // 初回は「押してください」を消す
+  if (el.querySelector('div[style*="text-align:center"]')) el.innerHTML = '';
+
+  const lbl = {strike:'S',ball:'B',foul:'F',hit:'安',double:'2B',triple:'3B',hr:'HR',out:'OUT',strikeout:'K',walk:'BB',error:'E'};
+  const cls = {strike:'s',ball:'b',foul:'f',hit:'hit',double:'hit',triple:'hit',hr:'hr',out:'out',strikeout:'out',walk:'walk',error:'hit'};
+
+  let html = '';
+  if (p.play === 'note') {
+    html = `<div class="pitch-note"><div class="pitch-note-inn">📋 ${p.inn}回${p.half} — ${p.pit}</div><div class="pitch-note-txt">${p.desc}</div></div>`;
+  } else if (p.play === 'inning_end') {
+    html = `<div class="pitch-event"><div class="pitch-event-txt">🔔 ${p.inn}回${p.half}終了 — ${p.desc}</div></div>`;
   } else {
-    state.bets.push({id, market, selection, odds, stake:0});
-    document.querySelector(`.odds-btn[data-id="${id}"]`)?.classList.add('selected');
-    document.getElementById('betslip-panel').classList.add('open');
-    document.getElementById('mobile-toggle').classList.add('hidden');
-  }
-  renderBetslip();
-}
-
-function renderBetslip() {
-  const cnt = state.bets.length;
-  document.getElementById('betslip-count').textContent = cnt;
-  document.getElementById('mobile-count').textContent = cnt;
-  document.getElementById('place-bet-btn').disabled = cnt === 0;
-  if (!cnt) {
-    document.getElementById('betslip-items').innerHTML = '<div class="empty-betslip"><p>予想が選択されていません</p></div>';
-    updateTotals(); return;
-  }
-  document.getElementById('betslip-items').innerHTML = '';
-  state.bets.forEach(bet => {
-    const div = document.createElement('div');
-    div.className = 'bet-item';
-    div.innerHTML = `<div style="display:flex;justify-content:space-between;margin-bottom:4px;"><div><div class="bet-selection">${bet.selection}</div><div class="bet-market">${bet.market}</div></div><div class="bet-odds-badge">${bet.odds.toFixed(2)}</div></div><button class="btn-remove" onclick="removeBet('${bet.id}')">✕</button><div style="position:relative;"><span class="stake-sym">pt</span><input type="number" id="input-${bet.id}" class="stake-input" placeholder="ポイント入力" value="${bet.stake||''}" oninput="handleInput('${bet.id}',this.value)"></div><div class="quick-stakes"><button class="btn-quick" onclick="addStake('${bet.id}',500)">+500</button><button class="btn-quick" onclick="addStake('${bet.id}',1000)">+1k</button><button class="btn-quick" onclick="addStake('${bet.id}',5000)">+5k</button><button class="btn-quick" onclick="addStake('${bet.id}','MAX')">MAX</button></div><div class="potential-return"><span>受取額:</span><span id="return-${bet.id}" class="return-amount">${Math.floor(bet.stake*bet.odds).toLocaleString()}pt</span></div>`;
-    document.getElementById('betslip-items').appendChild(div);
-  });
-  updateTotals();
-}
-
-function removeBet(id) {
-  document.querySelector(`.odds-btn[data-id="${id}"]`)?.classList.remove('selected');
-  const i = state.bets.findIndex(b => b.id === id);
-  if (i >= 0) state.bets.splice(i, 1);
-  renderBetslip();
-}
-
-function handleInput(id, v) {
-  const b = state.bets.find(x => x.id === id);
-  if (b) { b.stake = parseInt(v)||0; document.getElementById(`return-${id}`).textContent = `${Math.floor(b.stake*b.odds).toLocaleString()}pt`; updateTotals(); }
-}
-
-function addStake(id, a) {
-  const b = state.bets.find(x => x.id === id);
-  if (b) {
-    b.stake = a === 'MAX' ? state.balance : b.stake + a;
-    const inp = document.getElementById(`input-${id}`);
-    if (inp) inp.value = b.stake;
-    document.getElementById(`return-${id}`).textContent = `${Math.floor(b.stake*b.odds).toLocaleString()}pt`;
-    updateTotals();
-  }
-}
-
-function updateTotals() {
-  const ts = state.bets.reduce((s,b) => s+b.stake, 0);
-  const tr = state.bets.reduce((s,b) => s+b.stake*b.odds, 0);
-  document.getElementById('total-stake').textContent = `${ts.toLocaleString()}pt`;
-  document.getElementById('total-return').textContent = `${Math.floor(tr).toLocaleString()}pt`;
-}
-
-function toggleBetslip() {
-  document.getElementById('betslip-panel').classList.toggle('open');
-  document.getElementById('mobile-toggle').classList.toggle('hidden');
-}
-
-// ── VIEW SWITCHING ────────────────────
-function setActiveTab(tabId) {
-  document.querySelectorAll('.header-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tabId));
-}
-
-function switchView(viewId) {
-  document.querySelectorAll('.view-section').forEach(el => { el.classList.remove('active'); el.style.display = 'none'; });
-  const t = document.getElementById('view-' + viewId);
-  if (t) { t.classList.add('active'); t.style.display = 'block'; }
-  const tabMap = {home:'home', mypage:'mypage', mission:'mission', cards:'cards', wbc:'home'};
-  setActiveTab(tabMap[viewId] || 'home');
-  if (viewId === 'mission') renderMissionSection();
-  if (viewId === 'cards') renderPackGrid();
-  document.querySelector('.scroll-area').scrollTop = 0;
-}
-
-function showScreen(id) {
-  if (id === 'home') { switchView('home'); return; }
-  if (id === 'mypage') { switchView('mypage'); setActiveTab('mypage'); renderMpBets(); renderMpActiveBets(); renderMpFriends(); renderMpLeague(); return; }
-  if (id === 'rankingDetail') {
-    document.querySelectorAll('.view-section').forEach(el => { el.classList.remove('active'); el.style.display = 'none'; });
-    const t = document.getElementById('rankingDetail');
-    if (t) { t.classList.add('active'); t.style.display = 'block'; }
-    renderRankingDetail();
-    document.querySelector('.scroll-area').scrollTop = 0;
-  }
-}
-
-// ── STUDIO ────────────────────────────
-const studioComments = {
-  live:     '日本が3回に追加点！山本由伸は完璧なピッチングを見せています。',
-  result:   '本日の予想結果をお届けします。的中おめでとうございます！',
-  news:     '最新スポーツニュースをお届けします。',
-  ucomment: 'ユーザーたちが盛り上がっています！',
-  chat:     '何でも聞いてください！試合・選手・予想のコツをお答えします。',
-};
-const studioTags = {
-  live:'🎙️ AI解説', result:'🎯 予想結果', news:'📰 ニュース', ucomment:'💬 ユーザーコメント', chat:'🤖 AIチャット',
-};
-
-function studioSelect(tab) {
-  ['live','result','news','ucomment','chat'].forEach(t => {
-    document.getElementById('sbtn-' + t)?.classList.toggle('active', t === tab);
-    const p = document.getElementById('sp-' + t);
-    if (p) p.style.display = t === tab ? 'block' : 'none';
-  });
-  document.getElementById('studioCommentText').textContent = studioComments[tab];
-  document.getElementById('studioTag').textContent = studioTags[tab];
-  if (tab === 'live') renderSpLive();
-}
-
-// ── LIVE PANEL ────────────────────────
-function renderSpLive() {
-  const list = document.getElementById('sp-live-list');
-  const moreBtn = document.getElementById('sp-live-more');
-  if (!list) return;
-  const shown = spLiveExpanded ? liveMatches : liveMatches.slice(0, 3);
-  list.innerHTML = shown.map(m => {
-    const badgeCls = m.status === 'live' ? 'live' : m.status === 'upcoming' ? 'upcoming' : 'fin';
-    const badgeTxt = m.status === 'live' ? 'LIVE' : m.status === 'upcoming' ? '予定' : '終了';
-    const scoreHtml = m.homeScore !== null
-      ? `<span class="sp-live-score">${m.homeScore}-${m.awayScore}</span>`
-      : `<span style="font-size:10px;color:#8b949e;">VS</span>`;
-    return `<div class="sp-live-row" onclick="openMatchDetail(${m.id})">
-      <div class="sp-live-row-top">
-        <span class="sp-live-badge ${badgeCls}">${badgeTxt}</span>
-        <span class="sp-live-teams">${m.home.flag} ${m.home.name} ${scoreHtml} ${m.away.name} ${m.away.flag}</span>
+    const r = p.play;
+    const badge = lbl[r] || '?';
+    const bc = cls[r] || 'b';
+    html = `<div class="pitch-row">
+      <span class="pitch-num">${p.num || ''}</span>
+      <div class="pitch-ball ${bc}">${badge}</div>
+      <div class="pitch-info">
+        <div class="pitch-type">${p.bat} ${p.type ? '— ' + p.type : ''} ${p.spd ? p.spd+'km/h' : ''}</div>
+        <div class="pitch-detail">${p.desc}</div>
       </div>
-      <div class="sp-live-participants">👥 ${m.participants.toLocaleString()}人が予想中</div>
     </div>`;
-  }).join('');
-  if (moreBtn) moreBtn.style.display = liveMatches.length > 3 && !spLiveExpanded ? 'block' : 'none';
-}
-
-function spLiveShowMore() { spLiveExpanded = true; renderSpLive(); }
-
-// ── AI CHAT ───────────────────────────
-function sendHomeChat() {
-  const inp = document.getElementById('homeChatInput');
-  if (!inp.value.trim()) return;
-  const hist = document.getElementById('homeChatHistory');
-  const userMsg = document.createElement('div');
-  userMsg.className = 'sp-chat-msg user';
-  userMsg.innerHTML = `<span class="sp-chat-avatar">😊</span><div class="sp-chat-bubble user-bubble"><div class="sp-chat-name" style="color:var(--accent);">あなた</div>${inp.value}</div>`;
-  hist.appendChild(userMsg);
-  inp.value = '';
-  hist.scrollTop = hist.scrollHeight;
-  document.getElementById('studioCommentText').textContent = '入力を分析中...';
-  setTimeout(() => {
-    const reply = aiReplies[aiReplyIdx % aiReplies.length]; aiReplyIdx++;
-    const aiMsg = document.createElement('div');
-    aiMsg.className = 'sp-chat-msg';
-    aiMsg.innerHTML = `<span class="sp-chat-avatar">🤖</span><div class="sp-chat-bubble"><div class="sp-chat-name" style="color:#58a6ff;">BEAT-1</div>${reply}</div>`;
-    hist.appendChild(aiMsg);
-    hist.scrollTop = hist.scrollHeight;
-    document.getElementById('studioCommentText').textContent = reply;
-    document.getElementById('studioTag').textContent = '🤖 AIチャット';
-  }, 900);
-}
-
-// ── PLAYER CARDS ─────────────────────
-function renderPlayerCards() {
-  const c = document.getElementById('playerCardScroll');
-  if (!c) return;
-  c.innerHTML = allPlayerCards.map(p => `
-    <div class="pcard rarity-${p.rarity}" onclick="showCardDetail(${p.id})">
-      ${p.isNew ? '<div class="pcard-new">NEW</div>' : ''}
-      <div class="pcard-inner">
-        <div class="pcard-top">
-          <span class="pcard-number">${p.number}</span>
-          <span class="pcard-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span>
-        </div>
-        <div class="pcard-img-area"><div class="pcard-ball">${p.emoji}</div></div>
-        <div class="pcard-info">
-          <div class="pcard-name">${p.name}</div>
-          <div class="pcard-team">${p.team}</div>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function showCardDetail(id) {
-  const c = allPlayerCards.find(p => p.id === id);
-  if (!c) return;
-  const preview = document.getElementById('detail-card-preview');
-  if (preview) {
-    preview.style.background = rarityBg[c.rarity];
-    preview.innerHTML = `<span style="font-size:3rem;">${c.emoji}</span>`;
   }
-  document.getElementById('detail-name').textContent = c.name;
-  document.getElementById('detail-team').textContent = `${c.team} (${c.sport})`;
-  document.getElementById('detail-rarity').textContent = c.rarity;
-  document.getElementById('modal-card-detail').classList.add('active');
+
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  el.insertBefore(div.firstElementChild, el.firstChild);
+  el.scrollTop = 0;
 }
 
-// ── MATCH DETAIL ──────────────────────
-function openMatchDetail(idx) {
-  const m = liveMatches[idx];
-  if (!m) return;
-  // ヘッダ更新
-  document.getElementById('wbc-meta').textContent = `${m.detail.title} • ${m.detail.venue}`;
-  document.getElementById('wbc-inning').textContent = m.detail.inning ? `LIVE ${m.detail.inning}` : m.detail.date;
-  document.getElementById('wbc-home-flag').textContent = m.home.flag;
-  document.getElementById('wbc-home-name').textContent = m.home.name;
-  document.getElementById('wbc-away-flag').textContent = m.away.flag;
-  document.getElementById('wbc-away-name').textContent = m.away.name;
-  document.getElementById('wbc-home-score').textContent = m.homeScore !== null ? m.homeScore : '-';
-  document.getElementById('wbc-away-score').textContent = m.awayScore !== null ? m.awayScore : '-';
-  document.getElementById('wbc-participants').textContent = m.participants.toLocaleString();
-  switchView('wbc');
+// ── 試合進行メイン ────────────────────────────
+function advancePitch() {
+  if (pitchIdx >= pitchData.length) return;
+  const p = pitchData[pitchIdx];
+  pitchIdx++;
+
+  // ログ追加
+  renderPitchEntry(p);
+
+  // スコアカード・スコアボード更新
+  updateScoreCard(p);
+
+  // スタジオテキスト更新
+  const stEl = document.getElementById('matchStudioText');
+  if (stEl && p.desc) stEl.textContent = p.desc;
+
+  // ボタン更新
+  updateAdvanceBtn();
 }
 
-function switchTab(tabName) {
-  const map = ['match','stats','h2h','lineup'];
-  document.querySelectorAll('#view-wbc .tab').forEach((t,i) => t.classList.toggle('active', map[i] === tabName));
-  map.forEach(p => { const e = document.getElementById('tab-content-' + p); if (e) e.style.display = p === tabName ? 'block' : 'none'; });
-  if (tabName === 'h2h') renderGameLog();
-  if (tabName === 'lineup') { showLineup('jp'); }
-  if (tabName === 'stats') {}
+function updateAdvanceBtn() {
+  const btn = document.getElementById('advance-btn');
+  const sub = document.getElementById('advance-btn-sub');
+  if (!btn) return;
+  if (pitchIdx >= pitchData.length) {
+    btn.disabled = true;
+    btn.style.background = 'var(--border)';
+    btn.querySelector('div > div:first-child').textContent = '試合終了';
+    if (sub) sub.textContent = 'データを確認してください';
+    return;
+  }
+  const next = pitchData[pitchIdx];
+  btn.querySelector('div > div:first-child').textContent = '▶ 試合を進める';
+  if (sub) {
+    if (next.play === 'inning_end') {
+      sub.textContent = `${next.inn}回${next.half}終了`;
+    } else if (next.bat) {
+      sub.textContent = `${next.inn}回${next.half} ${next.bat} ${next.num ? next.num + '球目' : '打席開始'}`;
+    } else {
+      sub.textContent = `${next.inn}回${next.half}`;
+    }
+  }
 }
 
-// ── MATCH STUDIO ─────────────────────
-const matchStudioComments = {
-  live:     '3回裏、ベネズエラの先頭打者はアクーニャJr.。山本は141km/hのカットボールで入ります。',
-  result:   '現在の予想結果をお届けします。',
-  ucomment: 'ユーザーのコメントを表示中です。',
-  chat:     '試合について何でも聞いてください！',
-};
-const matchStudioTags = {
-  live:'🎙️ 実況', result:'🎯 予想結果', ucomment:'💬 コメント', chat:'🤖 AIチャット',
-};
+function resetGame() {
+  pitchIdx = 0;
+  scoreBoard.home = Array(MAX_INNINGS).fill(null);
+  scoreBoard.away = Array(MAX_INNINGS).fill(null);
+  scoreBoard.homeR = scoreBoard.homeH = scoreBoard.homeE = 0;
+  scoreBoard.awayR = scoreBoard.awayH = scoreBoard.awayE = 0;
+  document.getElementById('score-home').textContent = '0';
+  document.getElementById('score-away').textContent = '0';
+  document.getElementById('match-inning-label').textContent = '試合前';
+  document.getElementById('pitch-log').innerHTML = '<div style="font-size:10px;color:#8b949e;text-align:center;padding:8px;">「試合を進める」ボタンを押してください</div>';
+  ['b1','b2','b3','s1','s2','o1','o2'].forEach(id => { const el=document.getElementById(id);if(el)el.className='bso-dot'; });
+  document.getElementById('match-runners').textContent = '走者なし';
+  const btn = document.getElementById('advance-btn');
+  if (btn) { btn.disabled = false; btn.style.background = 'var(--live)'; }
+  renderScoreboard();
+  updateAdvanceBtn();
+}
 
-function matchStudioSelect(tab) {
+// ── MATCH STUDIO TABS ────────────────────────────
+function matchStudioTab(tab) {
   ['live','result','ucomment','chat'].forEach(t => {
     document.getElementById('msbtn-' + t)?.classList.toggle('active', t === tab);
     const p = document.getElementById('msp-' + t);
     if (p) p.style.display = t === tab ? 'block' : 'none';
   });
-  document.getElementById('matchStudioText').textContent = matchStudioComments[tab];
-  document.getElementById('matchStudioTag').textContent = matchStudioTags[tab];
 }
 
-const pitchLog = [
-  {num:1, result:'b',  batter:'R.アクーニャJr.', type:'カットボール', detail:'141km/h 外角低め — ボール', count:'1-0'},
-  {num:2, result:'s',  batter:'R.アクーニャJr.', type:'フォーシーム',  detail:'152km/h 内角高め — 見逃しストライク', count:'1-1'},
-  {num:3, result:'f',  batter:'R.アクーニャJr.', type:'スプリット',   detail:'138km/h 低め — ファウル', count:'1-2'},
-  {num:4, result:'b',  batter:'R.アクーニャJr.', type:'スライダー',  detail:'136km/h 外角 — ボール', count:'2-2'},
-  {num:5, result:'b',  batter:'R.アクーニャJr.', type:'フォーシーム', detail:'154km/h 高め — ボール', count:'3-2'},
-  {num:6, result:'hit',batter:'R.アクーニャJr.', type:'カットボール', detail:'140km/h 外角 — レフト前ヒット🔵', count:'3-2 → 安打'},
+function matchTab(tab) {
+  ['predict','data','lineup'].forEach(t => {
+    const el = document.getElementById('mt-' + t);
+    if (el) el.style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('#view-match .tab').forEach((t,i) => {
+    t.classList.toggle('active', ['predict','data','lineup'][i] === tab);
+  });
+}
+
+// ── DATA ─────────────────────────────────────────
+const allPlayerCards = [
+  {id:1,name:'梶原 昂希',number:'2', team:'横浜DeNA',sport:'NPB',rarity:'RARE',    emoji:'⚾',isNew:true},
+  {id:2,name:'筒香 嘉智',number:'24',team:'横浜DeNA',sport:'NPB',rarity:'EPIC',    emoji:'⚾',isNew:false},
+  {id:3,name:'ビシエド', number:'66',team:'横浜DeNA',sport:'NPB',rarity:'RARE',    emoji:'⚾',isNew:true},
+  {id:4,name:'藤浪晋太郎',number:'18',team:'千葉ロッテ',sport:'NPB',rarity:'EPIC',  emoji:'⚾',isNew:false},
+  {id:5,name:'度会 隆輝',number:'3', team:'横浜DeNA',sport:'NPB',rarity:'UNCOMMON',emoji:'⚾',isNew:false},
+  {id:6,name:'伊藤 光',  number:'39',team:'横浜DeNA',sport:'NPB',rarity:'NORMAL',  emoji:'⚾',isNew:false},
+];
+const rarityOrder={EPIC:0,RARE:1,UNCOMMON:2,NORMAL:3};
+const rarityLabel={EPIC:'E',RARE:'R',UNCOMMON:'U',NORMAL:'N'};
+const rarityBg={EPIC:'linear-gradient(160deg,#c87800,#f5a623)',RARE:'linear-gradient(160deg,#0d4a1a,#1a8a35)',UNCOMMON:'linear-gradient(160deg,#0a1a50,#1a3a9a)',NORMAL:'linear-gradient(160deg,#2a1a4a,#5a2a9a)'};
+
+const liveMatches = [
+  {id:0,status:'live',home:{flag:'⭐',name:'DeNA'}, away:{flag:'🦁',name:'ロッテ'}, homeScore:0,awayScore:0,participants:3842,detail:{title:'NPB 2回戦',inning:'進行中',venue:'横浜スタジアム'},isDena:true},
+  {id:1,status:'live',home:{flag:'🐯',name:'阪神'}, away:{flag:'🐰',name:'巨人'},   homeScore:2,awayScore:1,participants:2100,detail:{title:'NPB 公式戦',inning:'5回裏',  venue:'甲子園'},isDena:false},
+  {id:2,status:'upcoming',home:{flag:'🐧',name:'ヤクルト'},away:{flag:'🦅',name:'ロッテ'},homeScore:null,awayScore:null,participants:980,detail:{title:'NPB 公式戦',inning:null,venue:'神宮'},isDena:false},
 ];
 
-function renderPitchLog() {
-  const el = document.getElementById('pitch-log'); if (!el) return;
-  const typeClass = {s:'s', b:'b', f:'f', hit:'hit', hr:'hr', out:'out'};
-  const typeLabel = {s:'S', b:'B', f:'F', hit:'安', hr:'HR', out:'OUT'};
-  el.innerHTML = [...pitchLog].reverse().map(p => `
-    <div class="pitch-row">
-      <span class="pitch-num">${p.num}</span>
-      <div class="pitch-ball ${typeClass[p.result]}">${typeLabel[p.result]}</div>
-      <div class="pitch-info">
-        <div class="pitch-type">${p.batter} — ${p.type}</div>
-        <div class="pitch-detail">${p.detail}</div>
-      </div>
-      <div style="font-size:8px;color:#8b949e;flex-shrink:0;padding-top:2px;">${p.count}</div>
-    </div>`).join('');
-}
-
-function sendMatchChat() {
-  const inp = document.getElementById('matchChatInput');
-  if (!inp.value.trim()) return;
-  const hist = document.getElementById('matchChatHistory');
-  const userMsg = document.createElement('div');
-  userMsg.className = 'sp-chat-msg user';
-  userMsg.innerHTML = `<span class="sp-chat-avatar">😊</span><div class="sp-chat-bubble user-bubble"><div class="sp-chat-name" style="color:var(--accent);">あなた</div>${inp.value}</div>`;
-  hist.appendChild(userMsg);
-  const q = inp.value; inp.value = '';
-  hist.scrollTop = hist.scrollHeight;
-  document.getElementById('matchStudioText').textContent = '分析中...';
-  setTimeout(() => {
-    const replies = [
-      '山本由伸はここまで38球投げています。球速は最速154km/hです。',
-      'アクーニャJr.は今大会打率.294。外角のボール球に手を出す傾向があります。',
-      '3回現在、日本の得点圏打率はチームで.250です。',
-    ];
-    const reply = replies[Math.floor(Math.random() * replies.length)];
-    const aiMsg = document.createElement('div');
-    aiMsg.className = 'sp-chat-msg';
-    aiMsg.innerHTML = `<span class="sp-chat-avatar">🤖</span><div class="sp-chat-bubble"><div class="sp-chat-name" style="color:#58a6ff;">BEAT-1</div>${reply}</div>`;
-    hist.appendChild(aiMsg);
-    hist.scrollTop = hist.scrollHeight;
-    document.getElementById('matchStudioText').textContent = reply;
-    document.getElementById('matchStudioTag').textContent = '🤖 AIチャット';
-  }, 900);
-}
-
-// 出場選手データ
-const lineupJP = [
-  ['1','指','大谷 翔平','左','.500'],
-  ['2','右','佐藤 輝明','左','.300'],
-  ['3','中','森下 翔太','右','.222'],
-  ['4','左','吉田 正尚','左','.375'],
-  ['5','三','岡本 和真','右','.211'],
-  ['6','一','村上 宗隆','左','.211'],
-  ['7','二','牧 秀悟', '右','.154'],
-  ['8','遊','源田 壮亮','左','.556'],
-  ['9','捕','若月 健矢','右','.375'],
+const leagueRankingData=[
+  {rank:1,avatar:'😎',name:'Taro K.',pts:4120,isMe:false},{rank:2,avatar:'🌸',name:'Hana M.',pts:3255,isMe:false},
+  {rank:3,avatar:'🦊',name:'あなた',pts:3240,isMe:true},{rank:4,avatar:'🎃',name:'Yuki T.',pts:3190,isMe:false},
 ];
-const lineupVEN = [
-  ['1','右','R.アクーニャJr.','右','.294'],
-  ['2','三','M.ガルシア',     '右','.444'],
-  ['3','一','L.アラエス',     '左','.389'],
-  ['4','指','E.スアレス',     '右','.167'],
-  ['5','遊','E.トーバー',     '右','.667'],
-  ['6','二','A.ヒメネス',     '左','.143'],
-  ['7','左','W.アブレイユ',   '左','.294'],
-  ['8','捕','S.ペレス',       '右','.167'],
-  ['9','中','J.チョーリオ',   '右','.222'],
+const myBets=[
+  {status:'won',sport:'NPB',prediction:'DeNA 勝利',odds:1.85,stake:500,payout:925},
+  {status:'pending',sport:'NPB',prediction:'藤浪 5奪三振以上',odds:1.65,stake:1000,payout:null},
 ];
+const packs=[
+  {id:'npb', name:'NPBパック',   desc:'DeNA・ロッテ選手',rarity:'RARE',   costPaid:800, costFree:160,bg:'linear-gradient(135deg,#1a2a1a,#0d3b1a)'},
+  {id:'daily',name:'デイリーパック',desc:'本日出場選手',    rarity:'NORMAL', costPaid:200, costFree:40, bg:'linear-gradient(135deg,#1c1c1c,#2a2a2a)'},
+];
+const missions={
+  daily:[{title:'NPBの試合に予想する',reward:50,done:false,progress:{current:0,total:1}},{title:'3試合連続で予想する',reward:150,done:false,progress:{current:1,total:3}}],
+  weekly:[{title:'今週5試合以上予想する',reward:500,done:false,progress:{current:2,total:5}}],
+};
+let coins={paid:3200,free:800};
+let currentSelectedPack=null;
+let activeCardFilter='ALL';
+let spLiveExpanded2=false;
 
-function showLineup(team) {
-  const jpEl  = document.getElementById('lineup-jp');
-  const venEl = document.getElementById('lineup-ven');
-  const jpBtn = document.getElementById('ltab-jp');
-  const venBtn= document.getElementById('ltab-ven');
-  if (!jpEl || !venEl) return;
-  jpEl.style.display  = team === 'jp'  ? 'block' : 'none';
-  venEl.style.display = team === 'ven' ? 'block' : 'none';
-  jpBtn.style.borderBottomColor  = team==='jp'  ? 'var(--accent)' : 'transparent';
-  jpBtn.style.color  = team==='jp'  ? 'var(--accent)' : 'var(--text-sub)';
-  venBtn.style.borderBottomColor = team==='ven' ? 'var(--accent)' : 'transparent';
-  venBtn.style.color = team==='ven' ? 'var(--accent)' : 'var(--text-sub)';
+// ── BETSLIP ──────────────────────────────────────
+const state={bets:[],balance:10000};
+function toggleBet(id,market,selection,odds){
+  const idx=state.bets.findIndex(b=>b.id===id);
+  if(idx>=0){state.bets.splice(idx,1);document.querySelector(`.odds-btn[data-id="${id}"]`)?.classList.remove('selected');}
+  else{state.bets.push({id,market,selection,odds,stake:0});document.querySelector(`.odds-btn[data-id="${id}"]`)?.classList.add('selected');document.getElementById('betslip-panel').classList.add('open');document.getElementById('mobile-toggle').classList.add('hidden');}
+  renderBetslip();
+}
+function renderBetslip(){
+  const cnt=state.bets.length;
+  document.getElementById('betslip-count').textContent=cnt;document.getElementById('mobile-count').textContent=cnt;document.getElementById('place-bet-btn').disabled=!cnt;
+  if(!cnt){document.getElementById('betslip-items').innerHTML='<div class="empty-betslip"><p>予想が選択されていません</p></div>';updateTotals();return;}
+  document.getElementById('betslip-items').innerHTML='';
+  state.bets.forEach(bet=>{
+    const d=document.createElement('div');d.className='bet-item';
+    d.innerHTML=`<div style="display:flex;justify-content:space-between;margin-bottom:4px;"><div><div class="bet-selection">${bet.selection}</div><div class="bet-market" style="font-size:10px;color:var(--text-sub);">${bet.market}</div></div><div class="bet-odds-badge">${bet.odds.toFixed(2)}</div></div><button class="btn-remove" onclick="removeBet('${bet.id}')">✕</button><div style="position:relative;"><span class="stake-sym">pt</span><input type="number" id="input-${bet.id}" class="stake-input" placeholder="ポイント入力" value="${bet.stake||''}" oninput="handleInput('${bet.id}',this.value)"></div><div class="quick-stakes"><button class="btn-quick" onclick="addStake('${bet.id}',500)">+500</button><button class="btn-quick" onclick="addStake('${bet.id}',1000)">+1k</button><button class="btn-quick" onclick="addStake('${bet.id}',5000)">+5k</button><button class="btn-quick" onclick="addStake('${bet.id}','MAX')">MAX</button></div><div class="potential-return"><span>受取額:</span><span id="return-${bet.id}" class="return-amount">${Math.floor(bet.stake*bet.odds).toLocaleString()}pt</span></div>`;
+    document.getElementById('betslip-items').appendChild(d);
+  });
+  updateTotals();
+}
+function removeBet(id){document.querySelector(`.odds-btn[data-id="${id}"]`)?.classList.remove('selected');const i=state.bets.findIndex(b=>b.id===id);if(i>=0)state.bets.splice(i,1);renderBetslip();}
+function handleInput(id,v){const b=state.bets.find(x=>x.id===id);if(b){b.stake=parseInt(v)||0;document.getElementById(`return-${id}`).textContent=`${Math.floor(b.stake*b.odds).toLocaleString()}pt`;updateTotals();}}
+function addStake(id,a){const b=state.bets.find(x=>x.id===id);if(b){b.stake=a==='MAX'?state.balance:b.stake+a;const inp=document.getElementById(`input-${id}`);if(inp)inp.value=b.stake;document.getElementById(`return-${id}`).textContent=`${Math.floor(b.stake*b.odds).toLocaleString()}pt`;updateTotals();}}
+function updateTotals(){const ts=state.bets.reduce((s,b)=>s+b.stake,0),tr=state.bets.reduce((s,b)=>s+b.stake*b.odds,0);document.getElementById('total-stake').textContent=`${ts.toLocaleString()}pt`;document.getElementById('total-return').textContent=`${Math.floor(tr).toLocaleString()}pt`;}
+function toggleBetslip(){document.getElementById('betslip-panel').classList.toggle('open');document.getElementById('mobile-toggle').classList.toggle('hidden');}
 
-  const rowHtml = (rows) => rows.map(([n,p,nm,t,avg]) =>
-    `<tr style="border-bottom:1px solid #21262d;">
-      <td style="padding:8px 8px;text-align:center;font-size:12px;color:#8b949e;">${n}</td>
-      <td style="padding:8px 6px;text-align:center;font-size:11px;color:#f5a623;font-weight:bold;">${p}</td>
-      <td style="padding:8px 6px;font-size:12px;color:#58a6ff;font-weight:bold;">${nm}</td>
-      <td style="padding:8px 6px;text-align:center;font-size:11px;color:#8b949e;">${t}</td>
-      <td style="padding:8px 8px;text-align:right;font-size:12px;color:#e6edf3;font-family:var(--font-m);">${avg}</td>
-    </tr>`).join('');
-
-  const jpBody = document.getElementById('lineup-jp-body');
-  const venBody = document.getElementById('lineup-ven-body');
-  if (jpBody)  jpBody.innerHTML  = rowHtml(lineupJP);
-  if (venBody) venBody.innerHTML = rowHtml(lineupVEN);
+// ── VIEWS ─────────────────────────────────────────
+function setActiveTab(tabId){document.querySelectorAll('.header-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tabId));}
+function switchView(viewId){
+  document.querySelectorAll('.view-section').forEach(el=>{el.classList.remove('active');el.style.display='none';});
+  const t=document.getElementById('view-'+viewId);if(t){t.classList.add('active');t.style.display='block';}
+  const tabMap={home:'home',mypage:'mypage',mission:'mission',cards:'cards',match:'home'};
+  setActiveTab(tabMap[viewId]||'home');
+  if(viewId==='mission')renderMissionSection();
+  if(viewId==='cards')renderPackGrid();
+  document.querySelector('.scroll-area').scrollTop=0;
+}
+function showScreen(id){
+  if(id==='home'){switchView('home');return;}
+  if(id==='mypage'){switchView('mypage');setActiveTab('mypage');renderMpBets();renderMpLeague();return;}
+  if(id==='rankingDetail'){document.querySelectorAll('.view-section').forEach(el=>{el.classList.remove('active');el.style.display='none';});const t=document.getElementById('rankingDetail');if(t){t.classList.add('active');t.style.display='block';}renderRankingDetail();document.querySelector('.scroll-area').scrollTop=0;}
+}
+function openMatchDetail(idx){
+  const m = liveMatches[idx];
+  if (!m) return;
+  if (m.isDena) {
+    switchView('match');
+  } else {
+    alert(`${m.home.name} vs ${m.away.name} の詳細は準備中です`);
+  }
 }
 
-const gameLog = [
-  {inning:'3回表', team:'ベネズエラ', plays:[
-    {seq:4, situation:'二死三塁', batter:'5番 E.トーバー', desc:'カウント1-2からワンバウンドした球を空振り三振', result:'3アウト', highlight:false},
-    {seq:3, situation:'一死三塁', batter:'4番 E.スアレス', desc:'空振り三振でバッターアウト', result:'2アウト', highlight:false},
-    {seq:2, situation:'無死二塁', batter:'3番 L.アラエス', desc:'外角の変化球を引っかけてセカンドゴロ', result:'1アウト三塁', highlight:false},
-    {seq:1, situation:'無死走者なし', batter:'2番 M.ガルシア', desc:'レフトへのツーベース', result:'二塁', highlight:false},
-  ]},
-  {inning:'2回裏', team:'日本', plays:[
-    {seq:3, situation:'二死走者なし', batter:'7番 牧 秀悟', desc:'空振り三振', result:'3アウト', highlight:false},
-    {seq:2, situation:'一死走者なし', batter:'6番 村上 宗隆', desc:'空振りの三振を喫する', result:'2アウト', highlight:false},
-    {seq:1, situation:'無死走者なし', batter:'5番 岡本 和真', desc:'内角高めの真っ直ぐを打つもセンターライナー', result:'1アウト', highlight:false},
-  ]},
-  {inning:'2回表', team:'ベネズエラ', plays:[
-    {seq:6, situation:'二死一二塁', batter:'1番 R.アクーニャJr.', desc:'セカンドゴロ', result:'3アウト', highlight:false},
-    {seq:5, situation:'一死一二塁', batter:'9番 J.チョーリオ', desc:'空振り三振でバッターアウト', result:'2アウト', highlight:false},
-    {seq:4, situation:'無死一二塁', batter:'8番 S.ペレス', desc:'高めのツーシームを打つもライトフライ', result:'1アウト', highlight:false},
-    {seq:3, situation:'無死二塁', batter:'7番 W.アブレイユ', desc:'フォアボールを選ぶ', result:'一二塁', highlight:false},
-    {seq:2, situation:'無死二塁', batter:'6番 G.トーレス', desc:'ランナー二塁の2-2からレフトへのタイムリーツーベースでベネズエラ勝ち越し！', result:'🇻🇪 日 1-2 ベ', highlight:true},
-    {seq:1, situation:'無死走者なし', batter:'5番 E.トーバー', desc:'フェンス直撃のツーベースを放つ', result:'二塁', highlight:false},
-  ]},
-  {inning:'1回裏', team:'日本', plays:[
-    {seq:5, situation:'二死一塁', batter:'5番 岡本 和真', desc:'リプレー検証後判定覆る — 一塁走者 鈴木 盗塁アウト', result:'3アウト', highlight:false},
-    {seq:4, situation:'一死一塁', batter:'4番 吉田 正尚', desc:'空振り三振', result:'2アウト', highlight:false},
-    {seq:3, situation:'一死走者なし', batter:'3番 鈴木 誠也', desc:'フォアボールを選ぶ', result:'一塁', highlight:false},
-    {seq:2, situation:'無死走者なし', batter:'2番 佐藤 輝明', desc:'見逃し三振', result:'1アウト', highlight:false},
-    {seq:1, situation:'無死走者なし', batter:'1番 大谷 翔平', desc:'カウント2-1からセンターへのホームランで日本同点！', result:'🇯🇵 日 1-1 ベ', highlight:true},
-  ]},
-  {inning:'1回表', team:'ベネズエラ', plays:[
-    {seq:4, situation:'二死走者なし', batter:'4番 E.スアレス', desc:'サードゴロ', result:'3アウト', highlight:false},
-    {seq:3, situation:'一死走者なし', batter:'3番 L.アラエス', desc:'ショートフライ', result:'2アウト', highlight:false},
-    {seq:2, situation:'無死走者なし', batter:'2番 M.ガルシア', desc:'サードフライ', result:'1アウト', highlight:false},
-    {seq:1, situation:'無死走者なし', batter:'1番 R.アクーニャJr.', desc:'1-0から右中間へのホームランでベネズエラ先制！', result:'🇻🇪 日 0-1 ベ', highlight:true},
-  ]},
-];
-
-function renderGameLog() {
-  const el = document.getElementById('game-log'); if (!el) return;
-  el.innerHTML = gameLog.map(inn => `
-    <div style="border:1px solid #30363d;border-radius:8px;overflow:hidden;">
-      <div style="background:#161b22;padding:5px 10px;font-size:10px;font-weight:bold;color:#8b949e;display:flex;align-items:center;gap:6px;">
-        <span style="color:var(--accent);">${inn.inning}</span>
-        <span>${inn.team === '日本' ? '🇯🇵' : '🇻🇪'} ${inn.team}の攻撃</span>
-      </div>
-      ${inn.plays.map(p => `
-        <div style="padding:6px 10px;border-top:1px solid #21262d;background:${p.highlight?'rgba(245,166,35,0.06)':'transparent'};">
-          <div style="display:flex;align-items:center;gap:5px;margin-bottom:2px;">
-            <span style="font-size:9px;background:#21262d;color:#8b949e;padding:1px 5px;border-radius:3px;flex-shrink:0;">${p.seq}</span>
-            <span style="font-size:10px;font-weight:bold;color:#e6edf3;">${p.batter}</span>
-            <span style="font-size:9px;color:#8b949e;margin-left:auto;">${p.situation}</span>
-          </div>
-          <div style="font-size:10px;color:${p.highlight?'#f5a623':'#8b949e'};padding-left:2px;">${p.desc}</div>
-          <div style="font-size:9px;color:${p.highlight?'#3fb950':'#30363d'};text-align:right;margin-top:1px;font-weight:${p.highlight?'bold':'normal'};">${p.result}</div>
-        </div>`).join('')}
-    </div>`).join('');
+// ── HOME STUDIO ───────────────────────────────────
+const studioComments={live:'横浜スタジアム！藤浪晋太郎がNPB3年ぶり復帰登板。試合進行中！',result:'本日の予想結果をお届けします。',news:'最新スポーツニュースをお届けします。',ucomment:'ユーザーたちが盛り上がっています！',chat:'何でも聞いてください！'};
+const studioTags={live:'🎙️ AI解説',result:'🎯 予想結果',news:'📰 ニュース',ucomment:'💬 コメント',chat:'🤖 AIチャット'};
+function studioSelect(tab){
+  ['live','result','news','ucomment','chat'].forEach(t=>{document.getElementById('sbtn-'+t)?.classList.toggle('active',t===tab);const p=document.getElementById('sp-'+t);if(p)p.style.display=t===tab?'block':'none';});
+  document.getElementById('studioCommentText').textContent=studioComments[tab];
+  document.getElementById('studioTag').textContent=studioTags[tab];
+  if(tab==='live')renderSpLive();
 }
-
-// ── MYPAGE ────────────────────────────
-function renderMpBets() {
-  const el = document.getElementById('mpBetList'); if (!el) return;
-  el.innerHTML = myBets.map((b,i) => {
-    const icon = b.status==='won' ? '✅' : b.status==='lost' ? '❌' : '⏳';
-    const ptClass = b.status==='won' ? 'won' : b.status==='lost' ? 'lost' : 'pending';
-    const pt = b.status==='won' ? `+${b.payout-b.stake}pt` : b.status==='lost' ? `-${b.stake}pt` : '進行中';
-    return `<div class="lb-row" onclick="openBetDetail(${i})"><span class="lb-status">${icon}</span><span class="lb-label">${b.sport} • ${b.prediction}</span><span class="lb-pt ${ptClass}">${pt}</span><span class="lb-arrow">›</span></div>`;
+function renderSpLive(){
+  const list=document.getElementById('sp-live-list');const moreBtn=document.getElementById('sp-live-more');if(!list)return;
+  const shown=spLiveExpanded2?liveMatches:liveMatches.slice(0,3);
+  list.innerHTML=shown.map(m=>{
+    const bc=m.status==='live'?'live':m.status==='upcoming'?'upcoming':'fin';
+    const bt=m.status==='live'?'LIVE':m.status==='upcoming'?'予定':'終了';
+    const score=m.homeScore!==null?`<span style="font-size:12px;font-weight:bold;font-family:var(--font-m);color:#e6edf3;">${m.homeScore}-${m.awayScore}</span>`:`<span style="font-size:10px;color:#8b949e;">VS</span>`;
+    return `<div class="sp-live-row" onclick="openMatchDetail(${m.id})"><div class="sp-live-row-top"><span class="sp-live-badge ${bc}">${bt}</span><span class="sp-live-teams">${m.home.flag} ${m.home.name} ${score} ${m.away.name} ${m.away.flag}</span></div><div class="sp-live-participants">👥 ${m.participants.toLocaleString()}人が予想中</div></div>`;
   }).join('');
+  if(moreBtn)moreBtn.style.display=liveMatches.length>3&&!spLiveExpanded2?'block':'none';
+}
+function spLiveShowMore(){spLiveExpanded2=true;renderSpLive();}
+function sendHomeChat(){
+  const inp=document.getElementById('homeChatInput');if(!inp.value.trim())return;
+  const hist=document.getElementById('homeChatHistory');
+  const um=document.createElement('div');um.className='sp-chat-msg user';
+  um.innerHTML=`<span class="sp-chat-avatar">😊</span><div class="sp-chat-bubble user-bubble">${inp.value}</div>`;
+  hist.appendChild(um);inp.value='';hist.scrollTop=hist.scrollHeight;
+  setTimeout(()=>{const r='藤浪の球速は平均150km/h超えです。メジャー仕込みのスプリットに注目！';const am=document.createElement('div');am.className='sp-chat-msg';am.innerHTML=`<span class="sp-chat-avatar">🤖</span><div class="sp-chat-bubble"><div class="sp-chat-name" style="color:#58a6ff;">BEAT-1</div>${r}</div>`;hist.appendChild(am);hist.scrollTop=hist.scrollHeight;},900);
+}
+function sendMatchChat(){
+  const inp=document.getElementById('matchChatInput');if(!inp.value.trim())return;
+  const hist=document.getElementById('matchChatHistory');
+  const um=document.createElement('div');um.className='sp-chat-msg user';
+  um.innerHTML=`<span class="sp-chat-avatar">😊</span><div class="sp-chat-bubble user-bubble">${inp.value}</div>`;
+  hist.appendChild(um);inp.value='';hist.scrollTop=hist.scrollHeight;
+  setTimeout(()=>{const replies=['藤浪はここまで3回1失点。奪三振数は2つです。','ビシエドはDeNA移籍後まだ安打なし。次の打席に注目！','梶原の二塁打が惜しかった。後続に課題あり。'];const r=replies[Math.floor(Math.random()*replies.length)];const am=document.createElement('div');am.className='sp-chat-msg';am.innerHTML=`<span class="sp-chat-avatar">🤖</span><div class="sp-chat-bubble"><div class="sp-chat-name" style="color:#58a6ff;">BEAT-1</div>${r}</div>`;hist.appendChild(am);hist.scrollTop=hist.scrollHeight;document.getElementById('matchStudioText').textContent=r;},900);
 }
 
-function renderMpActiveBets() {
-  const el = document.getElementById('mpActiveBets'); if (!el) return;
-  el.innerHTML = myBets.filter(b => b.status==='pending').map(b =>
-    `<div class="mp-active-bet-card"><span class="mp-active-sport">⚽</span><div class="mp-active-info"><div class="mp-active-match">${b.sport}</div><div class="mp-active-my">予想: ${b.prediction} (${b.odds}倍)</div></div><span class="mp-active-status live">LIVE</span></div>`
-  ).join('');
+// ── PLAYER CARDS ──────────────────────────────────
+function renderPlayerCards(){
+  const c=document.getElementById('playerCardScroll');if(!c)return;
+  c.innerHTML=allPlayerCards.map(p=>`<div class="pcard rarity-${p.rarity}" onclick="showCardDetail(${p.id})">${p.isNew?'<div class="pcard-new">NEW</div>':''}<div class="pcard-inner"><div class="pcard-top"><span class="pcard-number">${p.number}</span><span class="pcard-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="pcard-img-area"><div class="pcard-ball">${p.emoji}</div></div><div class="pcard-info"><div class="pcard-name">${p.name}</div><div class="pcard-team">${p.team}</div></div></div></div>`).join('');
+}
+function showCardDetail(id){
+  const c=allPlayerCards.find(p=>p.id===id);if(!c)return;
+  const prev=document.getElementById('detail-card-preview');if(prev){prev.style.background=rarityBg[c.rarity];prev.innerHTML=`<span style="font-size:3rem;">${c.emoji}</span>`;}
+  document.getElementById('detail-name').textContent=c.name;document.getElementById('detail-team').textContent=`${c.team}`;document.getElementById('detail-rarity').textContent=c.rarity;
+  document.getElementById('modal-card-detail').classList.add('active');
 }
 
-function renderMpFriends() {
-  const el = document.getElementById('mpFriendList'); if (!el) return;
-  [{name:'Taro K.',avatar:'😎',bet:'日本 勝利',result:'won',pt:'+225pt'},
-   {name:'Hana M.',avatar:'🌸',bet:'大谷HR',  result:'pending',pt:'進行中'},
-   {name:'Yuki T.',avatar:'🎃',bet:'DeNA 勝利',result:'lost',pt:'-300pt'}]
-  .forEach(f => {
-    const d = document.createElement('div'); d.className = 'mp-friend-row';
-    d.innerHTML = `<span class="mp-friend-avatar">${f.avatar}</span><div class="mp-friend-info"><div class="mp-friend-name">${f.name}</div><div class="mp-friend-bet">${f.bet}</div></div><span class="mp-friend-result ${f.result}">${f.pt}</span>`;
-    el.appendChild(d);
-  });
+// ── MYPAGE ────────────────────────────────────────
+function renderMpBets(){
+  const el=document.getElementById('mpBetList');if(!el)return;
+  el.innerHTML=myBets.map((b,i)=>{const icon=b.status==='won'?'✅':b.status==='lost'?'❌':'⏳';const ptClass=b.status==='won'?'won':b.status==='lost'?'lost':'pending';const pt=b.status==='won'?`+${b.payout-b.stake}pt`:b.status==='lost'?`-${b.stake}pt`:'進行中';return `<div class="lb-row"><span class="lb-status">${icon}</span><span class="lb-label">${b.sport} • ${b.prediction}</span><span class="lb-pt ${ptClass}">${pt}</span></div>`;}).join('');
 }
+function renderMpLeague(){const el=document.getElementById('mpLeagueList');if(!el)return;el.innerHTML=leagueRankingData.map(r=>`<div class="lr-row${r.isMe?' me':''}"><span class="lr-rank">${r.rank}</span><span class="lr-avatar">${r.avatar}</span><span class="lr-name${r.isMe?' me-name':''}">${r.name}</span><span class="lr-pts${r.isMe?' me-pts':''}">${r.pts.toLocaleString()}pt</span></div>`).join('');}
+function renderRankingDetail(){const el=document.getElementById('rankingDetailList');if(!el)return;el.innerHTML=leagueRankingData.map(r=>`<div class="lr-row${r.isMe?' me':''}"><span class="lr-rank">${r.rank}</span><span class="lr-avatar">${r.avatar}</span><span class="lr-name${r.isMe?' me-name':''}">${r.name}</span><span class="lr-pts${r.isMe?' me-pts':''}">${r.pts.toLocaleString()}pt</span></div>`).join('');}
 
-function renderMpLeague() {
-  const el = document.getElementById('mpLeagueList'); if (!el) return;
-  el.innerHTML = leagueRankingData.map(r =>
-    `<div class="lr-row${r.isMe?' me':''}"><span class="lr-rank">${r.rank}</span><span class="lr-avatar">${r.avatar}</span><span class="lr-name${r.isMe?' me-name':''}">${r.name}</span><span class="lr-pts${r.isMe?' me-pts':''}">${r.pts.toLocaleString()}pt</span></div>`
-  ).join('');
-}
+// ── CARDS ─────────────────────────────────────────
+function switchCardNav(tab,el){document.querySelectorAll('.card-nav-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('cview-pack').style.display=tab==='pack'?'block':'none';document.getElementById('cview-mycard').style.display=tab==='mycard'?'block':'none';if(tab==='mycard')renderCardList();}
+function renderPackGrid(){const el=document.getElementById('pack-grid');if(!el)return;el.innerHTML=packs.map(p=>`<div class="pack-card" onclick="openBuyModal('${p.id}')"><div class="pack-bg" style="background:${p.bg};"></div><div class="pack-content"><div class="pack-image-area">📦</div><div class="pack-title">${p.name}</div><div class="pack-desc">${p.desc}</div><div class="pack-rarity">${p.rarity}</div><div class="pack-price"><span class="coin-paid">💰${p.costPaid}</span>/<span class="coin-free">🪙${p.costFree}</span></div><div class="btn-buy-pack">購入する</div></div></div>`).join('');}
+function renderCardList(){const el=document.getElementById('card-list-grid');if(!el)return;document.getElementById('card-count-label').textContent=`${allPlayerCards.length}枚のカード`;el.innerHTML=allPlayerCards.map(p=>`<div class="cl-card rarity-${p.rarity}" onclick="showCardDetail(${p.id})">${p.isNew?'<div class="cl-card-new">NEW</div>':''}<div class="cl-card-inner"><div class="cl-card-top"><span class="cl-card-num">${p.number}</span><span class="cl-card-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="cl-card-img-area"><div class="cl-card-ball">${p.emoji}</div></div><div class="cl-card-info"><div class="cl-card-name">${p.name}</div><div class="cl-card-team">${p.team}</div></div></div></div>`).join('');}
+function openBuyModal(packId){currentSelectedPack=packs.find(p=>p.id===packId);if(!currentSelectedPack)return;document.getElementById('buy-modal-title').textContent=`📦 ${currentSelectedPack.name}`;document.getElementById('buy-cost-paid').textContent=currentSelectedPack.costPaid;document.getElementById('buy-cost-free').textContent=currentSelectedPack.costFree;document.getElementById('radio-paid').checked=true;updateBuyModal();document.getElementById('modal-buy-pack').classList.add('active');}
+function updateBuyModal(){const isPaid=document.getElementById('radio-paid').checked;const cost=isPaid?currentSelectedPack.costPaid:currentSelectedPack.costFree;const bal=isPaid?coins.paid:coins.free;document.getElementById('buy-balance-calc').textContent=`${isPaid?'💰':'🪙'} ${bal} → 購入後: ${bal-cost}`;const err=bal-cost<0;document.getElementById('buy-error').style.display=err?'block':'none';document.getElementById('btn-confirm-buy').disabled=err;}
+function confirmBuyPack(){const isPaid=document.getElementById('radio-paid').checked;const cost=isPaid?currentSelectedPack.costPaid:currentSelectedPack.costFree;if(isPaid)coins.paid-=cost;else coins.free-=cost;document.getElementById('coin-paid-display').textContent=coins.paid.toLocaleString();document.getElementById('coin-free-display').textContent=coins.free.toLocaleString();closeModal('modal-buy-pack');openPackModal();}
+function openPackModal(){document.getElementById('open-pack-area').innerHTML=Array(3).fill(0).map(()=>`<div class="flip-card"><div class="flip-card-front">🎴</div><div class="flip-card-back"><div class="emoji">⚾</div><div class="name">選手カード</div><div class="rarity">RARE</div></div></div>`).join('');document.getElementById('open-pack-msg').style.display='none';document.getElementById('btn-open-all').style.display='block';document.getElementById('btn-close-open').style.display='none';document.getElementById('modal-open-pack').classList.add('active');}
+function openAllCards(){document.querySelectorAll('.flip-card').forEach((c,i)=>setTimeout(()=>c.classList.add('flipped'),i*200));setTimeout(()=>{document.getElementById('open-pack-msg').style.display='block';document.getElementById('btn-open-all').style.display='none';document.getElementById('btn-close-open').style.display='block';},1500);}
 
-function renderRankingDetail() {
-  const el = document.getElementById('rankingDetailList'); if (!el) return;
-  el.innerHTML = leagueRankingData.map(r =>
-    `<div class="lr-row${r.isMe?' me':''}"><span class="lr-rank">${r.rank}</span><span class="lr-avatar">${r.avatar}</span><span class="lr-name${r.isMe?' me-name':''}">${r.name}</span><span class="lr-pts${r.isMe?' me-pts':''}">${r.pts.toLocaleString()}pt</span></div>`
-  ).join('');
-}
+// ── MISSION ───────────────────────────────────────
+function renderMissionSection(){const el=document.getElementById('mission-container');if(!el)return;let html='';const rg=(title,list)=>{html+=`<div style="margin-bottom:12px;"><div class="section-header"><span>${title}</span></div>`;list.forEach(m=>{const pct=Math.round(m.progress.current/m.progress.total*100);html+=`<div class="mission-card${m.done?' done':''}"><div class="mission-card-info"><div class="mission-name">${m.done?'✅ ':''}${m.title}</div><div style="display:flex;align-items:center;gap:5px;margin-top:3px;"><div class="mission-progress-bar-bg"><div class="mission-progress-bar-fill" style="width:${pct}%"></div></div><span style="font-size:9px;color:#8b949e;">${m.progress.current}/${m.progress.total}</span></div></div><div class="mission-reward-text${m.done?' done':''}">+${m.reward}pt</div></div>`;});html+='</div>';};rg('📅 デイリーミッション',missions.daily);rg('📆 ウィークリーミッション',missions.weekly);el.innerHTML=html;}
+function closeModal(id){document.getElementById(id)?.classList.remove('active');}
 
-function openBetDetail(i) {
-  const b = myBets[i]; if (!b) return;
-  const statusMap = {won:'✅ 的中', lost:'❌ ハズレ', pending:'⏳ 進行中'};
-  document.getElementById('bet-detail-title').textContent = `${statusMap[b.status]} ${b.sport}`;
-  document.getElementById('bet-detail-amount').textContent = b.status==='won' ? `${b.stake}pt → ${b.payout}pt獲得` : b.status==='lost' ? `${b.stake}pt 没収` : `${b.stake}pt 進行中`;
-  document.getElementById('bet-detail-question-container').innerHTML = `<div class="bet-detail-section"><div class="bet-detail-section-title">❓ ${b.question}</div><div class="bet-detail-choices">${b.choices.map(c => {const cls=c.isMyChoice?(b.status==='won'?'my-choice-won':b.status==='lost'?'my-choice-lost':'my-choice-pending'):'';return `<div class="bet-detail-choice ${cls}"><div class="choice-label">${c.isMyChoice?'✓ ':''}${c.label}</div><div class="choice-odds">${c.odds}倍</div><div class="choice-votes">${c.pct}% (${c.votes}票)</div></div>`;}).join('')}</div></div>`;
-  document.getElementById('bet-detail-analysis-title').textContent = b.status==='pending' ? '📊 現在の状況' : '📊 振り返り';
-  document.getElementById('bet-detail-analysis-text').textContent = b.analysis.summary;
-  const hs = document.getElementById('bet-detail-hint-section');
-  if (b.analysis.hint) { hs.style.display='block'; document.getElementById('bet-detail-hint-text').textContent = b.analysis.hint; } else hs.style.display='none';
-  document.getElementById('bet-detail-news-list').innerHTML = b.analysis.news.map(n =>
-    `<div class="bet-news-item"><div class="bet-news-title">📰 ${n.title}</div><div class="bet-news-meta">${n.source} • ${n.time}</div></div>`
-  ).join('');
-  document.getElementById('modal-bet-detail').classList.add('active');
-}
-
-// ── CARDS ─────────────────────────────
-function switchCardNav(tab, el) {
-  document.querySelectorAll('.card-nav-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('cview-pack').style.display = tab === 'pack' ? 'block' : 'none';
-  document.getElementById('cview-mycard').style.display = tab === 'mycard' ? 'block' : 'none';
-  if (tab === 'mycard') renderCardList();
-}
-
-function renderPackGrid() {
-  const el = document.getElementById('pack-grid'); if (!el) return;
-  el.innerHTML = packs.map(p =>
-    `<div class="pack-card" onclick="openBuyModal('${p.id}')"><div class="pack-bg" style="background:${p.bg};"></div><div class="pack-content"><div class="pack-image-area">📦</div><div class="pack-title">${p.name}</div><div class="pack-desc">${p.desc}</div><div class="pack-rarity">${p.rarity}</div><div class="pack-price"><span class="coin-paid">💰${p.costPaid}</span> / <span class="coin-free">🪙${p.costFree}</span></div><div class="btn-buy-pack">購入する</div></div></div>`
-  ).join('');
-}
-
-function renderCardFilterRow() {
-  const filters = ['ALL','EPIC','RARE','UNCOMMON','NORMAL','NPB','WBC','Soccer'];
-  const labels = {ALL:'すべて',EPIC:'🌟 EPIC',RARE:'💎 RARE',UNCOMMON:'🔷 UNCOMMON',NORMAL:'⬜ NORMAL',NPB:'⚾ NPB',WBC:'🏆 WBC',Soccer:'⚽ Soccer'};
-  const row = document.getElementById('card-filter-row'); if (!row) return;
-  row.innerHTML = filters.map(f =>
-    `<button class="filter-chip${activeCardFilter===f?' active':''}" onclick="setCardFilter('${f}')">${labels[f]}</button>`
-  ).join('');
-}
-
-function setCardFilter(f) { activeCardFilter = f; renderCardList(); }
-
-function renderCardList() {
-  renderCardFilterRow();
-  let cards = [...allPlayerCards];
-  if (activeCardFilter !== 'ALL') cards = cards.filter(c => c.rarity===activeCardFilter || c.sport===activeCardFilter);
-  cards.sort((a,b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
-  const label = document.getElementById('card-count-label');
-  if (label) label.textContent = `${cards.length}枚のカード`;
-  const grid = document.getElementById('card-list-grid'); if (!grid) return;
-  grid.innerHTML = cards.map(p => `
-    <div class="cl-card rarity-${p.rarity}" onclick="showCardDetail(${p.id})">
-      ${p.isNew ? '<div class="cl-card-new">NEW</div>' : ''}
-      <div class="cl-card-inner">
-        <div class="cl-card-top">
-          <span class="cl-card-num">${p.number}</span>
-          <span class="cl-card-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span>
-        </div>
-        <div class="cl-card-img-area"><div class="cl-card-ball">${p.emoji}</div></div>
-        <div class="cl-card-info">
-          <div class="cl-card-name">${p.name}</div>
-          <div class="cl-card-team">${p.sport} • ${p.team}</div>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function openBuyModal(packId) {
-  currentSelectedPack = packs.find(p => p.id === packId); if (!currentSelectedPack) return;
-  document.getElementById('buy-modal-title').textContent = `📦 ${currentSelectedPack.name}`;
-  document.getElementById('buy-cost-paid').textContent = currentSelectedPack.costPaid;
-  document.getElementById('buy-cost-free').textContent = currentSelectedPack.costFree;
-  document.getElementById('radio-paid').checked = true;
-  updateBuyModal();
-  document.getElementById('modal-buy-pack').classList.add('active');
-}
-
-function updateBuyModal() {
-  const isPaid = document.getElementById('radio-paid').checked;
-  const cost = isPaid ? currentSelectedPack.costPaid : currentSelectedPack.costFree;
-  const bal = isPaid ? coins.paid : coins.free;
-  document.getElementById('buy-balance-calc').textContent = `${isPaid?'💰':'🪙'} ${bal} → 購入後: ${bal-cost}`;
-  const err = bal - cost < 0;
-  document.getElementById('buy-error').style.display = err ? 'block' : 'none';
-  document.getElementById('btn-confirm-buy').disabled = err;
-}
-
-function confirmBuyPack() {
-  const isPaid = document.getElementById('radio-paid').checked;
-  const cost = isPaid ? currentSelectedPack.costPaid : currentSelectedPack.costFree;
-  if (isPaid) coins.paid -= cost; else coins.free -= cost;
-  document.getElementById('coin-paid-display').textContent = coins.paid.toLocaleString();
-  document.getElementById('coin-free-display').textContent = coins.free.toLocaleString();
-  closeModal('modal-buy-pack');
-  openPackModal();
-}
-
-function openPackModal() {
-  document.getElementById('open-pack-area').innerHTML = Array(5).fill(0).map(() =>
-    `<div class="flip-card"><div class="flip-card-front">🎴</div><div class="flip-card-back"><div class="emoji">⚾</div><div class="name">選手カード</div><div class="rarity">RARE</div></div></div>`
-  ).join('');
-  document.getElementById('open-pack-msg').style.display = 'none';
-  document.getElementById('btn-open-all').style.display = 'block';
-  document.getElementById('btn-close-open').style.display = 'none';
-  document.getElementById('modal-open-pack').classList.add('active');
-}
-
-function openAllCards() {
-  document.querySelectorAll('.flip-card').forEach((c,i) => setTimeout(() => c.classList.add('flipped'), i*200));
-  setTimeout(() => {
-    document.getElementById('open-pack-msg').style.display = 'block';
-    document.getElementById('btn-open-all').style.display = 'none';
-    document.getElementById('btn-close-open').style.display = 'block';
-  }, 1500);
-}
-
-// ── MISSION ───────────────────────────
-function renderMissionSection() {
-  const el = document.getElementById('mission-container'); if (!el) return;
-  let html = '';
-  const renderGroup = (title, list) => {
-    html += `<div style="margin-bottom:12px;"><div class="section-header"><span>${title}</span></div>`;
-    list.forEach(m => {
-      const pct = Math.round(m.progress.current / m.progress.total * 100);
-      html += `<div class="mission-card${m.done?' done':''}"><div class="mission-card-info"><div class="mission-name">${m.done?'✅ ':''}${m.title}</div><div style="display:flex;align-items:center;gap:5px;margin-top:3px;"><div class="mission-progress-bar-bg"><div class="mission-progress-bar-fill" style="width:${pct}%"></div></div><span style="font-size:9px;color:#8b949e;">${m.progress.current}/${m.progress.total}</span></div></div><div class="mission-reward-text${m.done?' done':''}">+${m.reward}pt</div></div>`;
-    });
-    html += '</div>';
-  };
-  renderGroup('📅 デイリーミッション', missions.daily);
-  renderGroup('📆 ウィークリーミッション', missions.weekly);
-  el.innerHTML = html;
-}
-
-function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
-
-// ── ODDS ANIMATION ────────────────────
-setInterval(() => {
-  const btns = document.querySelectorAll('.odds-btn'); if (!btns.length) return;
-  const btn = btns[Math.floor(Math.random() * btns.length)];
-  let o = parseFloat(btn.dataset.odds) + (Math.random()*0.1 - 0.05);
-  if (o < 1.01) o = 1.01;
-  o = Math.round(o * 100) / 100;
-  const prev = parseFloat(btn.dataset.odds);
-  btn.querySelector('.odds-value').textContent = o.toFixed(2);
-  btn.dataset.odds = o.toFixed(2);
-  btn.classList.remove('flash-up','flash-down');
-  void btn.offsetWidth;
-  btn.classList.add(o > prev ? 'flash-up' : 'flash-down');
-}, 3000);
-
-// ── INIT ──────────────────────────────
-document.querySelectorAll('.odds-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    toggleBet(this.dataset.id, this.dataset.market, this.dataset.selection, parseFloat(this.dataset.odds));
-  });
-});
-
+// ── INIT ──────────────────────────────────────────
+document.querySelectorAll('.odds-btn').forEach(btn=>{btn.addEventListener('click',function(){toggleBet(this.dataset.id,this.dataset.market,this.dataset.selection,parseFloat(this.dataset.odds));});});
 renderSpLive();
 renderPlayerCards();
 renderPackGrid();
-renderPitchLog();
+renderScoreboard();
+updateAdvanceBtn();
 </script>
 </body>
 </html>
