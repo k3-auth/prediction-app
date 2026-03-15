@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390, initial-scale=1.0">
+<title>B.E.A.T</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-main:#0d1117;--bg-card:#161b22;--bg-sidebar:#1c2128;
+  --accent:#f5a623;--text-main:#e6edf3;--text-sub:#8b949e;
+  --live:#ff3b30;--success:#238636;--border:#30363d;
+  --font-h:'Barlow Condensed',sans-serif;--font-b:'Noto Sans JP',sans-serif;--font-m:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color:var(--text-main);overflow:hidden;}
+#phone{width:390px;height:844px;background:var(--bg-main);margin:0 auto;display:flex;flex-direction:column;position:relative;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,0.8);}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:0.4}}
+@keyframes liveBlink{0%,100%{opacity:1}50%{opacity:0.5}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cur{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+.header{background:var(--bg-sidebar);border-bottom:1px solid var(--border);padding:0 10px;display:flex;justify-content:space-between;align-items:stretch;height:48px;flex-shrink:0;z-index:100;}
+.logo{font-family:var(--font-h);font-size:1.2rem;font-weight:700;color:var(--accent);letter-spacing:1px;display:flex;align-items:center;gap:5px;padding:0 10px 0 0;border:none;background:none;cursor:pointer;}
+.logo svg{width:18px;height:18px;}
+.header-divider{width:1px;background:var(--border);margin:8px 0;}
+.header-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:0 12px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-sub);cursor:pointer;font-family:var(--font-b);height:100%;position:relative;transition:all 0.2s;white-space:nowrap;}
+.header-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(245,166,35,0.07);}
+.htab-icon{font-size:14px;line-height:1;}
+.htab-label{font-size:9px;font-weight:500;}
+.live-dot{position:absolute;top:8px;right:6px;width:5px;height:5px;background:var(--live);border-radius:50%;animation:pulseDot 1s infinite;}
+.balance{font-family:var(--font-m);font-size:11px;color:var(--text-main);background:var(--bg-main);padding:3px 8px;border-radius:4px;border:1px solid var(--border);}
+
+.scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:60px;}
+.scroll-area::-webkit-scrollbar{display:none;}
+.view-section{display:none;padding:10px;}
+.view-section.active{display:block;animation:fadeIn 0.2s ease-out;}
+
+/* LIVE MATCH CARDS */
+.live-matches-bar{padding:10px 10px 4px;}
+.live-matches-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x mandatory;}
+.live-matches-scroll::-webkit-scrollbar{display:none;}
+.lm-card{flex-shrink:0;width:200px;scroll-snap-align:start;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;transition:border-color 0.2s;position:relative;overflow:hidden;}
+.lm-card.is-live{border-color:rgba(255,59,48,0.4);}
+.lm-card-venue{font-size:9px;color:var(--text-sub);margin-bottom:7px;}
+.lm-card-teams{display:flex;align-items:center;justify-content:space-between;gap:6px;}
+.lm-team{display:flex;align-items:center;gap:5px;}
+.lm-team-logo{font-size:22px;line-height:1;}
+.lm-team-name{font-size:12px;font-weight:700;color:var(--text-main);}
+.lm-score{font-family:var(--font-m);font-size:18px;font-weight:700;color:#fff;line-height:1;}
+.lm-status{font-size:9px;text-align:center;margin-top:7px;}
+.badge-live{color:var(--live);font-weight:bold;animation:liveBlink 1s infinite;}
+.badge-pre{color:var(--accent);font-weight:bold;}
+.badge-fin{color:var(--text-sub);}
+.lm-card .live-pip{position:absolute;top:7px;right:8px;width:6px;height:6px;background:var(--live);border-radius:50%;animation:pulseDot 1s infinite;}
+
+/* STUDIO */
+.studio-wrap{background:linear-gradient(160deg,#0a0a0a,#1a0000 50%,#0d0d1a);border:1.5px solid #cc0000;border-radius:8px 8px 0 0;overflow:hidden;}
+.studio-hd{background:linear-gradient(90deg,#cc0000,#880000);padding:4px 10px;display:flex;align-items:center;justify-content:space-between;}
+.studio-hd-title{font-size:11px;font-weight:bold;color:#fff;letter-spacing:1px;}
+.studio-live-badge{background:#ff0000;color:#fff;font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;animation:liveBlink 1s infinite;}
+.studio-body{display:flex;align-items:flex-end;gap:10px;padding:8px 10px 0;}
+.studio-char-wrap{flex-shrink:0;text-align:center;}
+.studio-char{position:relative;width:60px;height:68px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;}
+.ai-caster{display:flex;flex-direction:column;align-items:center;}
+.ai-head{position:relative;font-size:26px;line-height:1;filter:drop-shadow(0 0 6px rgba(255,100,0,0.6));}
+.ai-headset{position:absolute;top:-4px;right:-8px;font-size:12px;}
+.ai-body{width:30px;height:22px;background:linear-gradient(180deg,#1a3a6a,#0d1f3c);border-radius:6px 6px 0 0;margin-top:2px;border:1px solid #2a4a8a;}
+.studio-desk{position:absolute;bottom:0;width:60px;height:10px;background:linear-gradient(180deg,#333,#1a1a1a);border-top:2px solid #cc0000;border-radius:2px;z-index:2;}
+.studio-nameplate{font-size:8px;color:#cc0000;font-weight:bold;letter-spacing:1px;margin-top:2px;font-family:monospace;}
+.studio-speech-wrap{flex:1;padding-bottom:10px;}
+.studio-bubble{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px 10px 10px 0;padding:8px 10px;font-size:11px;color:#e6edf3;line-height:1.5;min-height:44px;}
+.speech-cursor{display:inline-block;color:var(--accent);animation:cur 0.8s step-end infinite;font-weight:bold;}
+.studio-tag{font-size:9px;color:var(--text-sub);margin-top:3px;padding-left:2px;}
+.studio-actions{display:flex;border-top:1px solid rgba(200,0,0,0.3);background:rgba(0,0,0,0.3);}
+.studio-btn{flex:1;background:rgba(255,255,255,0.04);border:none;border-right:1px solid rgba(255,255,255,0.06);color:var(--text-sub);padding:6px 2px;font-size:10px;font-family:var(--font-b);cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:1px;}
+.studio-btn:last-child{border-right:none;}
+.studio-btn.active{background:rgba(204,0,0,0.2);color:#e6edf3;border-bottom:2px solid #cc0000;}
+.studio-btn-icon{font-size:12px;}
+.studio-btn-label{font-size:8px;}
+.studio-panel{background:#0d1117;border:1px solid #30363d;border-top:none;border-radius:0 0 8px 8px;margin-bottom:10px;}
+.studio-panel-inner{padding:8px 10px;}
+.sp-result-row{display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid #21262d;}
+.sp-result-row:last-child{border-bottom:none;}
+.sp-result-icon{font-size:12px;flex-shrink:0;}
+.sp-result-label{flex:1;font-size:11px;color:#e6edf3;}
+.sp-result-pt{font-size:11px;font-weight:bold;flex-shrink:0;}
+.sp-result-pt.won{color:#3fb950;}.sp-result-pt.lost{color:#ff6b6b;}.sp-result-pt.pending{color:#f5a623;}
+.sp-news-row{display:flex;gap:6px;padding:6px 0;border-bottom:1px solid #21262d;}
+.sp-news-row:last-child{border-bottom:none;}
+.sp-news-icon{font-size:15px;flex-shrink:0;}
+.sp-news-title{font-size:11px;color:#e6edf3;font-weight:bold;margin-bottom:1px;}
+.sp-news-meta{font-size:9px;color:#8b949e;}
+.sp-ucomment-list{display:flex;flex-direction:column;gap:5px;max-height:130px;overflow-y:auto;}
+.sp-ucomment-item{display:flex;gap:6px;align-items:flex-start;}
+.sp-ucomment-avatar{font-size:13px;flex-shrink:0;}
+.sp-ucomment-bubble{background:#161b22;border:1px solid #30363d;border-radius:7px;padding:4px 8px;font-size:11px;color:#e6edf3;line-height:1.4;}
+.sp-ucomment-name{font-size:9px;color:#f5a623;font-weight:bold;margin-bottom:1px;}
+
+/* CHAT */
+.sp-chat-history{display:flex;flex-direction:column;gap:5px;max-height:160px;overflow-y:auto;margin-bottom:7px;}
+.sp-chat-msg{display:flex;gap:6px;align-items:flex-start;}
+.sp-chat-msg.user{flex-direction:row-reverse;}
+.sp-chat-avatar{font-size:13px;flex-shrink:0;}
+.sp-chat-bubble{background:#161b22;border:1px solid #30363d;border-radius:7px;padding:4px 8px;font-size:11px;color:#e6edf3;line-height:1.4;max-width:85%;}
+.sp-chat-bubble.user-bubble{background:#1a2a3a;border-color:var(--accent);color:var(--accent);}
+.sp-chat-name{font-size:9px;font-weight:bold;margin-bottom:1px;}
+.sp-chat-input-row{display:flex;gap:6px;}
+.sp-chat-input{flex:1;background:#161b22;border:1px solid #30363d;border-radius:5px;padding:5px 8px;font-size:11px;color:#e6edf3;outline:none;}
+.sp-chat-input:focus{border-color:var(--accent);}
+.sp-chat-send{background:var(--accent);color:#000;border:none;border-radius:5px;padding:5px 10px;font-size:11px;font-weight:bold;cursor:pointer;white-space:nowrap;}
+.sp-chat-send:disabled{background:#444;color:#888;cursor:not-allowed;}
+.chat-typing{display:flex;gap:4px;align-items:center;padding:6px 10px;}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:#8b949e;animation:typing 1s infinite;}
+.chat-typing span:nth-child(2){animation-delay:.2s;}
+.chat-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+
+.info-bar-league{display:flex;justify-content:space-between;align-items:center;background:#0d1117;border:1px solid #30363d;border-top:none;padding:5px 10px;font-size:11px;cursor:pointer;}
+.info-bar-ticker{display:flex;align-items:center;gap:6px;background:#161b22;border:1px solid #30363d;border-top:none;padding:4px 10px;overflow:hidden;margin-bottom:10px;border-radius:0 0 8px 8px;}
+.ticker-track-wrap{overflow:hidden;flex:1;}
+.ticker-track{display:inline-block;white-space:nowrap;font-size:10px;color:#8b949e;animation:tickerMove 25s linear infinite;}
+@keyframes tickerMove{from{transform:translateX(390px)}to{transform:translateX(-100%)}}
+
+.section-header{display:flex;justify-content:space-between;align-items:center;padding:4px 0;margin-bottom:8px;border-bottom:1px solid var(--border);font-size:12px;font-weight:bold;}
+.see-more-btn{background:none;border:none;color:var(--text-sub);font-size:10px;cursor:pointer;}
+.player-cards-section{margin-top:14px;}
+.player-card-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory;}
+.player-card-scroll::-webkit-scrollbar{display:none;}
+.pcard{flex-shrink:0;width:90px;scroll-snap-align:start;cursor:pointer;border-radius:10px;overflow:hidden;border:none;background:transparent;position:relative;}
+.pcard-inner{border-radius:10px;overflow:hidden;position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;}
+.pcard.rarity-EPIC .pcard-inner{background:linear-gradient(160deg,#c87800,#f5a623);box-shadow:0 4px 14px rgba(245,166,35,0.5);}
+.pcard.rarity-RARE .pcard-inner{background:linear-gradient(160deg,#0d4a1a,#1a8a35);box-shadow:0 4px 14px rgba(30,180,80,0.4);}
+.pcard.rarity-UNCOMMON .pcard-inner{background:linear-gradient(160deg,#0a1a50,#1a3a9a);box-shadow:0 4px 14px rgba(60,100,220,0.4);}
+.pcard.rarity-NORMAL .pcard-inner{background:linear-gradient(160deg,#2a1a4a,#5a2a9a);}
+.pcard-top{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 6px 0;}
+.pcard-number{font-size:11px;font-weight:bold;color:rgba(255,255,255,0.9);font-family:var(--font-m);}
+.pcard-rbadge{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:bold;}
+.pcard-rbadge.EPIC{background:#fff;color:#c87800;}.pcard-rbadge.RARE{background:#fff;color:#1a8a35;}.pcard-rbadge.UNCOMMON{background:#fff;color:#1a3a9a;}.pcard-rbadge.NORMAL{background:rgba(255,255,255,0.3);color:#fff;}
+.pcard-img-area{flex:1;display:flex;align-items:center;justify-content:center;padding:4px;}
+.pcard-ball{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.pcard-info{padding:5px 6px 6px;background:rgba(0,0,0,0.25);}
+.pcard-name{font-size:9px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pcard-team{font-size:7px;color:rgba(255,255,255,0.65);margin-top:1px;}
+.pcard-new{position:absolute;top:-3px;right:-3px;background:var(--live);color:#fff;font-size:7px;font-weight:bold;padding:1px 4px;border-radius:6px;z-index:3;}
+
+/* BETSLIP */
+.betslip-panel{position:absolute;bottom:0;left:0;width:100%;max-height:75%;background:var(--bg-card);border-top:1px solid var(--border);display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:0 -4px 20px rgba(0,0,0,0.5);z-index:200;}
+.betslip-panel.open{transform:translateY(0);}
+.betslip-header{padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg-sidebar);display:flex;justify-content:space-between;align-items:center;cursor:pointer;flex-shrink:0;}
+.betslip-title{font-family:var(--font-h);font-size:1rem;font-weight:700;display:flex;align-items:center;gap:5px;}
+.betslip-count{background:var(--accent);color:#000;font-size:10px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;justify-content:center;align-items:center;}
+.betslip-body{flex:1;overflow-y:auto;padding:10px;}
+.empty-betslip{text-align:center;color:var(--text-sub);padding-top:1.5rem;font-size:12px;}
+.bet-item{background:var(--bg-main);border:1px solid var(--border);border-radius:6px;padding:8px;margin-bottom:8px;position:relative;}
+.bet-selection{font-weight:700;color:var(--accent);font-size:12px;}
+.bet-market{font-size:10px;color:var(--text-sub);}
+.bet-odds-badge{font-family:var(--font-m);font-weight:700;background:var(--bg-card);padding:2px 5px;border-radius:3px;font-size:11px;}
+.btn-remove{position:absolute;top:6px;right:6px;color:var(--text-sub);cursor:pointer;background:none;border:none;font-size:13px;}
+.stake-input{width:100%;background:var(--bg-card);border:1px solid var(--border);color:var(--text-main);padding:5px 5px 5px 20px;border-radius:4px;font-family:var(--font-m);font-size:12px;margin-top:5px;}
+.stake-sym{position:absolute;left:7px;top:50%;transform:translateY(-50%);color:var(--text-sub);font-size:11px;pointer-events:none;}
+.quick-stakes{display:flex;gap:3px;margin-top:4px;}
+.btn-quick{flex:1;background:var(--bg-card);border:1px solid var(--border);color:var(--text-sub);font-size:9px;padding:3px;border-radius:3px;cursor:pointer;}
+.potential-return{display:flex;justify-content:space-between;margin-top:4px;font-size:10px;color:var(--text-sub);}
+.return-amount{color:var(--success);font-weight:700;font-family:var(--font-m);}
+.betslip-footer{padding:10px 14px;border-top:1px solid var(--border);background:var(--bg-sidebar);flex-shrink:0;}
+.total-row{display:flex;justify-content:space-between;margin-bottom:3px;font-size:12px;}
+.total-row.big{font-weight:700;font-size:14px;color:var(--success);margin-bottom:8px;}
+.btn-place{width:100%;background:var(--success);color:#fff;border:none;padding:10px;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer;}
+.btn-place:disabled{background:var(--border);color:var(--text-sub);cursor:not-allowed;}
+.betslip-toggle{display:flex;position:absolute;bottom:0;left:0;width:100%;background:var(--bg-sidebar);padding:10px 14px;border-top:1px solid var(--border);justify-content:space-between;align-items:center;z-index:150;cursor:pointer;}
+.betslip-toggle.hidden{display:none;}
+
+/* MATCH DETAIL */
+.match-detail-topbar{padding:7px 12px;border-bottom:1px solid #30363d;background:#0d1117;position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;}
+.md-back-btn{background:none;border:none;color:var(--accent);font-size:12px;cursor:pointer;}
+.score-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:0;}
+.score-card-meta{display:flex;justify-content:space-between;align-items:center;font-size:10px;margin-bottom:6px;}
+.live-badge-anim{color:var(--live);animation:pulseDot 1s infinite;}
+.score-teams-row{display:flex;justify-content:space-between;align-items:center;padding:2px 4px;margin-bottom:6px;}
+.score-team{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:60px;}
+.score-team-flag{font-size:20px;}
+.score-team-name{font-size:10px;color:var(--text-sub);}
+.score-center{display:flex;align-items:center;gap:8px;}
+.score-num{font-size:32px;font-weight:bold;color:#fff;font-family:var(--font-m);}
+.score-sep{font-size:18px;color:#8b949e;}
+.bso-row{display:flex;gap:10px;background:#0d1117;border-radius:6px;padding:5px 10px;font-size:10px;}
+.bso-item{display:flex;align-items:center;gap:3px;}
+.bso-label{color:#8b949e;width:10px;font-size:9px;}
+.bso-dot{width:9px;height:9px;border-radius:50%;background:#21262d;}
+.bso-dot.on-b{background:#3fb950;}.bso-dot.on-s{background:#f5a623;}.bso-dot.on-o{background:#ff3b30;}
+.sb-wrap{overflow-x:auto;border:1px solid #30363d;border-radius:6px;}
+.sb-table{width:100%;border-collapse:collapse;font-size:9px;text-align:center;white-space:nowrap;}
+.sb-table th,.sb-table td{border:1px solid #21262d;padding:3px 5px;}
+.sb-table th{background:#161b22;color:#8b949e;font-weight:normal;}
+.sb-table td:first-child,.sb-table th:first-child{text-align:left;padding-left:8px;background:#161b22;position:sticky;left:0;z-index:1;}
+.sb-table .total-col{border-left:2px solid #30363d;font-weight:bold;}
+.pb-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.pb-card{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px 8px;}
+.pb-label{font-size:8px;color:#8b949e;margin-bottom:2px;}
+.pb-name{font-size:11px;font-weight:bold;color:#e6edf3;}
+.pb-sub{font-size:9px;color:#8b949e;}
+.pitch-row{display:flex;gap:6px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #21262d;}
+.pitch-row:last-child{border-bottom:none;}
+.pitch-num{font-size:9px;color:#8b949e;width:14px;flex-shrink:0;padding-top:3px;font-family:var(--font-m);}
+.pitch-ball{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;flex-shrink:0;}
+.pitch-ball.s{background:#f5a623;color:#000;}.pitch-ball.b{background:#3fb950;color:#000;}.pitch-ball.f{background:#30363d;color:#8b949e;}
+.pitch-ball.hit{background:#58a6ff;color:#000;}.pitch-ball.out{background:#ff3b30;color:#fff;}.pitch-ball.hr{background:linear-gradient(135deg,#ff6b00,#f5a623);color:#000;}
+.pitch-ball.walk{background:#7c3aed;color:#fff;}
+.pitch-info{flex:1;}
+.pitch-type{font-size:10px;color:#e6edf3;font-weight:bold;}
+.pitch-detail{font-size:9px;color:#8b949e;margin-top:1px;}
+.pitch-note{background:rgba(245,166,35,0.08);border-left:2px solid var(--accent);padding:4px 8px;border-radius:3px;}
+.pitch-note-inn{color:var(--accent);font-size:9px;font-weight:bold;}
+.pitch-note-txt{font-size:10px;color:#e6edf3;}
+.pitch-event{background:rgba(255,59,48,0.1);border-left:2px solid var(--live);padding:4px 8px;border-radius:3px;}
+.pitch-event-txt{font-size:10px;color:#ff8080;font-weight:bold;}
+.sc-tab{flex:1;padding:7px 4px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-sub);font-size:10px;font-weight:bold;cursor:pointer;font-family:var(--font-b);text-align:center;}
+.sc-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(245,166,35,0.06);}
+.market-group{margin-bottom:12px;}
+.market-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.market-title{font-size:12px;font-weight:700;color:var(--text-main);display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.odds-btn{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.2s;}
+.odds-btn.selected{background:rgba(245,166,35,0.15);border-color:var(--accent);}
+.odds-label{font-size:11px;color:var(--text-main);}
+.odds-value{font-family:var(--font-m);font-weight:700;color:var(--accent);font-size:12px;}
+.difficulty-badge{font-size:8px;padding:1px 5px;border-radius:6px;font-weight:bold;}
+.difficulty-badge.easy{background:#1a3a2a;color:#3fb950;}.difficulty-badge.medium{background:#3a2e0a;color:var(--accent);}
+.bases-wrap{display:flex;align-items:center;justify-content:center;width:48px;height:48px;position:relative;flex-shrink:0;}
+.base-diamond{position:absolute;width:14px;height:14px;border:2px solid #30363d;background:#0d1117;transform:rotate(45deg);transition:background 0.3s,border-color 0.3s,box-shadow 0.3s;}
+.base-diamond.on{background:var(--accent);border-color:var(--accent);box-shadow:0 0 6px rgba(245,166,35,0.7);}
+.base-2b{top:2px;left:50%;transform:translateX(-50%) rotate(45deg);}
+.base-1b{top:50%;right:2px;transform:translateY(-50%) rotate(45deg);}
+.base-3b{top:50%;left:2px;transform:translateY(-50%) rotate(45deg);}
+.advance-btn{width:100%;background:var(--live);color:#fff;border:none;border-radius:6px;padding:7px 12px;font-size:11px;font-weight:bold;cursor:pointer;font-family:var(--font-b);display:flex;align-items:center;justify-content:space-between;gap:6px;}
+.advance-btn:disabled{background:var(--border);color:var(--text-sub);cursor:not-allowed;}
+.advance-btn-sub{font-size:9px;opacity:0.8;margin-top:1px;}
+
+/* ★ LINEUP TABLE with stats */
+.lineup-table{width:100%;border-collapse:collapse;font-size:10px;}
+.lineup-table th{padding:4px 5px;background:var(--bg-sidebar);color:var(--text-sub);font-weight:normal;border-bottom:1px solid var(--border);}
+.lineup-table td{padding:5px 5px;border-bottom:1px solid #21262d;}
+.lineup-table tr:last-child td{border-bottom:none;}
+.lineup-table .col-pos{text-align:center;color:var(--accent);font-weight:bold;width:22px;}
+.lineup-table .col-num{text-align:center;color:var(--text-sub);width:20px;}
+.lineup-table .col-name{color:#58a6ff;font-weight:bold;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(88,166,255,0.4);}
+.lineup-table .col-name:hover{color:var(--accent);}
+.lineup-table .col-stat{text-align:center;font-family:var(--font-m);font-size:9px;color:var(--text-sub);width:28px;}
+.lineup-table .col-stat.hit{color:#3fb950;font-weight:bold;}
+.lineup-table .col-stat.avg{color:var(--accent);}
+.pitcher-stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:8px;}
+.pitcher-stat-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;}
+.pitcher-stat-row:last-child{border-bottom:none;}
+.pitcher-stat-name{font-size:11px;font-weight:bold;color:#58a6ff;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(88,166,255,0.4);flex:1;}
+.pitcher-stat-chips{display:flex;gap:5px;flex-wrap:wrap;}
+.pstat-chip{font-size:9px;padding:2px 6px;border-radius:4px;font-family:var(--font-m);}
+.pstat-chip.inn{background:rgba(245,166,35,0.12);color:var(--accent);}
+.pstat-chip.k{background:rgba(88,166,255,0.12);color:#58a6ff;}
+.pstat-chip.er{background:rgba(255,59,48,0.12);color:#ff6b6b;}
+.pstat-chip.era{background:rgba(63,185,80,0.12);color:#3fb950;}
+
+/* ★ PLAYER DETAIL PANEL (スライドアップ) */
+.player-panel-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:400;display:none;pointer-events:none;}
+.player-panel-overlay.active{display:block;pointer-events:auto;}
+.player-panel{position:absolute;bottom:0;left:0;width:100%;height:88%;background:var(--bg-main);border-radius:16px 16px 0 0;border-top:1px solid var(--border);display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);overflow:hidden;z-index:401;}
+.player-panel.open{transform:translateY(0);}
+.player-panel-drag{width:36px;height:4px;background:var(--border);border-radius:2px;margin:10px auto 0;}
+.player-panel-header{padding:10px 14px 8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.player-panel-close{background:none;border:none;color:var(--text-sub);font-size:16px;cursor:pointer;margin-left:auto;}
+.player-panel-body{flex:1;overflow-y:auto;padding:12px 14px;}
+.player-panel-body::-webkit-scrollbar{display:none;}
+/* hero */
+.pp-hero{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.pp-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.pp-name-block .pp-name{font-family:var(--font-h);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.1;}
+.pp-name-block .pp-sub{font-size:10px;color:var(--text-sub);margin-top:3px;}
+.pp-name-block .pp-tag{display:inline-block;font-size:9px;font-weight:bold;padding:2px 7px;border-radius:4px;margin-top:4px;}
+/* stats grid */
+.pp-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px;}
+.pp-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:7px 5px;text-align:center;}
+.pp-stat-val{font-family:var(--font-m);font-size:15px;font-weight:700;line-height:1;}
+.pp-stat-label{font-size:8px;color:var(--text-sub);margin-top:3px;}
+/* at-bats */
+.pp-section-title{font-size:11px;font-weight:bold;color:var(--text-main);margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+.atbat-list{display:flex;flex-direction:column;gap:4px;margin-bottom:14px;}
+.atbat-row{display:flex;align-items:center;gap:7px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:6px 9px;}
+.atbat-inn{font-size:9px;color:var(--text-sub);width:28px;flex-shrink:0;}
+.atbat-result-badge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;flex-shrink:0;}
+.atbat-result-badge.hit{background:#58a6ff;color:#000;}
+.atbat-result-badge.double{background:#3fb950;color:#000;}
+.atbat-result-badge.hr{background:linear-gradient(135deg,#ff6b00,#f5a623);color:#000;}
+.atbat-result-badge.out{background:#ff3b30;color:#fff;}
+.atbat-result-badge.k{background:#cc0000;color:#fff;}
+.atbat-result-badge.bb{background:#7c3aed;color:#fff;}
+.atbat-result-badge.none{background:#30363d;color:#8b949e;}
+.atbat-desc{flex:1;font-size:10px;color:var(--text-main);}
+.atbat-pitcher{font-size:9px;color:var(--text-sub);text-align:right;}
+/* profile */
+.pp-profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px;}
+.pp-profile-item{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:7px 9px;}
+.pp-profile-label{font-size:8px;color:var(--text-sub);margin-bottom:2px;}
+.pp-profile-val{font-size:11px;font-weight:bold;color:var(--text-main);}
+/* vs pitcher */
+.vs-pitcher-row{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid #21262d;}
+.vs-pitcher-row:last-child{border-bottom:none;}
+.vs-pitcher-name{flex:1;font-size:10px;color:var(--text-main);}
+.vs-stat{font-size:9px;font-family:var(--font-m);color:var(--text-sub);}
+.vs-stat.good{color:#3fb950;}
+.vs-stat.bad{color:#ff6b6b;}
+
+/* MYPAGE / CARDS / MISSION */
+.mp-section{padding:10px;border-bottom:1px solid #30363d;}
+.mp-section-title{font-size:12px;font-weight:bold;color:#e6edf3;margin-bottom:7px;}
+.mp-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.mp-stat-card{background:#1c2128;border:1px solid #30363d;border-radius:6px;padding:7px 9px;}
+.mp-stat-label{font-size:9px;color:#8b949e;margin-bottom:2px;}
+.mp-stat-pt{font-size:15px;font-weight:bold;}
+.mp-stat-pt.positive{color:#3fb950;}
+.mp-stat-sub{font-size:9px;color:#8b949e;margin-top:1px;}
+.mp-progress-wrap{height:4px;background:#21262d;border-radius:2px;margin:7px 0 2px;}
+.mp-progress-bar{height:100%;background:#3fb950;border-radius:2px;}
+.mp-progress-label{font-size:9px;color:#3fb950;text-align:right;}
+.lb-row{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid #21262d;gap:6px;cursor:pointer;}
+.lb-row:last-child{border-bottom:none;}
+.lb-status{font-size:12px;flex-shrink:0;}
+.lb-label{flex:1;font-size:11px;color:#e6edf3;}
+.lb-pt{font-size:11px;font-weight:bold;flex-shrink:0;}
+.lb-pt.won{color:#3fb950;}.lb-pt.lost{color:#ff6b6b;}.lb-pt.pending{color:var(--accent);}
+.lr-row{display:flex;align-items:center;padding:6px 10px;gap:7px;border-bottom:1px solid #21262d;}
+.lr-row.me{background:#1c2820;border-left:3px solid var(--accent);}
+.lr-rank{width:18px;font-size:10px;color:#8b949e;text-align:center;flex-shrink:0;}
+.lr-avatar{font-size:17px;flex-shrink:0;}
+.lr-name{flex:1;font-size:11px;color:#e6edf3;}
+.lr-name.me-name{color:var(--accent);font-weight:bold;}
+.lr-pts{font-size:11px;color:#8b949e;font-weight:bold;}
+.lr-pts.me-pts{color:#3fb950;}
+.league-ranking-wrap{background:#161b22;border:1px solid #30363d;border-radius:6px;margin-top:8px;overflow:hidden;}
+.coin-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:9px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.coin-balances{display:flex;gap:10px;font-weight:bold;font-size:11px;}
+.coin-paid{color:var(--accent);}.coin-free{color:#58a6ff;}
+.btn-buy-coin{background:transparent;border:1px solid var(--border);color:var(--text-sub);padding:4px 8px;border-radius:4px;font-size:10px;cursor:not-allowed;}
+.pack-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.pack-card{border-radius:8px;border:1px solid var(--border);padding:9px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;overflow:hidden;aspect-ratio:3/4;}
+.pack-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;opacity:0.8;}
+.pack-content{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;}
+.pack-image-area{flex:1;display:flex;align-items:center;justify-content:center;font-size:2rem;background:rgba(0,0,0,0.3);border-radius:5px;margin-bottom:7px;}
+.pack-title{font-weight:bold;font-size:11px;margin-bottom:2px;text-align:center;}
+.pack-desc{font-size:9px;color:#ccc;margin-bottom:2px;text-align:center;}
+.pack-rarity{font-size:9px;font-weight:bold;text-align:center;margin-bottom:6px;}
+.pack-price{font-size:10px;margin-bottom:4px;text-align:center;}
+.btn-buy-pack{background:var(--bg-main);border:1px solid var(--border);color:#fff;padding:5px;border-radius:5px;text-align:center;font-weight:bold;cursor:pointer;font-size:10px;}
+.card-nav-tab{flex:1;padding:10px 4px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-sub);font-family:var(--font-b);font-size:11px;font-weight:bold;cursor:pointer;text-align:center;}
+.card-nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(245,166,35,0.06);}
+.card-list-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.cl-card{border-radius:10px;overflow:visible;cursor:pointer;position:relative;}
+.cl-card-inner{border-radius:10px;overflow:hidden;position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;}
+.cl-card.rarity-EPIC .cl-card-inner{background:linear-gradient(160deg,#c87800,#f5a623);}
+.cl-card.rarity-RARE .cl-card-inner{background:linear-gradient(160deg,#0d4a1a,#1a8a35);}
+.cl-card.rarity-UNCOMMON .cl-card-inner{background:linear-gradient(160deg,#0a1a50,#1a3a9a);}
+.cl-card.rarity-NORMAL .cl-card-inner{background:linear-gradient(160deg,#2a1a4a,#5a2a9a);}
+.cl-card-top{display:flex;justify-content:space-between;padding:6px 6px 0;}
+.cl-card-num{font-size:11px;font-weight:bold;color:rgba(255,255,255,0.9);font-family:var(--font-m);}
+.cl-card-rbadge{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:bold;}
+.cl-card-rbadge.EPIC{background:#fff;color:#c87800;}.cl-card-rbadge.RARE{background:#fff;color:#1a8a35;}.cl-card-rbadge.UNCOMMON{background:#fff;color:#1a3a9a;}.cl-card-rbadge.NORMAL{background:rgba(255,255,255,0.3);color:#fff;}
+.cl-card-img-area{flex:1;display:flex;align-items:center;justify-content:center;padding:4px;}
+.cl-card-ball{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:26px;}
+.cl-card-info{padding:5px 6px 7px;background:rgba(0,0,0,0.25);}
+.cl-card-name{font-size:9px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cl-card-team{font-size:7px;color:rgba(255,255,255,0.65);margin-top:1px;}
+.mission-card{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:9px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;}
+.mission-card.done{border-color:#238636;}
+.mission-card-info{flex:1;}
+.mission-name{font-weight:bold;margin-bottom:2px;font-size:11px;}
+.mission-progress-bar-bg{width:50px;height:3px;background:var(--bg-main);border-radius:2px;overflow:hidden;display:inline-block;}
+.mission-progress-bar-fill{height:100%;background:var(--accent);}
+.mission-reward-text{font-weight:bold;font-family:var(--font-m);color:var(--accent);font-size:11px;}
+.mission-reward-text.done{color:#3fb950;}
+.rd-header{display:flex;align-items:center;gap:6px;padding:9px 10px;border-bottom:1px solid #30363d;background:#161b22;}
+.rd-back{background:none;border:none;color:var(--accent);font-size:12px;cursor:pointer;}
+.rd-title{flex:1;font-size:12px;font-weight:bold;color:#e6edf3;}
+.rd-timer{font-size:9px;color:#8b949e;}
+.rd-trophy-row{display:flex;gap:7px;padding:10px;overflow-x:auto;border-bottom:1px solid #30363d;}
+.rd-trophy{font-size:22px;flex-shrink:0;}
+.rd-trophy.locked{filter:grayscale(1) opacity(0.3);}
+.rd-zone-up{font-size:9px;color:#3fb950;text-align:center;padding:3px;border-top:1px solid #3fb950;border-bottom:1px solid #3fb950;margin:2px 0;}
+.modal-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:none;justify-content:center;align-items:center;z-index:300;}
+.modal-overlay.active{display:flex;}
+.modal-content{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:16px;width:90%;max-width:340px;position:relative;max-height:80%;overflow-y:auto;}
+.modal-close{position:absolute;top:10px;right:10px;cursor:pointer;color:var(--text-sub);font-size:14px;}
+.modal-title{font-size:14px;font-weight:bold;margin-bottom:12px;}
+.radio-group{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.radio-label{display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;}
+.balance-calc{background:var(--bg-main);padding:8px;border-radius:6px;margin-bottom:12px;font-size:11px;}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;}
+.btn-cancel{background:transparent;border:1px solid var(--border);color:#fff;padding:5px 12px;border-radius:5px;cursor:pointer;font-size:11px;}
+.btn-confirm{background:var(--accent);border:none;color:#000;padding:5px 12px;border-radius:5px;font-weight:bold;cursor:pointer;font-size:11px;}
+.btn-confirm:disabled{background:var(--border);color:var(--text-sub);cursor:not-allowed;}
+.open-pack-area{display:flex;gap:7px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;}
+.flip-card{width:65px;height:91px;position:relative;transform-style:preserve-3d;transition:transform 0.6s;cursor:pointer;}
+.flip-card.flipped{transform:rotateY(180deg);}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);}
+.flip-card-front{background:linear-gradient(135deg,#2a2a2a,#1a1a1a);color:var(--accent);font-size:1.4rem;}
+.flip-card-back{background:var(--bg-main);transform:rotateY(180deg);flex-direction:column;padding:5px;text-align:center;}
+.flip-card-back .emoji{font-size:1.4rem;margin-bottom:3px;}
+.flip-card-back .name{font-size:9px;font-weight:bold;}
+.flip-card-back .rarity{font-size:7px;color:var(--text-sub);}
+
+/* PREDICT */
+.predict-summary{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;}
+.predict-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+.predict-stat-label{font-size:9px;color:var(--text-sub);margin-bottom:3px;}
+.predict-stat-val{font-size:22px;font-weight:700;font-family:var(--font-m);line-height:1;}
+.predict-stat-val.positive{color:#3fb950;}.predict-stat-val.accent{color:var(--accent);}
+.predict-stat-sub{font-size:9px;color:var(--text-sub);margin-top:3px;}
+.predict-item{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:9px 10px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.predict-item.won{border-color:#238636;background:rgba(35,134,54,0.07);}
+.predict-item.lost{border-color:#ff3b30;background:rgba(255,59,48,0.05);}
+.predict-item.pending{border-color:var(--accent);background:rgba(245,166,35,0.05);}
+.predict-status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.predict-status-dot.won{background:#3fb950;}.predict-status-dot.lost{background:#ff3b30;}.predict-status-dot.pending{background:var(--accent);animation:pulseDot 1s infinite;}
+.predict-info{flex:1;min-width:0;}
+.predict-match{font-size:9px;color:var(--text-sub);margin-bottom:2px;}
+.predict-selection{font-size:11px;font-weight:bold;color:var(--text-main);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.predict-odds{font-size:9px;color:var(--text-sub);margin-top:1px;}
+.predict-result{text-align:right;flex-shrink:0;}
+.predict-pt{font-size:12px;font-weight:700;font-family:var(--font-m);}
+.predict-pt.won{color:#3fb950;}.predict-pt.lost{color:#ff6b6b;}.predict-pt.pending{color:var(--accent);}
+.predict-stake{font-size:9px;color:var(--text-sub);margin-top:1px;}
+.predict-rank-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid #21262d;}
+.predict-rank-row:last-child{border-bottom:none;}
+.predict-rank-row.me{background:#1c2820;border-left:3px solid var(--accent);}
+.predict-rank-num{width:22px;text-align:center;font-size:11px;font-weight:bold;flex-shrink:0;}
+.predict-rank-num.gold{color:#f5a623;}.predict-rank-num.silver{color:#8b949e;}.predict-rank-num.bronze{color:#c87800;}
+.predict-rank-avatar{font-size:18px;flex-shrink:0;}
+.predict-rank-name{flex:1;font-size:11px;color:var(--text-main);}
+.predict-rank-name.me{color:var(--accent);font-weight:bold;}
+.predict-rank-pt{font-size:11px;font-weight:700;font-family:var(--font-m);color:var(--text-sub);}
+.predict-rank-pt.me{color:#3fb950;}
+.predict-rank-badge{font-size:9px;padding:1px 5px;border-radius:4px;background:rgba(245,166,35,0.15);color:var(--accent);font-weight:bold;margin-left:2px;}
+.predict-empty{text-align:center;padding:20px 10px;color:var(--text-sub);font-size:11px;}
+.pred-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg-sidebar);}
+.pred-tab{flex:1;padding:10px 4px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-sub);font-family:var(--font-b);font-size:11px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;}
+.pred-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(245,166,35,0.06);}
+.pred-tab-badge{background:var(--live);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+.pred-detail-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #21262d;font-size:11px;}
+.pred-detail-row:last-child{border-bottom:none;}
+.pred-detail-label{color:var(--text-sub);}
+.pred-detail-val{font-weight:bold;color:var(--text-main);font-family:var(--font-m);}
+.pred-change-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;}
+.pred-change-btn{background:var(--bg-main);border:1px solid var(--border);border-radius:6px;padding:8px;font-size:11px;color:var(--text-main);cursor:pointer;text-align:center;transition:all 0.2s;}
+.pred-change-btn.current{background:rgba(245,166,35,0.15);border-color:var(--accent);color:var(--accent);}
+.ai-comment-box{background:linear-gradient(135deg,#0a0a0a,#1a0000);border:1px solid #cc0000;border-radius:8px;padding:10px 12px;margin-top:12px;}
+.ai-comment-head{display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:9px;color:#cc0000;font-weight:bold;}
+.ai-comment-text{font-size:11px;color:#e6edf3;line-height:1.6;}
+.hot-tab{padding:2px 8px;border-radius:10px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-sub);font-size:9px;cursor:pointer;font-family:var(--font-b);}
+.hot-tab.active{background:rgba(245,166,35,0.15);border-color:var(--accent);color:var(--accent);}
+.hot-bet-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:7px;cursor:pointer;}
+.hot-bet-top{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.hot-bet-tag{font-size:8px;font-weight:bold;padding:1px 6px;border-radius:4px;flex-shrink:0;}
+.hot-bet-tag.popular{background:rgba(255,59,48,0.15);color:#ff6b6b;}
+.hot-bet-tag.trending{background:rgba(245,166,35,0.15);color:var(--accent);}
+.hot-bet-tag.close{background:rgba(88,166,255,0.15);color:#58a6ff;}
+.hot-bet-match{font-size:10px;color:var(--text-sub);flex:1;}
+.hot-bet-participants{font-size:9px;color:var(--text-sub);}
+.hot-bet-question{font-size:12px;font-weight:bold;color:var(--text-main);margin-bottom:6px;}
+.hot-bet-opts{display:flex;gap:5px;}
+.hot-bet-opt{flex:1;background:var(--bg-main);border:1px solid var(--border);border-radius:5px;padding:5px 4px;text-align:center;}
+.hot-bet-opt.leading{border-color:var(--accent);background:rgba(245,166,35,0.08);}
+.hot-bet-opt-label{font-size:10px;color:var(--text-main);font-weight:bold;}
+.hot-bet-opt-bar-wrap{height:3px;background:var(--border);border-radius:2px;margin:3px 0;}
+.hot-bet-opt-bar{height:100%;border-radius:2px;background:var(--text-sub);}
+.hot-bet-opt.leading .hot-bet-opt-bar{background:var(--accent);}
+.hot-bet-opt-pct{font-size:9px;color:var(--text-sub);}
+.hot-bet-opt.leading .hot-bet-opt-pct{color:var(--accent);}
+.hot-bet-odds{font-size:10px;color:var(--accent);font-weight:bold;font-family:var(--font-m);}
+.yoso-headline{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid #21262d;}
+.yoso-headline:last-child{border-bottom:none;}
+.yoso-hl-icon{font-size:14px;flex-shrink:0;}
+.yoso-hl-text{flex:1;font-size:11px;color:#e6edf3;}
+.yoso-hl-badge{font-size:8px;font-weight:bold;padding:1px 5px;border-radius:4px;flex-shrink:0;}
+.yoso-hl-badge.up{background:rgba(63,185,80,0.2);color:#3fb950;}
+.yoso-hl-badge.hot{background:rgba(255,59,48,0.15);color:#ff6b6b;}
+.yoso-hl-badge.you{background:rgba(245,166,35,0.2);color:var(--accent);}
+.unentered-market{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;}
+.unentered-market-title{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
+.unentered-market-label{font-size:12px;font-weight:700;color:var(--text-main);flex:1;}
+.unentered-new-badge{font-size:8px;background:rgba(255,59,48,0.15);color:var(--live);padding:1px 5px;border-radius:4px;font-weight:bold;}
+
+/* ★ 予想タブ AI エリア */
+.pai-tab{flex:1;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.5);font-family:var(--font-b);font-size:10px;font-weight:bold;padding:7px 2px;cursor:pointer;white-space:nowrap;}
+.pai-tab.active{color:#fff;border-bottom-color:#ff0000;background:rgba(255,0,0,0.1);}
+.pai-strategy-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color 0.2s;}
+.pai-strategy-card:active{border-color:#cc0000;}
+.pai-strat-header{display:flex;align-items:center;gap:8px;padding:9px 10px;}
+.pai-strat-icon{font-size:16px;flex-shrink:0;}
+.pai-strat-title{font-size:12px;font-weight:bold;color:#fff;flex:1;}
+.pai-strat-sub{font-size:9px;color:rgba(255,255,255,0.5);margin-right:4px;}
+.pai-strat-arrow{font-size:14px;color:rgba(255,255,255,0.4);transition:transform 0.2s;}
+.pai-strat-arrow.open{transform:rotate(90deg);}
+.pai-strat-body{padding:0 10px 10px;border-top:1px solid rgba(255,255,255,0.08);}
+.pai-suggest-item{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.pai-suggest-item:last-child{border-bottom:none;}
+.pai-suggest-num{font-size:9px;color:rgba(255,255,255,0.4);width:14px;flex-shrink:0;padding-top:2px;}
+.pai-suggest-info{flex:1;}
+.pai-suggest-market{font-size:9px;color:rgba(255,255,255,0.5);margin-bottom:2px;}
+.pai-suggest-sel{font-size:11px;font-weight:bold;color:#e6edf3;}
+.pai-suggest-odds{font-size:9px;color:var(--accent);font-family:var(--font-m);margin-top:2px;}
+.pai-suggest-reason{font-size:9px;color:rgba(255,255,255,0.55);margin-top:3px;line-height:1.5;}
+.pai-add-btn{background:rgba(245,166,35,0.2);border:1px solid rgba(245,166,35,0.4);color:var(--accent);font-size:9px;font-weight:bold;padding:4px 8px;border-radius:4px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.pai-analysis-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:8px 10px;}
+.pai-analysis-market{font-size:9px;color:rgba(255,255,255,0.5);margin-bottom:3px;}
+.pai-analysis-sel{font-size:11px;font-weight:bold;color:var(--accent);margin-bottom:4px;}
+.pai-analysis-text{font-size:10px;color:#e6edf3;line-height:1.6;}
+.pai-gen-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 10px;}
+.pai-gen-title{font-size:12px;font-weight:bold;color:#fff;margin-bottom:6px;}
+.pai-gen-opts{display:flex;gap:5px;margin-bottom:6px;}
+.pai-gen-opt{flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:5px;padding:5px 4px;text-align:center;cursor:pointer;}
+.pai-gen-opt-label{font-size:10px;color:#e6edf3;font-weight:bold;}
+.pai-gen-opt-odds{font-size:10px;color:var(--accent);font-family:var(--font-m);margin-top:2px;}
+.pai-gen-reason{font-size:9px;color:rgba(255,255,255,0.5);line-height:1.5;}
+.pai-loading{display:flex;align-items:center;gap:8px;padding:12px 0;color:rgba(255,255,255,0.5);font-size:10px;}
+.pai-loading-dots span{width:5px;height:5px;border-radius:50%;background:#cc0000;display:inline-block;animation:typing 1s infinite;}
+.pai-loading-dots span:nth-child(2){animation-delay:.2s;}
+.pai-loading-dots span:nth-child(3){animation-delay:.4s;}
+</style>
+</head>
+<body>
+<div id="phone">
+<header class="header">
+  <div style="display:flex;align-items:stretch;">
+    <button class="logo" onclick="switchView('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+      B.E.A.T
+    </button>
+    <div class="header-divider"></div>
+    <button class="header-tab active" data-tab="home" onclick="switchView('home')"><span class="htab-icon">🔴</span><span class="htab-label">ライブ</span><span class="live-dot"></span></button>
+    <button class="header-tab" data-tab="predict" onclick="switchView('predict')"><span class="htab-icon">📊</span><span class="htab-label">予想</span></button>
+  </div>
+  <div style="display:flex;align-items:center;margin-left:auto;"><div class="balance" id="header-balance">10,000pt</div></div>
+</header>
+
+<div class="scroll-area">
+
+<!-- HOME -->
+<div id="view-home" class="view-section active">
+  <div class="live-matches-bar">
+    <div style="font-size:10px;color:var(--text-sub);font-weight:bold;margin-bottom:6px;display:flex;align-items:center;gap:5px;">
+      <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--live);animation:pulseDot 1s infinite;"></span>本日の試合
+    </div>
+    <div class="live-matches-scroll" id="liveMatchesScroll"></div>
+  </div>
+  <div class="studio-wrap">
+    <div class="studio-hd"><div class="studio-hd-title">🎙️ B.E.A.T STUDIO</div><div class="studio-live-badge">🔴 LIVE</div></div>
+    <div class="studio-body">
+      <div class="studio-char-wrap"><div class="studio-char"><div class="studio-desk"></div><div class="ai-caster"><div class="ai-head"><div>🤖</div><div class="ai-headset">🎧</div></div><div class="ai-body"></div></div></div><div class="studio-nameplate">BEAT-1</div></div>
+      <div class="studio-speech-wrap"><div class="studio-bubble"><span id="studioCommentText">📊 DeNA勝利予想に3,842人参加中！あなたは現在リーグ3位。Taro K.との差はわずか5pt。次の予想で逆転のチャンス！</span><span class="speech-cursor">|</span></div><div class="studio-tag" id="studioTag">🎙️ AI解説</div></div>
+    </div>
+    <div class="studio-actions">
+      <button class="studio-btn active" id="sbtn-live" onclick="studioSelect('live')"><span class="studio-btn-icon">📊</span><span class="studio-btn-label">予想速報</span></button>
+      <button class="studio-btn" id="sbtn-result" onclick="studioSelect('result')"><span class="studio-btn-icon">🎯</span><span class="studio-btn-label">予想結果</span></button>
+      <button class="studio-btn" id="sbtn-news" onclick="studioSelect('news')"><span class="studio-btn-icon">📰</span><span class="studio-btn-label">ニュース</span></button>
+      <button class="studio-btn" id="sbtn-ucomment" onclick="studioSelect('ucomment')"><span class="studio-btn-icon">💬</span><span class="studio-btn-label">コメント</span></button>
+      <button class="studio-btn" id="sbtn-chat" onclick="studioSelect('chat')"><span class="studio-btn-icon">🤖</span><span class="studio-btn-label">AIチャット</span></button>
+    </div>
+  </div>
+  <div class="studio-panel">
+    <div id="sp-live" class="studio-panel-inner"><div id="yoso-headlines"></div></div>
+    <div id="sp-result" class="studio-panel-inner" style="display:none;">
+      <div class="sp-result-row"><span class="sp-result-icon">✅</span><span class="sp-result-label">DeNA 勝利</span><span class="sp-result-pt won">+180pt</span></div>
+      <div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">藤浪 5奪三振以上</span><span class="sp-result-pt pending">進行中</span></div>
+    </div>
+    <div id="sp-news" class="studio-panel-inner" style="display:none;">
+      <div class="sp-news-row"><span class="sp-news-icon">⚾</span><div><div class="sp-news-title">藤浪晋太郎、NPB3年ぶり復帰登板</div><div class="sp-news-meta">スポーツナビ • 本日</div></div></div>
+      <div class="sp-news-row"><span class="sp-news-icon">⚾</span><div><div class="sp-news-title">ビシエド、DeNA移籍後初打席</div><div class="sp-news-meta">横浜DeNA公式 • 本日</div></div></div>
+    </div>
+    <div id="sp-ucomment" class="studio-panel-inner" style="display:none;">
+      <div class="sp-ucomment-list">
+        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">😎</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Taro K.</div>藤浪復帰登板！テンション上がる🔥</div></div>
+        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🌸</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Hana M.</div>ビシエドのDeNA初打席が見たい！</div></div>
+        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🦊</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Ken W.</div>筒香も出てきた。ハマの大砲復活なるか</div></div>
+      </div>
+    </div>
+    <div id="sp-chat" class="studio-panel-inner" style="display:none;">
+      <div class="sp-chat-history" id="homeChatHistory">
+        <div class="sp-chat-msg"><span class="sp-chat-avatar">🤖</span><div class="sp-chat-bubble"><div class="sp-chat-name" style="color:#58a6ff;">BEAT-1</div>こんにちは！試合の予想や選手情報など、何でも聞いてください。</div></div>
+      </div>
+      <div class="sp-chat-input-row">
+        <input type="text" id="homeChatInput" class="sp-chat-input" placeholder="AIに質問する...">
+        <button class="sp-chat-send" id="homeChatSend" onclick="sendHomeChat()">送信</button>
+      </div>
+    </div>
+  </div>
+  <div class="player-cards-section" style="padding-bottom:4px;">
+    <div class="section-header"><span>🃏 選手カード</span><button class="see-more-btn" onclick="switchView('cards')">すべて見る ›</button></div>
+    <div class="player-card-scroll" id="playerCardScroll"></div>
+  </div>
+  <div style="margin-top:14px;padding-bottom:4px;">
+    <div class="section-header">
+      <span>🔥 人気・注目の予想</span>
+      <div style="display:flex;gap:4px;">
+        <button id="hot-tab-popular" class="hot-tab active" onclick="switchHotTab('popular')">人気</button>
+        <button id="hot-tab-trending" class="hot-tab" onclick="switchHotTab('trending')">急上昇</button>
+        <button id="hot-tab-close" class="hot-tab" onclick="switchHotTab('close')">接戦</button>
+      </div>
+    </div>
+    <div id="hot-bet-list"></div>
+  </div>
+</div>
+
+<!-- MATCH DETAIL -->
+<div id="view-match" class="view-section" style="display:none;padding:0;">
+  <div class="match-detail-topbar">
+    <button class="md-back-btn" onclick="switchView('home')">← ホームに戻る</button>
+    <button onclick="resetGame()" style="background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.3);color:var(--accent);font-size:10px;padding:3px 9px;border-radius:4px;cursor:pointer;">🔄 リセット</button>
+  </div>
+  <div style="padding:10px 10px 8px;">
+    <div class="score-card">
+      <div class="score-card-meta">
+        <span style="color:var(--text-sub);">NPB 2回戦 • 横浜スタジアム</span>
+        <span style="display:flex;align-items:center;gap:4px;font-weight:bold;color:#fff;font-size:10px;"><span class="live-badge-anim">●</span><span id="match-inning-label">試合前</span></span>
+      </div>
+      <div id="match-live-ticker" style="display:flex;align-items:center;gap:6px;background:rgba(204,0,0,0.08);border:1px solid rgba(204,0,0,0.2);border-radius:5px;padding:5px 8px;margin-bottom:8px;min-height:28px;">
+        <span style="font-size:9px;color:#cc0000;font-weight:bold;flex-shrink:0;">🎙️</span>
+        <span id="match-live-text" style="font-size:10px;color:#e6edf3;line-height:1.4;">横浜スタジアム満員！藤浪晋太郎がNPB3年ぶり復帰登板。先頭は和田康士朗。</span>
+      </div>
+      <div class="score-teams-row">
+        <div class="score-team"><div class="score-team-flag">⭐</div><div class="score-team-name">横浜DeNA</div></div>
+        <div class="score-center"><span class="score-num" id="score-home">0</span><span class="score-sep">-</span><span class="score-num" id="score-away">0</span></div>
+        <div class="score-team"><div class="score-team-flag">🦁</div><div class="score-team-name">千葉ロッテ</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <div class="bso-row" style="flex:1;">
+          <div class="bso-item"><span class="bso-label">B</span><span class="bso-dot" id="b1"></span><span class="bso-dot" id="b2"></span><span class="bso-dot" id="b3"></span></div>
+          <div class="bso-item"><span class="bso-label">S</span><span class="bso-dot" id="s1"></span><span class="bso-dot" id="s2"></span></div>
+          <div class="bso-item"><span class="bso-label">O</span><span class="bso-dot" id="o1"></span><span class="bso-dot" id="o2"></span></div>
+        </div>
+        <div class="bases-wrap">
+          <div class="base-diamond base-2b" id="base-2b"></div>
+          <div class="base-diamond base-1b" id="base-1b"></div>
+          <div class="base-diamond base-3b" id="base-3b"></div>
+        </div>
+        <div style="font-size:9px;color:#8b949e;min-width:40px;text-align:right;" id="match-runners">走者なし</div>
+      </div>
+      <div style="display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:0 -10px;background:var(--bg-main);">
+        <button class="sc-tab active" id="sctab-score" onclick="switchScoreTab('score')">スコア</button>
+        <button class="sc-tab" id="sctab-data" onclick="switchScoreTab('data')">データ</button>
+        <button class="sc-tab" id="sctab-lineup" onclick="switchScoreTab('lineup')">出場選手</button>
+      </div>
+      <div id="scp-score" style="padding-top:8px;">
+        <div class="sb-wrap"><table class="sb-table" id="scoreboard"></table></div>
+        <div style="padding:6px 0 0;">
+          <button class="advance-btn" id="advance-btn" onclick="advancePitch()">
+            <div><div>▶ 試合を進める</div><div class="advance-btn-sub" id="advance-btn-sub">1回表 先頭：和田 康士朗</div></div>
+            <div style="font-size:14px;">⚾</div>
+          </button>
+        </div>
+      </div>
+      <div id="scp-data" style="display:none;padding-top:8px;">
+        <div class="pb-grid" style="margin-bottom:10px;">
+          <div class="pb-card"><div class="pb-label">投手</div><div class="pb-name" id="cur-pitcher">藤浪 晋太郎</div><div class="pb-sub" id="cur-pitcher-sub">NPB復帰登板</div></div>
+          <div class="pb-card"><div class="pb-label">打者</div><div class="pb-name" id="cur-batter">—</div><div class="pb-sub" id="cur-batter-sub">試合前</div></div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:9px;font-size:10px;color:#8b949e;line-height:1.9;">☀️ 天気：晴れ・気温36度・強風<br>🏟️ 横浜スタジアム満員<br>🎯 千葉ロッテ首位、2位Gとゲーム差1<br>👤 藤浪：メジャー後NPB3年ぶり復帰<br>👤 ビシエド：中日から移籍・本日初打席</div>
+      </div>
+      <!-- ★ 出場選手タブ（成績付き） -->
+      <div id="scp-lineup" style="display:none;padding-top:8px;">
+        <!-- 投手成績 -->
+        <div style="font-size:10px;color:var(--text-sub);font-weight:bold;margin-bottom:6px;">⚾ 本日の投手成績</div>
+        <div class="pitcher-stat-box">
+          <div class="pitcher-stat-row">
+            <div>
+              <div class="pitcher-stat-name" onclick="openPlayerPanel('fujinami')">藤浪 晋太郎</div>
+              <div style="font-size:8px;color:var(--text-sub);">先発 / 千葉ロッテ</div>
+            </div>
+            <div class="pitcher-stat-chips">
+              <span class="pstat-chip inn">3回</span>
+              <span class="pstat-chip k">2K</span>
+              <span class="pstat-chip er">0自責</span>
+              <span class="pstat-chip era">ERA 3.20</span>
+            </div>
+          </div>
+          <div class="pitcher-stat-row">
+            <div>
+              <div class="pitcher-stat-name" onclick="openPlayerPanel('mori')">森 唯斗</div>
+              <div style="font-size:8px;color:var(--text-sub);">中継 / 千葉ロッテ</div>
+            </div>
+            <div class="pitcher-stat-chips">
+              <span class="pstat-chip inn">1回</span>
+              <span class="pstat-chip k">3K</span>
+              <span class="pstat-chip er">0自責</span>
+              <span class="pstat-chip era">ERA 2.80</span>
+            </div>
+          </div>
+          <div class="pitcher-stat-row">
+            <div>
+              <div class="pitcher-stat-name" onclick="openPlayerPanel('yoshikawa')">吉川 悠斗</div>
+              <div style="font-size:8px;color:var(--text-sub);">先発 / 横浜DeNA</div>
+            </div>
+            <div class="pitcher-stat-chips">
+              <span class="pstat-chip inn">3回</span>
+              <span class="pstat-chip k">1K</span>
+              <span class="pstat-chip er">0自責</span>
+              <span class="pstat-chip era">ERA 4.04</span>
+            </div>
+          </div>
+        </div>
+        <!-- ロッテ打者 -->
+        <div style="font-size:10px;color:var(--text-sub);font-weight:bold;margin-bottom:5px;margin-top:4px;">🦁 千葉ロッテ 本日打席結果</div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:10px;">
+          <table class="lineup-table" id="table-lotte"></table>
+        </div>
+        <!-- DeNA打者 -->
+        <div style="font-size:10px;color:var(--text-sub);font-weight:bold;margin-bottom:5px;">⭐ 横浜DeNA 本日打席結果</div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+          <table class="lineup-table" id="table-dena"></table>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-top:6px;text-align:center;">選手名をタップでプロフィール表示</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI STUDIO (マッチ) -->
+  <div style="padding:0 10px 8px;">
+    <div class="studio-wrap">
+      <div class="studio-hd"><div class="studio-hd-title">🎙️ B.E.A.T STUDIO</div><div class="studio-live-badge">🔴 LIVE</div></div>
+      <div class="studio-body">
+        <div class="studio-char-wrap"><div class="studio-char"><div class="studio-desk"></div><div class="ai-caster"><div class="ai-head"><div>🤖</div><div class="ai-headset">🎧</div></div><div class="ai-body"></div></div></div><div class="studio-nameplate">BEAT-1</div></div>
+        <div class="studio-speech-wrap"><div class="studio-bubble"><span id="matchStudioText">横浜スタジアム満員！藤浪晋太郎がNPB3年ぶり復帰登板。先頭は和田康士朗。</span><span class="speech-cursor">|</span></div><div class="studio-tag" id="matchStudioTag">🎙️ 実況</div></div>
+      </div>
+      <div style="display:flex;border-top:1px solid rgba(200,0,0,0.3);background:rgba(0,0,0,0.3);">
+        <button class="studio-btn active" id="msbtn-live" onclick="matchStudioTab('live')"><span class="studio-btn-icon">🔴</span><span class="studio-btn-label">実況</span></button>
+        <button class="studio-btn" id="msbtn-result" onclick="matchStudioTab('result')"><span class="studio-btn-icon">🎯</span><span class="studio-btn-label">予想結果</span></button>
+        <button class="studio-btn" id="msbtn-ucomment" onclick="matchStudioTab('ucomment')"><span class="studio-btn-icon">💬</span><span class="studio-btn-label">コメント</span></button>
+        <button class="studio-btn" id="msbtn-chat" onclick="matchStudioTab('chat')"><span class="studio-btn-icon">🤖</span><span class="studio-btn-label">AIチャット</span></button>
+      </div>
+    </div>
+    <div style="background:#0d1117;border:1px solid #30363d;border-top:none;border-radius:0 0 8px 8px;">
+      <div id="msp-live" style="padding:8px 10px;">
+        <div style="font-size:9px;color:#8b949e;margin-bottom:6px;">⚾ 1球速報</div>
+        <div id="pitch-log" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto;">
+          <div style="font-size:10px;color:#8b949e;text-align:center;padding:8px;">「試合を進める」ボタンを押してください</div>
+        </div>
+      </div>
+      <div id="msp-result" style="display:none;padding:8px 10px;">
+        <div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">DeNA 勝利予想</span><span class="sp-result-pt pending">進行中</span></div>
+        <div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">藤浪 5奪三振以上</span><span class="sp-result-pt pending">進行中</span></div>
+      </div>
+      <div id="msp-ucomment" style="display:none;padding:8px 10px;">
+        <div class="sp-ucomment-list">
+          <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">😎</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Taro K.</div>藤浪152km/h！さすがメジャー帰り🔥</div></div>
+          <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🌸</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Hana M.</div>ビシエドDeNA初打席楽しみ！</div></div>
+        </div>
+      </div>
+      <!-- ★ AIチャット (送信ボタンのみ) -->
+      <div id="msp-chat" style="display:none;padding:8px 10px;">
+        <div class="sp-chat-history" id="matchChatHistory">
+          <div class="sp-chat-msg"><span class="sp-chat-avatar">🤖</span><div class="sp-chat-bubble"><div class="sp-chat-name" style="color:#58a6ff;">BEAT-1</div>試合について何でも聞いてください！選手名をタップするとプロフィールも見られます。</div></div>
+        </div>
+        <div class="sp-chat-input-row" style="margin-top:7px;">
+          <input type="text" id="matchChatInput" class="sp-chat-input" placeholder="試合について質問する...">
+          <button class="sp-chat-send" id="matchChatSend" onclick="sendMatchChat()">送信</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PREDICT -->
+<div id="view-predict" class="view-section" style="display:none;padding:0;">
+  <!-- ★ 予想タブ AIエリア -->
+  <div style="background:linear-gradient(160deg,#0a0a0a,#1a0000 50%,#0d0d1a);border-bottom:1.5px solid #cc0000;">
+    <div style="background:linear-gradient(90deg,#cc0000,#880000);padding:4px 10px;display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:11px;font-weight:bold;color:#fff;letter-spacing:1px;">🎙️ BEAT-1 AI</div>
+      <div style="background:#ff0000;color:#fff;font-size:9px;font-weight:bold;padding:1px 6px;border-radius:3px;animation:liveBlink 1s infinite;">LIVE</div>
+    </div>
+    <!-- AIタブバー -->
+    <div style="display:flex;border-bottom:1px solid rgba(255,255,255,0.1);">
+      <button class="pai-tab active" id="paitab-news" onclick="switchPAITab('news')">📊 速報</button>
+      <button class="pai-tab" id="paitab-suggest" onclick="switchPAITab('suggest')">💡 提案</button>
+      <button class="pai-tab" id="paitab-analysis" onclick="switchPAITab('analysis')">🔍 解説</button>
+      <button class="pai-tab" id="paitab-generate" onclick="switchPAITab('generate')">✨ 生成</button>
+    </div>
+    <!-- 速報パネル -->
+    <div id="paipanel-news" style="padding:8px 10px;">
+      <div id="pai-news-content">
+        <div class="yoso-headline"><span class="yoso-hl-icon">🔥</span><span class="yoso-hl-text">DeNA勝利予想が急増中！3,842人が参加</span><span class="yoso-hl-badge hot">HOT</span></div>
+        <div class="yoso-headline"><span class="yoso-hl-icon">📊</span><span class="yoso-hl-text">あなたは現在リーグ3位。Taro K.との差 5pt</span><span class="yoso-hl-badge you">YOU</span></div>
+        <div class="yoso-headline"><span class="yoso-hl-icon">⬆️</span><span class="yoso-hl-text">藤浪 3-5三振予想が人気1位。オッズ1.65</span><span class="yoso-hl-badge up">急上昇</span></div>
+        <div class="yoso-headline"><span class="yoso-hl-icon">💥</span><span class="yoso-hl-text">筒香本塁打予想に540人。オッズ4.50</span><span class="yoso-hl-badge hot">HOT</span></div>
+      </div>
+    </div>
+    <!-- 提案パネル -->
+    <div id="paipanel-suggest" style="display:none;padding:8px 10px;">
+      <div id="pai-suggest-content">
+        <div style="font-size:10px;color:var(--text-sub);margin-bottom:8px;">AIが未参加の予想から戦略別に提案します</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div class="pai-strategy-card" id="pai-strat-attack" onclick="expandStrategy('attack')">
+            <div class="pai-strat-header">
+              <span class="pai-strat-icon">⚔️</span>
+              <div class="pai-strat-title">ガンガンいこうぜ</div>
+              <div class="pai-strat-sub">1位を狙うならこれ</div>
+              <span class="pai-strat-arrow" id="pai-arrow-attack">›</span>
+            </div>
+            <div class="pai-strat-body" id="pai-body-attack" style="display:none;"></div>
+          </div>
+          <div class="pai-strategy-card" id="pai-strat-balance" onclick="expandStrategy('balance')">
+            <div class="pai-strat-header">
+              <span class="pai-strat-icon">⚖️</span>
+              <div class="pai-strat-title">そこそこキープ</div>
+              <div class="pai-strat-sub">順位をキープするならこれ</div>
+              <span class="pai-strat-arrow" id="pai-arrow-balance">›</span>
+            </div>
+            <div class="pai-strat-body" id="pai-body-balance" style="display:none;"></div>
+          </div>
+          <div class="pai-strategy-card" id="pai-strat-guard" onclick="expandStrategy('guard')">
+            <div class="pai-strat-header">
+              <span class="pai-strat-icon">🛡️</span>
+              <div class="pai-strat-title">ガチガチ守り</div>
+              <div class="pai-strat-sub">ポイント消費しない形</div>
+              <span class="pai-strat-arrow" id="pai-arrow-guard">›</span>
+            </div>
+            <div class="pai-strat-body" id="pai-body-guard" style="display:none;"></div>
+          </div>
+        </div>
+        <button onclick="loadAISuggestions()" id="pai-suggest-btn" style="width:100%;margin-top:8px;background:rgba(204,0,0,0.3);border:1px solid #cc0000;color:#fff;border-radius:6px;padding:8px;font-size:11px;font-weight:bold;cursor:pointer;font-family:var(--font-b);">🤖 AIに提案させる</button>
+      </div>
+    </div>
+    <!-- 解説パネル -->
+    <div id="paipanel-analysis" style="display:none;padding:8px 10px;">
+      <div id="pai-analysis-content">
+        <div style="font-size:10px;color:var(--text-sub);margin-bottom:8px;">各予想のAI解説ポイント</div>
+        <div style="display:flex;flex-direction:column;gap:5px;" id="pai-analysis-list"></div>
+        <button onclick="loadAIAnalysis()" id="pai-analysis-btn" style="width:100%;margin-top:8px;background:rgba(204,0,0,0.3);border:1px solid #cc0000;color:#fff;border-radius:6px;padding:8px;font-size:11px;font-weight:bold;cursor:pointer;font-family:var(--font-b);">🔍 AIに解説させる</button>
+      </div>
+    </div>
+    <!-- 生成パネル -->
+    <div id="paipanel-generate" style="display:none;padding:8px 10px;">
+      <div style="font-size:10px;color:var(--text-sub);margin-bottom:8px;">AIが既存にないオリジナル予想問題を生成します</div>
+      <div id="pai-generate-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px;"></div>
+      <button onclick="loadAIGenerate()" id="pai-generate-btn" style="width:100%;background:rgba(204,0,0,0.3);border:1px solid #cc0000;color:#fff;border-radius:6px;padding:8px;font-size:11px;font-weight:bold;cursor:pointer;font-family:var(--font-b);">✨ オリジナル予想を生成する</button>
+    </div>
+  </div>
+
+  <div class="info-bar-league" style="border-radius:0;border-left:none;border-right:none;border-top:none;" onclick="showScreen('rankingDetail')">
+    <span style="display:flex;align-items:center;gap:6px;"><span style="color:#7c3aed;font-weight:bold;font-size:10px;">🏆 Sリーグ 3部</span><span style="color:var(--accent);font-weight:bold;font-size:10px;">3位</span><span style="color:#ff6b6b;font-size:9px;">(-15pt)</span></span>
+    <span style="color:#8b949e;font-size:9px;">残り 1d ›</span>
+  </div>
+  <div class="info-bar-ticker" style="border-radius:0;border-left:none;border-right:none;margin-bottom:0;">
+    <span style="font-size:11px;flex-shrink:0;">💬</span>
+    <div class="ticker-track-wrap"><span class="ticker-track">Taro K.が藤浪 5奪三振以上を予想 • Hana M.がビシエド安打予想 • Ken W.がDeNA勝利予想で+320pt獲得！</span></div>
+  </div>
+  <div style="padding:10px 10px 0;">
+    <div class="predict-summary">
+      <div class="predict-stat"><div class="predict-stat-label">所持ポイント</div><div class="predict-stat-val accent" id="pred-balance">10,000</div><div class="predict-stat-sub">pt</div></div>
+      <div class="predict-stat"><div class="predict-stat-label">今月の獲得ポイント</div><div class="predict-stat-val positive" id="pred-earned">+425</div><div class="predict-stat-sub" id="pred-earned-sub">pt（通算 7勝 5敗）</div></div>
+    </div>
+  </div>
+  <div class="pred-tabs">
+    <button class="pred-tab active" id="ptab-pending" onclick="switchPredTab('pending')"><span>予想中</span><span class="pred-tab-badge" id="ptab-pending-cnt">0</span></button>
+    <button class="pred-tab" id="ptab-yoso" onclick="switchPredTab('yoso')">予想する</button>
+    <button class="pred-tab" id="ptab-result" onclick="switchPredTab('result')">結果</button>
+    <button class="pred-tab" id="ptab-ranking" onclick="switchPredTab('ranking')">ランキング</button>
+  </div>
+  <div id="ppanel-pending" class="pred-panel" style="padding:10px;"><div id="pred-pending-list"></div></div>
+  <div id="ppanel-yoso" class="pred-panel" style="display:none;padding:0 10px 10px;">
+    <div style="padding:12px 0 8px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;"><div style="font-size:11px;font-weight:bold;color:var(--text-main);">⚾ DeNA vs ロッテ の予想</div><div style="font-size:9px;color:var(--text-sub);">LIVE • 横浜スタジアム</div></div>
+    <div class="market-group"><div class="market-header"><div class="market-title">🏆 勝敗予想<span class="difficulty-badge easy">かんたん</span></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;"><button class="odds-btn" data-id="m-dena" data-market="勝敗" data-selection="DeNA勝利" data-odds="1.85"><span class="odds-label">⭐ DeNA勝利</span><span class="odds-value">1.85</span></button><button class="odds-btn" data-id="m-lotte" data-market="勝敗" data-selection="ロッテ勝利" data-odds="1.95"><span class="odds-label">🦁 ロッテ勝利</span><span class="odds-value">1.95</span></button></div></div>
+    <div class="market-group"><div class="market-header"><div class="market-title">⚾ 藤浪奪三振数<span class="difficulty-badge medium">ふつう</span></div></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;"><button class="odds-btn" data-id="fj-k0" data-market="藤浪三振" data-selection="0-2個" data-odds="3.20"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">0-2個</span><span class="odds-value" style="font-size:11px;">3.20</span></div></button><button class="odds-btn" data-id="fj-k3" data-market="藤浪三振" data-selection="3-5個" data-odds="1.65"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">3-5個</span><span class="odds-value" style="font-size:11px;">1.65</span></div></button><button class="odds-btn" data-id="fj-k6" data-market="藤浪三振" data-selection="6個以上" data-odds="2.10"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">6個〜</span><span class="odds-value" style="font-size:11px;">2.10</span></div></button></div></div>
+    <div class="market-group"><div class="market-header"><div class="market-title">🦸 ビシエド 初打席<span class="difficulty-badge easy">注目</span></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;"><button class="odds-btn" data-id="bv-hit" data-market="ビシエド初打席" data-selection="安打" data-odds="2.40"><span class="odds-label">安打を打つ</span><span class="odds-value">2.40</span></button><button class="odds-btn" data-id="bv-nohit" data-market="ビシエド初打席" data-selection="凡退" data-odds="1.55"><span class="odds-label">凡退する</span><span class="odds-value">1.55</span></button></div></div>
+
+    <!-- 🃏 選手カード予想 -->
+    <div style="margin:14px 0 8px;padding:8px 0 6px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;">
+      <span style="font-size:11px;font-weight:bold;color:var(--text-main);">🃏 選手カード予想</span>
+      <span style="font-size:9px;color:var(--text-sub);">カード選手ごとの注目予想</span>
+    </div>
+
+    <!-- 梶原 昂希 RARE -->
+    <div class="market-group">
+      <div class="market-header">
+        <div class="market-title"><span style="background:linear-gradient(135deg,#0d4a1a,#1a8a35);color:#fff;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;margin-right:4px;">R</span>梶原 昂希 #2</div>
+        <span style="font-size:9px;color:var(--text-sub);">外野手</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">① 本日の安打数</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="kj-h0" data-market="梶原 安打数" data-selection="0本" data-odds="2.10"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">0本</span><span class="odds-value" style="font-size:11px;">2.10</span></div></button>
+          <button class="odds-btn" data-id="kj-h1" data-market="梶原 安打数" data-selection="1本" data-odds="1.80"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">1本</span><span class="odds-value" style="font-size:11px;">1.80</span></div></button>
+          <button class="odds-btn" data-id="kj-h2" data-market="梶原 安打数" data-selection="2本以上" data-odds="3.50"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">2本〜</span><span class="odds-value" style="font-size:11px;">3.50</span></div></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">② 二塁打を打つか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="kj-2b-yes" data-market="梶原 二塁打" data-selection="二塁打あり" data-odds="2.80"><span class="odds-label">📌 あり</span><span class="odds-value">2.80</span></button>
+          <button class="odds-btn" data-id="kj-2b-no" data-market="梶原 二塁打" data-selection="二塁打なし" data-odds="1.40"><span class="odds-label">なし</span><span class="odds-value">1.40</span></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">③ 出塁数（安打＋四球）</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <button class="odds-btn" data-id="kj-ob0" data-market="梶原 出塁" data-selection="出塁なし" data-odds="1.95"><span class="odds-label">出塁なし</span><span class="odds-value">1.95</span></button>
+          <button class="odds-btn" data-id="kj-ob1" data-market="梶原 出塁" data-selection="1回以上出塁" data-odds="1.85"><span class="odds-label">1回以上</span><span class="odds-value">1.85</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 筒香 嘉智 EPIC -->
+    <div class="market-group">
+      <div class="market-header">
+        <div class="market-title"><span style="background:linear-gradient(135deg,#c87800,#f5a623);color:#000;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;margin-right:4px;">E</span>筒香 嘉智 #24</div>
+        <span style="font-size:9px;color:var(--text-sub);">指名打者</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">① 本塁打を打つか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="ts-hr-yes" data-market="筒香 本塁打" data-selection="本塁打あり" data-odds="4.50"><span class="odds-label">💥 あり</span><span class="odds-value">4.50</span></button>
+          <button class="odds-btn" data-id="ts-hr-no" data-market="筒香 本塁打" data-selection="本塁打なし" data-odds="1.20"><span class="odds-label">なし</span><span class="odds-value">1.20</span></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">② 打点を挙げるか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="ts-rbi-yes" data-market="筒香 打点" data-selection="打点あり" data-odds="2.60"><span class="odds-label">🏃 あり</span><span class="odds-value">2.60</span></button>
+          <button class="odds-btn" data-id="ts-rbi-no" data-market="筒香 打点" data-selection="打点なし" data-odds="1.50"><span class="odds-label">なし</span><span class="odds-value">1.50</span></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">③ 打数</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+          <button class="odds-btn" data-id="ts-ab2" data-market="筒香 打数" data-selection="1-2打数" data-odds="3.20"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">1-2打数</span><span class="odds-value" style="font-size:11px;">3.20</span></div></button>
+          <button class="odds-btn" data-id="ts-ab3" data-market="筒香 打数" data-selection="3打数" data-odds="1.70"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">3打数</span><span class="odds-value" style="font-size:11px;">1.70</span></div></button>
+          <button class="odds-btn" data-id="ts-ab4" data-market="筒香 打数" data-selection="4打数以上" data-odds="2.20"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">4打数〜</span><span class="odds-value" style="font-size:11px;">2.20</span></div></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ビシエド RARE -->
+    <div class="market-group">
+      <div class="market-header">
+        <div class="market-title"><span style="background:linear-gradient(135deg,#0d4a1a,#1a8a35);color:#fff;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;margin-right:4px;">R</span>ビシエド #66</div>
+        <span style="font-size:9px;color:var(--text-sub);">一塁手 / DeNA移籍後初打席</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">① 移籍後初安打を放つか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="bs-1h-yes" data-market="ビシエド 初安打" data-selection="初安打達成" data-odds="2.20"><span class="odds-label">🎉 達成</span><span class="odds-value">2.20</span></button>
+          <button class="odds-btn" data-id="bs-1h-no" data-market="ビシエド 初安打" data-selection="初安打なし" data-odds="1.65"><span class="odds-label">まだ先</span><span class="odds-value">1.65</span></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">② 打席で三振するか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="bs-k-yes" data-market="ビシエド 三振" data-selection="三振あり" data-odds="2.00"><span class="odds-label">空振り K</span><span class="odds-value">2.00</span></button>
+          <button class="odds-btn" data-id="bs-k-no" data-market="ビシエド 三振" data-selection="三振なし" data-odds="1.75"><span class="odds-label">三振なし</span><span class="odds-value">1.75</span></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">③ 長打（2塁打以上）</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <button class="odds-btn" data-id="bs-xbh-yes" data-market="ビシエド 長打" data-selection="長打あり" data-odds="3.80"><span class="odds-label">💪 長打</span><span class="odds-value">3.80</span></button>
+          <button class="odds-btn" data-id="bs-xbh-no" data-market="ビシエド 長打" data-selection="長打なし" data-odds="1.25"><span class="odds-label">なし</span><span class="odds-value">1.25</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 藤浪 晋太郎 EPIC -->
+    <div class="market-group">
+      <div class="market-header">
+        <div class="market-title"><span style="background:linear-gradient(135deg,#c87800,#f5a623);color:#000;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;margin-right:4px;">E</span>藤浪 晋太郎 #18</div>
+        <span style="font-size:9px;color:var(--text-sub);">投手 / NPB3年ぶり復帰</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">① 最速球速</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="fj-v149" data-market="藤浪 最速" data-selection="149km/h以下" data-odds="4.00"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">〜149</span><span class="odds-value" style="font-size:11px;">4.00</span></div></button>
+          <button class="odds-btn" data-id="fj-v152" data-market="藤浪 最速" data-selection="150-152km/h" data-odds="1.80"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">150-152</span><span class="odds-value" style="font-size:11px;">1.80</span></div></button>
+          <button class="odds-btn" data-id="fj-v153" data-market="藤浪 最速" data-selection="153km/h以上" data-odds="2.50"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">153〜</span><span class="odds-value" style="font-size:11px;">2.50</span></div></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">② 登板イニング数</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="fj-inn3" data-market="藤浪 登板回" data-selection="3回以内" data-odds="3.50"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">〜3回</span><span class="odds-value" style="font-size:11px;">3.50</span></div></button>
+          <button class="odds-btn" data-id="fj-inn5" data-market="藤浪 登板回" data-selection="4-5回" data-odds="1.75"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">4-5回</span><span class="odds-value" style="font-size:11px;">1.75</span></div></button>
+          <button class="odds-btn" data-id="fj-inn6" data-market="藤浪 登板回" data-selection="6回以上" data-odds="2.30"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">6回〜</span><span class="odds-value" style="font-size:11px;">2.30</span></div></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">③ 自責点</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+          <button class="odds-btn" data-id="fj-er0" data-market="藤浪 自責点" data-selection="0点" data-odds="2.40"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">0点</span><span class="odds-value" style="font-size:11px;">2.40</span></div></button>
+          <button class="odds-btn" data-id="fj-er12" data-market="藤浪 自責点" data-selection="1-2点" data-odds="1.90"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">1-2点</span><span class="odds-value" style="font-size:11px;">1.90</span></div></button>
+          <button class="odds-btn" data-id="fj-er3" data-market="藤浪 自責点" data-selection="3点以上" data-odds="3.10"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">3点〜</span><span class="odds-value" style="font-size:11px;">3.10</span></div></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 度会 隆輝 UNCOMMON -->
+    <div class="market-group">
+      <div class="market-header">
+        <div class="market-title"><span style="background:linear-gradient(135deg,#0a1a50,#1a3a9a);color:#fff;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;margin-right:4px;">U</span>度会 隆輝 #3</div>
+        <span style="font-size:9px;color:var(--text-sub);">外野手</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">① 安打を打つか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="dw-h-yes" data-market="度会 安打" data-selection="安打あり" data-odds="1.90"><span class="odds-label">🎯 安打</span><span class="odds-value">1.90</span></button>
+          <button class="odds-btn" data-id="dw-h-no" data-market="度会 安打" data-selection="安打なし" data-odds="1.90"><span class="odds-label">無安打</span><span class="odds-value">1.90</span></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">② 得点を挙げるか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="dw-r-yes" data-market="度会 得点" data-selection="得点あり" data-odds="2.70"><span class="odds-label">🏠 得点</span><span class="odds-value">2.70</span></button>
+          <button class="odds-btn" data-id="dw-r-no" data-market="度会 得点" data-selection="得点なし" data-odds="1.45"><span class="odds-label">なし</span><span class="odds-value">1.45</span></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">③ 初球打ち</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <button class="odds-btn" data-id="dw-fp-yes" data-market="度会 初球打ち" data-selection="初球打ちあり" data-odds="2.10"><span class="odds-label">⚡ 初球打ち</span><span class="odds-value">2.10</span></button>
+          <button class="odds-btn" data-id="dw-fp-no" data-market="度会 初球打ち" data-selection="初球打ちなし" data-odds="1.70"><span class="odds-label">待つ</span><span class="odds-value">1.70</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 伊藤 光 NORMAL -->
+    <div class="market-group">
+      <div class="market-header">
+        <div class="market-title"><span style="background:linear-gradient(135deg,#2a1a4a,#5a2a9a);color:#fff;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;margin-right:4px;">N</span>伊藤 光 #39</div>
+        <span style="font-size:9px;color:var(--text-sub);">捕手</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">① 盗塁を刺すか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="it-cs-yes" data-market="伊藤 盗塁阻止" data-selection="盗塁阻止あり" data-odds="3.60"><span class="odds-label">💪 阻止</span><span class="odds-value">3.60</span></button>
+          <button class="odds-btn" data-id="it-cs-no" data-market="伊藤 盗塁阻止" data-selection="盗塁阻止なし" data-odds="1.25"><span class="odds-label">なし</span><span class="odds-value">1.25</span></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">② 安打数</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="it-h0" data-market="伊藤 安打数" data-selection="0本" data-odds="1.70"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">0本</span><span class="odds-value" style="font-size:11px;">1.70</span></div></button>
+          <button class="odds-btn" data-id="it-h1" data-market="伊藤 安打数" data-selection="1本" data-odds="2.20"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">1本</span><span class="odds-value" style="font-size:11px;">2.20</span></div></button>
+          <button class="odds-btn" data-id="it-h2" data-market="伊藤 安打数" data-selection="2本以上" data-odds="4.50"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">2本〜</span><span class="odds-value" style="font-size:11px;">4.50</span></div></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">③ ワイルドピッチ</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <button class="odds-btn" data-id="it-wp-yes" data-market="伊藤 ワイルドピッチ" data-selection="あり" data-odds="4.20"><span class="odds-label">⚡ あり</span><span class="odds-value">4.20</span></button>
+          <button class="odds-btn" data-id="it-wp-no" data-market="伊藤 ワイルドピッチ" data-selection="なし" data-odds="1.20"><span class="odds-label">なし</span><span class="odds-value">1.20</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="ppanel-result" class="pred-panel" style="display:none;padding:10px;"><div id="pred-result-list"></div></div>
+  <div id="ppanel-ranking" class="pred-panel" style="display:none;padding:10px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <div style="font-size:11px;font-weight:bold;color:var(--text-main);">🏆 Sリーグ 3部</div>
+      <div style="font-size:9px;color:var(--text-sub);">残り 1d 23h • 10名</div>
+    </div>
+
+    <!-- グラフ切替タブ -->
+    <div style="display:flex;gap:4px;margin-bottom:10px;">
+      <button id="rg-tab-rank" onclick="switchRankGraph('rank')" style="flex:1;padding:5px 4px;border-radius:5px;border:1px solid #cc0000;background:rgba(204,0,0,0.2);color:#fff;font-size:10px;font-weight:bold;cursor:pointer;font-family:var(--font-b);">順位推移</button>
+      <button id="rg-tab-pts" onclick="switchRankGraph('pts')" style="flex:1;padding:5px 4px;border-radius:5px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-sub);font-size:10px;font-weight:bold;cursor:pointer;font-family:var(--font-b);">ポイント推移</button>
+    </div>
+
+    <!-- グラフ領域 -->
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:10px;">
+      <!-- 凡例 -->
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;" id="rg-legend"></div>
+      <!-- Canvas -->
+      <div style="position:relative;width:100%;height:160px;">
+        <canvas id="rankChart"></canvas>
+      </div>
+    </div>
+
+    <!-- ランキングリスト -->
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+      <div id="pred-ranking-list"></div>
+    </div>
+    <div style="margin-top:8px;background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);border-radius:6px;padding:8px 10px;font-size:10px;color:var(--text-sub);">
+      🏅 上位3名が上位リーグへ昇格。最下位3名は降格。
+    </div>
+  </div>
+</div>
+
+<!-- PREDICT MODALS -->
+<div id="modal-pred-detail" class="modal-overlay"><div class="modal-content" style="padding:0;overflow:hidden;"><div style="background:var(--bg-sidebar);padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;"><div style="font-size:13px;font-weight:bold;">📋 予想詳細</div><button class="modal-close" style="position:static;" onclick="closeModal('modal-pred-detail')">✕</button></div><div id="pred-detail-body" style="padding:14px;"></div></div></div>
+<div id="modal-pred-result" class="modal-overlay"><div class="modal-content" style="padding:0;overflow:hidden;"><div style="background:var(--bg-sidebar);padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;"><div style="font-size:13px;font-weight:bold;" id="pred-result-modal-title">📊 結果詳細</div><button class="modal-close" style="position:static;" onclick="closeModal('modal-pred-result')">✕</button></div><div id="pred-result-body" style="padding:14px;max-height:60vh;overflow-y:auto;"></div></div></div>
+
+<!-- MYPAGE -->
+<div id="view-mypage" class="view-section" style="display:none;padding:0;">
+  <div style="background:linear-gradient(160deg,#0a0a0a,#1a0000 50%,#0d0d1a);border-bottom:1px solid #cc0000;padding:16px 14px 12px;">
+    <div style="display:flex;align-items:flex-end;gap:14px;margin-bottom:10px;">
+      <div style="flex-shrink:0;text-align:center;"><div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#1a3a6a,#0d1f3c);border:3px solid #cc0000;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:4px;">🤖</div><div style="font-size:8px;color:#cc0000;font-weight:bold;letter-spacing:2px;font-family:monospace;">BEAT-1</div></div>
+      <div style="flex:1;padding-bottom:6px;"><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;">BEAT-1</span><span style="background:#cc0000;color:#fff;font-size:8px;font-weight:bold;padding:1px 6px;border-radius:3px;animation:liveBlink 1s infinite;">AI</span></div><div style="font-size:10px;color:#8b949e;margin-bottom:6px;">スポーツ予想AIアナリスト</div><div style="font-size:11px;color:#e6edf3;line-height:1.5;">試合データ・選手情報をリアルタイムで分析。</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#30363d;border-radius:8px;overflow:hidden;"><div style="background:#0d1117;padding:8px;text-align:center;"><div style="font-size:15px;font-weight:bold;color:#f5a623;font-family:'Roboto Mono',monospace;">12,840</div><div style="font-size:8px;color:#8b949e;margin-top:2px;">解析試合数</div></div><div style="background:#0d1117;padding:8px;text-align:center;"><div style="font-size:15px;font-weight:bold;color:#3fb950;font-family:'Roboto Mono',monospace;">73.2%</div><div style="font-size:8px;color:#8b949e;margin-top:2px;">予想的中率</div></div><div style="background:#0d1117;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:bold;color:#58a6ff;font-family:'Roboto Mono',monospace;">NPB</div><div style="font-size:8px;color:#8b949e;margin-top:2px;">得意ジャンル</div></div></div>
+  </div>
+  <div class="mp-section"><div class="mp-section-title">📊 あなたの成績</div><div class="mp-stats-grid"><div class="mp-stat-card"><div class="mp-stat-label">今月のポイント</div><div><span class="mp-stat-pt positive">+3,240pt</span></div><div class="mp-stat-sub">3位/20人</div></div><div class="mp-stat-card"><div class="mp-stat-label">的中率</div><div><span class="mp-stat-pt positive">58%</span></div><div class="mp-stat-sub">12戦 7勝 5敗</div></div></div><div class="mp-progress-wrap"><div class="mp-progress-bar" style="width:68%"></div></div><div class="mp-progress-label">順位アップまで 5pt</div></div>
+  <div class="mp-section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;"><span class="mp-section-title">🎯 直近の予想</span></div><div id="mpBetList"></div></div>
+  <div class="mp-section"><div class="mp-section-title">🏆 リーグランキング</div><div class="league-ranking-wrap" style="margin-top:6px;"><div id="mpLeagueList"></div></div></div>
+</div>
+
+<!-- CARDS -->
+<div id="view-cards" class="view-section" style="display:none;padding:0;">
+  <div style="display:flex;border-bottom:1px solid var(--border);background:var(--bg-sidebar);">
+    <button class="card-nav-tab active" onclick="switchCardNav('pack',this)">📦 パック</button>
+    <button class="card-nav-tab" onclick="switchCardNav('mycard',this)">🃏 選手カード</button>
+  </div>
+  <div id="cview-pack" style="padding:10px;">
+    <div class="coin-bar"><div class="coin-balances"><span class="coin-paid">💰 有償 <span id="coin-paid-display">3,200</span></span><span>／</span><span class="coin-free">🪙 無償 <span id="coin-free-display">800</span></span></div><button class="btn-buy-coin" disabled>購入 →</button></div>
+    <div class="pack-grid" id="pack-grid"></div>
+  </div>
+  <div id="cview-mycard" style="display:none;padding:10px;">
+    <div style="font-size:10px;color:var(--text-sub);margin-bottom:8px;" id="card-count-label"></div>
+    <div class="card-list-grid" id="card-list-grid"></div>
+  </div>
+</div>
+
+<!-- MISSION -->
+<div id="view-mission" class="view-section" style="display:none;padding:10px;"><div id="mission-container"></div></div>
+
+<!-- RANKING DETAIL -->
+<div id="rankingDetail" class="view-section" style="display:none;padding:0;">
+  <div class="rd-header"><button class="rd-back" onclick="showScreen('home')">← 戻る</button><span class="rd-title">🏆 Sリーグ 3部</span><span class="rd-timer">残り 1d</span></div>
+  <div class="rd-trophy-row"><div class="rd-trophy">🥇</div><div class="rd-trophy">🥈</div><div class="rd-trophy">🏆</div><div class="rd-trophy locked">🔒</div></div>
+  <div class="rd-zone-up">▲ 昇格ゾーン</div>
+  <div id="rankingDetailList"></div>
+</div>
+
+</div><!-- /scroll-area -->
+
+<!-- BETSLIP -->
+<div id="betslip-panel" class="betslip-panel">
+  <div class="betslip-header" onclick="toggleBetslip()"><div class="betslip-title">予想カート<div id="betslip-count" class="betslip-count">0</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  <div class="betslip-body" id="betslip-items"><div class="empty-betslip"><p>予想が選択されていません</p></div></div>
+  <div class="betslip-footer">
+    <div class="total-row"><span>参加金額:</span><span id="total-stake">0pt</span></div>
+    <div class="total-row big"><span>受取額:</span><span id="total-return">0pt</span></div>
+    <button id="place-bet-btn" class="btn-place" disabled>この予想で参加する</button>
+  </div>
+</div>
+<div id="mobile-toggle" class="betslip-toggle" onclick="toggleBetslip()">
+  <div class="betslip-title">予想カート<div id="mobile-count" class="betslip-count">0</div></div>
+  <span style="font-size:11px;color:var(--accent);">展開する ↑</span>
+</div>
+
+<!-- MODALS -->
+<div id="modal-buy-pack" class="modal-overlay"><div class="modal-content"><div class="modal-close" onclick="closeModal('modal-buy-pack')">✕</div><div class="modal-title" id="buy-modal-title">パックを購入</div><div class="radio-group"><label class="radio-label"><input type="radio" name="coin-type" value="paid" id="radio-paid" checked onchange="updateBuyModal()"><span class="coin-paid">💰 有償 <span id="buy-cost-paid">800</span></span></label><label class="radio-label"><input type="radio" name="coin-type" value="free" id="radio-free" onchange="updateBuyModal()"><span class="coin-free">🪙 無償 <span id="buy-cost-free">160</span></span></label></div><div class="balance-calc"><div style="margin-bottom:4px;">残高:</div><div id="buy-balance-calc" style="font-weight:bold;"></div><div id="buy-error" style="color:#ff3b30;font-size:10px;margin-top:4px;display:none;">コインが足りません</div></div><div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-buy-pack')">キャンセル</button><button class="btn-confirm" id="btn-confirm-buy" onclick="confirmBuyPack()">購入確定</button></div></div></div>
+<div id="modal-open-pack" class="modal-overlay"><div class="modal-content" style="text-align:center;"><div class="modal-title">パック開封</div><div class="open-pack-area" id="open-pack-area"></div><div id="open-pack-msg" style="margin-bottom:10px;font-weight:bold;color:var(--success);font-size:12px;display:none;">コレクションに追加 ✅</div><button class="btn-confirm" id="btn-open-all" onclick="openAllCards()">タップして開封</button><button class="btn-cancel" id="btn-close-open" style="display:none;margin:8px auto 0;" onclick="closeModal('modal-open-pack')">閉じる</button></div></div>
+
+<!-- ★ PLAYER PANEL (スライドアップ) -->
+<div class="player-panel-overlay" id="playerPanelOverlay" onclick="closePlayerPanel()"></div>
+<div class="player-panel" id="playerPanel">
+  <div class="player-panel-drag"></div>
+  <div class="player-panel-header">
+    <div id="pp-header-content" style="display:flex;align-items:center;gap:8px;"></div>
+    <button class="player-panel-close" onclick="closePlayerPanel()">✕</button>
+  </div>
+  <div class="player-panel-body" id="playerPanelBody"></div>
+</div>
+
+</div><!-- /phone -->
+<script>
+// ═══════════════════════════════════════════
+// ★ 予想タブ AI エリア
+// ═══════════════════════════════════════════
+const PAI_SYSTEM = `あなたはB.E.A.TのAIアナリスト「BEAT-1」です。
+現在の試合：横浜DeNA vs 千葉ロッテ（進行中・スコア0-0）
+投手：藤浪晋太郎（先発・3回0失点・2K）、吉川悠斗（DeNA先発・3回0失点）
+注目打者：梶原昂希(1安打)、筒香嘉智(三振)、ビシエド(0安打)
+リーグ順位：現在3位（1位との差 5pt）
+必ずJSON形式のみで返答してください。前置きや説明は不要です。`;
+
+const PAI_MARKETS = [
+  {id:'m-dena',  market:'勝敗',     selection:'DeNA勝利',   odds:1.85},
+  {id:'m-lotte', market:'勝敗',     selection:'ロッテ勝利',  odds:1.95},
+  {id:'fj-k3',   market:'藤浪三振', selection:'3-5個',      odds:1.65},
+  {id:'fj-k6',   market:'藤浪三振', selection:'6個以上',    odds:2.10},
+  {id:'kj-h1',   market:'梶原 安打数', selection:'1本',     odds:1.80},
+  {id:'kj-2b-yes',market:'梶原 二塁打',selection:'二塁打あり',odds:2.80},
+  {id:'ts-hr-yes',market:'筒香 本塁打',selection:'本塁打あり',odds:4.50},
+  {id:'bs-1h-yes',market:'ビシエド 初安打',selection:'初安打達成',odds:2.20},
+  {id:'fj-inn5',  market:'藤浪 登板回',selection:'4-5回',   odds:1.75},
+  {id:'fj-er0',   market:'藤浪 自責点',selection:'0点',     odds:2.40},
+  {id:'dw-h-yes', market:'度会 安打', selection:'安打あり',  odds:1.90},
+];
+
+let paiExpandedStrategy = null;
+
+function switchPAITab(tab) {
+  ['news','suggest','analysis','generate'].forEach(t => {
+    document.getElementById('paitab-'+t)?.classList.toggle('active', t===tab);
+    const p = document.getElementById('paipanel-'+t);
+    if(p) p.style.display = t===tab ? 'block' : 'none';
+  });
+  if(tab==='analysis') renderStaticAnalysis();
+}
+
+// ── 提案 ──
+const STRATEGIES = {
+  attack:  {label:'ガンガンいこうぜ', color:'#ff6b6b'},
+  balance: {label:'そこそこキープ',   color:'var(--accent)'},
+  guard:   {label:'ガチガチ守り',     color:'#3fb950'},
+};
+
+function expandStrategy(key) {
+  const body  = document.getElementById('pai-body-'+key);
+  const arrow = document.getElementById('pai-arrow-'+key);
+  const isOpen = body.style.display === 'block';
+  // 全部閉じる
+  ['attack','balance','guard'].forEach(k => {
+    document.getElementById('pai-body-'+k).style.display = 'none';
+    document.getElementById('pai-arrow-'+k).classList.remove('open');
+  });
+  if (!isOpen) {
+    body.style.display = 'block';
+    arrow.classList.add('open');
+    paiExpandedStrategy = key;
+    if (!body.dataset.loaded) loadStrategyContent(key, body);
+  } else {
+    paiExpandedStrategy = null;
+  }
+}
+
+async function loadAISuggestions() {
+  const btn = document.getElementById('pai-suggest-btn');
+  btn.disabled = true; btn.textContent = '⏳ 生成中...';
+  // 全ストラテジーをまとめて1回のAPI呼び出しで取得
+  const prompt = `以下の予想マーケットから戦略別に提案してください。
+マーケット一覧: ${JSON.stringify(PAI_MARKETS.map(m=>({market:m.market,selection:m.selection,odds:m.odds})))}
+
+以下のJSONフォーマットで返してください:
+{
+  "attack": [{"market":"..","selection":"..","odds":1.85,"reason":".."}],
+  "balance": [{"market":"..","selection":"..","odds":1.85,"reason":".."}],
+  "guard": [{"market":"..","selection":"..","odds":1.85,"reason":".."}]
+}
+attackは高オッズ狙いで3-4問、balanceは中オッズ安定で3問、guardは低オッズ確実で2-3問。reasonは日本語20字以内。`;
+  try {
+    const raw = await callClaude(PAI_SYSTEM, [{role:'user', content:prompt}]);
+    const json = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    ['attack','balance','guard'].forEach(k => {
+      const body = document.getElementById('pai-body-'+k);
+      body.dataset.loaded = '1';
+      body.innerHTML = renderStrategyItems(json[k]||[], k);
+    });
+    btn.textContent = '🔄 再生成する'; btn.disabled = false;
+  } catch(e) {
+    btn.textContent = '🤖 AIに提案させる'; btn.disabled = false;
+    console.error(e);
+  }
+}
+
+async function loadStrategyContent(key, body) {
+  body.innerHTML = `<div class="pai-loading"><div class="pai-loading-dots"><span></span><span></span><span></span></div>AI生成中...</div>`;
+  body.dataset.loaded = '1';
+  const stratDesc = {attack:'高オッズ狙いの攻撃的な予想を3-4問', balance:'中オッズで安定した予想を3問', guard:'低オッズで確実な予想を2-3問'};
+  const prompt = `${stratDesc[key]}選んでください。
+マーケット: ${JSON.stringify(PAI_MARKETS.map(m=>({market:m.market,selection:m.selection,odds:m.odds})))}
+JSON配列で: [{"market":"..","selection":"..","odds":1.85,"reason":"日本語20字以内"}]`;
+  try {
+    const raw = await callClaude(PAI_SYSTEM, [{role:'user', content:prompt}]);
+    const arr = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    body.innerHTML = renderStrategyItems(arr, key);
+  } catch(e) {
+    body.innerHTML = `<div style="font-size:10px;color:#ff6b6b;padding:8px 0;">生成に失敗しました。再試行してください。</div>`;
+  }
+}
+
+function renderStrategyItems(items, stratKey) {
+  if (!items.length) return '<div style="font-size:10px;color:rgba(255,255,255,0.4);padding:8px 0;">データなし</div>';
+  return `<div style="padding-top:4px;">` + items.map((item, i) => {
+    const mkt = PAI_MARKETS.find(m => m.market===item.market && m.selection===item.selection);
+    const btnId = mkt ? mkt.id : null;
+    const alreadyBet = btnId && state.bets.some(b=>b.id===btnId);
+    return `<div class="pai-suggest-item">
+      <div class="pai-suggest-num">${i+1}</div>
+      <div class="pai-suggest-info">
+        <div class="pai-suggest-market">${item.market}</div>
+        <div class="pai-suggest-sel">${item.selection}</div>
+        <div class="pai-suggest-odds">× ${parseFloat(item.odds).toFixed(2)}</div>
+        <div class="pai-suggest-reason">${item.reason||''}</div>
+      </div>
+      ${btnId ? `<button class="pai-add-btn${alreadyBet?' selected':''}" onclick="addSuggestBet('${btnId}','${item.market}','${item.selection}',${item.odds},this)">${alreadyBet?'✓ 追加済':'+ 追加'}</button>` : ''}
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function addSuggestBet(id, market, selection, odds, btn) {
+  const exists = state.bets.some(b=>b.id===id);
+  if (!exists) {
+    toggleBet(id, market, selection, odds);
+    btn.textContent = '✓ 追加済';
+    btn.classList.add('selected');
+    // 予想するタブのボタンも選択状態に
+    document.querySelectorAll(`.odds-btn[data-id="${id}"]`).forEach(b=>b.classList.add('selected'));
+  }
+}
+
+// ── 解説 ──
+function renderStaticAnalysis() {
+  const list = document.getElementById('pai-analysis-list');
+  if (!list || list.dataset.loaded) return;
+  const staticItems = [
+    {market:'勝敗', selection:'DeNA勝利', odds:1.85, text:'本拠地・横浜スタジアムでのホーム試合。今季ホーム勝率62%と高く有利。ロッテ先発藤浪はNPB復帰登板で未知数。'},
+    {market:'藤浪三振', selection:'3-5個', odds:1.65, text:'藤浪は今季MLB・ファームで平均奪三振率9.2。復帰緊張でコントロール重視の投球なら3-5個が最も現実的なレンジ。'},
+    {market:'梶原 安打数', selection:'1本', odds:1.80, text:'梶原は今季打率.284、対ロッテ系投手との相性も良好。1本が期待値最大の選択肢。今日すでに二塁打1本記録中。'},
+    {market:'筒香 本塁打', selection:'本塁打あり', odds:4.50, text:'ファーム打率.490と絶好調だが、1軍復帰直後の先発相手本塁打は低確率。リターンは大きいがリスクも高い高配当。'},
+  ];
+  list.dataset.loaded = '1';
+  list.innerHTML = staticItems.map(item => `
+    <div class="pai-analysis-item">
+      <div class="pai-analysis-market">${item.market}</div>
+      <div class="pai-analysis-sel">${item.selection} <span style="color:var(--text-sub);font-size:9px;">× ${item.odds}</span></div>
+      <div class="pai-analysis-text">${item.text}</div>
+    </div>`).join('');
+}
+
+async function loadAIAnalysis() {
+  const btn = document.getElementById('pai-analysis-btn');
+  const list = document.getElementById('pai-analysis-list');
+  btn.disabled = true; btn.textContent = '⏳ 解説生成中...';
+  list.innerHTML = `<div class="pai-loading"><div class="pai-loading-dots"><span></span><span></span><span></span></div>AI解説中...</div>`;
+  const prompt = `以下の予想について、各予想の根拠・注目ポイントをAI解説してください。
+予想一覧: ${JSON.stringify(PAI_MARKETS.slice(0,6).map(m=>({market:m.market,selection:m.selection,odds:m.odds})))}
+JSON配列で: [{"market":"..","selection":"..","odds":1.85,"text":"日本語60字以内の解説"}]`;
+  try {
+    const raw = await callClaude(PAI_SYSTEM, [{role:'user', content:prompt}]);
+    const arr = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    list.innerHTML = arr.map(item => `
+      <div class="pai-analysis-item">
+        <div class="pai-analysis-market">${item.market}</div>
+        <div class="pai-analysis-sel">${item.selection} <span style="color:var(--text-sub);font-size:9px;">× ${parseFloat(item.odds).toFixed(2)}</span></div>
+        <div class="pai-analysis-text">${item.text}</div>
+      </div>`).join('');
+    btn.textContent = '🔄 再解説する'; btn.disabled = false;
+  } catch(e) {
+    list.innerHTML = '<div style="font-size:10px;color:#ff6b6b;padding:8px 0;">解説の生成に失敗しました。</div>';
+    btn.textContent = '🔍 AIに解説させる'; btn.disabled = false;
+  }
+}
+
+// ── 生成 ──
+async function loadAIGenerate() {
+  const btn = document.getElementById('pai-generate-btn');
+  const listEl = document.getElementById('pai-generate-list');
+  btn.disabled = true; btn.textContent = '⏳ 生成中...';
+  listEl.innerHTML = `<div class="pai-loading"><div class="pai-loading-dots"><span></span><span></span><span></span></div>オリジナル予想を生成中...</div>`;
+  const prompt = `DeNA vs ロッテの試合について、既存にないオリジナルの予想問題を3問作成してください。
+（例：特定打者の初球結果、特定イニングの得点、守備エラー発生など）
+JSON配列で: [{"title":"予想タイトル","opts":[{"label":"選択肢A","odds":2.10},{"label":"選択肢B","odds":1.70}],"reason":"この予想の注目ポイント（40字以内）"}]`;
+  try {
+    const raw = await callClaude(PAI_SYSTEM, [{role:'user', content:prompt}]);
+    const arr = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    listEl.innerHTML = arr.map((item,i) => `
+      <div class="pai-gen-item">
+        <div class="pai-gen-title">${item.title}</div>
+        <div class="pai-gen-opts">
+          ${(item.opts||[]).map(o=>`<div class="pai-gen-opt"><div class="pai-gen-opt-label">${o.label}</div><div class="pai-gen-opt-odds">× ${parseFloat(o.odds).toFixed(2)}</div></div>`).join('')}
+        </div>
+        <div class="pai-gen-reason">💡 ${item.reason||''}</div>
+      </div>`).join('');
+    btn.textContent = '🔄 再生成する'; btn.disabled = false;
+  } catch(e) {
+    listEl.innerHTML = '<div style="font-size:10px;color:#ff6b6b;padding:8px 0;">生成に失敗しました。</div>';
+    btn.textContent = '✨ オリジナル予想を生成する'; btn.disabled = false;
+  }
+}
+// ═══════════════════════════════════════════
+const playerDB = {
+  kajiwara: {
+    id:'kajiwara', name:'梶原 昂希', number:'#2', team:'横浜DeNA', pos:'外野手', emoji:'⚾',
+    rarity:'RARE', rarityColor:'#1a8a35',
+    profile:{born:'1998年11月20日 (26歳)', height:'178cm / 79kg', born_place:'福岡県', draft:'2020年ドラフト2位', career:'青山学院大 → DeNA (2021〜)'},
+    season:{avg:'.284', hr:4, rbi:28, ops:'.742', sb:14, games:89},
+    today:{ab:2, h:1, rbi:0, bb:0},
+    atbats:[
+      {inn:'1回裏',result:'double',badge:'2B',desc:'レフトポール際フェンス直撃！二塁打',opp:'吉川 悠斗'},
+      {inn:'3回裏',result:'k',badge:'K',desc:'空振り三振',opp:'吉川 悠斗'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+    ],
+    vsPitcher:[
+      {name:'藤浪 晋太郎', record:'7打数 3安打 (.429)', good:true},
+      {name:'吉川 悠斗',   record:'12打数 2安打 (.167)', good:false},
+      {name:'佐々木 朗希', record:'8打数 1安打 (.125)',  good:false},
+    ],
+    comment:'今季は外野の主力として活躍。足の速さを活かした盗塁と二塁打が得意。本日は1打席目から二塁打を放つ好スタート。'
+  },
+  tsutsugoh: {
+    id:'tsutsugoh', name:'筒香 嘉智', number:'#24', team:'横浜DeNA', pos:'指名打者', emoji:'⚾',
+    rarity:'EPIC', rarityColor:'#f5a623',
+    profile:{born:'1991年11月26日 (33歳)', height:'185cm / 97kg', born_place:'和歌山県', draft:'2010年ドラフト1位', career:'PL学園 → DeNA (2011〜2019) → TB/PIT/LAD → DeNA (2024〜)'},
+    season:{avg:'.312', hr:2, rbi:15, ops:'.890', sb:0, games:22},
+    today:{ab:1, h:0, rbi:0, bb:0},
+    atbats:[
+      {inn:'2回裏',result:'k',badge:'K',desc:'見逃し三振。低めを見極め切れず',opp:'吉川 悠斗'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+    ],
+    vsPitcher:[
+      {name:'藤浪 晋太郎', record:'3打数 2安打 (.667)', good:true},
+      {name:'吉川 悠斗',   record:'5打数 0安打 (.000)', good:false},
+      {name:'ロメロ',      record:'8打数 4安打 (.500)', good:true},
+    ],
+    comment:'メジャー帰りのハマの大砲。ファームで打率.490と絶好調で1軍昇格。本塁打予想のオッズ4.50と高く設定されているが爆発力は折り紙付き。'
+  },
+  viciedo: {
+    id:'viciedo', name:'ビシエド', number:'#66', team:'横浜DeNA', pos:'一塁手', emoji:'⚾',
+    rarity:'RARE', rarityColor:'#1a8a35',
+    profile:{born:'1989年7月10日 (35歳)', height:'188cm / 105kg', born_place:'キューバ', draft:'外国人選手', career:'CWS (MLB) → 中日 (2013〜2023) → DeNA (2024〜)'},
+    season:{avg:'.301', hr:1, rbi:8, ops:'.821', sb:0, games:18},
+    today:{ab:2, h:0, rbi:0, bb:0},
+    atbats:[
+      {inn:'1回裏',result:'out',badge:'OUT',desc:'バットの根本。投手ゴロ→一塁アウト',opp:'吉川 悠斗'},
+      {inn:'3回裏',result:'out',badge:'OUT',desc:'センターフライ。チェンジアップに詰まる',opp:'吉川 悠斗'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+    ],
+    vsPitcher:[
+      {name:'藤浪 晋太郎', record:'初対戦', good:false},
+      {name:'吉川 悠斗',   record:'初対戦', good:false},
+    ],
+    comment:'中日からDeNAへ移籍。ファームで好成績を残し満を持して1軍デビュー。本日はまだノーヒット。初安打が飛び出すか注目。'
+  },
+  fujinami: {
+    id:'fujinami', name:'藤浪 晋太郎', number:'#18', team:'千葉ロッテ', pos:'投手（先発）', emoji:'⚾',
+    rarity:'EPIC', rarityColor:'#f5a623',
+    profile:{born:'1994年4月22日 (31歳)', height:'197cm / 97kg', born_place:'大阪府', draft:'2012年ドラフト1位', career:'大阪桐蔭 → 阪神 (2013〜2022) → OAK/TOR (MLB) → ロッテ (2025〜)'},
+    season:{avg:'—', hr:'—', rbi:'—', ops:'—', era:'3.20', ip:'24.1', k:28, bb:12, games:5},
+    today:{ip:'3回', k:2, er:0, bb:1},
+    isPitcher: true,
+    atbats:[
+      {inn:'1回表',result:'out',badge:'K',desc:'和田 康士朗：左飛'},
+      {inn:'1回表',result:'out',badge:'OUT',desc:'佐藤 都志也：左飛'},
+      {inn:'1回表',result:'out',badge:'OUT',desc:'谷村 剛：右飛（三者凡退）'},
+      {inn:'2回表',result:'out',badge:'K',desc:'茶谷 健太：見逃し三振'},
+      {inn:'2回表',result:'out',badge:'OUT',desc:'石川 慎吾：遊ゴロ（ピンチ脱出）'},
+    ],
+    vsPitcher:[],
+    comment:'メジャー帰りの本格派右腕。197cmの長身から繰り出す最速152km/hのストレートとスプリットが武器。NPB3年ぶりの復帰登板で3回を無失点と好投中。'
+  },
+  mori: {
+    id:'mori', name:'森 唯斗', number:'#33', team:'千葉ロッテ', pos:'投手（中継）', emoji:'⚾',
+    rarity:'UNCOMMON', rarityColor:'#1a3a9a',
+    profile:{born:'1993年3月28日 (32歳)', height:'177cm / 80kg', born_place:'大分県', draft:'2011年ドラフト2位', career:'作新学院 → ソフトバンク → 阪神 → ロッテ (2024〜)'},
+    season:{era:'2.80', ip:'19.1', k:25, bb:6, games:18},
+    today:{ip:'1回', k:3, er:0, bb:0},
+    isPitcher: true,
+    atbats:[
+      {inn:'3回表',result:'out',badge:'K',desc:'松石 信八：空振り三振'},
+      {inn:'3回表',result:'out',badge:'OUT',desc:'和田 康士朗：センター飛'},
+      {inn:'3回表',result:'out',badge:'OUT',desc:'佐藤 都志也：右飛'},
+    ],
+    vsPitcher:[],
+    comment:'今季はロッテのセットアッパーとして安定した投球。カットボールとフォークの組み合わせが効果的。本日3回を三者凡退に抑える好投。'
+  },
+  yoshikawa: {
+    id:'yoshikawa', name:'吉川 悠斗', number:'#21', team:'横浜DeNA', pos:'投手（先発）', emoji:'⚾',
+    rarity:'RARE', rarityColor:'#1a8a35',
+    profile:{born:'1998年5月15日 (27歳)', height:'182cm / 82kg', born_place:'神奈川県', draft:'2016年ドラフト3位', career:'横浜高校 → DeNA (2017〜)'},
+    season:{era:'4.04', ip:'42.0', k:38, bb:18, games:7},
+    today:{ip:'3回', k:1, er:0, bb:1},
+    isPitcher: true,
+    atbats:[
+      {inn:'1回裏',result:'out',badge:'K',desc:'梶原 昂希：二塁打（先制機を逃す）'},
+      {inn:'1回裏',result:'out',badge:'OUT',desc:'ビシエド：投ゴロ'},
+      {inn:'2回裏',result:'out',badge:'K',desc:'筒香 嘉智：見逃し三振'},
+      {inn:'3回裏',result:'hit',badge:'安',desc:'度会 隆輝：左安打'},
+    ],
+    vsPitcher:[],
+    comment:'DeNAの若手先発右腕。今季7試合で5勝2敗と好調。カットボールとチェンジアップを中心とした制球重視の投球スタイル。本日は3回1被安打の安定した内容。'
+  },
+  wada: {
+    id:'wada', name:'和田 康士朗', number:'#63', team:'千葉ロッテ', pos:'外野手', emoji:'⚾',
+    rarity:'NORMAL', rarityColor:'#5a2a9a',
+    profile:{born:'1999年4月1日 (26歳)', height:'175cm / 73kg', born_place:'京都府', draft:'2018年育成ドラフト1位', career:'龍谷大平安 → ロッテ (2019〜)'},
+    season:{avg:'.261', hr:0, rbi:12, ops:'.668', sb:24, games:82},
+    today:{ab:2, h:0, rbi:0, bb:0},
+    atbats:[
+      {inn:'1回表',result:'out',badge:'OUT',desc:'左飛。バットの根本に当たる'},
+      {inn:'3回表',result:'out',badge:'OUT',desc:'センター飛'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+    ],
+    vsPitcher:[
+      {name:'藤浪 晋太郎', record:'3打数 1安打 (.333)', good:true},
+      {name:'吉川 悠斗',   record:'5打数 2安打 (.400)', good:true},
+    ],
+    comment:'NPB屈指の俊足外野手。盗塁王争いの常連。足を活かした内野安打や犠牲フライが得意。本日は2打席ともアウト。'
+  },
+};
+
+// 名前→IDのマッピング（部分一致）
+const nameToId = {
+  '梶原':'kajiwara','梶原 昂希':'kajiwara',
+  '筒香':'tsutsugoh','筒香 嘉智':'tsutsugoh',
+  'ビシエド':'viciedo',
+  '藤浪':'fujinami','藤浪 晋太郎':'fujinami','藤浪晋太郎':'fujinami',
+  '森 唯斗':'mori','森唯斗':'mori',
+  '吉川':'yoshikawa','吉川 悠斗':'yoshikawa',
+  '和田':'wada','和田 康士朗':'wada',
+};
+
+// ★ 選手パネルを開く
+function openPlayerPanel(pid) {
+  if (!pid || pid === 'null' || pid === 'undefined') return;
+  const p = typeof pid === 'string' && playerDB[pid] ? playerDB[pid] : null;
+  if (!p) return;
+  const overlay = document.getElementById('playerPanelOverlay');
+  const panel   = document.getElementById('playerPanel');
+  const headerEl = document.getElementById('pp-header-content');
+  const bodyEl   = document.getElementById('playerPanelBody');
+
+  // Header
+  const rarityMap = {EPIC:'linear-gradient(160deg,#c87800,#f5a623)',RARE:'linear-gradient(160deg,#0d4a1a,#1a8a35)',UNCOMMON:'linear-gradient(160deg,#0a1a50,#1a3a9a)',NORMAL:'linear-gradient(160deg,#2a1a4a,#5a2a9a)'};
+  const rarityLbl = {EPIC:'EPIC',RARE:'RARE',UNCOMMON:'UC',NORMAL:'N'};
+  headerEl.innerHTML = `
+    <div style="width:40px;height:40px;border-radius:50%;background:${rarityMap[p.rarity]};display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid ${p.rarityColor};">${p.emoji}</div>
+    <div>
+      <div style="font-family:var(--font-h);font-size:1.2rem;font-weight:700;color:#fff;line-height:1;">${p.name}</div>
+      <div style="font-size:9px;color:var(--text-sub);margin-top:2px;">${p.number} • ${p.pos} • ${p.team}</div>
+    </div>
+    <span style="background:${p.rarityColor};color:${p.rarity==='EPIC'?'#000':'#fff'};font-size:8px;font-weight:bold;padding:2px 6px;border-radius:3px;">${rarityLbl[p.rarity]}</span>`;
+
+  // Body
+  let html = '';
+
+  // ── 今日の成績サマリ ──
+  if (p.isPitcher) {
+    html += `<div style="margin-bottom:14px;">
+      <div class="pp-section-title">📋 本日の投球成績</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+        <div class="pp-stat"><div class="pp-stat-val" style="color:var(--accent);">${p.today.ip}</div><div class="pp-stat-label">投球回</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:#58a6ff;">${p.today.k}</div><div class="pp-stat-label">奪三振</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:${p.today.er>0?'#ff6b6b':'#3fb950'};">${p.today.er}</div><div class="pp-stat-label">自責点</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:var(--text-sub);">${p.today.bb}</div><div class="pp-stat-label">四球</div></div>
+      </div>
+    </div>`;
+    // 今季成績
+    html += `<div style="margin-bottom:14px;">
+      <div class="pp-section-title">📊 今季成績</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+        <div class="pp-stat"><div class="pp-stat-val" style="color:#3fb950;">${p.season.era}</div><div class="pp-stat-label">防御率</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:#58a6ff;">${p.season.k}</div><div class="pp-stat-label">奪三振</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:var(--text-sub);">${p.season.ip}</div><div class="pp-stat-label">投球回</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:var(--text-sub);">${p.season.games}</div><div class="pp-stat-label">登板</div></div>
+      </div>
+    </div>`;
+  } else {
+    html += `<div style="margin-bottom:14px;">
+      <div class="pp-section-title">📋 本日の打席成績</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+        <div class="pp-stat"><div class="pp-stat-val" style="color:#fff;">${p.today.ab}</div><div class="pp-stat-label">打数</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:${p.today.h>0?'#3fb950':'var(--text-sub)'};">${p.today.h}</div><div class="pp-stat-label">安打</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:var(--text-sub);">${p.today.rbi}</div><div class="pp-stat-label">打点</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:var(--text-sub);">${p.today.bb}</div><div class="pp-stat-label">四球</div></div>
+      </div>
+    </div>`;
+    // 今季成績
+    html += `<div style="margin-bottom:14px;">
+      <div class="pp-section-title">📊 今季成績</div>
+      <div class="pp-stats-grid">
+        <div class="pp-stat"><div class="pp-stat-val" style="color:var(--accent);">${p.season.avg}</div><div class="pp-stat-label">打率</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:#ff6b6b;">${p.season.hr}</div><div class="pp-stat-label">本塁打</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:var(--text-sub);">${p.season.rbi}</div><div class="pp-stat-label">打点</div></div>
+        <div class="pp-stat"><div class="pp-stat-val" style="color:#3fb950;">${p.season.sb}</div><div class="pp-stat-label">盗塁</div></div>
+      </div>
+    </div>`;
+  }
+
+  // 直近打席 / 投球ログ
+  const abTitle = p.isPitcher ? '⚾ 本日の被打者記録' : '🕐 直近5打席';
+  html += `<div style="margin-bottom:14px;">
+    <div class="pp-section-title">${abTitle}</div>
+    <div class="atbat-list">`;
+  p.atbats.forEach(ab => {
+    html += `<div class="atbat-row">
+      <div class="atbat-inn">${ab.inn}</div>
+      <div class="atbat-result-badge ${ab.result}">${ab.badge}</div>
+      <div class="atbat-desc">${ab.desc}</div>
+      ${ab.opp ? `<div class="atbat-pitcher">${ab.opp}</div>` : ''}
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  // 対投手相性（打者のみ）
+  if (!p.isPitcher && p.vsPitcher.length) {
+    html += `<div style="margin-bottom:14px;">
+      <div class="pp-section-title">⚔️ 対投手相性</div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:6px 10px;">`;
+    p.vsPitcher.forEach(v => {
+      html += `<div class="vs-pitcher-row">
+        <div class="vs-pitcher-name">${v.name}</div>
+        <div class="vs-stat ${v.good?'good':'bad'}">${v.record}</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  // プロフィール
+  const prof = p.profile;
+  html += `<div style="margin-bottom:14px;">
+    <div class="pp-section-title">👤 プロフィール</div>
+    <div class="pp-profile-grid">
+      <div class="pp-profile-item"><div class="pp-profile-label">生年月日</div><div class="pp-profile-val" style="font-size:10px;">${prof.born}</div></div>
+      <div class="pp-profile-item"><div class="pp-profile-label">体格</div><div class="pp-profile-val" style="font-size:10px;">${prof.height}</div></div>
+      <div class="pp-profile-item"><div class="pp-profile-label">出身地</div><div class="pp-profile-val">${prof.born_place}</div></div>
+      <div class="pp-profile-item"><div class="pp-profile-label">ドラフト</div><div class="pp-profile-val" style="font-size:10px;">${prof.draft}</div></div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:10px;color:var(--text-sub);line-height:1.7;">${prof.career}</div>
+  </div>`;
+
+  // AIコメント
+  html += `<div class="ai-comment-box" style="margin-bottom:10px;">
+    <div class="ai-comment-head">🤖 BEAT-1 の分析</div>
+    <div class="ai-comment-text">${p.comment}</div>
+  </div>`;
+
+  bodyEl.innerHTML = html;
+  overlay.classList.add('active');
+  requestAnimationFrame(() => panel.classList.add('open'));
+}
+
+function closePlayerPanel() {
+  const panel   = document.getElementById('playerPanel');
+  const overlay = document.getElementById('playerPanelOverlay');
+  panel.classList.remove('open');
+  overlay.classList.remove('active');
+}
+
+// ═══════════════════════════════════════════
+// ★ Claude API
+// ═══════════════════════════════════════════
+const HOME_SYSTEM = `あなたはB.E.A.TというNPBスポーツ予想アプリのAIアナリスト「BEAT-1」です。
+現在の試合：横浜DeNA vs 千葉ロッテ（横浜スタジアム）
+注目選手：藤浪晋太郎（NPB3年ぶり復帰登板）、ビシエド（DeNA移籍後初打席）、筒香嘉智、梶原昂希
+返答は2〜4文程度、絵文字1〜2個で日本語でアドバイスしてください。`;
+
+const MATCH_SYSTEM = `あなたはB.E.A.TのAIアナリスト「BEAT-1」です。
+試合：横浜DeNA vs 千葉ロッテ（進行中）
+投手：藤浪晋太郎（先発）、森唯斗（中継）、吉川悠斗（DeNA先発）
+打者：梶原昂希(2B)、筒香嘉智(K)、ビシエド(0安打)、度会隆輝(1安打)
+2〜3文、絵文字1〜2個で日本語で答えてください。`;
+
+const homeMsgs = [], matchMsgs = [];
+
+async function callClaude(sys, msgs) {
+  const r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:msgs})});
+  const d = await r.json();
+  if(d.content?.[0]) return d.content[0].text;
+  throw new Error('err');
+}
+
+function addMsg(hist, role, text, color) {
+  const isU = role==='user';
+  const d = document.createElement('div');
+  d.className='sp-chat-msg'+(isU?' user':'');
+  d.innerHTML=`<span class="sp-chat-avatar">${isU?'😊':'🤖'}</span><div class="sp-chat-bubble${isU?' user-bubble':''}">${!isU?`<div class="sp-chat-name" style="color:${color||'#58a6ff'};">BEAT-1</div>`:''}${text}</div>`;
+  hist.appendChild(d);hist.scrollTop=hist.scrollHeight;
+}
+function addTyping(hist,id){const d=document.createElement('div');d.className='sp-chat-msg';d.id=id;d.innerHTML=`<span class="sp-chat-avatar">🤖</span><div class="sp-chat-bubble"><div class="sp-chat-name" style="color:#58a6ff;">BEAT-1</div><div class="chat-typing"><span></span><span></span><span></span></div></div>`;hist.appendChild(d);hist.scrollTop=hist.scrollHeight;}
+
+// ★ Enterキー送信を完全削除 → 送信ボタンのみ
+async function sendHomeChat() {
+  const inp=document.getElementById('homeChatInput'),btn=document.getElementById('homeChatSend'),hist=document.getElementById('homeChatHistory');
+  const text=inp.value.trim();if(!text)return;inp.value='';btn.disabled=true;
+  addMsg(hist,'user',text);homeMsgs.push({role:'user',content:text});addTyping(hist,'home-typing');
+  try{const r=await callClaude(HOME_SYSTEM,homeMsgs);document.getElementById('home-typing')?.remove();addMsg(hist,'assistant',r);homeMsgs.push({role:'assistant',content:r});document.getElementById('studioCommentText').textContent=r;}
+  catch{document.getElementById('home-typing')?.remove();addMsg(hist,'assistant','⚠️ 接続エラーが発生しました。');}
+  btn.disabled=false;
+}
+
+async function sendMatchChat() {
+  const inp=document.getElementById('matchChatInput'),btn=document.getElementById('matchChatSend'),hist=document.getElementById('matchChatHistory');
+  const text=inp.value.trim();if(!text)return;
+  // 選手パネルを開くのは「見せて」「プロフィール」「成績見たい」「詳細」など明示的な要求のみ
+  const panelTriggers = ['見せて','みせて','プロフィール','成績見','詳細','カード','打席見','データ見'];
+  const wantsPanel = panelTriggers.some(t => text.includes(t));
+  if (wantsPanel) {
+    for(const [k,v] of Object.entries(nameToId)){if(text.includes(k) && v){inp.value='';openPlayerPanel(v);return;}}
+  }
+  inp.value='';btn.disabled=true;
+  addMsg(hist,'user',text);
+  const ctx=`（現在スコア：DeNA ${scoreBoard.homeR} - ロッテ ${scoreBoard.awayR}）`;
+  matchMsgs.push({role:'user',content:text+ctx});addTyping(hist,'match-typing');
+  try{const r=await callClaude(MATCH_SYSTEM,matchMsgs);document.getElementById('match-typing')?.remove();addMsg(hist,'assistant',r);matchMsgs.push({role:'assistant',content:r});document.getElementById('matchStudioText').textContent=r;}
+  catch{document.getElementById('match-typing')?.remove();addMsg(hist,'assistant','⚠️ 接続エラーが発生しました。');}
+  btn.disabled=false;
+}
+
+// ═══════════════════════════════════════════
+// ★ ライブ試合データ
+// ═══════════════════════════════════════════
+const todayMatches=[
+  {id:0,status:'live',venue:'横浜スタジアム',home:{flag:'🐬',name:'DeNA',score:0},away:{flag:'🦁',name:'ロッテ',score:0},statusLabel:'LIVE • 3回表',isDena:true},
+  {id:1,status:'live',venue:'甲子園',home:{flag:'🐯',name:'阪神',score:2},away:{flag:'🐰',name:'巨人',score:1},statusLabel:'LIVE • 5回裏',isDena:false},
+  {id:2,status:'pre',venue:'マツダスタジアム',home:{flag:'🦅',name:'広島',score:null},away:{flag:'🐉',name:'中日',score:null},statusLabel:'18:00',isDena:false},
+  {id:3,status:'pre',venue:'神宮球場',home:{flag:'🐧',name:'ヤクルト',score:null},away:{flag:'🐟',name:'横浜',score:null},statusLabel:'18:00',isDena:false},
+  {id:4,status:'fin',venue:'PayPayドーム',home:{flag:'🦅',name:'ソフトバンク',score:5},away:{flag:'🦄',name:'楽天',score:2},statusLabel:'試合終了',isDena:false},
+];
+
+function renderLiveMatchCards(){
+  const el=document.getElementById('liveMatchesScroll');if(!el)return;
+  el.innerHTML=todayMatches.map(m=>{
+    const isL=m.status==='live',isP=m.status==='pre';
+    const scoreHtml=isP?`<div style="font-size:13px;font-weight:bold;color:var(--accent);">${m.statusLabel}</div>`:`<div class="lm-score">${m.home.score} - ${m.away.score}</div>`;
+    const badgeCls=isL?'badge-live':isP?'badge-pre':'badge-fin';
+    const bText=isL?`🔴 ${m.statusLabel}`:isP?`🕕 ${m.statusLabel}`:`✅ ${m.statusLabel}`;
+    return `<div class="lm-card${isL?' is-live':''}" onclick="openMatchDetail(${m.id})">${isL?'<div class="live-pip"></div>':''}<div class="lm-card-venue">${m.venue}</div><div class="lm-card-teams"><div class="lm-team"><div class="lm-team-logo">${m.home.flag}</div><div class="lm-team-name">${m.home.name}</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;">${scoreHtml}</div><div class="lm-team" style="flex-direction:row-reverse;"><div class="lm-team-logo">${m.away.flag}</div><div class="lm-team-name">${m.away.name}</div></div></div><div class="lm-status"><span class="${badgeCls}">${bText}</span></div></div>`;
+  }).join('');
+}
+
+// ★ 出場選手テーブル描画
+function renderLineupTables() {
+  const lotteData = [
+    {num:'1',pos:'中',name:'和田 康士朗',pid:'wada',    ab:2,h:0,rbi:0,avg:'.261'},
+    {num:'2',pos:'捕',name:'佐藤 都志也',pid:null,     ab:2,h:0,rbi:0,avg:'.243'},
+    {num:'3',pos:'内',name:'谷村 剛',    pid:null,     ab:1,h:0,rbi:0,avg:'.271'},
+    {num:'4',pos:'指',name:'角中 勝也',  pid:null,     ab:1,h:0,rbi:0,avg:'.302'},
+    {num:'5',pos:'遊',name:'茶谷 健太',  pid:null,     ab:1,h:0,rbi:0,avg:'.234'},
+    {num:'6',pos:'外',name:'山口 航輝',  pid:null,     ab:1,h:1,rbi:0,avg:'.288'},
+    {num:'7',pos:'外',name:'石川 慎吾',  pid:null,     ab:1,h:0,rbi:0,avg:'.311'},
+    {num:'8',pos:'外',name:'松石 信八',  pid:null,     ab:1,h:0,rbi:0,avg:'.198'},
+    {num:'9',pos:'内',name:'藤田 和樹',  pid:null,     ab:1,h:1,rbi:0,avg:'.290'},
+  ];
+  const denaData = [
+    {num:'1',pos:'外',name:'梶原 昂希',  pid:'kajiwara', ab:2,h:1,rbi:0,avg:'.284'},
+    {num:'2',pos:'外',name:'度会 隆輝',  pid:null,       ab:2,h:1,rbi:0,avg:'.224'},
+    {num:'3',pos:'一',name:'ビシエド',   pid:'viciedo',  ab:2,h:0,rbi:0,avg:'.301'},
+    {num:'4',pos:'捕',name:'筒香 嘉智',  pid:'tsutsugoh',ab:1,h:0,rbi:0,avg:'.312'},
+    {num:'5',pos:'外',name:'加藤 響',    pid:null,       ab:1,h:0,rbi:0,avg:'.225'},
+    {num:'6',pos:'捕',name:'伊藤 光',    pid:null,       ab:1,h:0,rbi:0,avg:'.265'},
+    {num:'7',pos:'外',name:'東妻 純平',  pid:null,       ab:0,h:0,rbi:0,avg:'.241'},
+    {num:'8',pos:'内',name:'西巻 賢二',  pid:null,       ab:0,h:0,rbi:0,avg:'.208'},
+    {num:'9',pos:'内',name:'田内 真翔',  pid:null,       ab:1,h:0,rbi:0,avg:'.189'},
+  ];
+
+  const makeTable = (data, el) => {
+    if (!el) return;
+    const head = `<thead><tr>
+      <th class="col-num">#</th>
+      <th class="col-pos" style="text-align:center;">守</th>
+      <th style="text-align:left;padding:4px 6px;color:var(--text-sub);font-weight:normal;">選手</th>
+      <th class="col-stat">打数</th>
+      <th class="col-stat">安打</th>
+      <th class="col-stat">打点</th>
+      <th class="col-stat avg">打率</th>
+    </tr></thead>`;
+    const rows = data.map(d => {
+      const nameCell = d.pid
+        ? `<td style="padding:5px 6px;"><span class="col-name" onclick="openPlayerPanel('${d.pid}')">${d.name} <span style="font-size:8px;color:var(--accent);">›</span></span></td>`
+        : `<td style="padding:5px 6px;color:var(--text-main);">${d.name}</td>`;
+      const hitClass = d.h > 0 ? ' hit' : '';
+      return `<tr>
+        <td class="col-num" style="text-align:center;color:var(--text-sub);">${d.num}</td>
+        <td class="col-pos">${d.pos}</td>
+        ${nameCell}
+        <td class="col-stat">${d.ab || '-'}</td>
+        <td class="col-stat${hitClass}">${d.h}</td>
+        <td class="col-stat">${d.rbi}</td>
+        <td class="col-stat avg">${d.avg}</td>
+      </tr>`;
+    }).join('');
+    el.innerHTML = head + '<tbody>' + rows + '</tbody>';
+  };
+  makeTable(lotteData, document.getElementById('table-lotte'));
+  makeTable(denaData,  document.getElementById('table-dena'));
+}
+
+// ═══════════════════════════════════════════
+// 試合進行
+// ═══════════════════════════════════════════
+const pitchData=[
+  {inn:1,half:'表',num:0,pit:'藤浪 晋太郎',bat:'和田 康士朗',type:null,spd:null,play:'note',desc:'先頭・和田。藤浪との対戦3打数1安打。横浜スタジアム満員！',balls:0,strikes:0,outs:0,runners:[]},
+  {inn:1,half:'表',num:1,pit:'藤浪 晋太郎',bat:'和田 康士朗',type:'ストレート',spd:152,play:'foul',desc:'152km/h！初球から打ちに行く。一塁側へファール。',balls:0,strikes:1,outs:0,runners:[]},
+  {inn:1,half:'表',num:2,pit:'藤浪 晋太郎',bat:'和田 康士朗',type:'スプリット',spd:null,play:'strike',desc:'変化球外いっぱい。見逃しストライク。2球で追い込む。',balls:0,strikes:2,outs:0,runners:[]},
+  {inn:1,half:'表',num:3,pit:'藤浪 晋太郎',bat:'和田 康士朗',type:'スプリット',spd:null,play:'out',desc:'ちょこんと当てた打球。左飛！1アウト。',balls:0,strikes:2,outs:1,runners:[]},
+  {inn:1,half:'表',num:1,pit:'藤浪 晋太郎',bat:'佐藤 都志也',type:'ストレート',spd:null,play:'out',desc:'バットの根本、詰まった打球。左飛。2アウト。',balls:0,strikes:1,outs:2,runners:[]},
+  {inn:1,half:'表',num:1,pit:'藤浪 晋太郎',bat:'谷村 剛',type:'ストレート',spd:null,play:'out',desc:'初球打ち。ライト前、度会が捕球。3アウト！',balls:0,strikes:1,outs:3,runners:[]},
+  {inn:1,half:'表',num:null,pit:'藤浪 晋太郎',bat:null,type:null,spd:null,play:'inning_end',desc:'1回表終了。三者凡退。藤浪、帽子を取り一礼。大きな拍手！',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
+  {inn:1,half:'裏',num:2,pit:'吉川 悠斗',bat:'梶原 昂希',type:'ストレート',spd:143,play:'double',desc:'レフトポール際フェンス直撃！梶原、二塁打！',balls:1,strikes:0,outs:0,runners:[2]},
+  {inn:1,half:'裏',num:5,pit:'吉川 悠斗',bat:'度会 隆輝',type:'ストレート',spd:142,play:'out',desc:'右中間フライ。センター捕球。2アウト。',balls:3,strikes:2,outs:2,runners:[2]},
+  {inn:1,half:'裏',num:4,pit:'吉川 悠斗',bat:'ビシエド',type:'ストレート',spd:146,play:'out',desc:'バットの根本。投手→一塁。梶原走れず。3アウト！',balls:2,strikes:2,outs:3,runners:[2]},
+  {inn:1,half:'裏',num:null,pit:'吉川 悠斗',bat:null,type:null,spd:null,play:'inning_end',desc:'1回裏終了。梶原二塁打も後続なく無得点。0-0。',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
+  {inn:2,half:'表',num:6,pit:'藤浪 晋太郎',bat:'角中 勝也',type:'カットボール',spd:140,play:'out',desc:'捕飛。1アウト。',balls:3,strikes:2,outs:1,runners:[]},
+  {inn:2,half:'表',num:3,pit:'藤浪 晋太郎',bat:'藤田 和樹',type:'ナックルカーブ',spd:121,play:'hit',desc:'三遊間を抜ける！左安！',balls:1,strikes:2,outs:1,runners:[1]},
+  {inn:2,half:'表',num:3,pit:'藤浪 晋太郎',bat:'茶谷 健太',type:'ツーシーム',spd:141,play:'strikeout',desc:'見逃し三振！2アウト。',balls:0,strikes:3,outs:2,runners:[1]},
+  {inn:2,half:'表',num:1,pit:'藤浪 晋太郎',bat:'山口 航輝',type:'ストレート',spd:141,play:'error',desc:'三塁手が落球！内野安打。一二塁ピンチ！',balls:0,strikes:1,outs:2,runners:[1,2]},
+  {inn:2,half:'表',num:1,pit:'藤浪 晋太郎',bat:'石川 慎吾',type:'ツーシーム',spd:141,play:'out',desc:'遊ゴロ。二塁アウト！ピンチ脱出！',balls:0,strikes:1,outs:3,runners:[]},
+  {inn:2,half:'表',num:null,pit:'藤浪 晋太郎',bat:null,type:null,spd:null,play:'inning_end',desc:'2回表終了。ピンチを切り抜けた藤浪！0-0継続。',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
+  {inn:2,half:'裏',num:6,pit:'吉川 悠斗',bat:'筒香 嘉智',type:'ストレート',spd:146,play:'strikeout',desc:'低めいっぱい！見逃し三振！',balls:3,strikes:3,outs:1,runners:[]},
+  {inn:2,half:'裏',num:5,pit:'吉川 悠斗',bat:'加藤 響',type:'ストレート',spd:144,play:'out',desc:'左中間フライ。2アウト。',balls:2,strikes:2,outs:2,runners:[]},
+  {inn:2,half:'裏',num:4,pit:'吉川 悠斗',bat:'伊藤 光',type:'ストレート',spd:144,play:'out',desc:'セカンド高いフライ。2回裏も無得点。',balls:2,strikes:2,outs:3,runners:[]},
+  {inn:2,half:'裏',num:null,pit:'吉川 悠斗',bat:null,type:null,spd:null,play:'inning_end',desc:'2回裏終了。0-0。',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
+  {inn:3,half:'表',num:4,pit:'森 唯斗',bat:'松石 信八',type:'フォーク',spd:126,play:'strikeout',desc:'空振り三振！1アウト。',balls:1,strikes:3,outs:1,runners:[]},
+  {inn:3,half:'表',num:5,pit:'森 唯斗',bat:'和田 康士朗',type:'カットボール',spd:139,play:'out',desc:'センター飛。2アウト。',balls:3,strikes:2,outs:2,runners:[]},
+  {inn:3,half:'表',num:3,pit:'森 唯斗',bat:'佐藤 都志也',type:'カットボール',spd:139,play:'out',desc:'右飛。3アウト！',balls:1,strikes:2,outs:3,runners:[]},
+  {inn:3,half:'表',num:null,pit:'森 唯斗',bat:null,type:null,spd:null,play:'inning_end',desc:'3回表終了。森も三者凡退。0-0。',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
+  {inn:3,half:'裏',num:5,pit:'吉川 悠斗',bat:'田内 真翔',type:'カットボール',spd:null,play:'out',desc:'三ゴロ。1アウト。',balls:1,strikes:2,outs:1,runners:[]},
+  {inn:3,half:'裏',num:3,pit:'吉川 悠斗',bat:'梶原 昂希',type:'ストレート',spd:null,play:'strikeout',desc:'空振り三振！2アウト。',balls:1,strikes:3,outs:2,runners:[]},
+  {inn:3,half:'裏',num:2,pit:'吉川 悠斗',bat:'度会 隆輝',type:'カットボール',spd:null,play:'hit',desc:'三遊間を抜ける左安！',balls:0,strikes:1,outs:2,runners:[1]},
+  {inn:3,half:'裏',num:1,pit:'吉川 悠斗',bat:'ビシエド',type:'チェンジアップ',spd:null,play:'out',desc:'センターフライ。3アウト！',balls:0,strikes:1,outs:3,runners:[1]},
+  {inn:3,half:'裏',num:null,pit:'吉川 悠斗',bat:null,type:null,spd:null,play:'inning_end',desc:'3回裏終了。0-0で中盤へ。緊迫した展開が続く！',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
+];
+let pitchIdx=0;
+const MAX_INNINGS=9;
+const scoreBoard={home:Array(MAX_INNINGS).fill(null),away:Array(MAX_INNINGS).fill(null),homeR:0,homeH:0,homeE:0,awayR:0,awayH:0,awayE:0};
+
+function renderScoreboard(){
+  const t=document.getElementById('scoreboard');if(!t)return;
+  const maxInn=Math.max(3,pitchIdx>0?pitchData[Math.min(pitchIdx-1,pitchData.length-1)].inn:1);
+  let head='<thead><tr><th style="text-align:left;padding:3px 6px;position:sticky;left:0;background:#161b22;z-index:2;border-right:1px solid #30363d;"></th>';
+  for(let i=1;i<=maxInn;i++)head+=`<th style="padding:3px 5px;border-right:1px solid #21262d;">${i}</th>`;
+  head+='<th style="padding:3px 5px;border-left:2px solid #30363d;font-weight:bold;">R</th><th style="padding:3px 5px;">H</th><th style="padding:3px 5px;">E</th></tr></thead>';
+  const mkRow=(team,flag,scores,r,h,e)=>{
+    let c=`<td style="text-align:left;padding:3px 6px;position:sticky;left:0;background:#161b22;z-index:1;border-right:1px solid #30363d;font-size:9px;">${flag} ${team}</td>`;
+    for(let i=0;i<maxInn;i++){const v=scores[i]!==null?scores[i]:'—';c+=`<td style="padding:3px 5px;border-right:1px solid #21262d;">${v}</td>`;}
+    c+=`<td style="padding:3px 5px;border-left:2px solid #30363d;font-weight:bold;color:${r>0?'#3fb950':'#e6edf3'};">${r}</td><td style="padding:3px 5px;">${h}</td><td style="padding:3px 5px;">${e}</td>`;
+    return `<tr style="border-top:1px solid #21262d;">${c}</tr>`;
+  };
+  t.innerHTML=head+'<tbody>'+mkRow('DeNA','⭐',scoreBoard.home,scoreBoard.homeR,scoreBoard.homeH,scoreBoard.homeE)+mkRow('ロッテ','🦁',scoreBoard.away,scoreBoard.awayR,scoreBoard.awayH,scoreBoard.awayE)+'</tbody>';
+}
+function updateScoreCard(p){
+  const il=document.getElementById('match-inning-label');if(il)il.textContent=p.play==='inning_end'||!p.bat?`LIVE ${p.inn}回${p.half} 終了`:`LIVE ${p.inn}回${p.half}`;
+  document.getElementById('score-home').textContent=scoreBoard.homeR;
+  document.getElementById('score-away').textContent=scoreBoard.awayR;
+  ['b1','b2','b3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.className='bso-dot'+(i<(p.balls||0)?' on-b':'');});
+  ['s1','s2'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.className='bso-dot'+(i<(p.strikes||0)?' on-s':'');});
+  ['o1','o2'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.className='bso-dot'+(i<(p.outs||0)?' on-o':'');});
+  const r=p.runners||[];
+  document.getElementById('base-1b').classList.toggle('on',r.includes(1));
+  document.getElementById('base-2b').classList.toggle('on',r.includes(2));
+  document.getElementById('base-3b').classList.toggle('on',r.includes(3));
+  const re=document.getElementById('match-runners');if(re){const pos={1:'一',2:'二',3:'三'};re.textContent=r.length?r.map(x=>pos[x]+'塁').join('・'):'走者なし';}
+  const pe=document.getElementById('cur-pitcher');if(pe&&p.pit)pe.textContent=p.pit;
+  const be=document.getElementById('cur-batter');if(be)be.textContent=p.bat||'—';
+  if(p.play==='inning_end'&&p.score){
+    const idx=p.inn-1,hs=p.score.home||0,as=p.score.away||0;
+    if(p.half==='表'){scoreBoard.away[idx]=as;scoreBoard.awayR+=as;if(as>0)scoreBoard.awayH++;}
+    else{scoreBoard.home[idx]=hs;scoreBoard.homeR+=hs;if(hs>0)scoreBoard.homeH++;}
+    document.getElementById('score-home').textContent=scoreBoard.homeR;
+    document.getElementById('score-away').textContent=scoreBoard.awayR;
+    renderScoreboard();todayMatches[0].home.score=scoreBoard.homeR;todayMatches[0].away.score=scoreBoard.awayR;renderLiveMatchCards();
+  }
+  if(p.play==='error')scoreBoard.homeE++;
+}
+function renderPitchEntry(p){
+  const el=document.getElementById('pitch-log');if(!el)return;
+  if(el.querySelector('div[style*="text-align:center"]'))el.innerHTML='';
+  const lbl={strike:'S',ball:'B',foul:'F',hit:'安',double:'2B',triple:'3B',hr:'HR',out:'OUT',strikeout:'K',walk:'BB',error:'E'};
+  const cls={strike:'s',ball:'b',foul:'f',hit:'hit',double:'hit',triple:'hit',hr:'hr',out:'out',strikeout:'out',walk:'walk',error:'hit'};
+  let html='';
+  if(p.play==='note'){html=`<div style="background:rgba(245,166,35,0.08);border-left:2px solid var(--accent);padding:4px 8px;border-radius:3px;"><div style="color:var(--accent);font-size:9px;font-weight:bold;">📋 ${p.inn}回${p.half}</div><div style="font-size:10px;color:#e6edf3;">${p.desc}</div></div>`;}
+  else if(p.play==='inning_end'){html=`<div style="background:rgba(255,59,48,0.1);border-left:2px solid var(--live);padding:4px 8px;border-radius:3px;"><div style="font-size:10px;color:#ff8080;font-weight:bold;">🔔 ${p.inn}回${p.half}終了 — ${p.desc}</div></div>`;}
+  else{const r=p.play,badge=lbl[r]||'?',bc=cls[r]||'b';html=`<div class="pitch-row"><span class="pitch-num">${p.num||''}</span><div class="pitch-ball ${bc}">${badge}</div><div class="pitch-info"><div class="pitch-type">${p.bat} ${p.type?'— '+p.type:''} ${p.spd?p.spd+'km/h':''}</div><div class="pitch-detail">${p.desc}</div></div></div>`;}
+  const div=document.createElement('div');div.innerHTML=html;el.insertBefore(div.firstElementChild,el.firstChild);
+}
+function advancePitch(){if(pitchIdx>=pitchData.length)return;const p=pitchData[pitchIdx++];renderPitchEntry(p);updateScoreCard(p);const st=document.getElementById('matchStudioText');if(st&&p.desc)st.textContent=p.desc;const lt=document.getElementById('match-live-text');if(lt&&p.desc)lt.textContent=p.desc;updateAdvanceBtn();}
+function updateAdvanceBtn(){const btn=document.getElementById('advance-btn'),sub=document.getElementById('advance-btn-sub');if(!btn)return;if(pitchIdx>=pitchData.length){btn.disabled=true;btn.style.background='var(--border)';if(sub)sub.textContent='試合終了';return;}const nxt=pitchData[pitchIdx];btn.disabled=false;btn.style.background='var(--live)';if(sub){if(nxt.play==='inning_end')sub.textContent=`${nxt.inn}回${nxt.half}終了`;else if(nxt.bat)sub.textContent=`${nxt.inn}回${nxt.half} ${nxt.bat} ${nxt.num?nxt.num+'球目':'打席開始'}`;else sub.textContent=`${nxt.inn}回${nxt.half}`;}}
+function resetGame(){pitchIdx=0;scoreBoard.home=Array(MAX_INNINGS).fill(null);scoreBoard.away=Array(MAX_INNINGS).fill(null);scoreBoard.homeR=scoreBoard.homeH=scoreBoard.homeE=scoreBoard.awayR=scoreBoard.awayH=scoreBoard.awayE=0;document.getElementById('score-home').textContent='0';document.getElementById('score-away').textContent='0';document.getElementById('match-inning-label').textContent='試合前';document.getElementById('pitch-log').innerHTML='<div style="font-size:10px;color:#8b949e;text-align:center;padding:8px;">「試合を進める」ボタンを押してください</div>';['b1','b2','b3','s1','s2','o1','o2'].forEach(id=>{const e=document.getElementById(id);if(e)e.className='bso-dot';});document.getElementById('match-runners').textContent='走者なし';renderScoreboard();updateAdvanceBtn();todayMatches[0].home.score=0;todayMatches[0].away.score=0;renderLiveMatchCards();}
+
+function matchStudioTab(tab){['live','result','ucomment','chat'].forEach(t=>{document.getElementById('msbtn-'+t)?.classList.toggle('active',t===tab);const p=document.getElementById('msp-'+t);if(p)p.style.display=t===tab?'block':'none';});}
+function switchScoreTab(tab){
+  ['score','data','lineup'].forEach(t=>{document.getElementById('sctab-'+t)?.classList.toggle('active',t===tab);const p=document.getElementById('scp-'+t);if(p)p.style.display=t===tab?'block':'none';});
+  if(tab==='lineup') renderLineupTables();
+}
+
+// DATA
+const allPlayerCards=[{id:1,name:'梶原 昂希',number:'2',team:'横浜DeNA',rarity:'RARE',emoji:'⚾',isNew:true},{id:2,name:'筒香 嘉智',number:'24',team:'横浜DeNA',rarity:'EPIC',emoji:'⚾',isNew:false},{id:3,name:'ビシエド',number:'66',team:'横浜DeNA',rarity:'RARE',emoji:'⚾',isNew:true},{id:4,name:'藤浪晋太郎',number:'18',team:'千葉ロッテ',rarity:'EPIC',emoji:'⚾',isNew:false},{id:5,name:'度会 隆輝',number:'3',team:'横浜DeNA',rarity:'UNCOMMON',emoji:'⚾',isNew:false},{id:6,name:'伊藤 光',number:'39',team:'横浜DeNA',rarity:'NORMAL',emoji:'⚾',isNew:false}];
+const rarityLabel={EPIC:'E',RARE:'R',UNCOMMON:'U',NORMAL:'N'};
+const rarityBg={EPIC:'linear-gradient(160deg,#c87800,#f5a623)',RARE:'linear-gradient(160deg,#0d4a1a,#1a8a35)',UNCOMMON:'linear-gradient(160deg,#0a1a50,#1a3a9a)',NORMAL:'linear-gradient(160deg,#2a1a4a,#5a2a9a)'};
+const cardPidMap={1:'kajiwara',2:'tsutsugoh',3:'viciedo',4:'fujinami',5:null,6:null};
+const leagueData=[{rank:1,avatar:'😎',name:'Taro K.',pts:4120,isMe:false},{rank:2,avatar:'🌸',name:'Hana M.',pts:3255,isMe:false},{rank:3,avatar:'🦊',name:'あなた',pts:3240,isMe:true},{rank:4,avatar:'🎃',name:'Yuki T.',pts:3190,isMe:false}];
+const myBets=[{status:'won',sport:'NPB',prediction:'DeNA 勝利',odds:1.85,stake:500,payout:925},{status:'pending',sport:'NPB',prediction:'藤浪 5奪三振以上',odds:1.65,stake:1000,payout:null}];
+const packs=[{id:'npb',name:'NPBパック',desc:'DeNA・ロッテ選手',rarity:'RARE',costPaid:800,costFree:160,bg:'linear-gradient(135deg,#1a2a1a,#0d3b1a)'},{id:'daily',name:'デイリーパック',desc:'本日出場選手',rarity:'NORMAL',costPaid:200,costFree:40,bg:'linear-gradient(135deg,#1c1c1c,#2a2a2a)'}];
+const missions={daily:[{title:'NPBの試合に予想する',reward:50,done:false,progress:{current:0,total:1}},{title:'3試合連続で予想する',reward:150,done:false,progress:{current:1,total:3}}],weekly:[{title:'今週5試合以上予想する',reward:500,done:false,progress:{current:2,total:5}}]};
+let coins={paid:3200,free:800},currentSelectedPack=null;
+
+// BETSLIP
+const state={bets:[],balance:10000};
+function toggleBet(id,market,selection,odds){
+  const i=state.bets.findIndex(b=>b.id===id);
+  if(i>=0){
+    state.bets.splice(i,1);
+    document.querySelectorAll(`.odds-btn[data-id="${id}"]`).forEach(b=>b.classList.remove('selected'));
+  } else {
+    state.bets.push({id,market,selection,odds,stake:0});
+    document.querySelectorAll(`.odds-btn[data-id="${id}"]`).forEach(b=>b.classList.add('selected'));
+    document.getElementById('betslip-panel').classList.add('open');
+    document.getElementById('mobile-toggle').classList.add('hidden');
+  }
+  renderBetslip();
+  // 予想タブが表示中なら予想中パネルも即更新
+  const predictView = document.getElementById('view-predict');
+  if(predictView && predictView.style.display !== 'none') {
+    renderPredictView();
+  }
+}
+function renderBetslip(){const cnt=state.bets.length;document.getElementById('betslip-count').textContent=cnt;document.getElementById('mobile-count').textContent=cnt;document.getElementById('place-bet-btn').disabled=!cnt;if(!cnt){document.getElementById('betslip-items').innerHTML='<div class="empty-betslip"><p>予想が選択されていません</p></div>';updateTotals();return;}document.getElementById('betslip-items').innerHTML='';state.bets.forEach(bet=>{const d=document.createElement('div');d.className='bet-item';d.innerHTML=`<div style="display:flex;justify-content:space-between;margin-bottom:4px;"><div><div class="bet-selection">${bet.selection}</div><div class="bet-market">${bet.market}</div></div><div class="bet-odds-badge">${bet.odds.toFixed(2)}</div></div><button class="btn-remove" onclick="removeBet('${bet.id}')">✕</button><div style="position:relative;"><span class="stake-sym">pt</span><input type="number" id="input-${bet.id}" class="stake-input" placeholder="ポイント入力" value="${bet.stake||''}" oninput="handleInput('${bet.id}',this.value)"></div><div class="quick-stakes"><button class="btn-quick" onclick="addStake('${bet.id}',500)">+500</button><button class="btn-quick" onclick="addStake('${bet.id}',1000)">+1k</button><button class="btn-quick" onclick="addStake('${bet.id}',5000)">+5k</button><button class="btn-quick" onclick="addStake('${bet.id}','MAX')">MAX</button></div><div class="potential-return"><span>受取額:</span><span id="return-${bet.id}" class="return-amount">${Math.floor(bet.stake*bet.odds).toLocaleString()}pt</span></div>`;document.getElementById('betslip-items').appendChild(d);});updateTotals();}
+function removeBet(id){document.querySelector(`.odds-btn[data-id="${id}"]`)?.classList.remove('selected');const i=state.bets.findIndex(b=>b.id===id);if(i>=0)state.bets.splice(i,1);renderBetslip();}
+function handleInput(id,v){const b=state.bets.find(x=>x.id===id);if(b){b.stake=parseInt(v)||0;document.getElementById(`return-${id}`).textContent=`${Math.floor(b.stake*b.odds).toLocaleString()}pt`;updateTotals();}}
+function addStake(id,a){const b=state.bets.find(x=>x.id===id);if(b){b.stake=a==='MAX'?state.balance:b.stake+a;const inp=document.getElementById(`input-${id}`);if(inp)inp.value=b.stake;document.getElementById(`return-${id}`).textContent=`${Math.floor(b.stake*b.odds).toLocaleString()}pt`;updateTotals();}}
+function updateTotals(){const ts=state.bets.reduce((s,b)=>s+b.stake,0),tr=state.bets.reduce((s,b)=>s+b.stake*b.odds,0);document.getElementById('total-stake').textContent=`${ts.toLocaleString()}pt`;document.getElementById('total-return').textContent=`${Math.floor(tr).toLocaleString()}pt`;}
+function toggleBetslip(){document.getElementById('betslip-panel').classList.toggle('open');document.getElementById('mobile-toggle').classList.toggle('hidden');}
+
+// VIEWS
+function setActiveTab(id){document.querySelectorAll('.header-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===id));}
+function switchView(v){document.querySelectorAll('.view-section').forEach(el=>{el.classList.remove('active');el.style.display='none';});const t=document.getElementById('view-'+v);if(t){t.classList.add('active');t.style.display='block';}const m={home:'home',mypage:'mypage',mission:'mission',cards:'cards',match:'home'};setActiveTab(m[v]||'home');if(v==='mission')renderMissionSection();if(v==='cards')renderPackGrid();if(v==='predict')renderPredictView();document.querySelector('.scroll-area').scrollTop=0;}
+function showScreen(id){if(id==='home'){switchView('home');return;}if(id==='mypage'){switchView('mypage');setActiveTab('mypage');renderMpBets();renderMpLeague();return;}if(id==='rankingDetail'){document.querySelectorAll('.view-section').forEach(el=>{el.classList.remove('active');el.style.display='none';});const t=document.getElementById('rankingDetail');if(t){t.classList.add('active');t.style.display='block';}renderRankingDetail();document.querySelector('.scroll-area').scrollTop=0;}}
+function openMatchDetail(idx){const m=todayMatches[idx];if(!m)return;if(m.isDena){switchView('match');}else{alert(`${m.home.name} vs ${m.away.name} の詳細は準備中です`);}}
+
+// HOME STUDIO
+const studioComments={live:'📊 DeNA勝利予想に3,842人参加中！あなたは現在リーグ3位。Taro K.との差はわずか5pt。次の予想で逆転のチャンス！',result:'本日の予想結果をお届けします。',news:'最新スポーツニュースをお届けします。',ucomment:'ユーザーたちが盛り上がっています！',chat:'何でも聞いてください！'};
+const studioTags={live:'📊 予想速報',result:'🎯 予想結果',news:'📰 ニュース',ucomment:'💬 コメント',chat:'🤖 AIチャット'};
+function studioSelect(tab){['live','result','news','ucomment','chat'].forEach(t=>{document.getElementById('sbtn-'+t)?.classList.toggle('active',t===tab);const p=document.getElementById('sp-'+t);if(p)p.style.display=t===tab?'block':'none';});document.getElementById('studioCommentText').textContent=studioComments[tab];document.getElementById('studioTag').textContent=studioTags[tab];if(tab==='live')renderYosoHeadlines();}
+
+// PLAYER CARDS
+function renderPlayerCards(){const c=document.getElementById('playerCardScroll');if(!c)return;c.innerHTML=allPlayerCards.map(p=>`<div class="pcard rarity-${p.rarity}" onclick="openPlayerPanel('${cardPidMap[p.id]||''}')">${p.isNew?'<div class="pcard-new">NEW</div>':''}<div class="pcard-inner"><div class="pcard-top"><span class="pcard-number">${p.number}</span><span class="pcard-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="pcard-img-area"><div class="pcard-ball">${p.emoji}</div></div><div class="pcard-info"><div class="pcard-name">${p.name}</div><div class="pcard-team">${p.team}</div></div></div></div>`).join('');}
+
+// MYPAGE
+function renderMpBets(){const el=document.getElementById('mpBetList');if(!el)return;el.innerHTML=myBets.map(b=>{const icon=b.status==='won'?'✅':'⏳';const ptClass=b.status==='won'?'won':'pending';const pt=b.status==='won'?`+${b.payout-b.stake}pt`:'進行中';return `<div class="lb-row"><span class="lb-status">${icon}</span><span class="lb-label">${b.sport} • ${b.prediction}</span><span class="lb-pt ${ptClass}">${pt}</span></div>`;}).join('');}
+function renderMpLeague(){const el=document.getElementById('mpLeagueList');if(!el)return;el.innerHTML=leagueData.map(r=>`<div class="lr-row${r.isMe?' me':''}"><span class="lr-rank">${r.rank}</span><span class="lr-avatar">${r.avatar}</span><span class="lr-name${r.isMe?' me-name':''}">${r.name}</span><span class="lr-pts${r.isMe?' me-pts':''}">${r.pts.toLocaleString()}pt</span></div>`).join('');}
+function renderRankingDetail(){const el=document.getElementById('rankingDetailList');if(!el)return;el.innerHTML=leagueData.map(r=>`<div class="lr-row${r.isMe?' me':''}"><span class="lr-rank">${r.rank}</span><span class="lr-avatar">${r.avatar}</span><span class="lr-name${r.isMe?' me-name':''}">${r.name}</span><span class="lr-pts${r.isMe?' me-pts':''}">${r.pts.toLocaleString()}pt</span></div>`).join('');}
+
+// CARDS
+function switchCardNav(tab,el){document.querySelectorAll('.card-nav-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('cview-pack').style.display=tab==='pack'?'block':'none';document.getElementById('cview-mycard').style.display=tab==='mycard'?'block':'none';if(tab==='mycard')renderCardList();}
+function renderPackGrid(){const el=document.getElementById('pack-grid');if(!el)return;el.innerHTML=packs.map(p=>`<div class="pack-card" onclick="openBuyModal('${p.id}')"><div class="pack-bg" style="background:${p.bg};"></div><div class="pack-content"><div class="pack-image-area">📦</div><div class="pack-title">${p.name}</div><div class="pack-desc">${p.desc}</div><div class="pack-rarity">${p.rarity}</div><div class="pack-price"><span class="coin-paid">💰${p.costPaid}</span>/<span class="coin-free">🪙${p.costFree}</span></div><div class="btn-buy-pack">購入する</div></div></div>`).join('');}
+function renderCardList(){const el=document.getElementById('card-list-grid');if(!el)return;document.getElementById('card-count-label').textContent=`${allPlayerCards.length}枚のカード`;el.innerHTML=allPlayerCards.map(p=>`<div class="cl-card rarity-${p.rarity}" onclick="openPlayerPanel('${cardPidMap[p.id]||''}')"><div class="cl-card-inner"><div class="cl-card-top"><span class="cl-card-num">${p.number}</span><span class="cl-card-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="cl-card-img-area"><div class="cl-card-ball">${p.emoji}</div></div><div class="cl-card-info"><div class="cl-card-name">${p.name}</div><div class="cl-card-team">${p.team}</div></div></div></div>`).join('');}
+function openBuyModal(packId){currentSelectedPack=packs.find(p=>p.id===packId);if(!currentSelectedPack)return;document.getElementById('buy-modal-title').textContent=`📦 ${currentSelectedPack.name}`;document.getElementById('buy-cost-paid').textContent=currentSelectedPack.costPaid;document.getElementById('buy-cost-free').textContent=currentSelectedPack.costFree;document.getElementById('radio-paid').checked=true;updateBuyModal();document.getElementById('modal-buy-pack').classList.add('active');}
+function updateBuyModal(){const isP=document.getElementById('radio-paid').checked;const cost=isP?currentSelectedPack.costPaid:currentSelectedPack.costFree;const bal=isP?coins.paid:coins.free;document.getElementById('buy-balance-calc').textContent=`${isP?'💰':'🪙'} ${bal} → 購入後: ${bal-cost}`;const err=bal-cost<0;document.getElementById('buy-error').style.display=err?'block':'none';document.getElementById('btn-confirm-buy').disabled=err;}
+function confirmBuyPack(){const isP=document.getElementById('radio-paid').checked;const cost=isP?currentSelectedPack.costPaid:currentSelectedPack.costFree;if(isP)coins.paid-=cost;else coins.free-=cost;document.getElementById('coin-paid-display').textContent=coins.paid.toLocaleString();document.getElementById('coin-free-display').textContent=coins.free.toLocaleString();closeModal('modal-buy-pack');openPackModal();}
+function openPackModal(){document.getElementById('open-pack-area').innerHTML=Array(3).fill(0).map(()=>`<div class="flip-card"><div class="flip-card-front">🎴</div><div class="flip-card-back"><div class="emoji">⚾</div><div class="name">選手カード</div><div class="rarity">RARE</div></div></div>`).join('');document.getElementById('open-pack-msg').style.display='none';document.getElementById('btn-open-all').style.display='block';document.getElementById('btn-close-open').style.display='none';document.getElementById('modal-open-pack').classList.add('active');}
+function openAllCards(){document.querySelectorAll('.flip-card').forEach((c,i)=>setTimeout(()=>c.classList.add('flipped'),i*200));setTimeout(()=>{document.getElementById('open-pack-msg').style.display='block';document.getElementById('btn-open-all').style.display='none';document.getElementById('btn-close-open').style.display='block';},1500);}
+
+// MISSION
+function renderMissionSection(){const el=document.getElementById('mission-container');if(!el)return;let html='';const rg=(title,list)=>{html+=`<div style="margin-bottom:12px;"><div class="section-header"><span>${title}</span></div>`;list.forEach(m=>{const pct=Math.round(m.progress.current/m.progress.total*100);html+=`<div class="mission-card${m.done?' done':''}"><div class="mission-card-info"><div class="mission-name">${m.done?'✅ ':''}${m.title}</div><div style="display:flex;align-items:center;gap:5px;margin-top:3px;"><div class="mission-progress-bar-bg"><div class="mission-progress-bar-fill" style="width:${pct}%"></div></div><span style="font-size:9px;color:#8b949e;">${m.progress.current}/${m.progress.total}</span></div></div><div class="mission-reward-text${m.done?' done':''}">+${m.reward}pt</div></div>`;});html+='</div>';};rg('📅 デイリーミッション',missions.daily);rg('📆 ウィークリーミッション',missions.weekly);el.innerHTML=html;}
+function closeModal(id){document.getElementById(id)?.classList.remove('active');}
+
+// PREDICT VIEW
+const allBets=[{id:'b1',status:'pending',match:'DeNA vs ロッテ',market:'勝敗',selection:'DeNA勝利',odds:1.85,stake:1000,payout:null,date:'本日',options:[{label:'DeNA勝利',odds:1.85},{label:'ロッテ勝利',odds:1.95}]},{id:'b2',status:'pending',match:'DeNA vs ロッテ',market:'藤浪 三振数',selection:'3-5個',odds:1.65,stake:500,payout:null,date:'本日',options:[{label:'0-2個',odds:3.20},{label:'3-5個',odds:1.65},{label:'6個以上',odds:2.10}]},{id:'b4',status:'won',match:'阪神 vs 巨人',market:'勝敗',selection:'阪神勝利',odds:1.90,stake:500,payout:950,date:'昨日',correct:'阪神勝利',actual:'阪神 3-1 巨人'},{id:'b5',status:'lost',match:'阪神 vs 広島',market:'先発QS',selection:'あり',odds:1.70,stake:400,payout:0,date:'3日前',correct:'なし',actual:'先発4回2/3で降板'}];
+const rankingData=[{rank:1,avatar:'😎',name:'Taro K.',pts:4120,won:18,total:24,isMe:false,streak:3},{rank:2,avatar:'🌸',name:'Hana M.',pts:3255,won:14,total:20,isMe:false,streak:1},{rank:3,avatar:'🦊',name:'あなた',pts:3240,won:12,total:17,isMe:true,streak:2},{rank:4,avatar:'🎃',name:'Yuki T.',pts:3190,won:11,total:16,isMe:false,streak:0}];
+let currentPredTab='pending',_editingBetId=null;
+
+function switchPredTab(tab){
+  currentPredTab=tab;
+  ['pending','yoso','result','ranking'].forEach(t=>{
+    document.getElementById('ptab-'+t)?.classList.toggle('active',t===tab);
+    const p=document.getElementById('ppanel-'+t);if(p)p.style.display=t===tab?'block':'none';
+  });
+  if(tab==='yoso'){
+    bindOddsBtns(document.getElementById('ppanel-yoso'));
+    document.querySelectorAll('#ppanel-yoso .odds-btn').forEach(btn=>{
+      btn.classList.toggle('selected',state.bets.some(b=>b.id===btn.dataset.id));
+    });
+  }
+  if(tab==='ranking'){
+    ensureChartJS(() => renderRankGraph());
+  }
+}
+function renderPredictView(){
+  document.getElementById('pred-balance').textContent=state.balance.toLocaleString();
+  const wonPts=allBets.filter(b=>b.status==='won').reduce((s,b)=>s+(b.payout-b.stake),0);
+  const lostPts=allBets.filter(b=>b.status==='lost').reduce((s,b)=>s+b.stake,0);
+  const net=wonPts-lostPts;const wc=allBets.filter(b=>b.status==='won').length,lc=allBets.filter(b=>b.status==='lost').length;
+  const earnEl=document.getElementById('pred-earned');earnEl.textContent=(net>=0?'+':'')+net.toLocaleString();earnEl.className='predict-stat-val '+(net>=0?'positive':'');
+  document.getElementById('pred-earned-sub').textContent=`pt（通算 ${wc}勝 ${lc}敗）`;
+  const pc=allBets.filter(b=>b.status==='pending').length+state.bets.length;const badge=document.getElementById('ptab-pending-cnt');if(badge){badge.textContent=pc;badge.style.display=pc>0?'flex':'none';}
+  const cartItems=state.bets.map(b=>({id:'cart-'+b.id,status:'cart',match:b.market,market:b.market,selection:b.selection,odds:b.odds,stake:b.stake,payout:null,date:'カート',fromCart:true,origId:b.id}));
+  const allP=[...cartItems,...allBets.filter(b=>b.status==='pending')];
+  const pendingEl=document.getElementById('pred-pending-list');
+  if(!allP.length){pendingEl.innerHTML='<div class="predict-empty">現在予想中の項目はありません</div>';}
+  else{pendingEl.innerHTML=allP.map(b=>{const isC=b.fromCart;const sl=b.stake>0?`${b.stake.toLocaleString()}pt 賭け`:'pt 未入力';const bg=isC?'<span style="font-size:8px;background:rgba(245,166,35,0.2);color:var(--accent);padding:1px 5px;border-radius:3px;font-weight:bold;margin-left:4px;">カート</span>':'';return `<div class="predict-item pending" style="cursor:pointer;" onclick="openPredDetail('${b.id}')"><div class="predict-status-dot pending"></div><div class="predict-info"><div class="predict-match">${b.match}${bg} • ${b.date}</div><div class="predict-selection">${b.selection}</div><div class="predict-odds">${b.market} • オッズ ${b.odds.toFixed(2)}</div></div><div class="predict-result"><div class="predict-pt pending">${isC?'参加前':'進行中'}</div><div class="predict-stake">${sl}</div></div><div style="color:var(--text-sub);font-size:11px;margin-left:4px;">›</div></div>`;}).join('');}
+  const rEl=document.getElementById('pred-result-list');rEl.innerHTML=allBets.filter(b=>b.status!=='pending').map(b=>{const pt=b.status==='won'?`+${(b.payout-b.stake).toLocaleString()}pt`:`-${b.stake.toLocaleString()}pt`;return `<div class="predict-item ${b.status}" style="cursor:pointer;" onclick="openPredResult('${b.id}')"><div style="font-size:16px;flex-shrink:0;">${b.status==='won'?'✅':'❌'}</div><div class="predict-info"><div class="predict-match">${b.match} • ${b.date}</div><div class="predict-selection">${b.selection}</div><div class="predict-odds">${b.market} • オッズ ${b.odds.toFixed(2)}</div></div><div class="predict-result"><div class="predict-pt ${b.status}">${pt}</div><div class="predict-stake">${b.stake.toLocaleString()}pt</div></div><div style="color:var(--text-sub);font-size:11px;margin-left:4px;">›</div></div>`;}).join('');
+  const medals=['🥇','🥈','🥉'];const rkEl=document.getElementById('pred-ranking-list');
+  rkEl.innerHTML=rankingData.map(r=>{const wr=Math.round(r.won/r.total*100);const rd=r.rank<=3?medals[r.rank-1]:r.rank;const rc=r.rank===1?'gold':r.rank===2?'silver':r.rank===3?'bronze':'';const st=r.streak>0?`<span style="color:#3fb950;font-size:9px;">🔥${r.streak}連勝</span>`:r.streak<0?`<span style="color:#ff6b6b;font-size:9px;">❄️${Math.abs(r.streak)}連敗</span>`:'';return `<div class="predict-rank-row${r.isMe?' me':''}"><div class="predict-rank-num ${rc}" style="width:28px;text-align:center;">${rd}</div><div class="predict-rank-avatar">${r.avatar}</div><div style="flex:1;min-width:0;"><div style="display:flex;align-items:center;gap:4px;"><span class="predict-rank-name${r.isMe?' me':''}">${r.name}</span>${r.isMe?'<span class="predict-rank-badge">YOU</span>':''}${st}</div><div style="font-size:9px;color:var(--text-sub);">${r.won}勝${r.total-r.won}敗 的中率${wr}%</div></div><div class="predict-rank-pt${r.isMe?' me':''}">${r.pts.toLocaleString()}<span style="font-size:8px;color:var(--text-sub);">pt</span></div></div>`;}).join('');
+  // ランキングタブ表示中のみグラフを描画
+  if (currentPredTab === 'ranking') {
+    ensureChartJS(() => renderRankGraph());
+  }
+}
+function openPredDetail(betId){_editingBetId=betId;const isC=betId.startsWith('cart-');let b;if(isC){const oid=betId.replace('cart-','');const cb=state.bets.find(x=>x.id===oid);if(!cb)return;b={id:betId,fromCart:true,match:cb.market,market:cb.market,selection:cb.selection,odds:cb.odds,stake:cb.stake,options:[],origId:oid};}else{b=allBets.find(x=>x.id===betId);if(!b)return;}_renderPDB(b);document.getElementById('modal-pred-detail').classList.add('active');}
+function _renderPDB(b){const opts=b.options||[];const sd=b.stake>0?`${b.stake.toLocaleString()}`:'';const rd=b.stake>0?`${Math.floor(b.stake*b.odds).toLocaleString()}pt`:'—';const sl=b.fromCart?'🟡 カート（未参加）':'🟢 進行中';let oh='';if(opts.length){oh=`<div style="margin-top:14px;"><div style="font-size:10px;color:var(--text-sub);margin-bottom:6px;font-weight:bold;">📌 予想を変更する</div><div class="pred-change-opts">${opts.map(o=>`<button class="pred-change-btn${o.label===b.selection?' current':''}" onclick="changePredSel('${b.id}','${o.label}',${o.odds})"><div style="font-weight:bold;font-size:11px;">${o.label}</div><div style="font-size:10px;color:var(--accent);margin-top:2px;">× ${o.odds.toFixed(2)}</div></button>`).join('')}</div></div>`;}
+const ph=`<div style="margin-top:14px;"><div style="font-size:10px;color:var(--text-sub);margin-bottom:6px;font-weight:bold;">💰 賭けポイントを変更する</div><div style="position:relative;margin-bottom:6px;"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text-sub);pointer-events:none;">pt</span><input type="number" id="pred-stake-input" class="stake-input" style="padding-left:28px;width:100%;" placeholder="ポイントを入力" value="${sd}" oninput="updatePR()"></div><div style="display:flex;gap:4px;margin-bottom:6px;">${[100,500,1000,3000].map(v=>`<button onclick="setPS(${v})" style="flex:1;background:var(--bg-main);border:1px solid var(--border);color:var(--text-sub);padding:4px 2px;border-radius:4px;font-size:9px;cursor:pointer;">+${v>=1000?v/1000+'k':v}</button>`).join('')}<button onclick="setPS('MAX')" style="flex:1;background:var(--bg-main);border:1px solid var(--border);color:var(--accent);padding:4px 2px;border-radius:4px;font-size:9px;cursor:pointer;font-weight:bold;">MAX</button></div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-sub);background:var(--bg-main);padding:6px 10px;border-radius:5px;"><span>受取予定</span><span id="pred-return-preview" style="font-weight:bold;font-family:var(--font-m);color:#3fb950;">${rd}</span></div><button onclick="savePS()" style="width:100%;margin-top:8px;background:var(--accent);color:#000;border:none;border-radius:6px;padding:9px;font-size:11px;font-weight:bold;cursor:pointer;">変更を保存</button></div>`;
+document.getElementById('pred-detail-body').innerHTML=`<div class="pred-detail-row"><span class="pred-detail-label">試合</span><span class="pred-detail-val" style="font-size:10px;">${b.match}</span></div><div class="pred-detail-row"><span class="pred-detail-label">マーケット</span><span class="pred-detail-val" style="font-size:10px;">${b.market}</span></div><div class="pred-detail-row"><span class="pred-detail-label">予想</span><span class="pred-detail-val" style="color:var(--accent);">${b.selection}</span></div><div class="pred-detail-row"><span class="pred-detail-label">オッズ</span><span class="pred-detail-val">${b.odds.toFixed(2)}</span></div><div class="pred-detail-row"><span class="pred-detail-label">ステータス</span><span class="pred-detail-val">${sl}</span></div>${oh}${ph}`;}
+function updatePR(){const inp=document.getElementById('pred-stake-input'),s=parseInt(inp.value)||0;let odds=1;if(_editingBetId.startsWith('cart-')){const cb=state.bets.find(x=>x.id===_editingBetId.replace('cart-',''));if(cb)odds=cb.odds;}else{const b=allBets.find(x=>x.id===_editingBetId);if(b)odds=b.odds;}const r=document.getElementById('pred-return-preview');if(r)r.textContent=s>0?`${Math.floor(s*odds).toLocaleString()}pt`:'—';}
+function setPS(v){const i=document.getElementById('pred-stake-input');if(!i)return;if(v==='MAX')i.value=state.balance;else i.value=(parseInt(i.value)||0)+v;updatePR();}
+function savePS(){const inp=document.getElementById('pred-stake-input'),ns=parseInt(inp.value)||0;if(_editingBetId.startsWith('cart-')){const cb=state.bets.find(x=>x.id===_editingBetId.replace('cart-',''));if(cb){cb.stake=ns;renderBetslip();}}else{const b=allBets.find(x=>x.id===_editingBetId);if(b)b.stake=ns;}closeModal('modal-pred-detail');renderPredictView();}
+function changePredSel(bid,nl,no){const isC=bid.startsWith('cart-');if(isC){const cb=state.bets.find(x=>x.id===bid.replace('cart-',''));if(cb){cb.selection=nl;cb.odds=no;renderBetslip();}}else{const b=allBets.find(x=>x.id===bid);if(b){b.selection=nl;b.odds=no;}}let bl;if(isC){const cb=state.bets.find(x=>x.id===bid.replace('cart-',''));if(cb)bl={id:bid,fromCart:true,match:cb.market,market:cb.market,selection:cb.selection,odds:cb.odds,stake:cb.stake,options:[],origId:bid.replace('cart-','')};}else{bl=allBets.find(x=>x.id===bid);}if(bl)_renderPDB(bl);renderPredictView();}
+function openPredResult(bid){const b=allBets.find(x=>x.id===bid);if(!b)return;const iW=b.status==='won';const pg=iW?b.payout-b.stake:-b.stake;const pt=iW?`+${pg.toLocaleString()}pt`:`${pg.toLocaleString()}pt`;document.getElementById('pred-result-modal-title').textContent=iW?'✅ 的中！':'❌ 不正解';document.getElementById('pred-result-body').innerHTML=`<div style="text-align:center;padding:12px 0 16px;"><div style="font-size:36px;margin-bottom:6px;">${iW?'🎯':'😔'}</div><div style="font-size:24px;font-weight:900;font-family:var(--font-m);color:${iW?'#3fb950':'#ff6b6b'};">${pt}</div><div style="font-size:10px;color:var(--text-sub);margin-top:3px;">賭け ${b.stake.toLocaleString()}pt × ${b.odds.toFixed(2)}</div></div><div class="pred-detail-row"><span class="pred-detail-label">試合</span><span class="pred-detail-val">${b.match}</span></div><div class="pred-detail-row"><span class="pred-detail-label">予想</span><span class="pred-detail-val" style="color:${iW?'#3fb950':'#ff6b6b'};">${b.selection}</span></div>${b.correct?`<div class="pred-detail-row"><span class="pred-detail-label">正解</span><span class="pred-detail-val" style="color:#3fb950;">${b.correct}</span></div>`:''}${b.actual?`<div class="pred-detail-row"><span class="pred-detail-label">試合結果</span><span class="pred-detail-val">${b.actual}</span></div>`:''}<div class="ai-comment-box"><div class="ai-comment-head">🤖 BEAT-1 の分析</div><div class="ai-comment-text">${iW?'素晴らしい予想でした！データ分析と直感の融合が完璧でした。':'惜しい結果でしたが、次回はコンディション指標も加味しましょう。'}</div></div>`;document.getElementById('modal-pred-result').classList.add('active');}
+
+// YOSO HEADLINES
+const yosoHL=[{icon:'🔥',text:'DeNA勝利予想が急増中！3,842人が参加',badge:'hot',bt:'hot'},{icon:'📊',text:'あなたは現在リーグ3位。Taro K.との差 5pt',badge:'YOU',bt:'you'},{icon:'⬆️',text:'藤浪 3-5三振予想が人気1位。オッズ1.65',badge:'急上昇',bt:'up'}];
+function renderYosoHeadlines(){const el=document.getElementById('yoso-headlines');if(!el)return;el.innerHTML=yosoHL.map(h=>`<div class="yoso-headline"><span class="yoso-hl-icon">${h.icon}</span><span class="yoso-hl-text">${h.text}</span><span class="yoso-hl-badge ${h.bt}">${h.badge}</span></div>`).join('');}
+
+// HOT BETS
+const hotBets={popular:[{tag:'popular',tagLabel:'人気No.1',match:'DeNA vs ロッテ',question:'⚾ 勝敗予想',participants:3842,opts:[{label:'DeNA勝利',pct:62,odds:1.85,leading:true},{label:'ロッテ勝利',pct:38,odds:1.95}]},{tag:'popular',tagLabel:'人気No.2',match:'DeNA vs ロッテ',question:'🎳 藤浪 奪三振数',participants:2140,opts:[{label:'3-5個',pct:58,odds:1.65,leading:true},{label:'6個以上',pct:25,odds:2.10},{label:'0-2個',pct:17,odds:3.20}]}],trending:[{tag:'trending',tagLabel:'急上昇🔥',match:'DeNA vs ロッテ',question:'💥 筒香 本塁打',participants:540,opts:[{label:'なし',pct:78,odds:1.20,leading:true},{label:'あり',pct:22,odds:4.50}]}],close:[{tag:'close',tagLabel:'接戦⚡',match:'DeNA vs ロッテ',question:'🎯 梶原 出塁',participants:890,opts:[{label:'1回以上',pct:53,odds:1.85,leading:true},{label:'出塁なし',pct:47,odds:1.95}]}]};
+let currentHotTab='popular';
+function switchHotTab(tab){currentHotTab=tab;['popular','trending','close'].forEach(t=>{document.getElementById('hot-tab-'+t)?.classList.toggle('active',t===tab);});renderHotBets();}
+function renderHotBets(){const el=document.getElementById('hot-bet-list');if(!el)return;const list=hotBets[currentHotTab]||[];el.innerHTML=list.map(b=>{const oh=b.opts.map(o=>`<div class="hot-bet-opt${o.leading?' leading':''}"><div class="hot-bet-opt-label">${o.label}</div><div class="hot-bet-opt-bar-wrap"><div class="hot-bet-opt-bar" style="width:${o.pct}%"></div></div><div style="display:flex;justify-content:space-between;"><span class="hot-bet-opt-pct">${o.pct}%</span><span class="hot-bet-odds">${o.odds.toFixed(2)}</span></div></div>`).join('');return `<div class="hot-bet-card" onclick="switchView('predict');setTimeout(()=>switchPredTab('yoso'),100)"><div class="hot-bet-top"><span class="hot-bet-tag ${b.tag}">${b.tagLabel}</span><span class="hot-bet-match">${b.match}</span><span class="hot-bet-participants">👥${b.participants.toLocaleString()}</span></div><div class="hot-bet-question">${b.question}</div><div class="hot-bet-opts">${oh}</div></div>`;}).join('');}
+
+// ★ odds-btn 全バインド（共通）
+function bindOddsBtns(root) {
+  (root || document).querySelectorAll('.odds-btn').forEach(btn => {
+    btn.onclick = function() {
+      toggleBet(this.dataset.id, this.dataset.market, this.dataset.selection, parseFloat(this.dataset.odds));
+    };
+  });
+}
+
+// Chart.js ローダー
+window.ensureChartJS = function(cb) {
+  if (window.Chart) { cb(); return; }
+  const s = document.createElement('script');
+  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';
+  s.onload = cb;
+  document.head.appendChild(s);
+};
+
+// INIT
+bindOddsBtns();
+renderLiveMatchCards();
+renderYosoHeadlines();
+renderHotBets();
+renderPlayerCards();
+renderPackGrid();
+renderScoreboard();
+updateAdvanceBtn();
+</script>
+</body>
+</html>
