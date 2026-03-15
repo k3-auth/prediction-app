@@ -119,6 +119,8 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
 .player-card-scroll::-webkit-scrollbar{display:none;}
 .pcard{flex-shrink:0;width:90px;scroll-snap-align:start;cursor:pointer;border-radius:10px;overflow:hidden;border:none;background:transparent;position:relative;}
 .pcard-inner{border-radius:10px;overflow:hidden;position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;}
+.pcard-bg-img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+.pcard-inner>*:not(.pcard-bg-img){position:relative;z-index:1;}
 .pcard.rarity-EPIC .pcard-inner{background:linear-gradient(160deg,#c87800,#f5a623);box-shadow:0 4px 14px rgba(245,166,35,0.5);}
 .pcard.rarity-RARE .pcard-inner{background:linear-gradient(160deg,#0d4a1a,#1a8a35);box-shadow:0 4px 14px rgba(30,180,80,0.4);}
 .pcard.rarity-UNCOMMON .pcard-inner{background:linear-gradient(160deg,#0a1a50,#1a3a9a);box-shadow:0 4px 14px rgba(60,100,220,0.4);}
@@ -130,9 +132,8 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
 .pcard-rbadge.RARE{background:#fff;color:#1a8a35;}
 .pcard-rbadge.UNCOMMON{background:#fff;color:#1a3a9a;}
 .pcard-rbadge.NORMAL{background:rgba(255,255,255,0.3);color:#fff;}
-.pcard-img-area{flex:1;display:flex;align-items:center;justify-content:center;padding:4px;}
-.pcard-ball{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;}
-.pcard-info{padding:5px 6px 6px;background:rgba(0,0,0,0.25);}
+.pcard-img-area{display:none;}
+.pcard-info{padding:5px 6px 6px;background:rgba(0,0,0,0.5);margin-top:auto;}
 .pcard-name{font-size:9px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pcard-team{font-size:7px;color:rgba(255,255,255,0.65);margin-top:1px;}
 .pcard-new{position:absolute;top:-3px;right:-3px;background:var(--live);color:#fff;font-size:7px;font-weight:bold;padding:1px 4px;border-radius:6px;z-index:3;}
@@ -306,6 +307,8 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
 .card-list-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .cl-card{border-radius:10px;overflow:visible;cursor:pointer;position:relative;}
 .cl-card-inner{border-radius:10px;overflow:hidden;position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;}
+.cl-card-bg-img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+.cl-card-inner>*:not(.cl-card-bg-img){position:relative;z-index:1;}
 .cl-card.rarity-EPIC .cl-card-inner{background:linear-gradient(160deg,#c87800,#f5a623);}
 .cl-card.rarity-RARE .cl-card-inner{background:linear-gradient(160deg,#0d4a1a,#1a8a35);}
 .cl-card.rarity-UNCOMMON .cl-card-inner{background:linear-gradient(160deg,#0a1a50,#1a3a9a);}
@@ -317,9 +320,8 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
 .cl-card-rbadge.RARE{background:#fff;color:#1a8a35;}
 .cl-card-rbadge.UNCOMMON{background:#fff;color:#1a3a9a;}
 .cl-card-rbadge.NORMAL{background:rgba(255,255,255,0.3);color:#fff;}
-.cl-card-img-area{flex:1;display:flex;align-items:center;justify-content:center;padding:4px;}
-.cl-card-ball{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:26px;}
-.cl-card-info{padding:5px 6px 7px;background:rgba(0,0,0,0.25);}
+.cl-card-img-area{display:none;}
+.cl-card-info{padding:5px 6px 7px;background:rgba(0,0,0,0.5);margin-top:auto;}
 .cl-card-name{font-size:9px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .cl-card-team{font-size:7px;color:rgba(255,255,255,0.65);margin-top:1px;}
 .cl-card-new{position:absolute;top:-3px;right:-3px;background:var(--live);color:#fff;font-size:7px;font-weight:bold;padding:1px 4px;border-radius:6px;z-index:3;}
@@ -990,13 +992,22 @@ function matchTab(tab) {
 }
 
 // ── DATA ─────────────────────────────────────────
+const cardImages = [
+  'images/4E7A8B4E-4AA3-4091-8DC0-E88597F8C7B4.jpg',
+  'images/6AF3FD83-4893-4818-AF14-83CC454E5CFA.jpg',
+  'images/7E668681-A095-43C6-A1FF-BBC482758765.jpg',
+  'images/86E0360E-B923-4CB3-9243-D51966EEFD63.jpg',
+  'images/9ECF18E5-F5A8-4BD9-ABE9-A9E2F03FC675.jpg',
+  'images/B220C7E1-1470-424E-8523-8CBF30C1A0C7.jpg',
+];
+function randomCardImage(){return cardImages[Math.floor(Math.random()*cardImages.length)];}
 const allPlayerCards = [
-  {id:1,name:'梶原 昂希',number:'2', team:'横浜DeNA',sport:'NPB',rarity:'RARE',    emoji:'⚾',isNew:true},
-  {id:2,name:'筒香 嘉智',number:'24',team:'横浜DeNA',sport:'NPB',rarity:'EPIC',    emoji:'⚾',isNew:false},
-  {id:3,name:'ビシエド', number:'66',team:'横浜DeNA',sport:'NPB',rarity:'RARE',    emoji:'⚾',isNew:true},
-  {id:4,name:'藤浪晋太郎',number:'18',team:'千葉ロッテ',sport:'NPB',rarity:'EPIC',  emoji:'⚾',isNew:false},
-  {id:5,name:'度会 隆輝',number:'3', team:'横浜DeNA',sport:'NPB',rarity:'UNCOMMON',emoji:'⚾',isNew:false},
-  {id:6,name:'伊藤 光',  number:'39',team:'横浜DeNA',sport:'NPB',rarity:'NORMAL',  emoji:'⚾',isNew:false},
+  {id:1,name:'梶原 昂希',number:'2', team:'横浜DeNA',sport:'NPB',rarity:'RARE',    emoji:'⚾',isNew:true, image:randomCardImage()},
+  {id:2,name:'筒香 嘉智',number:'24',team:'横浜DeNA',sport:'NPB',rarity:'EPIC',    emoji:'⚾',isNew:false,image:randomCardImage()},
+  {id:3,name:'ビシエド', number:'66',team:'横浜DeNA',sport:'NPB',rarity:'RARE',    emoji:'⚾',isNew:true, image:randomCardImage()},
+  {id:4,name:'藤浪晋太郎',number:'18',team:'千葉ロッテ',sport:'NPB',rarity:'EPIC',  emoji:'⚾',isNew:false,image:randomCardImage()},
+  {id:5,name:'度会 隆輝',number:'3', team:'横浜DeNA',sport:'NPB',rarity:'UNCOMMON',emoji:'⚾',isNew:false,image:randomCardImage()},
+  {id:6,name:'伊藤 光',  number:'39',team:'横浜DeNA',sport:'NPB',rarity:'NORMAL',  emoji:'⚾',isNew:false,image:randomCardImage()},
 ];
 const rarityOrder={EPIC:0,RARE:1,UNCOMMON:2,NORMAL:3};
 const rarityLabel={EPIC:'E',RARE:'R',UNCOMMON:'U',NORMAL:'N'};
@@ -1122,11 +1133,11 @@ function sendMatchChat(){
 // ── PLAYER CARDS ──────────────────────────────────
 function renderPlayerCards(){
   const c=document.getElementById('playerCardScroll');if(!c)return;
-  c.innerHTML=allPlayerCards.map(p=>`<div class="pcard rarity-${p.rarity}" onclick="showCardDetail(${p.id})">${p.isNew?'<div class="pcard-new">NEW</div>':''}<div class="pcard-inner"><div class="pcard-top"><span class="pcard-number">${p.number}</span><span class="pcard-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="pcard-img-area"><div class="pcard-ball">${p.emoji}</div></div><div class="pcard-info"><div class="pcard-name">${p.name}</div><div class="pcard-team">${p.team}</div></div></div></div>`).join('');
+  c.innerHTML=allPlayerCards.map(p=>`<div class="pcard rarity-${p.rarity}" onclick="showCardDetail(${p.id})">${p.isNew?'<div class="pcard-new">NEW</div>':''}<div class="pcard-inner"><img class="pcard-bg-img" src="${p.image}" alt="${p.name}"><div class="pcard-top"><span class="pcard-number">${p.number}</span><span class="pcard-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="pcard-info"><div class="pcard-name">${p.name}</div><div class="pcard-team">${p.team}</div></div></div></div>`).join('');
 }
 function showCardDetail(id){
   const c=allPlayerCards.find(p=>p.id===id);if(!c)return;
-  const prev=document.getElementById('detail-card-preview');if(prev){prev.style.background=rarityBg[c.rarity];prev.innerHTML=`<span style="font-size:3rem;">${c.emoji}</span>`;}
+  const prev=document.getElementById('detail-card-preview');if(prev){prev.style.background='none';prev.innerHTML=`<img src="${c.image}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">`;}
   document.getElementById('detail-name').textContent=c.name;document.getElementById('detail-team').textContent=`${c.team}`;document.getElementById('detail-rarity').textContent=c.rarity;
   document.getElementById('modal-card-detail').classList.add('active');
 }
@@ -1142,11 +1153,11 @@ function renderRankingDetail(){const el=document.getElementById('rankingDetailLi
 // ── CARDS ─────────────────────────────────────────
 function switchCardNav(tab,el){document.querySelectorAll('.card-nav-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('cview-pack').style.display=tab==='pack'?'block':'none';document.getElementById('cview-mycard').style.display=tab==='mycard'?'block':'none';if(tab==='mycard')renderCardList();}
 function renderPackGrid(){const el=document.getElementById('pack-grid');if(!el)return;el.innerHTML=packs.map(p=>`<div class="pack-card" onclick="openBuyModal('${p.id}')"><div class="pack-bg" style="background:${p.bg};"></div><div class="pack-content"><div class="pack-image-area">📦</div><div class="pack-title">${p.name}</div><div class="pack-desc">${p.desc}</div><div class="pack-rarity">${p.rarity}</div><div class="pack-price"><span class="coin-paid">💰${p.costPaid}</span>/<span class="coin-free">🪙${p.costFree}</span></div><div class="btn-buy-pack">購入する</div></div></div>`).join('');}
-function renderCardList(){const el=document.getElementById('card-list-grid');if(!el)return;document.getElementById('card-count-label').textContent=`${allPlayerCards.length}枚のカード`;el.innerHTML=allPlayerCards.map(p=>`<div class="cl-card rarity-${p.rarity}" onclick="showCardDetail(${p.id})">${p.isNew?'<div class="cl-card-new">NEW</div>':''}<div class="cl-card-inner"><div class="cl-card-top"><span class="cl-card-num">${p.number}</span><span class="cl-card-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="cl-card-img-area"><div class="cl-card-ball">${p.emoji}</div></div><div class="cl-card-info"><div class="cl-card-name">${p.name}</div><div class="cl-card-team">${p.team}</div></div></div></div>`).join('');}
+function renderCardList(){const el=document.getElementById('card-list-grid');if(!el)return;document.getElementById('card-count-label').textContent=`${allPlayerCards.length}枚のカード`;el.innerHTML=allPlayerCards.map(p=>`<div class="cl-card rarity-${p.rarity}" onclick="showCardDetail(${p.id})">${p.isNew?'<div class="cl-card-new">NEW</div>':''}<div class="cl-card-inner"><img class="cl-card-bg-img" src="${p.image}" alt="${p.name}"><div class="cl-card-top"><span class="cl-card-num">${p.number}</span><span class="cl-card-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="cl-card-info"><div class="cl-card-name">${p.name}</div><div class="cl-card-team">${p.team}</div></div></div></div>`).join('');}
 function openBuyModal(packId){currentSelectedPack=packs.find(p=>p.id===packId);if(!currentSelectedPack)return;document.getElementById('buy-modal-title').textContent=`📦 ${currentSelectedPack.name}`;document.getElementById('buy-cost-paid').textContent=currentSelectedPack.costPaid;document.getElementById('buy-cost-free').textContent=currentSelectedPack.costFree;document.getElementById('radio-paid').checked=true;updateBuyModal();document.getElementById('modal-buy-pack').classList.add('active');}
 function updateBuyModal(){const isPaid=document.getElementById('radio-paid').checked;const cost=isPaid?currentSelectedPack.costPaid:currentSelectedPack.costFree;const bal=isPaid?coins.paid:coins.free;document.getElementById('buy-balance-calc').textContent=`${isPaid?'💰':'🪙'} ${bal} → 購入後: ${bal-cost}`;const err=bal-cost<0;document.getElementById('buy-error').style.display=err?'block':'none';document.getElementById('btn-confirm-buy').disabled=err;}
 function confirmBuyPack(){const isPaid=document.getElementById('radio-paid').checked;const cost=isPaid?currentSelectedPack.costPaid:currentSelectedPack.costFree;if(isPaid)coins.paid-=cost;else coins.free-=cost;document.getElementById('coin-paid-display').textContent=coins.paid.toLocaleString();document.getElementById('coin-free-display').textContent=coins.free.toLocaleString();closeModal('modal-buy-pack');openPackModal();}
-function openPackModal(){document.getElementById('open-pack-area').innerHTML=Array(3).fill(0).map(()=>`<div class="flip-card"><div class="flip-card-front">🎴</div><div class="flip-card-back"><div class="emoji">⚾</div><div class="name">選手カード</div><div class="rarity">RARE</div></div></div>`).join('');document.getElementById('open-pack-msg').style.display='none';document.getElementById('btn-open-all').style.display='block';document.getElementById('btn-close-open').style.display='none';document.getElementById('modal-open-pack').classList.add('active');}
+function openPackModal(){document.getElementById('open-pack-area').innerHTML=Array(3).fill(0).map(()=>{const p=allPlayerCards[Math.floor(Math.random()*allPlayerCards.length)];return `<div class="flip-card"><div class="flip-card-front">🎴</div><div class="flip-card-back" style="background-image:url('${p.image}');background-size:cover;background-position:center;"><div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.6);padding:6px 4px;border-radius:0 0 8px 8px;text-align:center;"><div class="name" style="font-size:11px;font-weight:bold;">${p.name}</div><div class="rarity" style="font-size:9px;">${rarityLabel[p.rarity]} • ${p.team}</div></div></div></div>`;}).join('');document.getElementById('open-pack-msg').style.display='none';document.getElementById('btn-open-all').style.display='block';document.getElementById('btn-close-open').style.display='none';document.getElementById('modal-open-pack').classList.add('active');}
 function openAllCards(){document.querySelectorAll('.flip-card').forEach((c,i)=>setTimeout(()=>c.classList.add('flipped'),i*200));setTimeout(()=>{document.getElementById('open-pack-msg').style.display='block';document.getElementById('btn-open-all').style.display='none';document.getElementById('btn-close-open').style.display='block';},1500);}
 
 // ── MISSION ───────────────────────────────────────
