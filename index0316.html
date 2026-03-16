@@ -537,7 +537,10 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
     <button class="header-tab active" data-tab="home" onclick="switchView('match')"><span class="htab-icon">🔴</span><span class="htab-label">ライブ</span><span class="live-dot"></span></button>
     <button class="header-tab" data-tab="predict" onclick="switchView('predict')"><span class="htab-icon">📊</span><span class="htab-label">予想</span></button>
   </div>
-  <div style="display:flex;align-items:center;margin-left:auto;"><div class="balance" id="header-balance">10,000pt</div></div>
+  <div style="display:flex;align-items:center;gap:6px;margin-left:auto;">
+    <button onclick="addPoints()" style="background:rgba(245,166,35,0.15);border:1px solid var(--accent);color:var(--accent);border-radius:12px;padding:3px 8px;font-size:10px;font-weight:bold;cursor:pointer;font-family:var(--font-b);">+PT</button>
+    <div class="balance" id="header-balance">10,000pt</div>
+  </div>
 </header>
 
 <div class="scroll-area">
@@ -632,6 +635,23 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
         <div class="score-center"><span class="score-num" id="score-home">0</span><span class="score-sep">-</span><span class="score-num" id="score-away">0</span></div>
         <div class="score-team"><div class="score-team-flag">🦁</div><div class="score-team-name">千葉ロッテ</div></div>
       </div>
+      <!-- 投手・打者・球速バー -->
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:5px 8px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:8px;color:#8b949e;">投手</div>
+          <div style="font-size:11px;font-weight:bold;color:#e6edf3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="cur-pitcher">藤浪 晋太郎</div>
+        </div>
+        <div style="width:1px;height:28px;background:var(--border);flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:8px;color:#8b949e;">打者</div>
+          <div style="font-size:11px;font-weight:bold;color:#e6edf3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="cur-batter">—</div>
+        </div>
+        <div style="width:1px;height:28px;background:var(--border);flex-shrink:0;"></div>
+        <div style="text-align:center;flex-shrink:0;min-width:44px;">
+          <div style="font-size:8px;color:#8b949e;">球速</div>
+          <div style="font-size:12px;font-weight:bold;color:var(--accent);font-family:var(--font-m);" id="cur-speed">—</div>
+        </div>
+      </div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
         <div class="bso-row" style="flex:1;">
           <div class="bso-item"><span class="bso-label">B</span><span class="bso-dot" id="b1"></span><span class="bso-dot" id="b2"></span><span class="bso-dot" id="b3"></span></div>
@@ -643,7 +663,10 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
           <div class="base-diamond base-1b" id="base-1b"></div>
           <div class="base-diamond base-3b" id="base-3b"></div>
         </div>
-        <div style="font-size:9px;color:#8b949e;min-width:40px;text-align:right;" id="match-runners">走者なし</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;min-width:52px;">
+          <div style="font-size:10px;font-weight:bold;color:#58a6ff;font-family:var(--font-b);letter-spacing:0.5px;text-align:right;" id="cur-pitch-type">—</div>
+          <div style="font-size:9px;color:#8b949e;text-align:right;" id="match-runners">走者なし</div>
+        </div>
       </div>
       <div style="display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:0 -10px;background:var(--bg-main);">
         <button class="sc-tab active" id="sctab-score" onclick="switchScoreTab('score')">スコア</button>
@@ -660,10 +683,6 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
         </div>
       </div>
       <div id="scp-data" style="display:none;padding-top:8px;">
-        <div class="pb-grid" style="margin-bottom:10px;">
-          <div class="pb-card"><div class="pb-label">投手</div><div class="pb-name" id="cur-pitcher">藤浪 晋太郎</div><div class="pb-sub" id="cur-pitcher-sub">NPB復帰登板</div></div>
-          <div class="pb-card"><div class="pb-label">打者</div><div class="pb-name" id="cur-batter">—</div><div class="pb-sub" id="cur-batter-sub">試合前</div></div>
-        </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:9px;font-size:10px;color:#8b949e;line-height:1.9;">☀️ 天気：晴れ・気温36度・強風<br>🏟️ 横浜スタジアム満員<br>🎯 千葉ロッテ首位、2位Gとゲーム差1<br>👤 藤浪：メジャー後NPB3年ぶり復帰<br>👤 ビシエド：中日から移籍・本日初打席</div>
       </div>
       <!-- ★ 出場選手タブ（成績付き） -->
@@ -856,7 +875,7 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
   <div style="padding:10px 10px 0;">
     <div class="predict-summary">
       <div class="predict-stat"><div class="predict-stat-label">所持ポイント</div><div class="predict-stat-val accent" id="pred-balance">10,000</div><div class="predict-stat-sub">pt</div></div>
-      <div class="predict-stat"><div class="predict-stat-label">今月の獲得ポイント</div><div class="predict-stat-val positive" id="pred-earned">0</div><div class="predict-stat-sub" id="pred-earned-sub">pt（通算 0勝 0敗）</div></div>
+      <div class="predict-stat"><div class="predict-stat-label">今日の獲得ポイント</div><div class="predict-stat-val positive" id="pred-earned">0</div><div class="predict-stat-sub" id="pred-earned-sub">pt（0勝 0敗）</div><div id="pred-my-rank" style="margin-top:4px;font-size:16px;font-weight:900;font-family:var(--font-m);color:var(--accent);line-height:1;"></div></div>
     </div>
   </div>
   <div class="pred-tabs">
@@ -1985,6 +2004,8 @@ function updateScoreCard(p){
   const re=document.getElementById('match-runners');if(re){const pos={1:'一',2:'二',3:'三'};re.textContent=r.length?r.map(x=>pos[x]+'塁').join('・'):'走者なし';}
   const pe=document.getElementById('cur-pitcher');if(pe&&p.pit)pe.textContent=p.pit;
   const be=document.getElementById('cur-batter');if(be)be.textContent=p.bat||'—';
+  const se=document.getElementById('cur-speed');if(se)se.textContent=p.spd?p.spd+'km/h':'—';
+  const te=document.getElementById('cur-pitch-type');if(te)te.textContent=p.type||'—';
   if(p.play==='inning_end'&&p.score){
     const idx=p.inn-1,hs=p.score.home||0,as=p.score.away||0;
     if(p.half==='表'){scoreBoard.away[idx]=as;scoreBoard.awayR+=as;if(as>0)scoreBoard.awayH++;}
@@ -2067,6 +2088,16 @@ function placeBet(){
   renderPredictView();
   renderStudioResults();
   checkAndSettleBets();
+}
+
+// ポイント追加（ヘッダーボタン）
+function addPoints(){
+  const amounts=[500,1000,3000,5000];
+  const add=amounts[Math.floor(Math.random()*amounts.length)];
+  state.balance+=add;
+  updateHeaderBalance();
+  document.getElementById('pred-balance').textContent=state.balance.toLocaleString();
+  showToast(`💰 +${add.toLocaleString()}pt チャージしました！`);
 }
 
 // ヘッダーポイント表示を更新
@@ -2630,7 +2661,10 @@ function renderPredictView(){
   const lostPts=allBets.filter(b=>b.status==='lost').reduce((s,b)=>s+b.stake,0);
   const net=wonPts-lostPts;const wc=allBets.filter(b=>b.status==='won').length,lc=allBets.filter(b=>b.status==='lost').length;
   const earnEl=document.getElementById('pred-earned');earnEl.textContent=(net>=0?'+':'')+net.toLocaleString();earnEl.className='predict-stat-val '+(net>=0?'positive':'');
-  document.getElementById('pred-earned-sub').textContent=`pt（通算 ${wc}勝 ${lc}敗）`;
+  const myRankRow=buildRankingRows().find(r=>r.isMe);
+  document.getElementById('pred-earned-sub').textContent=`pt（${wc}勝 ${lc}敗）`;
+  const rankEl=document.getElementById('pred-my-rank');
+  if(rankEl) rankEl.textContent=myRankRow?`${myRankRow.rank}位`:'';
   const pc=allBets.filter(b=>b.status==='pending').length+state.bets.length;const badge=document.getElementById('ptab-pending-cnt');if(badge){badge.textContent=pc;badge.style.display=pc>0?'flex':'none';}
   const cartItems=state.bets.map(b=>({id:'cart-'+b.id,status:'cart',match:b.market,market:b.market,selection:b.selection,odds:b.odds,stake:b.stake,payout:null,date:'カート',fromCart:true,origId:b.id}));
   const allP=[...cartItems,...allBets.filter(b=>b.status==='pending')];
