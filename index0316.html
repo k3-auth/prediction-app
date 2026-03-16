@@ -885,8 +885,60 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
     <button class="pred-tab" id="ptab-ranking" onclick="switchPredTab('ranking')">ランキング</button>
   </div>
   <div id="ppanel-pending" class="pred-panel" style="padding:10px;"><div id="pred-pending-list"></div></div>
-  <div id="ppanel-yoso" class="pred-panel" style="display:none;padding:0 10px 10px;">
-    <div style="padding:12px 0 8px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;"><div style="font-size:11px;font-weight:bold;color:var(--text-main);">⚾ DeNA vs ロッテ の予想</div><div style="font-size:9px;color:var(--text-sub);">LIVE • 横浜スタジアム</div></div>
+  <div id="ppanel-yoso" class="pred-panel" style="display:none;padding:0;">
+    <!-- ===== カードデッキUI ===== -->
+    <div id="swipe-deck-ui" style="padding:0 10px;">
+      <div style="padding:12px 0 8px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:11px;font-weight:bold;color:var(--text-main);">⚾ DeNA vs ロッテ の予想</div>
+        <div style="font-size:9px;color:var(--text-sub);">LIVE • 横浜スタジアム</div>
+      </div>
+      <!-- 残り枚数インジケーター -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="display:flex;gap:3px;" id="card-progress-dots"></div>
+        <div style="font-size:9px;color:var(--text-sub);" id="card-counter">0 / 0</div>
+      </div>
+      <!-- カードスタック -->
+      <div id="swipe-card-stack" style="position:relative;height:300px;margin-bottom:12px;"></div>
+      <!-- アクションボタン -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:14px;">
+        <button onclick="skipCard()" id="btn-skip" style="width:52px;height:52px;border-radius:50%;background:rgba(255,59,48,0.12);border:2px solid #ff3b30;color:#ff6b6b;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;">✕</button>
+        <div style="text-align:center;">
+          <div style="font-size:9px;color:var(--text-sub);">スワイプまたはボタンで操作</div>
+          <div style="font-size:8px;color:#444;margin-top:1px;">← スキップ　　予想する →</div>
+        </div>
+        <button onclick="betCard()" id="btn-bet" style="width:52px;height:52px;border-radius:50%;background:rgba(245,166,35,0.15);border:2px solid var(--accent);color:var(--accent);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;">⭐</button>
+      </div>
+      <!-- ポイント入力（予想選択後に表示） -->
+      <div id="swipe-bet-input" style="display:none;background:var(--bg-card);border:1px solid var(--accent);border-radius:10px;padding:12px;margin-bottom:10px;">
+        <div style="font-size:10px;color:var(--text-sub);margin-bottom:6px;font-weight:bold;">💰 賭けポイントを入力</div>
+        <div style="position:relative;margin-bottom:6px;">
+          <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text-sub);pointer-events:none;">pt</span>
+          <input type="number" id="swipe-stake-input" class="stake-input" style="padding-left:28px;width:100%;" placeholder="ポイントを入力" oninput="updateSwipePR()">
+        </div>
+        <div style="display:flex;gap:4px;margin-bottom:6px;">
+          <button onclick="setSwipeStake(500)" style="flex:1;background:var(--bg-main);border:1px solid var(--border);color:var(--text-sub);padding:5px 2px;border-radius:4px;font-size:9px;cursor:pointer;">+500</button>
+          <button onclick="setSwipeStake(1000)" style="flex:1;background:var(--bg-main);border:1px solid var(--border);color:var(--text-sub);padding:5px 2px;border-radius:4px;font-size:9px;cursor:pointer;">+1k</button>
+          <button onclick="setSwipeStake(3000)" style="flex:1;background:var(--bg-main);border:1px solid var(--border);color:var(--text-sub);padding:5px 2px;border-radius:4px;font-size:9px;cursor:pointer;">+3k</button>
+          <button onclick="setSwipeStake('MAX')" style="flex:1;background:var(--bg-main);border:1px solid var(--border);color:var(--accent);padding:5px 2px;border-radius:4px;font-size:9px;cursor:pointer;font-weight:bold;">MAX</button>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-sub);background:var(--bg-main);padding:6px 10px;border-radius:5px;margin-bottom:8px;">
+          <span>受取予定</span><span id="swipe-return-preview" style="font-weight:bold;color:#3fb950;font-family:var(--font-m);">—</span>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button onclick="confirmSwipeBet()" style="flex:1;background:var(--accent);color:#000;border:none;border-radius:6px;padding:9px;font-size:11px;font-weight:bold;cursor:pointer;">✅ 予想確定</button>
+          <button onclick="cancelSwipeBet()" style="background:var(--bg-main);border:1px solid var(--border);color:var(--text-sub);border-radius:6px;padding:9px 12px;font-size:11px;cursor:pointer;">取消</button>
+        </div>
+      </div>
+      <!-- デッキ終了メッセージ -->
+      <div id="swipe-done-msg" style="display:none;text-align:center;padding:20px 0 10px;">
+        <div style="font-size:28px;margin-bottom:8px;">🎯</div>
+        <div style="font-size:13px;font-weight:bold;color:var(--text-main);margin-bottom:4px;">全ての予想を確認しました！</div>
+        <div style="font-size:10px;color:var(--text-sub);">新しい予想問題が追加されたらお知らせします</div>
+        <button onclick="resetSwipeDeck()" style="margin-top:12px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-main);border-radius:8px;padding:8px 20px;font-size:11px;cursor:pointer;">最初から見直す</button>
+      </div>
+    </div>
+    <!-- ===== 既存market-groupsは非表示で保持（betAnswers等に使用） ===== -->
+    <div id="yoso-markets-hidden" style="display:none;padding:0 10px 10px;">
     <div class="market-group"><div class="market-header"><div class="market-title">🏆 勝敗予想<span class="difficulty-badge easy">かんたん</span></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;"><button class="odds-btn" data-id="m-dena" data-market="勝敗" data-selection="DeNA勝利" data-odds="1.85"><span class="odds-label">⭐ DeNA勝利</span><span class="odds-value">1.85</span></button><button class="odds-btn" data-id="m-lotte" data-market="勝敗" data-selection="ロッテ勝利" data-odds="1.95"><span class="odds-label">🦁 ロッテ勝利</span><span class="odds-value">1.95</span></button></div></div>
 
     <!-- ⚡ イニング別予想セクション -->
@@ -1005,7 +1057,8 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
     <div class="market-group"><div class="market-header"><div class="market-title">🦸 ビシエド 初打席<span class="difficulty-badge easy">注目</span></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;"><button class="odds-btn" data-id="bv-hit" data-market="ビシエド初打席" data-selection="安打" data-odds="2.40"><span class="odds-label">安打を打つ</span><span class="odds-value">2.40</span></button><button class="odds-btn" data-id="bv-nohit" data-market="ビシエド初打席" data-selection="凡退" data-odds="1.55"><span class="odds-label">凡退する</span><span class="odds-value">1.55</span></button></div></div>
 
     <!-- 🃏 選手カード予想 -->
-    <div id="card-market-section" style="margin:14px 0 8px;padding:8px 0 6px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;">
+    </div><!-- /yoso-markets-hidden -->
+    <div id="card-market-section" style="display:none;margin:14px 0 8px;padding:8px 0 6px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;">
       <span style="font-size:11px;font-weight:bold;color:var(--text-main);">🃏 選手カード予想</span>
       <span style="font-size:9px;color:var(--text-sub);">カード選手ごとの注目予想</span>
     </div>
@@ -2217,7 +2270,7 @@ function hideSettledMarkets(){
   ]);
 
   // data-markets属性を持つ market-group を走査
-  document.querySelectorAll('#ppanel-yoso .market-group[data-markets]').forEach(group=>{
+  document.querySelectorAll('#yoso-markets-hidden .market-group[data-markets]').forEach(group=>{
     const markets = group.dataset.markets.split(',');
     // グループ内の全マーケットが決着済みなら非表示
     const allSettled = markets.every(m => settledMarkets.has(m));
@@ -2239,6 +2292,11 @@ function hideSettledMarkets(){
                          '梶原1回出塁','梶原1回長打','梶原1回初球','度会1回打席','度会1回球数','度会1回打点','DeNA1回得点'];
   const innHeader = document.getElementById('section-inn-header');
   if(innHeader) innHeader.style.display = allInnMarkets.every(m=>settledMarkets.has(m)) ? 'none' : '';
+  // デッキ更新（決着済みカードを除外）
+  if(document.getElementById('ppanel-yoso')?.style.display!=='none'){
+    buildSwipeDeck();
+    if(!swipePendingCard) renderSwipeDeck();
+  }
 }
 
 // 予想されなかったマーケットの結果を resolvedResults に追記
@@ -2475,15 +2533,364 @@ function injectInningMarkets(p){
   }
 
   // バインド＆非表示チェック
-  bindOddsBtns(wrap);
-  refreshOddsBtnStates();
+  // wrap を yoso-markets-hidden に移動して管理
+  const hiddenArea=document.getElementById('yoso-markets-hidden');
+  const cardSecEl=document.getElementById('card-market-section');
+  if(hiddenArea&&cardSecEl) hiddenArea.insertBefore(wrap,cardSecEl);
   hideSettledMarkets();
+  buildSwipeDeck();
+  renderSwipeDeck();
 
   // 予想タブ通知
   showToast(`📣 ${p.inn}回${p.half}の予想問題が追加されました！`);
   pushHeadline('📣',`${p.inn}回${p.half}の予想問題が追加！今すぐ参加しよう`,'NEW','up');
 }
 // ========== ここまで動的出題 ==========
+
+
+// ========== Tinderスワイプカードシステム ==========
+let swipeDeck = [];      // 全カードデータ
+let swipeIdx  = 0;       // 現在表示中カードindex
+let swipePendingCard = null; // 予想選択中カード
+let swipeSelectedOpt = null; // 選択中オプション
+
+// market-groupからカードデータを収集してデッキ構築
+function buildSwipeDeck(){
+  swipeDeck = [];
+  const hidden = document.getElementById('yoso-markets-hidden');
+  if(!hidden) return;
+  hidden.querySelectorAll('.market-group[data-markets]').forEach(group=>{
+    if(group.style.display==='none') return; // 決着済みはスキップ
+    const markets = group.dataset.markets.split(',');
+    const titleEl = group.querySelector('.market-title');
+    const title = titleEl ? titleEl.childNodes[0]?.textContent?.trim() || '' : '';
+    const diffBadge = group.querySelector('.difficulty-badge');
+    const diff = diffBadge ? diffBadge.textContent : '';
+    const noteEl = group.querySelector('[style*="text-sub"]');
+    const note = noteEl ? noteEl.textContent : '';
+    const btns = [...group.querySelectorAll('.odds-btn')];
+    if(!btns.length) return;
+    const options = btns.map(b=>({
+      id: b.dataset.id,
+      market: b.dataset.market,
+      selection: b.dataset.selection,
+      odds: parseFloat(b.dataset.odds),
+      label: b.querySelector('.odds-label')?.textContent || b.querySelector('span')?.textContent || b.dataset.selection,
+      disabled: b.disabled,
+      selected: b.classList.contains('selected')
+    }));
+    // すでにベット済みマーケットはスキップ
+    const alreadyBet = allBets.some(b=>markets.includes(b.market) && b.status==='pending')
+                    || resolvedResults.some(r=>markets.includes(r.market));
+    if(alreadyBet) return;
+    swipeDeck.push({ markets, title, diff, note, options, group });
+  });
+  swipeIdx = 0;
+}
+
+function renderSwipeDeck(){
+  const stack = document.getElementById('swipe-card-stack');
+  const doneMsg = document.getElementById('swipe-done-msg');
+  const ui = document.getElementById('swipe-deck-ui');
+  if(!stack) return;
+
+  cancelSwipeBet();
+  stack.innerHTML = '';
+
+  if(!swipeDeck.length || swipeIdx >= swipeDeck.length){
+    stack.style.display = 'none';
+    document.getElementById('btn-skip').style.display = 'none';
+    document.getElementById('btn-bet').style.display = 'none';
+    if(doneMsg) doneMsg.style.display = 'block';
+    updateCardCounter();
+    return;
+  }
+
+  if(doneMsg) doneMsg.style.display = 'none';
+  stack.style.display = 'block';
+  document.getElementById('btn-skip').style.display = 'flex';
+  document.getElementById('btn-bet').style.display = 'flex';
+
+  // 最大3枚を重ねて表示（奥→手前）
+  const total = swipeDeck.length;
+  for(let i = Math.min(swipeIdx+2, total-1); i >= swipeIdx; i--){
+    const card = swipeDeck[i];
+    const depth = i - swipeIdx; // 0=手前, 1=2枚目, 2=3枚目
+    const el = createSwipeCard(card, depth, i===swipeIdx);
+    stack.appendChild(el);
+  }
+  updateCardCounter();
+  if(swipeIdx === swipeDeck.length - 1){
+    // 最後の1枚 → nextを描かない
+  }
+  // 手前カードにスワイプ付与
+  const topCard = stack.querySelector('.swipe-card[data-depth="0"]');
+  if(topCard) attachSwipe(topCard);
+}
+
+function createSwipeCard(card, depth, isTop){
+  const el = document.createElement('div');
+  el.className = 'swipe-card';
+  el.dataset.depth = depth;
+  const scale = 1 - depth * 0.04;
+  const yOff = depth * 8;
+  el.style.cssText = `
+    position:absolute;left:0;right:0;top:0;
+    background:var(--bg-card);
+    border:1px solid ${depth===0?'var(--border)':'#21262d'};
+    border-radius:16px;
+    padding:16px;
+    transform:scale(${scale}) translateY(${yOff}px);
+    transform-origin:center top;
+    transition:transform 0.2s ease, box-shadow 0.2s;
+    box-shadow:0 ${4+depth*2}px ${12+depth*4}px rgba(0,0,0,${0.3+depth*0.1});
+    z-index:${10-depth};
+    cursor:${isTop?'grab':'default'};
+    user-select:none;
+  `;
+
+  // カード内容
+  const diffColor = card.diff==='むずかしい'?'#ff6b6b':card.diff==='注目'?'#3fb950':'var(--accent)';
+  let optsHtml = '';
+  const cols = card.options.length <= 2 ? '1fr 1fr' : 'repeat(3,1fr)';
+  optsHtml = `<div style="display:grid;grid-template-columns:${cols};gap:8px;margin-top:12px;">`;
+  card.options.forEach(opt=>{
+    const isSel = opt.selected;
+    optsHtml += `<button
+      class="swipe-opt-btn${isSel?' selected':''}"
+      data-id="${opt.id}" data-market="${opt.market}"
+      data-selection="${opt.selection}" data-odds="${opt.odds}"
+      ${opt.disabled?'disabled':''}
+      onclick="selectSwipeOptCurrent(this)"
+      style="
+        background:${isSel?'rgba(245,166,35,0.2)':'var(--bg-main)'};
+        border:1.5px solid ${isSel?'var(--accent)':'var(--border)'};
+        border-radius:8px;padding:8px 4px;cursor:${opt.disabled?'default':'pointer'};
+        display:flex;flex-direction:column;align-items:center;gap:3px;
+        transition:all 0.15s;
+      ">
+      <span style="font-size:10px;color:var(--text-sub);text-align:center;line-height:1.3;">${opt.selection}</span>
+      <span style="font-size:13px;font-weight:900;color:var(--accent);font-family:var(--font-m);">×${opt.odds.toFixed(2)}</span>
+    </button>`;
+  });
+  optsHtml += '</div>';
+
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <span style="font-size:9px;font-weight:bold;color:${diffColor};background:${diffColor}22;padding:2px 7px;border-radius:10px;">${card.diff}</span>
+      <span style="font-size:9px;color:var(--text-sub);">← スキップ　予想 →</span>
+    </div>
+    <div style="font-size:13px;font-weight:bold;color:var(--text-main);line-height:1.4;margin-bottom:4px;">${card.title}</div>
+    ${card.note?`<div style="font-size:10px;color:var(--text-sub);">${card.note}</div>`:''}
+    ${optsHtml}
+  `;
+  return el;
+}
+
+function attachSwipe(el){
+  let startX=0, startY=0, dx=0;
+  let dragging=false;
+
+  const onStart = e=>{
+    if(swipePendingCard) return;
+    startX = e.touches?e.touches[0].clientX:e.clientX;
+    startY = e.touches?e.touches[0].clientY:e.clientY;
+    dragging=true;
+    el.style.transition='none';
+  };
+  const onMove = e=>{
+    if(!dragging) return;
+    dx = (e.touches?e.touches[0].clientX:e.clientX) - startX;
+    const dy = (e.touches?e.touches[0].clientY:e.clientY) - startY;
+    if(Math.abs(dy)>Math.abs(dx)*1.5){dragging=false;return;} // 縦スクロール優先
+    e.preventDefault();
+    const rot = dx * 0.08;
+    const fade = Math.min(Math.abs(dx)/120, 1);
+    el.style.transform = `translateX(${dx}px) rotate(${rot}deg)`;
+    // 方向インジケーター
+    const skipIcon = document.getElementById('btn-skip');
+    const betIcon  = document.getElementById('btn-bet');
+    if(dx < -30){ skipIcon.style.transform=`scale(1.3)`; betIcon.style.transform='scale(1)'; }
+    else if(dx > 30){ betIcon.style.transform=`scale(1.3)`; skipIcon.style.transform='scale(1)'; }
+    else { skipIcon.style.transform='scale(1)'; betIcon.style.transform='scale(1)'; }
+  };
+  const onEnd = e=>{
+    if(!dragging) return;
+    dragging=false;
+    el.style.transition='transform 0.3s ease, opacity 0.3s';
+    document.getElementById('btn-skip').style.transform='scale(1)';
+    document.getElementById('btn-bet').style.transform='scale(1)';
+    if(dx < -80){
+      flyOut(el, 'left');
+    } else if(dx > 80){
+      flyOut(el, 'right');
+    } else {
+      el.style.transform=`scale(1) translateY(0)`;
+    }
+    dx=0;
+  };
+
+  el.addEventListener('mousedown', onStart);
+  el.addEventListener('touchstart', onStart, {passive:false});
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('touchmove', onMove, {passive:false});
+  document.addEventListener('mouseup', onEnd);
+  document.addEventListener('touchend', onEnd);
+}
+
+function flyOut(el, dir){
+  const x = dir==='left' ? -400 : 400;
+  el.style.transform = `translateX(${x}px) rotate(${dir==='left'?-25:25}deg)`;
+  el.style.opacity = '0';
+  setTimeout(()=>{
+    if(dir==='right'){
+      // 右スワイプ = 予想するUIを開く
+      swipePendingCard = swipeDeck[swipeIdx];
+      showSwipeBetInput(swipePendingCard);
+      // カードを戻す（まだindexを進めない）
+      el.style.transition='transform 0.25s ease,opacity 0.25s';
+      el.style.transform='scale(1) translateY(0)';
+      el.style.opacity='1';
+    } else {
+      skipCard();
+    }
+  }, 300);
+}
+
+function skipCard(){
+  if(swipeIdx >= swipeDeck.length) return;
+  swipeIdx++;
+  renderSwipeDeck();
+}
+
+function betCard(){
+  if(swipeIdx >= swipeDeck.length) return;
+  swipePendingCard = swipeDeck[swipeIdx];
+  showSwipeBetInput(swipePendingCard);
+}
+
+function showSwipeBetInput(card){
+  document.getElementById('swipe-bet-input').style.display='block';
+  document.getElementById('swipe-stake-input').value='';
+  document.getElementById('swipe-return-preview').textContent='—';
+  // オプション未選択なら先頭を選択状態に
+  if(!swipeSelectedOpt && card.options.length){
+    const topCard = document.querySelector('.swipe-card[data-depth="0"]');
+    if(topCard){
+      const firstBtn = topCard.querySelector('.swipe-opt-btn:not([disabled])');
+      if(firstBtn) selectSwipeOpt(firstBtn, card);
+    }
+  }
+}
+
+function cancelSwipeBet(){
+  swipePendingCard = null;
+  swipeSelectedOpt = null;
+  document.getElementById('swipe-bet-input').style.display='none';
+}
+
+function selectSwipeOptCurrent(btn){
+  const card = swipeDeck[swipeIdx];
+  selectSwipeOpt(btn, card);
+}
+
+function selectSwipeOpt(btn, card){
+  // 同カード内の全ボタンのselectedを解除
+  const topCard = document.querySelector('.swipe-card[data-depth="0"]');
+  if(topCard) topCard.querySelectorAll('.swipe-opt-btn').forEach(b=>{
+    b.style.background='var(--bg-main)';
+    b.style.borderColor='var(--border)';
+  });
+  btn.style.background='rgba(245,166,35,0.2)';
+  btn.style.borderColor='var(--accent)';
+  swipeSelectedOpt = {
+    id: btn.dataset.id,
+    market: btn.dataset.market,
+    selection: btn.dataset.selection,
+    odds: parseFloat(btn.dataset.odds)
+  };
+  updateSwipePR();
+  if(!swipePendingCard){
+    swipePendingCard = card;
+    showSwipeBetInput(card);
+  }
+}
+
+function setSwipeStake(v){
+  const inp=document.getElementById('swipe-stake-input');
+  if(v==='MAX') inp.value=state.balance;
+  else inp.value=(parseInt(inp.value)||0)+v;
+  updateSwipePR();
+}
+
+function updateSwipePR(){
+  const inp=document.getElementById('swipe-stake-input');
+  const s=parseInt(inp.value)||0;
+  const odds=swipeSelectedOpt?swipeSelectedOpt.odds:1;
+  const el=document.getElementById('swipe-return-preview');
+  if(el) el.textContent=s>0?`${Math.floor(s*odds).toLocaleString()}pt`:'—';
+}
+
+function confirmSwipeBet(){
+  if(!swipeSelectedOpt) return;
+  const s=parseInt(document.getElementById('swipe-stake-input').value)||0;
+  if(s<=0){ showToast('ポイントを入力してください'); return; }
+  if(s>state.balance){ showToast('ポイントが足りません'); return; }
+
+  // toggleBet → state.bets に追加してplaceBetの流れ
+  const opt = swipeSelectedOpt;
+  state.balance -= s;
+  const bet = {
+    id:'user-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),
+    status:'pending', match:'DeNA vs ロッテ',
+    market:opt.market, selection:opt.selection, odds:opt.odds,
+    stake:s, payout:null, date:'本日', prediction:opt.selection, options:[]
+  };
+  allBets.push(bet);
+  myBets.push({...bet});
+  myTotal++;
+
+  // NPC参加
+  npcPlayers.forEach(npc=>{ if(Math.random()<0.4) npc.total=(npc.total||0)+1; });
+
+  cancelSwipeBet();
+  showToast(`✅ 「${opt.selection}」に${s.toLocaleString()}pt 予想！`);
+  updateHeaderBalance();
+  refreshOddsBtnStates();
+  renderPredictView();
+  renderStudioResults();
+
+  // 次のカードへ
+  swipeIdx++;
+  // デッキ再構築（決着済みを除外）
+  buildSwipeDeck();
+  swipeIdx = 0; // resetして再描画
+  renderSwipeDeck();
+  checkAndSettleBets();
+}
+
+function updateCardCounter(){
+  const remaining = swipeDeck.length;
+  const total = swipeDeck.length + swipeIdx;
+  document.getElementById('card-counter').textContent =
+    remaining>0?`残り ${remaining} 問`:'完了';
+  // ドットインジケーター
+  const dots = document.getElementById('card-progress-dots');
+  if(dots){
+    dots.innerHTML = swipeDeck.map((_,i)=>`
+      <div style="width:${i===0?'16':'6'}px;height:6px;border-radius:3px;
+        background:${i===0?'var(--accent)':'var(--border)'};
+        transition:all 0.2s;"></div>`).join('');
+  }
+}
+
+function resetSwipeDeck(){
+  buildSwipeDeck();
+  renderSwipeDeck();
+}
+
+// switchPredTab('yoso')時にデッキを構築
+// ========== ここまでスワイプシステム ==========
 
 function advancePitch(){if(pitchIdx>=pitchData.length)return;const p=pitchData[pitchIdx++];renderPitchEntry(p);updateScoreCard(p);injectInningMarkets(p);const st=document.getElementById('matchStudioText');if(st&&p.desc)st.textContent=p.desc;const lt=document.getElementById('match-live-text');if(lt&&p.desc)lt.textContent=p.desc;updateAdvanceBtn();checkAndSettleBets();}
 function updateAdvanceBtn(){const btn=document.getElementById('advance-btn'),sub=document.getElementById('advance-btn-sub');if(!btn)return;if(pitchIdx>=pitchData.length){btn.disabled=true;btn.style.background='var(--border)';if(sub)sub.textContent='試合終了';return;}const nxt=pitchData[pitchIdx];btn.disabled=false;btn.style.background='var(--live)';if(sub){if(nxt.play==='inning_end')sub.textContent=`${nxt.inn}回${nxt.half}終了`;else if(nxt.bat)sub.textContent=`${nxt.inn}回${nxt.half} ${nxt.bat} ${nxt.num?nxt.num+'球目':'打席開始'}`;else sub.textContent=`${nxt.inn}回${nxt.half}`;}}
@@ -2648,9 +3055,10 @@ function switchPredTab(tab){
     const p=document.getElementById('ppanel-'+t);if(p)p.style.display=t===tab?'block':'none';
   });
   if(tab==='yoso'){
-    bindOddsBtns(document.getElementById('ppanel-yoso'));
-    refreshOddsBtnStates();
+    bindOddsBtns(document.getElementById('yoso-markets-hidden'));
     hideSettledMarkets();
+    buildSwipeDeck();
+    renderSwipeDeck();
   }
   if(tab==='ranking'){
   }
