@@ -1695,6 +1695,42 @@ const playerDB = {
     vsPitcher:[],
     comment:'DeNAの若手先発右腕。今季7試合で5勝2敗と好調。カットボールとチェンジアップを中心とした制球重視の投球スタイル。本日は3回1被安打の安定した内容。'
   },
+  watanuki: {
+    id:'watanuki', name:'度会 隆輝', number:'#3', team:'横浜DeNA', pos:'外野手', emoji:'⚾',
+    rarity:'UNCOMMON', rarityColor:'#1a3a9a',
+    profile:{born:'2002年1月7日 (24歳)', height:'178cm / 78kg', born_place:'神奈川県', draft:'2023年ドラフト1位', career:'ENEOS → DeNA (2024〜)'},
+    season:{avg:'.224', hr:4, rbi:18, ops:'.668', sb:6, games:42},
+    today:{ab:2, h:1, rbi:0, bb:0},
+    atbats:[
+      {inn:'1回裏',result:'out',badge:'OUT',desc:'右中間フライ。センター捕球。（5球）',opp:'吉川 悠斗'},
+      {inn:'3回裏',result:'hit',badge:'安',desc:'三遊間を抜ける左安打！',opp:'吉川 悠斗'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+    ],
+    vsPitcher:[
+      {name:'吉川 悠斗', record:'12打数 2安打 (.167)', good:false},
+    ],
+    comment:'2023年ドラフト1位でDeNA入団のルーキー。ENEOSでの社会人経験を活かしたコンタクト力と勝負強さが持ち味。今日は3回裏に左安打を放ち存在感を示した。'
+  },
+  ito: {
+    id:'ito', name:'伊藤 光', number:'#39', team:'横浜DeNA', pos:'捕手', emoji:'⚾',
+    rarity:'NORMAL', rarityColor:'#5a2a9a',
+    profile:{born:'1991年5月6日 (34歳)', height:'178cm / 90kg', born_place:'広島県', draft:'2009年ドラフト3位', career:'広陵高 → オリックス → DeNA (2018〜)'},
+    season:{avg:'.241', hr:2, rbi:15, ops:'.638', sb:0, games:38},
+    today:{ab:3, h:0, rbi:0, bb:0},
+    atbats:[
+      {inn:'2回裏',result:'out',badge:'OUT',desc:'セカンドへの高いフライ',opp:'吉川 悠斗'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+      {inn:'-',result:'none',badge:'—',desc:'未打席',opp:'—'},
+    ],
+    vsPitcher:[
+      {name:'吉川 悠斗', record:'5打数 0安打 (.000)', good:false},
+    ],
+    comment:'ベテラン捕手として投手陣を巧みにリード。吉川悠斗との呼吸は抜群。打撃面では苦労しているが、守備面での貢献度は高い。'
+  },
   wada: {
     id:'wada', name:'和田 康士朗', number:'#63', team:'千葉ロッテ', pos:'外野手', emoji:'⚾',
     rarity:'NORMAL', rarityColor:'#5a2a9a',
@@ -1719,6 +1755,8 @@ const playerDB = {
 // 名前→IDのマッピング（部分一致）
 const nameToId = {
   '梶原':'kajiwara','梶原 昂希':'kajiwara',
+  '度会':'watanuki','度会 隆輝':'watanuki',
+  '伊藤':'ito','伊藤 光':'ito',
   '筒香':'tsutsugoh','筒香 嘉智':'tsutsugoh',
   'ビシエド':'viciedo',
   '藤浪':'fujinami','藤浪 晋太郎':'fujinami','藤浪晋太郎':'fujinami',
@@ -3255,7 +3293,7 @@ function upgradeCard(cardIdx){
 // ===== ここまでアップグレードシステム =====
 
 const rarityBg={EPIC:'linear-gradient(160deg,#c87800,#f5a623)',RARE:'linear-gradient(160deg,#0d4a1a,#1a8a35)',UNCOMMON:'linear-gradient(160deg,#0a1a50,#1a3a9a)',NORMAL:'linear-gradient(160deg,#2a1a4a,#5a2a9a)'};
-const cardPidMap={1:'kajiwara',2:'tsutsugoh',3:'viciedo',4:'fujinami',5:null,6:null};
+const cardPidMap={1:'kajiwara',2:'tsutsugoh',3:'viciedo',4:'fujinami',5:'watanuki',6:'ito'};
 // NPCプレイヤー定義（8名、ポイントは0スタート）
 const npcPlayers=[
   {avatar:'😎',name:'Taro K.',  pts:0,won:0,total:0,isMe:false},
@@ -3322,7 +3360,27 @@ const studioTags={live:'📊 予想速報',result:'🎯 予想結果',news:'📰
 function studioSelect(tab){['live','result','news','ucomment','chat'].forEach(t=>{document.getElementById('sbtn-'+t)?.classList.toggle('active',t===tab);const p=document.getElementById('sp-'+t);if(p)p.style.display=t===tab?'block':'none';});document.getElementById('studioCommentText').textContent=studioComments[tab];document.getElementById('studioTag').textContent=studioTags[tab];if(tab==='live')renderYosoHeadlines();}
 
 // PLAYER CARDS
-function renderPlayerCards(){const c=document.getElementById('playerCardScroll');if(!c)return;c.innerHTML=allPlayerCards.map(p=>`<div class="pcard rarity-${p.rarity}" onclick="openPlayerPanel('${cardPidMap[p.id]||''}')">${p.isNew?'<div class="pcard-new">NEW</div>':''}<div class="pcard-inner"><div class="pcard-top"><span class="pcard-number">${p.number}</span><span class="pcard-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="pcard-img-area"><div class="pcard-ball">${p.emoji}</div></div><div class="pcard-info"><div class="pcard-name">${p.name}</div><div class="pcard-team">${p.team}</div></div></div></div>`).join('');}
+function renderPlayerCards(){const c=document.getElementById('playerCardScroll');if(!c)return;c.innerHTML=allPlayerCards.map(p=>{const pid=cardPidMap[p.id];return `<div class="pcard rarity-${p.rarity}" onclick="openPlayerPanelFromCard(${p.id})">${p.isNew?'<div class="pcard-new">NEW</div>':''}<div class="pcard-inner"><div class="pcard-top"><span class="pcard-number">${p.number}</span><span class="pcard-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="pcard-img-area"><div class="pcard-ball">${p.emoji}</div></div><div class="pcard-info"><div class="pcard-name">${p.name}</div><div class="pcard-team">${p.team}</div></div></div></div>`;}).join('');}
+
+function openPlayerPanelFromCard(cardId){
+  const pid = cardPidMap[cardId];
+  if(pid){
+    openPlayerPanel(pid);
+  } else {
+    // pidが未定義の場合はカードデータで簡易表示
+    const card = allPlayerCards.find(p=>p.id===cardId);
+    if(!card) return;
+    const overlay = document.getElementById('playerPanelOverlay');
+    const panel   = document.getElementById('playerPanel');
+    const header  = document.getElementById('playerPanelHeader');
+    const body    = document.getElementById('playerPanelBody');
+    if(!overlay||!panel||!body) return;
+    if(header) header.innerHTML = `<div style="font-size:18px;">${card.emoji}</div><div><div style="font-size:13px;font-weight:bold;">${card.name}</div><div style="font-size:10px;color:var(--text-sub);">${card.team} • ${card.number}</div></div>`;
+    body.innerHTML = `<div style="text-align:center;padding:20px 0;"><div style="font-size:48px;margin-bottom:8px;">${card.emoji}</div><div style="font-size:14px;font-weight:bold;">${card.name}</div><div style="font-size:11px;color:var(--text-sub);margin-top:4px;">${card.team} ${card.number}</div><div style="margin-top:16px;font-size:10px;color:var(--text-sub);">詳細プロフィールは準備中</div></div>`;
+    overlay.classList.add('active');
+    panel.classList.add('open');
+  }
+}
 
 // MYPAGE
 function renderMpBets(){const el=document.getElementById('mpBetList');if(!el)return;if(!myBets.length){el.innerHTML='<div style="font-size:10px;color:#8b949e;padding:8px;">まだ予想がありません</div>';return;}el.innerHTML=myBets.map(b=>{const icon=b.status==='won'?'✅':b.status==='lost'?'❌':'⏳';const ptClass=b.status==='won'?'won':b.status==='lost'?'lost':'pending';const pt=b.status==='won'?`+${(b.payout-b.stake).toLocaleString()}pt`:b.status==='lost'?`-${b.stake.toLocaleString()}pt`:'進行中';return `<div class="lb-row"><span class="lb-status">${icon}</span><span class="lb-label">NPB • ${b.prediction}</span><span class="lb-pt ${ptClass}">${pt}</span></div>`;}).join('');}
