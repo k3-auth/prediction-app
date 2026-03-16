@@ -538,6 +538,8 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
     <button class="header-tab" data-tab="predict" onclick="switchView('predict')"><span class="htab-icon">📊</span><span class="htab-label">予想</span></button>
   </div>
   <div style="display:flex;align-items:center;gap:6px;margin-left:auto;">
+    <button onclick="openRecord()" style="background:rgba(63,185,80,0.12);border:1px solid #3fb950;color:#3fb950;border-radius:12px;padding:3px 8px;font-size:10px;font-weight:bold;cursor:pointer;font-family:var(--font-b);">📅</button>
+    <button onclick="openCollection()" id="header-collection-btn" style="background:rgba(88,166,255,0.12);border:1px solid #58a6ff;color:#58a6ff;border-radius:12px;padding:3px 8px;font-size:10px;font-weight:bold;cursor:pointer;font-family:var(--font-b);position:relative;">🃏<span id="header-card-count" style="font-size:8px;margin-left:2px;">6</span></button>
     <button onclick="addPoints()" style="background:rgba(245,166,35,0.15);border:1px solid var(--accent);color:var(--accent);border-radius:12px;padding:3px 8px;font-size:10px;font-weight:bold;cursor:pointer;font-family:var(--font-b);">+PT</button>
     <div class="balance" id="header-balance">10,000pt</div>
   </div>
@@ -1239,6 +1241,70 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
 <!-- PREDICT MODALS -->
 <div id="modal-pred-detail" class="modal-overlay"><div class="modal-content" style="padding:0;overflow:hidden;"><div style="background:var(--bg-sidebar);padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;"><div style="font-size:13px;font-weight:bold;">📋 予想詳細</div><button class="modal-close" style="position:static;" onclick="closeModal('modal-pred-detail')">✕</button></div><div id="pred-detail-body" style="padding:14px;"></div></div></div>
 <div id="modal-pred-result" class="modal-overlay"><div class="modal-content" style="padding:0;overflow:hidden;"><div style="background:var(--bg-sidebar);padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;"><div style="font-size:13px;font-weight:bold;" id="pred-result-modal-title">📊 結果詳細</div><button class="modal-close" style="position:static;" onclick="closeModal('modal-pred-result')">✕</button></div><div id="pred-result-body" style="padding:14px;max-height:60vh;overflow-y:auto;"></div></div></div>
+
+<!-- 記録モーダル（カレンダー＋試合結果＋AI解説） -->
+<div id="modal-record" class="modal-overlay" style="z-index:500;">
+  <div class="modal-content" style="padding:0;overflow:hidden;max-height:88vh;display:flex;flex-direction:column;">
+    <div style="background:var(--bg-sidebar);padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div>
+        <div style="font-size:13px;font-weight:bold;">📅 試合記録</div>
+        <div style="font-size:9px;color:var(--text-sub);margin-top:1px;" id="record-month-label">2026年3月</div>
+      </div>
+      <button class="modal-close" style="position:static;" onclick="closeModal('modal-record')">✕</button>
+    </div>
+    <!-- カレンダー -->
+    <div style="padding:10px 12px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <button onclick="recordMonthNav(-1)" style="background:none;border:none;color:var(--text-sub);font-size:16px;cursor:pointer;padding:2px 8px;">‹</button>
+        <span id="record-cal-title" style="font-size:11px;font-weight:bold;color:var(--text-main);">2026年3月</span>
+        <button onclick="recordMonthNav(1)" style="background:none;border:none;color:var(--text-sub);font-size:16px;cursor:pointer;padding:2px 8px;">›</button>
+      </div>
+      <!-- 曜日ヘッダー -->
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;">
+        <div style="text-align:center;font-size:9px;color:#ff6b6b;">日</div>
+        <div style="text-align:center;font-size:9px;color:var(--text-sub);">月</div>
+        <div style="text-align:center;font-size:9px;color:var(--text-sub);">火</div>
+        <div style="text-align:center;font-size:9px;color:var(--text-sub);">水</div>
+        <div style="text-align:center;font-size:9px;color:var(--text-sub);">木</div>
+        <div style="text-align:center;font-size:9px;color:var(--text-sub);">金</div>
+        <div style="text-align:center;font-size:9px;color:#58a6ff;">土</div>
+      </div>
+      <div id="record-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;"></div>
+    </div>
+    <!-- 試合詳細 -->
+    <div style="overflow-y:auto;flex:1;padding:12px;" id="record-detail-area">
+      <div style="text-align:center;color:var(--text-sub);font-size:10px;padding:20px 0;">日付を選択してください</div>
+    </div>
+  </div>
+</div>
+
+<!-- コレクションモーダル -->
+<div id="modal-collection" class="modal-overlay" style="z-index:500;">
+  <div class="modal-content" style="padding:0;overflow:hidden;max-height:85vh;display:flex;flex-direction:column;">
+    <div style="background:var(--bg-sidebar);padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div>
+        <div style="font-size:13px;font-weight:bold;">🃏 カードコレクション</div>
+        <div style="font-size:9px;color:var(--text-sub);margin-top:1px;" id="col-card-count">6枚所持</div>
+      </div>
+      <button class="modal-close" style="position:static;" onclick="closeModal('modal-collection')">✕</button>
+    </div>
+    <!-- カードグリッド -->
+    <div style="overflow-y:auto;flex:1;padding:12px;">
+      <div id="col-card-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- カード詳細・アップグレードモーダル -->
+<div id="modal-card-upgrade" class="modal-overlay" style="z-index:600;">
+  <div class="modal-content" style="padding:0;overflow:hidden;">
+    <div style="background:var(--bg-sidebar);padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:13px;font-weight:bold;" id="upgrade-modal-title">カード詳細</div>
+      <button class="modal-close" style="position:static;" onclick="closeModal('modal-card-upgrade')">✕</button>
+    </div>
+    <div id="upgrade-modal-body" style="padding:16px;"></div>
+  </div>
+</div>
 
 <!-- MYPAGE -->
 <div id="view-mypage" class="view-section" style="display:none;padding:0;">
@@ -2905,6 +2971,289 @@ function switchScoreTab(tab){
 // DATA
 const allPlayerCards=[{id:1,name:'梶原 昂希',number:'2',team:'横浜DeNA',rarity:'RARE',emoji:'⚾',isNew:true},{id:2,name:'筒香 嘉智',number:'24',team:'横浜DeNA',rarity:'EPIC',emoji:'⚾',isNew:false},{id:3,name:'ビシエド',number:'66',team:'横浜DeNA',rarity:'RARE',emoji:'⚾',isNew:true},{id:4,name:'藤浪晋太郎',number:'18',team:'千葉ロッテ',rarity:'EPIC',emoji:'⚾',isNew:false},{id:5,name:'度会 隆輝',number:'3',team:'横浜DeNA',rarity:'UNCOMMON',emoji:'⚾',isNew:false},{id:6,name:'伊藤 光',number:'39',team:'横浜DeNA',rarity:'NORMAL',emoji:'⚾',isNew:false}];
 const rarityLabel={EPIC:'E',RARE:'R',UNCOMMON:'U',NORMAL:'N'};
+
+// ===== カードアップグレードシステム =====
+const UPGRADE_COST = 1000;
+const RARITY_ORDER = ['NORMAL','UNCOMMON','RARE','EPIC'];
+
+// アップグレード後のビジュアル定義
+const RARITY_UPGRADE_STYLE = {
+  NORMAL:   { bg:'linear-gradient(160deg,#2a1a4a,#5a2a9a)', glow:'rgba(90,42,154,0.4)',  shine:false, label:'NORMAL',   labelColor:'rgba(255,255,255,0.7)' },
+  UNCOMMON: { bg:'linear-gradient(160deg,#0a1a50,#1a3a9a)', glow:'rgba(60,100,220,0.5)', shine:false, label:'UNCOMMON', labelColor:'#7eb8ff' },
+  RARE:     { bg:'linear-gradient(160deg,#0d4a1a,#1a8a35)', glow:'rgba(30,180,80,0.6)',  shine:true,  label:'RARE',     labelColor:'#6ff0a0' },
+  EPIC:     { bg:'linear-gradient(160deg,#c87800,#f5a623,#ffe066,#f5a623)', glow:'rgba(245,166,35,0.8)', shine:true, label:'EPIC', labelColor:'#fff8b0' },
+};
+
+function nextRarity(r){ const i=RARITY_ORDER.indexOf(r); return i<RARITY_ORDER.length-1?RARITY_ORDER[i+1]:null; }
+
+
+// ===== 記録カレンダーシステム =====
+
+// 試合データ（日付 → 結果）
+const gameRecords = {
+  '2026-03-16': { home:'DeNA', away:'ロッテ', homeScore:0, awayScore:0, status:'live', label:'進行中' },
+  '2026-03-14': { home:'DeNA', away:'巨人',   homeScore:3, awayScore:2, status:'win',  label:'勝' },
+  '2026-03-13': { home:'DeNA', away:'巨人',   homeScore:1, awayScore:4, status:'lose', label:'負' },
+  '2026-03-11': { home:'阪神', away:'DeNA',   homeScore:2, awayScore:2, status:'draw', label:'分' },
+  '2026-03-09': { home:'DeNA', away:'広島',   homeScore:5, awayScore:1, status:'win',  label:'勝' },
+  '2026-03-07': { home:'DeNA', away:'広島',   homeScore:0, awayScore:3, status:'lose', label:'負' },
+  '2026-03-05': { home:'DeNA', away:'中日',   homeScore:4, awayScore:2, status:'win',  label:'勝' },
+  '2026-03-03': { home:'中日', away:'DeNA',   homeScore:1, awayScore:6, status:'win',  label:'勝' },
+  '2026-03-01': { home:'DeNA', away:'ヤクルト',homeScore:3, awayScore:3, status:'draw', label:'分' },
+};
+
+let recordYear = 2026, recordMonth = 3, recordSelectedDate = null;
+
+function openRecord(){
+  recordYear = 2026; recordMonth = 3;
+  renderRecordCalendar();
+  document.getElementById('modal-record').classList.add('active');
+}
+
+function recordMonthNav(dir){
+  recordMonth += dir;
+  if(recordMonth > 12){ recordMonth=1; recordYear++; }
+  if(recordMonth < 1){ recordMonth=12; recordYear--; }
+  renderRecordCalendar();
+}
+
+function renderRecordCalendar(){
+  const title = `${recordYear}年${recordMonth}月`;
+  document.getElementById('record-cal-title').textContent = title;
+  document.getElementById('record-month-label').textContent = title;
+
+  const firstDay = new Date(recordYear, recordMonth-1, 1).getDay();
+  const daysInMonth = new Date(recordYear, recordMonth, 0).getDate();
+  const grid = document.getElementById('record-cal-grid');
+  let html = '';
+
+  // 空白セル
+  for(let i=0; i<firstDay; i++){
+    html += '<div></div>';
+  }
+
+  for(let d=1; d<=daysInMonth; d++){
+    const key = `${recordYear}-${String(recordMonth).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const rec = gameRecords[key];
+    const isSelected = recordSelectedDate === key;
+    const isToday = key === '2026-03-16';
+    const dow = (firstDay + d - 1) % 7;
+
+    let bg = 'transparent', border = '1px solid transparent', textColor = 'var(--text-sub)';
+    let badge = '';
+
+    if(rec){
+      const colors = { win:'#3fb950', lose:'#ff3b30', draw:'#8b949e', live:'var(--accent)' };
+      bg = `${colors[rec.status]}22`;
+      border = `1px solid ${colors[rec.status]}66`;
+      textColor = colors[rec.status];
+      badge = `<div style="font-size:6px;font-weight:bold;color:${colors[rec.status]};margin-top:1px;">${rec.label}</div>`;
+    }
+    if(isSelected){ bg='rgba(245,166,35,0.25)'; border='1px solid var(--accent)'; }
+    if(isToday && !rec){ border='1px solid #444'; }
+
+    const sunSat = dow===0?'#ff6b6b':dow===6?'#58a6ff':'var(--text-main)';
+
+    html += `<div onclick="selectRecordDate('${key}')" style="
+      text-align:center;padding:4px 2px;border-radius:6px;cursor:${rec?'pointer':'default'};
+      background:${bg};border:${border};
+      ${rec?'':'pointer-events:none;'}
+    ">
+      <div style="font-size:10px;font-weight:${rec||isToday?'bold':'normal'};color:${rec?textColor:isToday?'#fff':sunSat};">${d}</div>
+      ${badge}
+    </div>`;
+  }
+  grid.innerHTML = html;
+}
+
+function selectRecordDate(dateKey){
+  recordSelectedDate = dateKey;
+  renderRecordCalendar();
+  const rec = gameRecords[dateKey];
+  if(!rec) return;
+  const area = document.getElementById('record-detail-area');
+
+  const statusColors = { win:'#3fb950', lose:'#ff3b30', draw:'#8b949e', live:'var(--accent)' };
+  const statusLabel  = { win:'勝利', lose:'敗北', draw:'引き分け', live:'試合中' };
+  const col = statusColors[rec.status];
+
+  area.innerHTML = `
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <span style="font-size:10px;color:var(--text-sub);">NPB ${dateKey.replace(/-/g,'/')}</span>
+        <span style="font-size:10px;font-weight:bold;color:${col};background:${col}22;padding:2px 8px;border-radius:8px;">${statusLabel[rec.status]}</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="text-align:center;flex:1;">
+          <div style="font-size:11px;font-weight:bold;color:var(--text-main);">${rec.home}</div>
+          <div style="font-size:28px;font-weight:900;font-family:var(--font-m);color:${rec.homeScore>rec.awayScore?'#3fb950':'var(--text-main)'};">${rec.homeScore}</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-sub);font-weight:bold;">VS</div>
+        <div style="text-align:center;flex:1;">
+          <div style="font-size:11px;font-weight:bold;color:var(--text-main);">${rec.away}</div>
+          <div style="font-size:28px;font-weight:900;font-family:var(--font-m);color:${rec.awayScore>rec.homeScore?'#3fb950':'var(--text-main)'};">${rec.awayScore}</div>
+        </div>
+      </div>
+    </div>
+    <div id="record-ai-area">
+      <button onclick="loadGameSummary('${dateKey}')" style="width:100%;background:rgba(88,166,255,0.1);border:1px solid #58a6ff;color:#58a6ff;border-radius:8px;padding:10px;font-size:11px;font-weight:bold;cursor:pointer;">
+        🤖 AI解説を読み込む
+      </button>
+    </div>`;
+}
+
+async function loadGameSummary(dateKey){
+  const rec = gameRecords[dateKey];
+  const area = document.getElementById('record-ai-area');
+  area.innerHTML = `<div style="text-align:center;padding:16px;color:var(--text-sub);font-size:10px;">
+    <div style="font-size:20px;margin-bottom:6px;">⏳</div>AI解説を生成中...</div>`;
+
+  const prompt = `あなたはNPBの野球解説AIです。以下の試合について、試合展開・ポイントとなった場面・選手のパフォーマンスを200字程度で日本語で解説してください。
+
+試合: ${rec.home} vs ${rec.away}
+スコア: ${rec.home} ${rec.homeScore} - ${rec.awayScore} ${rec.away}
+日付: ${dateKey}
+結果: ${rec.homeScore>rec.awayScore?rec.home+'が勝利':rec.awayScore>rec.homeScore?rec.away+'が勝利':'引き分け'}
+
+特に今日（2026-03-16）の試合の場合は、藤浪晋太郎のNPB復帰登板（3回0失点）、梶原昂希の二塁打、吉川悠斗の好投（3回0失点）を含めてください。`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:400,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || 'AI解説を取得できませんでした。';
+    area.innerHTML = `
+      <div style="background:rgba(88,166,255,0.06);border:1px solid rgba(88,166,255,0.25);border-radius:10px;padding:12px;">
+        <div style="font-size:9px;color:#58a6ff;font-weight:bold;margin-bottom:8px;">🤖 BEAT-1 の試合解説</div>
+        <div style="font-size:11px;color:var(--text-main);line-height:1.7;">${text}</div>
+      </div>`;
+  } catch(e) {
+    area.innerHTML = `<div style="color:#ff6b6b;font-size:10px;padding:8px;">接続エラーが発生しました。</div>`;
+  }
+}
+// ===== ここまで記録カレンダーシステム =====
+
+function openCollection(){
+  renderCollectionGrid();
+  document.getElementById('modal-collection').classList.add('active');
+}
+
+function renderCollectionGrid(){
+  const grid = document.getElementById('col-card-grid');
+  const count = document.getElementById('col-card-count');
+  if(count) count.textContent = `${allPlayerCards.length}枚所持`;
+  if(!grid) return;
+  grid.innerHTML = allPlayerCards.map((p,i)=>{
+    const st = RARITY_UPGRADE_STYLE[p.rarity];
+    const canUp = nextRarity(p.rarity) !== null;
+    return `<div onclick="openCardUpgrade(${i})" style="cursor:pointer;border-radius:12px;overflow:hidden;position:relative;aspect-ratio:3/4;background:${st.bg};box-shadow:0 4px 16px ${st.glow};transition:transform 0.15s;" onmouseenter="this.style.transform='scale(1.04)'" onmouseleave="this.style.transform='scale(1)'">
+      ${st.shine?`<div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.18) 0%,transparent 50%,rgba(255,255,255,0.06) 100%);pointer-events:none;border-radius:12px;"></div>`:''}
+      <div style="position:absolute;top:6px;left:6px;right:6px;display:flex;justify-content:space-between;align-items:flex-start;">
+        <span style="font-size:11px;font-weight:bold;color:rgba(255,255,255,0.9);font-family:var(--font-m);">#${p.number}</span>
+        <span style="font-size:8px;font-weight:bold;color:${st.labelColor};background:rgba(0,0,0,0.3);padding:1px 5px;border-radius:8px;">${st.label}</span>
+      </div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:36px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5));">${p.emoji}</div>
+      </div>
+      <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.35);padding:6px 7px 7px;">
+        <div style="font-size:9px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.name}</div>
+        <div style="font-size:7px;color:rgba(255,255,255,0.6);margin-top:1px;">${p.team}</div>
+      </div>
+      ${canUp?`<div style="position:absolute;bottom:44px;right:5px;background:var(--accent);color:#000;font-size:7px;font-weight:bold;border-radius:8px;padding:1px 5px;">UP↑</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function openCardUpgrade(cardIdx){
+  const p = allPlayerCards[cardIdx];
+  const st = RARITY_UPGRADE_STYLE[p.rarity];
+  const nextR = nextRarity(p.rarity);
+  const nextSt = nextR ? RARITY_UPGRADE_STYLE[nextR] : null;
+  const canUp = nextR !== null;
+  const canAfford = state.balance >= UPGRADE_COST;
+
+  document.getElementById('upgrade-modal-title').textContent = p.name;
+
+  const previewHtml = (r, s, label) => `
+    <div style="border-radius:14px;overflow:hidden;position:relative;aspect-ratio:3/4;width:100%;background:${s.bg};box-shadow:0 6px 20px ${s.glow};">
+      ${s.shine?`<div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.2) 0%,transparent 55%,rgba(255,255,255,0.08) 100%);border-radius:14px;pointer-events:none;"></div>`:''}
+      <div style="position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;">
+        <span style="font-size:13px;font-weight:bold;color:rgba(255,255,255,0.9);font-family:var(--font-m);">#${p.number}</span>
+        <span style="font-size:9px;font-weight:bold;color:${s.labelColor};background:rgba(0,0,0,0.3);padding:1px 6px;border-radius:8px;">${s.label}</span>
+      </div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:52px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.5));">${p.emoji}</div>
+      </div>
+      <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.4);padding:8px 10px 9px;">
+        <div style="font-size:11px;font-weight:bold;color:#fff;">${p.name}</div>
+        <div style="font-size:9px;color:rgba(255,255,255,0.6);margin-top:1px;">${p.team}</div>
+      </div>
+      <div style="position:absolute;bottom:52px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:bold;color:${s.labelColor};text-align:center;">${label}</div>
+    </div>`;
+
+  let body = '';
+  if(canUp){
+    body = `
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:16px;">
+        <div>${previewHtml(p.rarity, st, '現在')}</div>
+        <div style="font-size:20px;color:var(--accent);">→</div>
+        <div style="opacity:0.75;transition:opacity 0.3s;" id="upgrade-preview-next">${previewHtml(nextR, nextSt, 'アップグレード後')}</div>
+      </div>
+      <div style="background:var(--bg-main);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:10px;color:var(--text-sub);">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span>${p.rarity} → <span style="color:${nextSt.labelColor};font-weight:bold;">${nextR}</span></span>
+          <span style="color:var(--accent);font-weight:bold;font-family:var(--font-m);">-${UPGRADE_COST.toLocaleString()}pt</span>
+        </div>
+        <div style="margin-top:4px;color:${canAfford?'#3fb950':'#ff6b6b'};">残高: ${state.balance.toLocaleString()}pt ${canAfford?'✓':'（不足）'}</div>
+      </div>
+      <button onclick="upgradeCard(${cardIdx})" ${!canAfford?'disabled':''} style="width:100%;background:${canAfford?'var(--accent)':'#333'};color:${canAfford?'#000':'#666'};border:none;border-radius:8px;padding:11px;font-size:12px;font-weight:bold;cursor:${canAfford?'pointer':'default'};">
+        ✨ ${UPGRADE_COST.toLocaleString()}pt でアップグレード
+      </button>`;
+  } else {
+    body = `
+      <div style="max-width:180px;margin:0 auto 16px;">${previewHtml(p.rarity, st, '最高レアリティ')}</div>
+      <div style="text-align:center;background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.3);border-radius:8px;padding:12px;">
+        <div style="font-size:22px;margin-bottom:6px;">🏆</div>
+        <div style="font-size:11px;font-weight:bold;color:var(--accent);">最高レアリティ達成！</div>
+        <div style="font-size:10px;color:var(--text-sub);margin-top:4px;">このカードはすでに最高ランクです</div>
+      </div>`;
+  }
+  document.getElementById('upgrade-modal-body').innerHTML = body;
+  document.getElementById('modal-card-upgrade').classList.add('active');
+}
+
+function upgradeCard(cardIdx){
+  const p = allPlayerCards[cardIdx];
+  const nextR = nextRarity(p.rarity);
+  if(!nextR || state.balance < UPGRADE_COST) return;
+
+  state.balance -= UPGRADE_COST;
+  allPlayerCards[cardIdx].rarity = nextR;
+
+  updateHeaderBalance();
+  document.getElementById('pred-balance').textContent = state.balance.toLocaleString();
+  showToast(`✨ ${p.name} が ${nextR} にアップグレード！`);
+
+  // アニメーション → モーダル更新
+  const preview = document.getElementById('upgrade-preview-next');
+  if(preview){ preview.style.opacity='0'; }
+  setTimeout(()=>{
+    closeModal('modal-card-upgrade');
+    renderCollectionGrid();
+    renderPlayerCards();
+    renderCardList();
+    setTimeout(()=>openCardUpgrade(cardIdx), 300);
+  }, 200);
+}
+// ===== ここまでアップグレードシステム =====
+
 const rarityBg={EPIC:'linear-gradient(160deg,#c87800,#f5a623)',RARE:'linear-gradient(160deg,#0d4a1a,#1a8a35)',UNCOMMON:'linear-gradient(160deg,#0a1a50,#1a3a9a)',NORMAL:'linear-gradient(160deg,#2a1a4a,#5a2a9a)'};
 const cardPidMap={1:'kajiwara',2:'tsutsugoh',3:'viciedo',4:'fujinami',5:null,6:null};
 // NPCプレイヤー定義（8名、ポイントは0スタート）
