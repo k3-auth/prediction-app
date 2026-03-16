@@ -529,12 +529,12 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
 <div id="phone">
 <header class="header">
   <div style="display:flex;align-items:stretch;">
-    <button class="logo" onclick="switchView('home')">
+    <button class="logo" onclick="goHome()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
       B.E.A.T
     </button>
     <div class="header-divider"></div>
-    <button class="header-tab active" data-tab="home" onclick="switchView('home')"><span class="htab-icon">🔴</span><span class="htab-label">ライブ</span><span class="live-dot"></span></button>
+    <button class="header-tab active" data-tab="home" onclick="switchView('match')"><span class="htab-icon">🔴</span><span class="htab-label">ライブ</span><span class="live-dot"></span></button>
     <button class="header-tab" data-tab="predict" onclick="switchView('predict')"><span class="htab-icon">📊</span><span class="htab-label">予想</span></button>
   </div>
   <div style="display:flex;align-items:center;margin-left:auto;"><div class="balance" id="header-balance">10,000pt</div></div>
@@ -567,18 +567,21 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
   <div class="studio-panel">
     <div id="sp-live" class="studio-panel-inner"><div id="yoso-headlines"></div></div>
     <div id="sp-result" class="studio-panel-inner" style="display:none;">
-      <div class="sp-result-row"><span class="sp-result-icon">✅</span><span class="sp-result-label">DeNA 勝利</span><span class="sp-result-pt won">+180pt</span></div>
-      <div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">藤浪 5奪三振以上</span><span class="sp-result-pt pending">進行中</span></div>
+      <div id="home-result-list" style="font-size:10px;color:#8b949e;padding:4px 0;">まだ予想がありません</div>
     </div>
     <div id="sp-news" class="studio-panel-inner" style="display:none;">
       <div class="sp-news-row"><span class="sp-news-icon">⚾</span><div><div class="sp-news-title">藤浪晋太郎、NPB3年ぶり復帰登板</div><div class="sp-news-meta">スポーツナビ • 本日</div></div></div>
       <div class="sp-news-row"><span class="sp-news-icon">⚾</span><div><div class="sp-news-title">ビシエド、DeNA移籍後初打席</div><div class="sp-news-meta">横浜DeNA公式 • 本日</div></div></div>
     </div>
     <div id="sp-ucomment" class="studio-panel-inner" style="display:none;">
-      <div class="sp-ucomment-list">
+      <div class="sp-ucomment-list" id="home-comment-list">
         <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">😎</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Taro K.</div>藤浪復帰登板！テンション上がる🔥</div></div>
         <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🌸</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Hana M.</div>ビシエドのDeNA初打席が見たい！</div></div>
-        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🦊</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Ken W.</div>筒香も出てきた。ハマの大砲復活なるか</div></div>
+        <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🦊</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">あなた</div>筒香も出てきた。ハマの大砲復活なるか</div></div>
+      </div>
+      <div class="sp-chat-input-row" style="margin-top:6px;">
+        <input type="text" id="homeCommentInput" class="sp-chat-input" placeholder="コメントを入力..." maxlength="60">
+        <button class="sp-chat-send" onclick="postHomeComment()">投稿</button>
       </div>
     </div>
     <div id="sp-chat" class="studio-panel-inner" style="display:none;">
@@ -743,13 +746,16 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
         </div>
       </div>
       <div id="msp-result" style="display:none;padding:8px 10px;">
-        <div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">DeNA 勝利予想</span><span class="sp-result-pt pending">進行中</span></div>
-        <div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">藤浪 5奪三振以上</span><span class="sp-result-pt pending">進行中</span></div>
+        <div id="match-result-list" style="font-size:10px;color:#8b949e;padding:4px 0;">まだ予想がありません</div>
       </div>
       <div id="msp-ucomment" style="display:none;padding:8px 10px;">
-        <div class="sp-ucomment-list">
+        <div class="sp-ucomment-list" id="match-comment-list">
           <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">😎</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Taro K.</div>藤浪152km/h！さすがメジャー帰り🔥</div></div>
           <div class="sp-ucomment-item"><span class="sp-ucomment-avatar">🌸</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name">Hana M.</div>ビシエドDeNA初打席楽しみ！</div></div>
+        </div>
+        <div class="sp-chat-input-row" style="margin-top:6px;">
+          <input type="text" id="matchCommentInput" class="sp-chat-input" placeholder="コメントを入力..." maxlength="60">
+          <button class="sp-chat-send" onclick="postMatchComment()">投稿</button>
         </div>
       </div>
       <!-- ★ AIチャット (送信ボタンのみ) -->
@@ -784,10 +790,7 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
     <!-- 速報パネル -->
     <div id="paipanel-news" style="padding:8px 10px;">
       <div id="pai-news-content">
-        <div class="yoso-headline"><span class="yoso-hl-icon">🔥</span><span class="yoso-hl-text">DeNA勝利予想が急増中！3,842人が参加</span><span class="yoso-hl-badge hot">HOT</span></div>
-        <div class="yoso-headline"><span class="yoso-hl-icon">📊</span><span class="yoso-hl-text">あなたは現在リーグ3位。Taro K.との差 5pt</span><span class="yoso-hl-badge you">YOU</span></div>
-        <div class="yoso-headline"><span class="yoso-hl-icon">⬆️</span><span class="yoso-hl-text">藤浪 3-5三振予想が人気1位。オッズ1.65</span><span class="yoso-hl-badge up">急上昇</span></div>
-        <div class="yoso-headline"><span class="yoso-hl-icon">💥</span><span class="yoso-hl-text">筒香本塁打予想に540人。オッズ4.50</span><span class="yoso-hl-badge hot">HOT</span></div>
+        <div id="predict-news-list"><div style="font-size:10px;color:#8b949e;padding:6px 0;">速報はまだありません</div></div>
       </div>
     </div>
     <!-- 提案パネル -->
@@ -853,7 +856,7 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
   <div style="padding:10px 10px 0;">
     <div class="predict-summary">
       <div class="predict-stat"><div class="predict-stat-label">所持ポイント</div><div class="predict-stat-val accent" id="pred-balance">10,000</div><div class="predict-stat-sub">pt</div></div>
-      <div class="predict-stat"><div class="predict-stat-label">今月の獲得ポイント</div><div class="predict-stat-val positive" id="pred-earned">+425</div><div class="predict-stat-sub" id="pred-earned-sub">pt（通算 7勝 5敗）</div></div>
+      <div class="predict-stat"><div class="predict-stat-label">今月の獲得ポイント</div><div class="predict-stat-val positive" id="pred-earned">0</div><div class="predict-stat-sub" id="pred-earned-sub">pt（通算 0勝 0敗）</div></div>
     </div>
   </div>
   <div class="pred-tabs">
@@ -866,11 +869,124 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
   <div id="ppanel-yoso" class="pred-panel" style="display:none;padding:0 10px 10px;">
     <div style="padding:12px 0 8px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;"><div style="font-size:11px;font-weight:bold;color:var(--text-main);">⚾ DeNA vs ロッテ の予想</div><div style="font-size:9px;color:var(--text-sub);">LIVE • 横浜スタジアム</div></div>
     <div class="market-group"><div class="market-header"><div class="market-title">🏆 勝敗予想<span class="difficulty-badge easy">かんたん</span></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;"><button class="odds-btn" data-id="m-dena" data-market="勝敗" data-selection="DeNA勝利" data-odds="1.85"><span class="odds-label">⭐ DeNA勝利</span><span class="odds-value">1.85</span></button><button class="odds-btn" data-id="m-lotte" data-market="勝敗" data-selection="ロッテ勝利" data-odds="1.95"><span class="odds-label">🦁 ロッテ勝利</span><span class="odds-value">1.95</span></button></div></div>
-    <div class="market-group"><div class="market-header"><div class="market-title">⚾ 藤浪奪三振数<span class="difficulty-badge medium">ふつう</span></div></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;"><button class="odds-btn" data-id="fj-k0" data-market="藤浪三振" data-selection="0-2個" data-odds="3.20"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">0-2個</span><span class="odds-value" style="font-size:11px;">3.20</span></div></button><button class="odds-btn" data-id="fj-k3" data-market="藤浪三振" data-selection="3-5個" data-odds="1.65"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">3-5個</span><span class="odds-value" style="font-size:11px;">1.65</span></div></button><button class="odds-btn" data-id="fj-k6" data-market="藤浪三振" data-selection="6個以上" data-odds="2.10"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">6個〜</span><span class="odds-value" style="font-size:11px;">2.10</span></div></button></div></div>
+
+    <!-- ⚡ イニング別予想セクション -->
+    <div id="section-inn-header" style="margin:14px 0 8px;padding:8px 0 6px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;">
+      <span style="font-size:11px;font-weight:bold;color:var(--text-main);">⚡ イニング別予想</span>
+      <span style="font-size:9px;color:var(--text-sub);">1回表・裏の展開を予想</span>
+    </div>
+
+    <!-- 1回表：藤浪 晋太郎 -->
+    <div id="section-1omote" style="padding:5px 8px;background:rgba(255,59,48,0.08);border-left:3px solid #ff3b30;border-radius:3px;margin-bottom:8px;">
+      <span style="font-size:9px;font-weight:bold;color:#ff6b6b;">📍 1回表 — 藤浪 晋太郎 登板</span>
+    </div>
+
+    <div class="market-group" data-markets="1回表先頭">
+      <div class="market-header"><div class="market-title">⚾ 1回表：先頭打者の結果<span class="difficulty-badge medium">ふつう</span></div></div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">和田 康士朗（ロッテ先頭）の結果は？</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+          <button class="odds-btn" data-id="r1-wada-k" data-market="1回表先頭" data-selection="三振" data-odds="2.20"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">三振</span><span class="odds-value" style="font-size:11px;">2.20</span></div></button>
+          <button class="odds-btn" data-id="r1-wada-out" data-market="1回表先頭" data-selection="凡退（三振以外）" data-odds="1.75"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">凡退</span><span class="odds-value" style="font-size:11px;">1.75</span></div></button>
+          <button class="odds-btn" data-id="r1-wada-hit" data-market="1回表先頭" data-selection="出塁" data-odds="3.80"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">出塁</span><span class="odds-value" style="font-size:11px;">3.80</span></div></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="market-group" data-markets="藤浪1回三振">
+      <div class="market-header"><div class="market-title">🔥 1回表：藤浪 奪三振数<span class="difficulty-badge medium">ふつう</span></div></div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">1回表（3打者）で何個奪う？</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+          <button class="odds-btn" data-id="fj-1inn-k0" data-market="藤浪1回三振" data-selection="0個" data-odds="2.80"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">0個</span><span class="odds-value" style="font-size:11px;">2.80</span></div></button>
+          <button class="odds-btn" data-id="fj-1inn-k1" data-market="藤浪1回三振" data-selection="1個" data-odds="2.10"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">1個</span><span class="odds-value" style="font-size:11px;">2.10</span></div></button>
+          <button class="odds-btn" data-id="fj-1inn-k2" data-market="藤浪1回三振" data-selection="2個以上" data-odds="2.50"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">2個〜</span><span class="odds-value" style="font-size:11px;">2.50</span></div></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="market-group" data-markets="藤浪初球球速">
+      <div class="market-header"><div class="market-title">💨 1回表：藤浪 初球球速<span class="difficulty-badge easy">注目</span></div></div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">NPB復帰初球は何km/h？</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+          <button class="odds-btn" data-id="fj-1p-v149" data-market="藤浪初球球速" data-selection="149km/h以下" data-odds="4.50"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">〜149</span><span class="odds-value" style="font-size:11px;">4.50</span></div></button>
+          <button class="odds-btn" data-id="fj-1p-v151" data-market="藤浪初球球速" data-selection="150-151km/h" data-odds="2.20"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">150-151</span><span class="odds-value" style="font-size:11px;">2.20</span></div></button>
+          <button class="odds-btn" data-id="fj-1p-v152" data-market="藤浪初球球速" data-selection="152km/h以上" data-odds="1.90"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">152〜</span><span class="odds-value" style="font-size:11px;">1.90</span></div></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="market-group" data-markets="藤浪1回三者凡退">
+      <div class="market-header"><div class="market-title">🛡️ 1回表：藤浪 三者凡退か<span class="difficulty-badge hard">むずかしい</span></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <button class="odds-btn" data-id="fj-1inn-3up-yes" data-market="藤浪1回三者凡退" data-selection="三者凡退" data-odds="2.30"><span class="odds-label">✅ 三者凡退</span><span class="odds-value">2.30</span></button>
+        <button class="odds-btn" data-id="fj-1inn-3up-no" data-market="藤浪1回三者凡退" data-selection="出塁を許す" data-odds="1.60"><span class="odds-label">出塁を許す</span><span class="odds-value">1.60</span></button>
+      </div>
+    </div>
+
+    <!-- 1回裏：梶原・度会 -->
+    <div id="section-1ura" style="padding:5px 8px;background:rgba(88,166,255,0.08);border-left:3px solid #58a6ff;border-radius:3px;margin-bottom:8px;margin-top:4px;">
+      <span style="font-size:9px;font-weight:bold;color:#58a6ff;">📍 1回裏 — 梶原 昂希 / 度会 隆輝</span>
+    </div>
+
+    <div class="market-group" data-markets="梶原1回出塁,梶原1回長打,梶原1回初球">
+      <div class="market-header"><div class="market-title">⚡ 1回裏：梶原 昂希 先頭打席<span class="difficulty-badge easy">注目</span></div></div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">① 先頭打者として出塁するか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="kj-1inn-ob-yes" data-market="梶原1回出塁" data-selection="出塁する" data-odds="2.40"><span class="odds-label">📌 出塁</span><span class="odds-value">2.40</span></button>
+          <button class="odds-btn" data-id="kj-1inn-ob-no" data-market="梶原1回出塁" data-selection="凡退" data-odds="1.55"><span class="odds-label">凡退</span><span class="odds-value">1.55</span></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">② 長打（2塁打以上）</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="kj-1inn-xbh-yes" data-market="梶原1回長打" data-selection="長打あり" data-odds="3.20"><span class="odds-label">💥 長打</span><span class="odds-value">3.20</span></button>
+          <button class="odds-btn" data-id="kj-1inn-xbh-no" data-market="梶原1回長打" data-selection="長打なし" data-odds="1.30"><span class="odds-label">なし</span><span class="odds-value">1.30</span></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">③ 初球を打つか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <button class="odds-btn" data-id="kj-1inn-fp-yes" data-market="梶原1回初球" data-selection="初球スイング" data-odds="2.60"><span class="odds-label">⚡ 初球打ち</span><span class="odds-value">2.60</span></button>
+          <button class="odds-btn" data-id="kj-1inn-fp-no" data-market="梶原1回初球" data-selection="初球見送り" data-odds="1.50"><span class="odds-label">見送る</span><span class="odds-value">1.50</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="market-group" data-markets="度会1回打席,度会1回球数,度会1回打点">
+      <div class="market-header"><div class="market-title">🎯 1回裏：度会 隆輝 打席<span class="difficulty-badge medium">ふつう</span></div></div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">① 打席結果</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="dw-1inn-hit" data-market="度会1回打席" data-selection="安打" data-odds="2.80"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">安打</span><span class="odds-value" style="font-size:11px;">2.80</span></div></button>
+          <button class="odds-btn" data-id="dw-1inn-out" data-market="度会1回打席" data-selection="凡退" data-odds="1.65"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">凡退</span><span class="odds-value" style="font-size:11px;">1.65</span></div></button>
+          <button class="odds-btn" data-id="dw-1inn-bb" data-market="度会1回打席" data-selection="四球" data-odds="5.50"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">四球</span><span class="odds-value" style="font-size:11px;">5.50</span></div></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">② 吉川との対戦球数（1打席）</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px;">
+          <button class="odds-btn" data-id="dw-1inn-p3" data-market="度会1回球数" data-selection="1-3球" data-odds="1.80"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">1-3球</span><span class="odds-value" style="font-size:11px;">1.80</span></div></button>
+          <button class="odds-btn" data-id="dw-1inn-p4" data-market="度会1回球数" data-selection="4-5球" data-odds="2.10"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">4-5球</span><span class="odds-value" style="font-size:11px;">2.10</span></div></button>
+          <button class="odds-btn" data-id="dw-1inn-p6" data-market="度会1回球数" data-selection="6球以上" data-odds="3.40"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">6球〜</span><span class="odds-value" style="font-size:11px;">3.40</span></div></button>
+        </div>
+        <div style="font-size:9px;color:var(--text-sub);margin-bottom:2px;">③ 梶原が二塁打で出た場合、度会が返すか</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <button class="odds-btn" data-id="dw-1inn-rbi-yes" data-market="度会1回打点" data-selection="打点あり" data-odds="4.20"><span class="odds-label">🏠 打点あり</span><span class="odds-value">4.20</span></button>
+          <button class="odds-btn" data-id="dw-1inn-rbi-no" data-market="度会1回打点" data-selection="打点なし" data-odds="1.20"><span class="odds-label">なし</span><span class="odds-value">1.20</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="market-group" data-markets="DeNA1回得点">
+      <div class="market-header"><div class="market-title">🔮 1回裏：DeNA 得点するか<span class="difficulty-badge hard">むずかしい</span></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <button class="odds-btn" data-id="dena-1inn-score-yes" data-market="DeNA1回得点" data-selection="1回裏に得点" data-odds="3.50"><span class="odds-label">✅ 得点あり</span><span class="odds-value">3.50</span></button>
+        <button class="odds-btn" data-id="dena-1inn-score-no" data-market="DeNA1回得点" data-selection="無得点" data-odds="1.28"><span class="odds-label">無得点</span><span class="odds-value">1.28</span></button>
+      </div>
+    </div>
+
+    <div class="market-group"><div class="market-header"><div class="market-title">⚾ 藤浪 奪三振数（試合全体）<span class="difficulty-badge medium">ふつう</span></div></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;"><button class="odds-btn" data-id="fj-k0" data-market="藤浪三振" data-selection="0-2個" data-odds="3.20"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">0-2個</span><span class="odds-value" style="font-size:11px;">3.20</span></div></button><button class="odds-btn" data-id="fj-k3" data-market="藤浪三振" data-selection="3-5個" data-odds="1.65"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">3-5個</span><span class="odds-value" style="font-size:11px;">1.65</span></div></button><button class="odds-btn" data-id="fj-k6" data-market="藤浪三振" data-selection="6個以上" data-odds="2.10"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">6個〜</span><span class="odds-value" style="font-size:11px;">2.10</span></div></button></div></div>
     <div class="market-group"><div class="market-header"><div class="market-title">🦸 ビシエド 初打席<span class="difficulty-badge easy">注目</span></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;"><button class="odds-btn" data-id="bv-hit" data-market="ビシエド初打席" data-selection="安打" data-odds="2.40"><span class="odds-label">安打を打つ</span><span class="odds-value">2.40</span></button><button class="odds-btn" data-id="bv-nohit" data-market="ビシエド初打席" data-selection="凡退" data-odds="1.55"><span class="odds-label">凡退する</span><span class="odds-value">1.55</span></button></div></div>
 
     <!-- 🃏 選手カード予想 -->
-    <div style="margin:14px 0 8px;padding:8px 0 6px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;">
+    <div id="card-market-section" style="margin:14px 0 8px;padding:8px 0 6px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;">
       <span style="font-size:11px;font-weight:bold;color:var(--text-main);">🃏 選手カード予想</span>
       <span style="font-size:9px;color:var(--text-sub);">カード選手ごとの注目予想</span>
     </div>
@@ -1038,22 +1154,6 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
       <div style="font-size:9px;color:var(--text-sub);">残り 1d 23h • 10名</div>
     </div>
 
-    <!-- グラフ切替タブ -->
-    <div style="display:flex;gap:4px;margin-bottom:10px;">
-      <button id="rg-tab-rank" onclick="switchRankGraph('rank')" style="flex:1;padding:5px 4px;border-radius:5px;border:1px solid #cc0000;background:rgba(204,0,0,0.2);color:#fff;font-size:10px;font-weight:bold;cursor:pointer;font-family:var(--font-b);">順位推移</button>
-      <button id="rg-tab-pts" onclick="switchRankGraph('pts')" style="flex:1;padding:5px 4px;border-radius:5px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-sub);font-size:10px;font-weight:bold;cursor:pointer;font-family:var(--font-b);">ポイント推移</button>
-    </div>
-
-    <!-- グラフ領域 -->
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:10px;">
-      <!-- 凡例 -->
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;" id="rg-legend"></div>
-      <!-- Canvas -->
-      <div style="position:relative;width:100%;height:160px;">
-        <canvas id="rankChart"></canvas>
-      </div>
-    </div>
-
     <!-- ランキングリスト -->
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
       <div id="pred-ranking-list"></div>
@@ -1118,7 +1218,7 @@ html,body{width:100%;height:100%;background:#111;font-family:var(--font-b);color
   <div class="betslip-footer">
     <div class="total-row"><span>参加金額:</span><span id="total-stake">0pt</span></div>
     <div class="total-row big"><span>受取額:</span><span id="total-return">0pt</span></div>
-    <button id="place-bet-btn" class="btn-place" disabled>この予想で参加する</button>
+    <button id="place-bet-btn" class="btn-place" disabled onclick="placeBet()">この予想で参加する</button>
   </div>
 </div>
 <div id="mobile-toggle" class="betslip-toggle" onclick="toggleBetslip()">
@@ -1766,28 +1866,91 @@ const pitchData=[
   {inn:1,half:'表',num:1,pit:'藤浪 晋太郎',bat:'佐藤 都志也',type:'ストレート',spd:null,play:'out',desc:'バットの根本、詰まった打球。左飛。2アウト。',balls:0,strikes:1,outs:2,runners:[]},
   {inn:1,half:'表',num:1,pit:'藤浪 晋太郎',bat:'谷村 剛',type:'ストレート',spd:null,play:'out',desc:'初球打ち。ライト前、度会が捕球。3アウト！',balls:0,strikes:1,outs:3,runners:[]},
   {inn:1,half:'表',num:null,pit:'藤浪 晋太郎',bat:null,type:null,spd:null,play:'inning_end',desc:'1回表終了。三者凡退。藤浪、帽子を取り一礼。大きな拍手！',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
-  {inn:1,half:'裏',num:2,pit:'吉川 悠斗',bat:'梶原 昂希',type:'ストレート',spd:143,play:'double',desc:'レフトポール際フェンス直撃！梶原、二塁打！',balls:1,strikes:0,outs:0,runners:[2]},
-  {inn:1,half:'裏',num:5,pit:'吉川 悠斗',bat:'度会 隆輝',type:'ストレート',spd:142,play:'out',desc:'右中間フライ。センター捕球。2アウト。',balls:3,strikes:2,outs:2,runners:[2]},
-  {inn:1,half:'裏',num:4,pit:'吉川 悠斗',bat:'ビシエド',type:'ストレート',spd:146,play:'out',desc:'バットの根本。投手→一塁。梶原走れず。3アウト！',balls:2,strikes:2,outs:3,runners:[2]},
+  {inn:1,half:'裏',num:0,pit:'吉川 悠斗',bat:'梶原 昂希',type:null,spd:null,play:'note',desc:'1回裏スタート。DeNA先頭・梶原 昂希。吉川 悠斗、NPB初先発の緊張の初球。',balls:0,strikes:0,outs:0,runners:[]},
+  {inn:1,half:'裏',num:1,pit:'吉川 悠斗',bat:'梶原 昂希',type:'ストレート',spd:145,play:'ball',desc:'初球、外角に外れる。ボール。梶原、冷静に見送る。',balls:1,strikes:0,outs:0,runners:[]},
+  {inn:1,half:'裏',num:2,pit:'吉川 悠斗',bat:'梶原 昂希',type:'ストレート',spd:143,play:'double',desc:'甘く入った！梶原が痛烈に叩く！レフトポール際フェンス直撃！二塁打！',balls:1,strikes:0,outs:0,runners:[2]},
+  {inn:1,half:'裏',num:0,pit:'吉川 悠斗',bat:'度会 隆輝',type:null,spd:null,play:'note',desc:'🔥 度会 隆輝 打席。無死二塁の先制チャンス！吉川、ここが正念場。',balls:0,strikes:0,outs:0,runners:[2]},
+  {inn:1,half:'裏',num:1,pit:'吉川 悠斗',bat:'度会 隆輝',type:'カットボール',spd:139,play:'ball',desc:'外に外れる。ボール。度会、じっくり見極める。',balls:1,strikes:0,outs:0,runners:[2]},
+  {inn:1,half:'裏',num:2,pit:'吉川 悠斗',bat:'度会 隆輝',type:'ストレート',spd:144,play:'strike',desc:'内角を攻める！度会、ファールチップ。ストライク。',balls:1,strikes:1,outs:0,runners:[2]},
+  {inn:1,half:'裏',num:3,pit:'吉川 悠斗',bat:'度会 隆輝',type:'スライダー',spd:130,play:'ball',desc:'変化球、低めに外れる。ボール。カウント2-1。',balls:2,strikes:1,outs:0,runners:[2]},
+  {inn:1,half:'裏',num:4,pit:'吉川 悠斗',bat:'度会 隆輝',type:'カットボール',spd:141,play:'foul',desc:'ファール！強く振った。粘る度会。',balls:2,strikes:2,outs:0,runners:[2]},
+  {inn:1,half:'裏',num:5,pit:'吉川 悠斗',bat:'度会 隆輝',type:'ストレート',spd:142,play:'out',desc:'フルカウントから渾身の直球！右中間フライ、センター捕球。1アウト。梶原は動けず。',balls:3,strikes:2,outs:1,runners:[2]},
+  {inn:1,half:'裏',num:0,pit:'吉川 悠斗',bat:'ビシエド',type:null,spd:null,play:'note',desc:'ビシエド 打席。1アウト二塁、まだチャンス。吉川、踏ん張る。',balls:0,strikes:0,outs:1,runners:[2]},
+  {inn:1,half:'裏',num:1,pit:'吉川 悠斗',bat:'ビシエド',type:'ストレート',spd:147,play:'strike',desc:'外角低め！ビシエド見逃す。ストライク。',balls:0,strikes:1,outs:1,runners:[2]},
+  {inn:1,half:'裏',num:2,pit:'吉川 悠斗',bat:'ビシエド',type:'カットボール',spd:140,play:'foul',desc:'詰まりながらもファール。カット！カット！',balls:0,strikes:2,outs:1,runners:[2]},
+  {inn:1,half:'裏',num:3,pit:'吉川 悠斗',bat:'ビシエド',type:'ストレート',spd:146,play:'ball',desc:'外に逃げる。ボール。',balls:1,strikes:2,outs:1,runners:[2]},
+  {inn:1,half:'裏',num:4,pit:'吉川 悠斗',bat:'ビシエド',type:'ストレート',spd:146,play:'out',desc:'バットの根本！詰まった打球が一直線に投手へ。吉川→一塁！梶原も走れず3アウト！',balls:2,strikes:2,outs:3,runners:[2]},
   {inn:1,half:'裏',num:null,pit:'吉川 悠斗',bat:null,type:null,spd:null,play:'inning_end',desc:'1回裏終了。梶原二塁打も後続なく無得点。0-0。',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
-  {inn:2,half:'表',num:6,pit:'藤浪 晋太郎',bat:'角中 勝也',type:'カットボール',spd:140,play:'out',desc:'捕飛。1アウト。',balls:3,strikes:2,outs:1,runners:[]},
-  {inn:2,half:'表',num:3,pit:'藤浪 晋太郎',bat:'藤田 和樹',type:'ナックルカーブ',spd:121,play:'hit',desc:'三遊間を抜ける！左安！',balls:1,strikes:2,outs:1,runners:[1]},
-  {inn:2,half:'表',num:3,pit:'藤浪 晋太郎',bat:'茶谷 健太',type:'ツーシーム',spd:141,play:'strikeout',desc:'見逃し三振！2アウト。',balls:0,strikes:3,outs:2,runners:[1]},
-  {inn:2,half:'表',num:1,pit:'藤浪 晋太郎',bat:'山口 航輝',type:'ストレート',spd:141,play:'error',desc:'三塁手が落球！内野安打。一二塁ピンチ！',balls:0,strikes:1,outs:2,runners:[1,2]},
-  {inn:2,half:'表',num:1,pit:'藤浪 晋太郎',bat:'石川 慎吾',type:'ツーシーム',spd:141,play:'out',desc:'遊ゴロ。二塁アウト！ピンチ脱出！',balls:0,strikes:1,outs:3,runners:[]},
+  {inn:2,half:'表',num:0,pit:'藤浪 晋太郎',bat:'角中 勝也',type:null,spd:null,play:'note',desc:'2回表。角中 勝也 打席。藤浪、2回目のマウンドへ。引き続き球場が注目する。',balls:0,strikes:0,outs:0,runners:[]},
+  {inn:2,half:'表',num:1,pit:'藤浪 晋太郎',bat:'角中 勝也',type:'ストレート',spd:150,play:'ball',desc:'外角に外れる。ボール。',balls:1,strikes:0,outs:0,runners:[]},
+  {inn:2,half:'表',num:2,pit:'藤浪 晋太郎',bat:'角中 勝也',type:'スプリット',spd:null,play:'strike',desc:'落ちる球！角中、バットが止まる。見逃しストライク。',balls:1,strikes:1,outs:0,runners:[]},
+  {inn:2,half:'表',num:3,pit:'藤浪 晋太郎',bat:'角中 勝也',type:'カットボール',spd:142,play:'foul',desc:'詰まりながらもファール。粘る角中。',balls:1,strikes:2,outs:0,runners:[]},
+  {inn:2,half:'表',num:4,pit:'藤浪 晋太郎',bat:'角中 勝也',type:'ストレート',spd:151,play:'ball',desc:'高め、外れる。ボール。2-2。',balls:2,strikes:2,outs:0,runners:[]},
+  {inn:2,half:'表',num:5,pit:'藤浪 晋太郎',bat:'角中 勝也',type:'スプリット',spd:null,play:'ball',desc:'低めに外れる。ボール。フルカウント！',balls:3,strikes:2,outs:0,runners:[]},
+  {inn:2,half:'表',num:6,pit:'藤浪 晋太郎',bat:'角中 勝也',type:'カットボール',spd:140,play:'out',desc:'キャッチャーフライ！捕飛。1アウト。',balls:3,strikes:2,outs:1,runners:[]},
+  {inn:2,half:'表',num:0,pit:'藤浪 晋太郎',bat:'藤田 和樹',type:null,spd:null,play:'note',desc:'藤田 和樹 打席。俊足の左打者、藤浪が慎重に。',balls:0,strikes:0,outs:1,runners:[]},
+  {inn:2,half:'表',num:1,pit:'藤浪 晋太郎',bat:'藤田 和樹',type:'ストレート',spd:152,play:'strike',desc:'内角ズバッ！藤田、のけぞる。ストライク。',balls:0,strikes:1,outs:1,runners:[]},
+  {inn:2,half:'表',num:2,pit:'藤浪 晋太郎',bat:'藤田 和樹',type:'スプリット',spd:null,play:'ball',desc:'低めに外れる。ボール。',balls:1,strikes:1,outs:1,runners:[]},
+  {inn:2,half:'表',num:3,pit:'藤浪 晋太郎',bat:'藤田 和樹',type:'ナックルカーブ',spd:121,play:'hit',desc:'緩いカーブに合わせた！三遊間を鋭く抜ける！左安打！',balls:1,strikes:2,outs:1,runners:[1]},
+  {inn:2,half:'表',num:0,pit:'藤浪 晋太郎',bat:'茶谷 健太',type:null,spd:null,play:'note',desc:'茶谷 健太 打席。1アウト一塁、2番打者。藤浪、ここで三振を狙う。',balls:0,strikes:0,outs:1,runners:[1]},
+  {inn:2,half:'表',num:1,pit:'藤浪 晋太郎',bat:'茶谷 健太',type:'ストレート',spd:153,play:'strike',desc:'内角高め！茶谷、完全に詰まる。見逃しストライク。',balls:0,strikes:1,outs:1,runners:[1]},
+  {inn:2,half:'表',num:2,pit:'藤浪 晋太郎',bat:'茶谷 健太',type:'ストレート',spd:151,play:'strike',desc:'外角低め！茶谷、バットが出ない。2ストライク！',balls:0,strikes:2,outs:1,runners:[1]},
+  {inn:2,half:'表',num:3,pit:'藤浪 晋太郎',bat:'茶谷 健太',type:'ツーシーム',spd:141,play:'strikeout',desc:'内角に食い込むツーシーム！茶谷、見逃し三振！藤浪、吠える！2アウト。',balls:0,strikes:3,outs:2,runners:[1]},
+  {inn:2,half:'表',num:0,pit:'藤浪 晋太郎',bat:'山口 航輝',type:null,spd:null,play:'note',desc:'山口 航輝 打席。2アウト一塁、強打者。藤浪、慎重に攻める。',balls:0,strikes:0,outs:2,runners:[1]},
+  {inn:2,half:'表',num:1,pit:'藤浪 晋太郎',bat:'山口 航輝',type:'ストレート',spd:141,play:'error',desc:'打球は三塁線へ！三塁手が落球！エラー！内野安打。一二塁ピンチ！',balls:0,strikes:1,outs:2,runners:[1,2]},
+  {inn:2,half:'表',num:0,pit:'藤浪 晋太郎',bat:'石川 慎吾',type:null,spd:null,play:'note',desc:'石川 慎吾 打席。2アウト一二塁！藤浪、ここを踏ん張れるか！',balls:0,strikes:0,outs:2,runners:[1,2]},
+  {inn:2,half:'表',num:1,pit:'藤浪 晋太郎',bat:'石川 慎吾',type:'ツーシーム',spd:141,play:'out',desc:'詰まった！遊ゴロ、二塁アウト！ダブルプレー崩れ。ピンチ脱出！藤浪、ガッツポーズ！',balls:0,strikes:1,outs:3,runners:[]},
   {inn:2,half:'表',num:null,pit:'藤浪 晋太郎',bat:null,type:null,spd:null,play:'inning_end',desc:'2回表終了。ピンチを切り抜けた藤浪！0-0継続。',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
-  {inn:2,half:'裏',num:6,pit:'吉川 悠斗',bat:'筒香 嘉智',type:'ストレート',spd:146,play:'strikeout',desc:'低めいっぱい！見逃し三振！',balls:3,strikes:3,outs:1,runners:[]},
-  {inn:2,half:'裏',num:5,pit:'吉川 悠斗',bat:'加藤 響',type:'ストレート',spd:144,play:'out',desc:'左中間フライ。2アウト。',balls:2,strikes:2,outs:2,runners:[]},
-  {inn:2,half:'裏',num:4,pit:'吉川 悠斗',bat:'伊藤 光',type:'ストレート',spd:144,play:'out',desc:'セカンド高いフライ。2回裏も無得点。',balls:2,strikes:2,outs:3,runners:[]},
+  {inn:2,half:'裏',num:0,pit:'吉川 悠斗',bat:'筒香 嘉智',type:null,spd:null,play:'note',desc:'2回裏。筒香 嘉智 打席。経験豊富なベテランと若き吉川の対決。球場が注目する。',balls:0,strikes:0,outs:0,runners:[]},
+  {inn:2,half:'裏',num:1,pit:'吉川 悠斗',bat:'筒香 嘉智',type:'ストレート',spd:143,play:'ball',desc:'外角、外れる。ボール。筒香、じっくり。',balls:1,strikes:0,outs:0,runners:[]},
+  {inn:2,half:'裏',num:2,pit:'吉川 悠斗',bat:'筒香 嘉智',type:'カットボール',spd:139,play:'strike',desc:'外角キレる！筒香、バットが出ない。ストライク。',balls:1,strikes:1,outs:0,runners:[]},
+  {inn:2,half:'裏',num:3,pit:'吉川 悠斗',bat:'筒香 嘉智',type:'スライダー',spd:128,play:'ball',desc:'低めに外れる変化球。ボール。カウント2-1。',balls:2,strikes:1,outs:0,runners:[]},
+  {inn:2,half:'裏',num:4,pit:'吉川 悠斗',bat:'筒香 嘉智',type:'ストレート',spd:145,play:'foul',desc:'強振！ファール。まだまだ続く。',balls:2,strikes:2,outs:0,runners:[]},
+  {inn:2,half:'裏',num:5,pit:'吉川 悠斗',bat:'筒香 嘉智',type:'カットボール',spd:140,play:'ball',desc:'外に逃げる。ボール。フルカウント！',balls:3,strikes:2,outs:0,runners:[]},
+  {inn:2,half:'裏',num:6,pit:'吉川 悠斗',bat:'筒香 嘉智',type:'ストレート',spd:146,play:'strikeout',desc:'低めいっぱい渾身の直球！筒香、動けず見逃し三振！吉川、雄叫び！1アウト。',balls:3,strikes:3,outs:1,runners:[]},
+  {inn:2,half:'裏',num:0,pit:'吉川 悠斗',bat:'加藤 響',type:null,spd:null,play:'note',desc:'加藤 響 打席。勢いに乗る吉川、続けて抑えられるか。',balls:0,strikes:0,outs:1,runners:[]},
+  {inn:2,half:'裏',num:1,pit:'吉川 悠斗',bat:'加藤 響',type:'ストレート',spd:144,play:'ball',desc:'高めに抜ける。ボール。',balls:1,strikes:0,outs:1,runners:[]},
+  {inn:2,half:'裏',num:2,pit:'吉川 悠斗',bat:'加藤 響',type:'カットボール',spd:138,play:'strike',desc:'外角ズバッ！見逃しストライク。',balls:1,strikes:1,outs:1,runners:[]},
+  {inn:2,half:'裏',num:3,pit:'吉川 悠斗',bat:'加藤 響',type:'スライダー',spd:129,play:'foul',desc:'変化球に食らいつく！ファール。',balls:1,strikes:2,outs:1,runners:[]},
+  {inn:2,half:'裏',num:4,pit:'吉川 悠斗',bat:'加藤 響',type:'チェンジアップ',spd:124,play:'ball',desc:'チェンジアップ、低めに外れる。ボール。',balls:2,strikes:2,outs:1,runners:[]},
+  {inn:2,half:'裏',num:5,pit:'吉川 悠斗',bat:'加藤 響',type:'ストレート',spd:144,play:'out',desc:'外角直球に詰まる！左中間フライ、難なく捕球。2アウト。',balls:2,strikes:2,outs:2,runners:[]},
+  {inn:2,half:'裏',num:0,pit:'吉川 悠斗',bat:'伊藤 光',type:null,spd:null,play:'note',desc:'伊藤 光 打席。2アウト、吉川あと1つ。ベテラン捕手との対決。',balls:0,strikes:0,outs:2,runners:[]},
+  {inn:2,half:'裏',num:1,pit:'吉川 悠斗',bat:'伊藤 光',type:'カットボール',spd:137,play:'strike',desc:'外角に鋭く切れ込む！伊藤、詰まる。ストライク。',balls:0,strikes:1,outs:2,runners:[]},
+  {inn:2,half:'裏',num:2,pit:'吉川 悠斗',bat:'伊藤 光',type:'ストレート',spd:143,play:'ball',desc:'高めに外れる。ボール。カウント1-1。',balls:1,strikes:1,outs:2,runners:[]},
+  {inn:2,half:'裏',num:3,pit:'吉川 悠斗',bat:'伊藤 光',type:'チェンジアップ',spd:123,play:'foul',desc:'チェンジアップに泳ぎながらもファール！粘る伊藤。',balls:1,strikes:2,outs:2,runners:[]},
+  {inn:2,half:'裏',num:4,pit:'吉川 悠斗',bat:'伊藤 光',type:'ストレート',spd:144,play:'out',desc:'ラストは直球勝負！セカンドへの高いフライ！2回裏も無得点。吉川、2回を投げ切る！',balls:2,strikes:2,outs:3,runners:[]},
   {inn:2,half:'裏',num:null,pit:'吉川 悠斗',bat:null,type:null,spd:null,play:'inning_end',desc:'2回裏終了。0-0。',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
-  {inn:3,half:'表',num:4,pit:'森 唯斗',bat:'松石 信八',type:'フォーク',spd:126,play:'strikeout',desc:'空振り三振！1アウト。',balls:1,strikes:3,outs:1,runners:[]},
-  {inn:3,half:'表',num:5,pit:'森 唯斗',bat:'和田 康士朗',type:'カットボール',spd:139,play:'out',desc:'センター飛。2アウト。',balls:3,strikes:2,outs:2,runners:[]},
-  {inn:3,half:'表',num:3,pit:'森 唯斗',bat:'佐藤 都志也',type:'カットボール',spd:139,play:'out',desc:'右飛。3アウト！',balls:1,strikes:2,outs:3,runners:[]},
+  {inn:3,half:'表',num:0,pit:'森 唯斗',bat:'松石 信八',type:null,spd:null,play:'note',desc:'3回表。中継ぎ・森 唯斗登板。松石 信八 先頭打席。',balls:0,strikes:0,outs:0,runners:[]},
+  {inn:3,half:'表',num:1,pit:'森 唯斗',bat:'松石 信八',type:'カットボール',spd:138,play:'strike',desc:'外角に鋭く曲がる！松石、バット止まらず。ストライク。',balls:0,strikes:1,outs:0,runners:[]},
+  {inn:3,half:'表',num:2,pit:'森 唯斗',bat:'松石 信八',type:'フォーク',spd:128,play:'ball',desc:'フォーク、低めに落ちすぎる。ボール。',balls:1,strikes:1,outs:0,runners:[]},
+  {inn:3,half:'表',num:3,pit:'森 唯斗',bat:'松石 信八',type:'ストレート',spd:142,play:'strike',desc:'内角高め！松石、のけぞる。2ストライク。',balls:1,strikes:2,outs:0,runners:[]},
+  {inn:3,half:'表',num:4,pit:'森 唯斗',bat:'松石 信八',type:'フォーク',spd:126,play:'strikeout',desc:'落差鋭いフォーク！松石、空振り三振！1アウト。',balls:1,strikes:3,outs:1,runners:[]},
+  {inn:3,half:'表',num:0,pit:'森 唯斗',bat:'和田 康士朗',type:null,spd:null,play:'note',desc:'和田 康士朗 打席。足を絡めてくる相手、森は慎重に。',balls:0,strikes:0,outs:1,runners:[]},
+  {inn:3,half:'表',num:1,pit:'森 唯斗',bat:'和田 康士朗',type:'ストレート',spd:143,play:'ball',desc:'外角に外れる。ボール。和田、じっくり見る。',balls:1,strikes:0,outs:1,runners:[]},
+  {inn:3,half:'表',num:2,pit:'森 唯斗',bat:'和田 康士朗',type:'カットボール',spd:139,play:'strike',desc:'外角カット！和田、詰まる。見逃しストライク。',balls:1,strikes:1,outs:1,runners:[]},
+  {inn:3,half:'表',num:3,pit:'森 唯斗',bat:'和田 康士朗',type:'フォーク',spd:127,play:'ball',desc:'フォーク、ワンバウンド。ボール。2-1。',balls:2,strikes:1,outs:1,runners:[]},
+  {inn:3,half:'表',num:4,pit:'森 唯斗',bat:'和田 康士朗',type:'ストレート',spd:141,play:'foul',desc:'ファール！強く振った。まだ続く。',balls:2,strikes:2,outs:1,runners:[]},
+  {inn:3,half:'表',num:5,pit:'森 唯斗',bat:'和田 康士朗',type:'カットボール',spd:139,play:'out',desc:'センターへの飛球。難なく捕球。2アウト。',balls:3,strikes:2,outs:2,runners:[]},
+  {inn:3,half:'表',num:0,pit:'森 唯斗',bat:'佐藤 都志也',type:null,spd:null,play:'note',desc:'佐藤 都志也 打席。2アウト、あと1つ。森、落ち着いて攻める。',balls:0,strikes:0,outs:2,runners:[]},
+  {inn:3,half:'表',num:1,pit:'森 唯斗',bat:'佐藤 都志也',type:'ストレート',spd:142,play:'strike',desc:'内角ストレート！佐藤、詰まる。ストライク。',balls:0,strikes:1,outs:2,runners:[]},
+  {inn:3,half:'表',num:2,pit:'森 唯斗',bat:'佐藤 都志也',type:'フォーク',spd:125,play:'ball',desc:'フォーク、低めに外れる。ボール。',balls:1,strikes:1,outs:2,runners:[]},
+  {inn:3,half:'表',num:3,pit:'森 唯斗',bat:'佐藤 都志也',type:'カットボール',spd:139,play:'out',desc:'ライトへの飛球！右飛。3アウト！森、三者凡退で切り抜けた！',balls:1,strikes:2,outs:3,runners:[]},
   {inn:3,half:'表',num:null,pit:'森 唯斗',bat:null,type:null,spd:null,play:'inning_end',desc:'3回表終了。森も三者凡退。0-0。',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
-  {inn:3,half:'裏',num:5,pit:'吉川 悠斗',bat:'田内 真翔',type:'カットボール',spd:null,play:'out',desc:'三ゴロ。1アウト。',balls:1,strikes:2,outs:1,runners:[]},
-  {inn:3,half:'裏',num:3,pit:'吉川 悠斗',bat:'梶原 昂希',type:'ストレート',spd:null,play:'strikeout',desc:'空振り三振！2アウト。',balls:1,strikes:3,outs:2,runners:[]},
-  {inn:3,half:'裏',num:2,pit:'吉川 悠斗',bat:'度会 隆輝',type:'カットボール',spd:null,play:'hit',desc:'三遊間を抜ける左安！',balls:0,strikes:1,outs:2,runners:[1]},
-  {inn:3,half:'裏',num:1,pit:'吉川 悠斗',bat:'ビシエド',type:'チェンジアップ',spd:null,play:'out',desc:'センターフライ。3アウト！',balls:0,strikes:1,outs:3,runners:[1]},
+  {inn:3,half:'裏',num:0,pit:'吉川 悠斗',bat:'田内 真翔',type:null,spd:null,play:'note',desc:'3回裏。田内 真翔 打席。吉川 悠斗、力を温存しながら丁寧に攻める。',balls:0,strikes:0,outs:0,runners:[]},
+  {inn:3,half:'裏',num:1,pit:'吉川 悠斗',bat:'田内 真翔',type:'ストレート',spd:141,play:'strike',desc:'外角低めにズバッ！見逃しストライク。',balls:0,strikes:1,outs:0,runners:[]},
+  {inn:3,half:'裏',num:2,pit:'吉川 悠斗',bat:'田内 真翔',type:'カットボール',spd:138,play:'ball',desc:'引っかかった。内角に外れボール。',balls:1,strikes:1,outs:0,runners:[]},
+  {inn:3,half:'裏',num:3,pit:'吉川 悠斗',bat:'田内 真翔',type:'ストレート',spd:143,play:'foul',desc:'詰まりながらもファール。粘る田内。',balls:1,strikes:2,outs:0,runners:[]},
+  {inn:3,half:'裏',num:4,pit:'吉川 悠斗',bat:'田内 真翔',type:'スライダー',spd:128,play:'foul',desc:'外に逃げる変化球、ファール。',balls:1,strikes:2,outs:0,runners:[]},
+  {inn:3,half:'裏',num:5,pit:'吉川 悠斗',bat:'田内 真翔',type:'カットボール',spd:139,play:'out',desc:'三ゴロ！正面を突く打球、田内アウト。1アウト。',balls:1,strikes:2,outs:1,runners:[]},
+  {inn:3,half:'裏',num:0,pit:'吉川 悠斗',bat:'梶原 昂希',type:null,spd:null,play:'note',desc:'梶原 昂希 打席。1回裏に二塁打を放った左の好打者。吉川は慎重に。',balls:0,strikes:0,outs:1,runners:[]},
+  {inn:3,half:'裏',num:1,pit:'吉川 悠斗',bat:'梶原 昂希',type:'ストレート',spd:144,play:'ball',desc:'高め、ボール。梶原、見送る。',balls:1,strikes:0,outs:1,runners:[]},
+  {inn:3,half:'裏',num:2,pit:'吉川 悠斗',bat:'梶原 昂希',type:'カットボール',spd:140,play:'strike',desc:'外角キレのあるカット！見逃しストライク。',balls:1,strikes:1,outs:1,runners:[]},
+  {inn:3,half:'裏',num:3,pit:'吉川 悠斗',bat:'梶原 昂希',type:'ストレート',spd:145,play:'strikeout',desc:'内角高め渾身の直球！梶原、空振り三振！2アウト。',balls:1,strikes:3,outs:2,runners:[]},
+  {inn:3,half:'裏',num:0,pit:'吉川 悠斗',bat:'度会 隆輝',type:null,spd:null,play:'note',desc:'🔥 度会 隆輝 打席！2アウトながら、ここが最大の見せ場。吉川との対決に球場が静まる。',balls:0,strikes:0,outs:2,runners:[]},
+  {inn:3,half:'裏',num:1,pit:'吉川 悠斗',bat:'度会 隆輝',type:'ストレート',spd:146,play:'strike',desc:'度会、初球から積極的に！外角高めをファールチップ。ストライク。',balls:0,strikes:1,outs:2,runners:[]},
+  {inn:3,half:'裏',num:2,pit:'吉川 悠斗',bat:'度会 隆輝',type:'カットボール',spd:141,play:'hit',desc:'三遊間を鋭く破る！度会、左安打！ランナー一塁、チャンス！',balls:0,strikes:1,outs:2,runners:[1]},
+  {inn:3,half:'裏',num:0,pit:'吉川 悠斗',bat:'ビシエド',type:null,spd:null,play:'note',desc:'ビシエド 打席。2アウト一塁、吉川は踏ん張りどころ。',balls:0,strikes:0,outs:2,runners:[1]},
+  {inn:3,half:'裏',num:1,pit:'吉川 悠斗',bat:'ビシエド',type:'チェンジアップ',spd:126,play:'out',desc:'チェンジアップに泳ぐ！センターフライ。3アウト！吉川、ピンチを凌ぐ！',balls:0,strikes:1,outs:3,runners:[1]},
   {inn:3,half:'裏',num:null,pit:'吉川 悠斗',bat:null,type:null,spd:null,play:'inning_end',desc:'3回裏終了。0-0で中盤へ。緊迫した展開が続く！',balls:0,strikes:0,outs:0,runners:[],score:{home:0,away:0}},
 ];
 let pitchIdx=0;
@@ -1843,7 +2006,455 @@ function renderPitchEntry(p){
   else{const r=p.play,badge=lbl[r]||'?',bc=cls[r]||'b';html=`<div class="pitch-row"><span class="pitch-num">${p.num||''}</span><div class="pitch-ball ${bc}">${badge}</div><div class="pitch-info"><div class="pitch-type">${p.bat} ${p.type?'— '+p.type:''} ${p.spd?p.spd+'km/h':''}</div><div class="pitch-detail">${p.desc}</div></div></div>`;}
   const div=document.createElement('div');div.innerHTML=html;el.insertBefore(div.firstElementChild,el.firstChild);
 }
-function advancePitch(){if(pitchIdx>=pitchData.length)return;const p=pitchData[pitchIdx++];renderPitchEntry(p);updateScoreCard(p);const st=document.getElementById('matchStudioText');if(st&&p.desc)st.textContent=p.desc;const lt=document.getElementById('match-live-text');if(lt&&p.desc)lt.textContent=p.desc;updateAdvanceBtn();}
+
+// ========== BEAT予想コアロジック ==========
+
+// ランキング行を生成（0ptのユーザーは除外、動的ソート）
+function buildRankingRows(){
+  const all=[];
+  if(myPts>0||myTotal>0) all.push({avatar:'🦊',name:'あなた',pts:myPts,won:myWon,total:myTotal,isMe:true});
+  npcPlayers.forEach(n=>{if(n.pts>0||n.total>0)all.push({...n,isMe:false});});
+  all.sort((a,b)=>b.pts-a.pts);
+  return all.map((r,i)=>({...r,rank:i+1}));
+}
+
+// 予想確定（betslipから）
+function placeBet(){
+  const betsToPlace=state.bets.filter(b=>b.stake>0);
+  if(!betsToPlace.length){alert('ポイントを入力してください');return;}
+  const total=betsToPlace.reduce((s,b)=>s+b.stake,0);
+  if(total>state.balance){alert('ポイントが足りません');return;}
+
+  betsToPlace.forEach(b=>{
+    state.balance-=b.stake;
+    const bet={
+      id:'user-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),
+      status:'pending',
+      match:'DeNA vs ロッテ',
+      market:b.market,
+      selection:b.selection,
+      odds:b.odds,
+      stake:b.stake,
+      payout:null,
+      date:'本日',
+      prediction:b.selection,
+      options:[]
+    };
+    allBets.push(bet);
+    myBets.push({...bet});
+    myTotal++;
+    // ボタンをselected固定
+    document.querySelector(`.odds-btn[data-id="${b.id}"]`)?.classList.add('selected');
+  });
+
+  // NPC もランダム参加（各NPCに5-30%の確率で同時エントリー）
+  npcPlayers.forEach(npc=>{
+    if(Math.random()<0.4){
+      npc.total=(npc.total||0)+1;
+    }
+  });
+
+  // カートクリア
+  state.bets=[];
+  renderBetslip();
+  document.getElementById('betslip-panel').classList.remove('open');
+  document.getElementById('mobile-toggle').classList.remove('hidden');
+
+  // 通知トースト
+  showToast(`✅ ${betsToPlace.length}件の予想を受付ました！`);
+  updateHeaderBalance();
+  refreshOddsBtnStates();
+  renderPredictView();
+  renderStudioResults();
+  checkAndSettleBets();
+}
+
+// ヘッダーポイント表示を更新
+function updateHeaderBalance(){
+  const el=document.getElementById('header-balance');
+  if(el) el.textContent=state.balance.toLocaleString()+'pt';
+}
+
+// 速報を自動生成してpush
+function pushRankingHeadline(){
+  const rows=buildRankingRows();
+  const me=rows.find(r=>r.isMe);
+  if(!me) return;
+  const above=rows[me.rank-2]; // 1つ上
+  if(above){
+    const diff=above.pts-me.pts;
+    if(diff<=100){
+      pushHeadline('⬆️',`${above.name}との差がわずか${diff}pt！逆転のチャンス！`,'接戦','up');
+    } else {
+      pushHeadline('📊',`あなたは現在${me.rank}位（${me.pts.toLocaleString()}pt）`,'YOU','you');
+    }
+  } else {
+    pushHeadline('🏆',`首位！${me.pts.toLocaleString()}pt でリードしています`,'1位','up');
+  }
+}
+
+// コメント投稿（ホーム）
+function postHomeComment(){
+  const inp=document.getElementById('homeCommentInput');
+  const text=inp?.value?.trim();
+  if(!text) return;
+  const list=document.getElementById('home-comment-list');
+  if(list){
+    const item=document.createElement('div');
+    item.className='sp-ucomment-item';
+    item.innerHTML=`<span class="sp-ucomment-avatar">🦊</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name" style="color:var(--accent);">あなた</div>${text}</div>`;
+    list.appendChild(item);
+    list.scrollTop=list.scrollHeight;
+    // 試合コメントにも同期
+    const mlist=document.getElementById('match-comment-list');
+    if(mlist){const mi=item.cloneNode(true);mlist.appendChild(mi);mlist.scrollTop=mlist.scrollHeight;}
+  }
+  inp.value='';
+}
+
+// コメント投稿（試合）
+function postMatchComment(){
+  const inp=document.getElementById('matchCommentInput');
+  const text=inp?.value?.trim();
+  if(!text) return;
+  const list=document.getElementById('match-comment-list');
+  if(list){
+    const item=document.createElement('div');
+    item.className='sp-ucomment-item';
+    item.innerHTML=`<span class="sp-ucomment-avatar">🦊</span><div class="sp-ucomment-bubble"><div class="sp-ucomment-name" style="color:var(--accent);">あなた</div>${text}</div>`;
+    list.appendChild(item);
+    list.scrollTop=list.scrollHeight;
+    // ホームコメントにも同期
+    const hlist=document.getElementById('home-comment-list');
+    if(hlist){const hi=item.cloneNode(true);hlist.appendChild(hi);hlist.scrollTop=hlist.scrollHeight;}
+  }
+  inp.value='';
+}
+
+
+
+// トースト通知
+function showToast(msg){
+  let t=document.getElementById('beat-toast');
+  if(!t){t=document.createElement('div');t.id='beat-toast';t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1a2a1a;border:1px solid #3fb950;color:#3fb950;padding:8px 16px;border-radius:20px;font-size:11px;font-weight:bold;z-index:9999;transition:opacity 0.4s;pointer-events:none;';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(t._timer);t._timer=setTimeout(()=>{t.style.opacity='0';},2500);
+}
+
+// pitchData進行後に自動決着チェック
+function checkAndSettleBets(){
+  if(!pitchIdx) return;
+  const cur=pitchData[Math.min(pitchIdx-1,pitchData.length-1)];
+  allBets.filter(b=>b.status==='pending').forEach(b=>{
+    const sa=betSettleAt[b.market];
+    if(!sa) return; // 試合全体予想は後で
+    let settled=false;
+    if(sa.trigger==='atbat_end'){
+      // 指定打者の打席結果球（アウト・安打・三振・四球など）で決着
+      const isTargetBat = cur.bat===sa.bat && cur.inn===sa.inn && cur.half===sa.half;
+      const isAtbatEnd  = ATBAT_END_PLAYS.has(cur.play);
+      settled = isTargetBat && isAtbatEnd;
+      // イニングを過ぎても未決着なら強制決着
+      if(!settled && (cur.inn>sa.inn || (cur.inn===sa.inn && cur.half!==sa.half && sa.half==='表') || (cur.inn===sa.inn && sa.half==='裏' && cur.half==='裏' && cur.play==='inning_end'))){
+        settled=true;
+      }
+    } else {
+      // inning_end トリガー
+      settled = (cur.play==='inning_end' && cur.inn===sa.inn && cur.half===sa.half) ||
+                (cur.inn>sa.inn) ||
+                (cur.inn===sa.inn && sa.half==='表' && cur.half==='裏' && cur.play==='inning_end');
+    }
+    if(settled){ settleSingleBet(b); }
+  });
+
+  // 未予想マーケットの結果を記録
+  recordUnbetResults(cur);
+
+  // 決着済みマーケットを予想リストから非表示
+  hideSettledMarkets();
+
+  renderPredictView();
+  renderMpBets();
+}
+
+// 決着済みマーケットを予想するタブから非表示にする
+function hideSettledMarkets(){
+  // betAnswers に登録されたmarket名のうち決着済みのものを収集
+  const settledMarkets = new Set([
+    ...allBets.filter(b=>b.status!=='pending').map(b=>b.market),
+    ...resolvedResults.map(r=>r.market)
+  ]);
+
+  // data-markets属性を持つ market-group を走査
+  document.querySelectorAll('#ppanel-yoso .market-group[data-markets]').forEach(group=>{
+    const markets = group.dataset.markets.split(',');
+    // グループ内の全マーケットが決着済みなら非表示
+    const allSettled = markets.every(m => settledMarkets.has(m));
+    group.style.display = allSettled ? 'none' : '';
+  });
+
+  // セクションヘッダーも：配下の全market-groupが非表示なら隠す
+  [
+    {headerId:'section-1omote', markets:['1回表先頭','藤浪1回三振','藤浪初球球速','藤浪1回三者凡退']},
+    {headerId:'section-1ura',   markets:['梶原1回出塁','梶原1回長打','梶原1回初球','度会1回打席','度会1回球数','度会1回打点','DeNA1回得点']},
+  ].forEach(({headerId, markets})=>{
+    const allDone = markets.every(m => settledMarkets.has(m));
+    const el = document.getElementById(headerId);
+    if(el) el.style.display = allDone ? 'none' : '';
+  });
+
+  // イニング別予想セクション見出し自体も全決着で非表示
+  const allInnMarkets = ['1回表先頭','藤浪1回三振','藤浪初球球速','藤浪1回三者凡退',
+                         '梶原1回出塁','梶原1回長打','梶原1回初球','度会1回打席','度会1回球数','度会1回打点','DeNA1回得点'];
+  const innHeader = document.getElementById('section-inn-header');
+  if(innHeader) innHeader.style.display = allInnMarkets.every(m=>settledMarkets.has(m)) ? 'none' : '';
+}
+
+// 予想されなかったマーケットの結果を resolvedResults に追記
+function recordUnbetResults(cur){
+  Object.entries(betSettleAt).forEach(([market, sa])=>{
+    // すでに記録済みならスキップ
+    if(resolvedResults.some(r=>r.market===market)) return;
+    // allBets に同マーケットの予想があればスキップ（settleSingleBetが担当）
+    if(allBets.some(b=>b.market===market)) return;
+
+    let settled=false;
+    if(sa.trigger==='atbat_end'){
+      const isTargetBat = cur.bat===sa.bat && cur.inn===sa.inn && cur.half===sa.half;
+      settled = isTargetBat && ATBAT_END_PLAYS.has(cur.play);
+      if(!settled && (cur.inn>sa.inn || (cur.inn===sa.inn && cur.half!==sa.half && sa.half==='表') || (cur.inn===sa.inn && sa.half==='裏' && cur.half==='裏' && cur.play==='inning_end'))){
+        settled=true;
+      }
+    } else {
+      settled = (cur.play==='inning_end' && cur.inn===sa.inn && cur.half===sa.half) ||
+                (cur.inn>sa.inn) ||
+                (cur.inn===sa.inn && sa.half==='表' && cur.half==='裏' && cur.play==='inning_end');
+    }
+    if(settled){
+      const answer=betAnswers[market];
+      if(answer===null||answer===undefined) return;
+      resolvedResults.push({market, answer, date:'本日'});
+    }
+  });
+}
+
+function settleSingleBet(b){
+  const answer=betAnswers[b.market];
+  if(answer===undefined||answer===null) return;
+  const won=b.selection===answer;
+  b.status=won?'won':'lost';
+  b.payout=won?Math.floor(b.stake*b.odds):0;
+  b.correct=answer;
+
+  // myBets も更新
+  const mb=myBets.find(x=>x.id===b.id);
+  if(mb){mb.status=b.status;mb.payout=b.payout;mb.correct=b.correct;}
+
+  // ポイント増減
+  if(won){
+    const gain=b.payout-b.stake;
+    state.balance+=b.payout;
+    myPts+=gain;
+    myWon++;
+    // NPC もランダム勝敗
+    npcPlayers.forEach(npc=>{
+      if(npc.total>0&&Math.random()<0.55){
+        const g=Math.floor(50+Math.random()*300);
+        npc.pts+=g;npc.won=(npc.won||0)+1;
+      }
+    });
+    showToast(`🎯 的中！ +${(b.payout-b.stake).toLocaleString()}pt`);
+  } else {
+    myPts-=b.stake;
+    npcPlayers.forEach(npc=>{
+      if(npc.total>0&&Math.random()<0.45){
+        const g=Math.floor(20+Math.random()*200);
+        npc.pts+=g;npc.won=(npc.won||0)+1;
+      }
+    });
+    showToast(`❌ 不正解 -${b.stake.toLocaleString()}pt`);
+  }
+
+  // 画面のポイント更新
+  document.getElementById('pred-balance').textContent=state.balance.toLocaleString();
+  updateHeaderBalance();
+  pushRankingHeadline();
+  renderPredictView();
+  renderStudioResults();
+}
+
+// ========== ここまでコアロジック ==========
+
+
+// ========== イニング別予想 動的出題 ==========
+
+// 各イニングの予想定義
+const inningMarkets = {
+  '2-表': {
+    sectionId: 'section-2omote',
+    sectionColor: '#ff6b6b',
+    sectionBg: 'rgba(255,59,48,0.08)',
+    sectionBorder: '#ff3b30',
+    sectionLabel: '2回表 — 藤浪 晋太郎',
+    markets: [
+      { market:'藤浪2回三振', label:'🔥 2回表：藤浪 奪三振数', difficulty:'ふつう',
+        note:'2回表（5打者）で何個奪う？',
+        layout:'3col',
+        answers: [{id:'fj-2inn-k0',sel:'0個',odds:2.20},{id:'fj-2inn-k1',sel:'1個',odds:1.80},{id:'fj-2inn-k2',sel:'2個以上',odds:2.50}],
+        answer:'1個', trigger:'inning_end', inn:2, half:'表' },
+      { market:'藤浪2回失点', label:'🛡️ 2回表：藤浪 失点するか', difficulty:'むずかしい',
+        layout:'2col',
+        answers: [{id:'fj-2inn-er-yes',sel:'失点あり',odds:3.80},{id:'fj-2inn-er-no',sel:'無失点',odds:1.25}],
+        answer:'無失点', trigger:'inning_end', inn:2, half:'表' },
+      { market:'2回表先頭', label:'⚾ 2回表：先頭打者（角中）の結果', difficulty:'ふつう',
+        note:'角中 勝也（ロッテ）の打席結果は？',
+        layout:'3col',
+        answers: [{id:'r2-kado-k',sel:'三振',odds:2.80},{id:'r2-kado-out',sel:'凡退（三振以外）',odds:1.60},{id:'r2-kado-hit',sel:'出塁',odds:3.20}],
+        answer:'凡退（三振以外）', trigger:'atbat_end', bat:'角中 勝也', inn:2, half:'表' },
+    ]
+  },
+  '2-裏': {
+    sectionId: 'section-2ura',
+    sectionColor: '#58a6ff',
+    sectionBg: 'rgba(88,166,255,0.08)',
+    sectionBorder: '#58a6ff',
+    sectionLabel: '2回裏 — 筒香 嘉智 / 加藤 響',
+    markets: [
+      { market:'筒香2回打席', label:'💥 2回裏：筒香 嘉智 打席', difficulty:'注目',
+        note:'筒香 嘉智の2回裏の結果は？',
+        layout:'3col',
+        answers: [{id:'ts-2inn-k',sel:'三振',odds:2.10},{id:'ts-2inn-out',sel:'凡退（三振以外）',odds:2.00},{id:'ts-2inn-hit',sel:'出塁',odds:3.50}],
+        answer:'三振', trigger:'atbat_end', bat:'筒香 嘉智', inn:2, half:'裏' },
+      { market:'DeNA2回得点', label:'🔮 2回裏：DeNA 得点するか', difficulty:'むずかしい',
+        layout:'2col',
+        answers: [{id:'dena-2inn-yes',sel:'得点あり',odds:4.00},{id:'dena-2inn-no',sel:'無得点',odds:1.18}],
+        answer:'無得点', trigger:'inning_end', inn:2, half:'裏' },
+      { market:'吉川2回三者凡退', label:'🛡️ 2回裏：吉川 三者凡退か', difficulty:'むずかしい',
+        layout:'2col',
+        answers: [{id:'yk-2inn-3up-yes',sel:'三者凡退',odds:2.10},{id:'yk-2inn-3up-no',sel:'出塁を許す',odds:1.65}],
+        answer:'三者凡退', trigger:'inning_end', inn:2, half:'裏' },
+    ]
+  },
+  '3-表': {
+    sectionId: 'section-3omote',
+    sectionColor: '#ff6b6b',
+    sectionBg: 'rgba(255,59,48,0.08)',
+    sectionBorder: '#ff3b30',
+    sectionLabel: '3回表 — 森 唯斗',
+    markets: [
+      { market:'森3回三者凡退', label:'🛡️ 3回表：森 唯斗 三者凡退か', difficulty:'ふつう',
+        layout:'2col',
+        answers: [{id:'mori-3inn-3up-yes',sel:'三者凡退',odds:2.30},{id:'mori-3inn-3up-no',sel:'出塁を許す',odds:1.55}],
+        answer:'三者凡退', trigger:'inning_end', inn:3, half:'表' },
+      { market:'3回表先頭', label:'⚾ 3回表：先頭打者（松石）の結果', difficulty:'ふつう',
+        note:'松石 信八の打席結果は？',
+        layout:'3col',
+        answers: [{id:'r3-mat-k',sel:'三振',odds:2.00},{id:'r3-mat-out',sel:'凡退（三振以外）',odds:2.10},{id:'r3-mat-hit',sel:'出塁',odds:3.80}],
+        answer:'三振', trigger:'atbat_end', bat:'松石 信八', inn:3, half:'表' },
+    ]
+  },
+  '3-裏': {
+    sectionId: 'section-3ura',
+    sectionColor: '#58a6ff',
+    sectionBg: 'rgba(88,166,255,0.08)',
+    sectionBorder: '#58a6ff',
+    sectionLabel: '3回裏 — 度会 隆輝 / ビシエド',
+    markets: [
+      { market:'度会3回打席', label:'🎯 3回裏：度会 隆輝 打席', difficulty:'ふつう',
+        note:'度会 隆輝の3回裏の結果は？',
+        layout:'3col',
+        answers: [{id:'dw-3inn-hit',sel:'安打',odds:2.60},{id:'dw-3inn-out',sel:'凡退',odds:1.55},{id:'dw-3inn-bb',sel:'四球',odds:5.50}],
+        answer:'安打', trigger:'atbat_end', bat:'度会 隆輝', inn:3, half:'裏' },
+      { market:'ビシエド3回打席', label:'🦸 3回裏：ビシエド 打席', difficulty:'注目',
+        note:'ビシエドの3回裏は？',
+        layout:'2col',
+        answers: [{id:'bv-3inn-hit',sel:'出塁',odds:3.20},{id:'bv-3inn-out',sel:'凡退',odds:1.35}],
+        answer:'凡退', trigger:'atbat_end', bat:'ビシエド', inn:3, half:'裏' },
+      { market:'DeNA3回得点', label:'🔮 3回裏：DeNA 得点するか', difficulty:'むずかしい',
+        layout:'2col',
+        answers: [{id:'dena-3inn-yes',sel:'得点あり',odds:3.80},{id:'dena-3inn-no',sel:'無得点',odds:1.22}],
+        answer:'無得点', trigger:'inning_end', inn:3, half:'裏' },
+    ]
+  },
+};
+
+// 出題済み管理
+const injectedSections = new Set();
+
+// イニング先頭noteのときに予想問題を動的注入
+function injectInningMarkets(p){
+  if(p.play !== 'note') return;
+  // 先頭打者（outs===0）のnoteのみ対象
+  if(p.outs !== 0 || p.num !== 0) return;
+  const key = `${p.inn}-${p.half}`;
+  if(injectedSections.has(key)) return;
+  const def = inningMarkets[key];
+  if(!def) return;
+  injectedSections.add(key);
+
+  const yosoPanel = document.getElementById('ppanel-yoso');
+  if(!yosoPanel) return;
+
+  // betAnswers / betSettleAt に追加
+  def.markets.forEach(m => {
+    betAnswers[m.market] = m.answer;
+    const sa = {trigger: m.trigger, inn: m.inn, half: m.half};
+    if(m.trigger === 'atbat_end') sa.bat = m.bat;
+    betSettleAt[m.market] = sa;
+  });
+
+  // セクションヘッダー
+  const isOmote = def.sectionLabel.includes('表');
+  const wrap = document.createElement('div');
+  wrap.id = 'inning-section-' + key;
+
+  // セパレータ
+  const sep = document.createElement('div');
+  sep.style.cssText = `margin:14px 0 8px;padding:8px 0 6px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;`;
+  sep.innerHTML = `<span style="font-size:11px;font-weight:bold;color:var(--text-main);">⚡ ${p.inn}回${p.half}の予想</span><span style="font-size:9px;color:var(--text-sub);">新着</span>`;
+  wrap.appendChild(sep);
+
+  // セクションラベル
+  const label = document.createElement('div');
+  label.style.cssText = `padding:5px 8px;background:${def.sectionBg};border-left:3px solid ${def.sectionBorder};border-radius:3px;margin-bottom:8px;`;
+  label.innerHTML = `<span style="font-size:9px;font-weight:bold;color:${def.sectionColor};">📍 ${def.sectionLabel}</span>`;
+  wrap.appendChild(label);
+
+  // 各マーケット
+  def.markets.forEach(m => {
+    const mg = document.createElement('div');
+    mg.className = 'market-group';
+    mg.dataset.markets = m.market;
+    const cols = m.layout === '3col' ? 'repeat(3,1fr)' : '1fr 1fr';
+    const btns = m.answers.map(a =>
+      m.layout === '3col'
+        ? `<button class="odds-btn" data-id="${a.id}" data-market="${m.market}" data-selection="${a.sel}" data-odds="${a.odds}"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;"><span style="font-size:9px;color:var(--text-sub);">${a.sel}</span><span class="odds-value" style="font-size:11px;">${a.odds.toFixed(2)}</span></div></button>`
+        : `<button class="odds-btn" data-id="${a.id}" data-market="${m.market}" data-selection="${a.sel}" data-odds="${a.odds}"><span class="odds-label">${a.sel}</span><span class="odds-value">${a.odds.toFixed(2)}</span></button>`
+    ).join('');
+    mg.innerHTML = `<div class="market-header"><div class="market-title">${m.label}<span class="difficulty-badge ${m.difficulty==='むずかしい'?'hard':m.difficulty==='注目'?'easy':'medium'}">${m.difficulty}</span></div></div>${m.note?`<div style="font-size:9px;color:var(--text-sub);margin-bottom:6px;">${m.note}</div>`:''}<div style="display:grid;grid-template-columns:${cols};gap:6px;">${btns}</div>`;
+    wrap.appendChild(mg);
+  });
+
+  // 選手カード予想セクションの直前に挿入
+  const cardSection = document.getElementById('card-market-section');
+  if(cardSection && cardSection.parentNode === yosoPanel){
+    yosoPanel.insertBefore(wrap, cardSection);
+  } else {
+    yosoPanel.appendChild(wrap);
+  }
+
+  // バインド＆非表示チェック
+  bindOddsBtns(wrap);
+  refreshOddsBtnStates();
+  hideSettledMarkets();
+
+  // 予想タブ通知
+  showToast(`📣 ${p.inn}回${p.half}の予想問題が追加されました！`);
+  pushHeadline('📣',`${p.inn}回${p.half}の予想問題が追加！今すぐ参加しよう`,'NEW','up');
+}
+// ========== ここまで動的出題 ==========
+
+function advancePitch(){if(pitchIdx>=pitchData.length)return;const p=pitchData[pitchIdx++];renderPitchEntry(p);updateScoreCard(p);injectInningMarkets(p);const st=document.getElementById('matchStudioText');if(st&&p.desc)st.textContent=p.desc;const lt=document.getElementById('match-live-text');if(lt&&p.desc)lt.textContent=p.desc;updateAdvanceBtn();checkAndSettleBets();}
 function updateAdvanceBtn(){const btn=document.getElementById('advance-btn'),sub=document.getElementById('advance-btn-sub');if(!btn)return;if(pitchIdx>=pitchData.length){btn.disabled=true;btn.style.background='var(--border)';if(sub)sub.textContent='試合終了';return;}const nxt=pitchData[pitchIdx];btn.disabled=false;btn.style.background='var(--live)';if(sub){if(nxt.play==='inning_end')sub.textContent=`${nxt.inn}回${nxt.half}終了`;else if(nxt.bat)sub.textContent=`${nxt.inn}回${nxt.half} ${nxt.bat} ${nxt.num?nxt.num+'球目':'打席開始'}`;else sub.textContent=`${nxt.inn}回${nxt.half}`;}}
 function resetGame(){pitchIdx=0;scoreBoard.home=Array(MAX_INNINGS).fill(null);scoreBoard.away=Array(MAX_INNINGS).fill(null);scoreBoard.homeR=scoreBoard.homeH=scoreBoard.homeE=scoreBoard.awayR=scoreBoard.awayH=scoreBoard.awayE=0;document.getElementById('score-home').textContent='0';document.getElementById('score-away').textContent='0';document.getElementById('match-inning-label').textContent='試合前';document.getElementById('pitch-log').innerHTML='<div style="font-size:10px;color:#8b949e;text-align:center;padding:8px;">「試合を進める」ボタンを押してください</div>';['b1','b2','b3','s1','s2','o1','o2'].forEach(id=>{const e=document.getElementById(id);if(e)e.className='bso-dot';});document.getElementById('match-runners').textContent='走者なし';renderScoreboard();updateAdvanceBtn();todayMatches[0].home.score=0;todayMatches[0].away.score=0;renderLiveMatchCards();}
 
@@ -1858,8 +2469,21 @@ const allPlayerCards=[{id:1,name:'梶原 昂希',number:'2',team:'横浜DeNA',ra
 const rarityLabel={EPIC:'E',RARE:'R',UNCOMMON:'U',NORMAL:'N'};
 const rarityBg={EPIC:'linear-gradient(160deg,#c87800,#f5a623)',RARE:'linear-gradient(160deg,#0d4a1a,#1a8a35)',UNCOMMON:'linear-gradient(160deg,#0a1a50,#1a3a9a)',NORMAL:'linear-gradient(160deg,#2a1a4a,#5a2a9a)'};
 const cardPidMap={1:'kajiwara',2:'tsutsugoh',3:'viciedo',4:'fujinami',5:null,6:null};
-const leagueData=[{rank:1,avatar:'😎',name:'Taro K.',pts:4120,isMe:false},{rank:2,avatar:'🌸',name:'Hana M.',pts:3255,isMe:false},{rank:3,avatar:'🦊',name:'あなた',pts:3240,isMe:true},{rank:4,avatar:'🎃',name:'Yuki T.',pts:3190,isMe:false}];
-const myBets=[{status:'won',sport:'NPB',prediction:'DeNA 勝利',odds:1.85,stake:500,payout:925},{status:'pending',sport:'NPB',prediction:'藤浪 5奪三振以上',odds:1.65,stake:1000,payout:null}];
+// NPCプレイヤー定義（8名、ポイントは0スタート）
+const npcPlayers=[
+  {avatar:'😎',name:'Taro K.',  pts:0,won:0,total:0,isMe:false},
+  {avatar:'🌸',name:'Hana M.',  pts:0,won:0,total:0,isMe:false},
+  {avatar:'🎃',name:'Yuki T.',  pts:0,won:0,total:0,isMe:false},
+  {avatar:'⚡',name:'Ryu S.',   pts:0,won:0,total:0,isMe:false},
+  {avatar:'🐯',name:'Masa K.',  pts:0,won:0,total:0,isMe:false},
+  {avatar:'🌊',name:'Nao W.',   pts:0,won:0,total:0,isMe:false},
+  {avatar:'🦅',name:'Kenta F.', pts:0,won:0,total:0,isMe:false},
+  {avatar:'🌺',name:'Yui A.',   pts:0,won:0,total:0,isMe:false},
+];
+// 自分のポイント
+let myPts=0, myWon=0, myTotal=0;
+// マイページ用ベット履歴（動的）
+const myBets=[];
 const packs=[{id:'npb',name:'NPBパック',desc:'DeNA・ロッテ選手',rarity:'RARE',costPaid:800,costFree:160,bg:'linear-gradient(135deg,#1a2a1a,#0d3b1a)'},{id:'daily',name:'デイリーパック',desc:'本日出場選手',rarity:'NORMAL',costPaid:200,costFree:40,bg:'linear-gradient(135deg,#1c1c1c,#2a2a2a)'}];
 const missions={daily:[{title:'NPBの試合に予想する',reward:50,done:false,progress:{current:0,total:1}},{title:'3試合連続で予想する',reward:150,done:false,progress:{current:1,total:3}}],weekly:[{title:'今週5試合以上予想する',reward:500,done:false,progress:{current:2,total:5}}]};
 let coins={paid:3200,free:800},currentSelectedPack=null;
@@ -1893,6 +2517,14 @@ function toggleBetslip(){document.getElementById('betslip-panel').classList.togg
 
 // VIEWS
 function setActiveTab(id){document.querySelectorAll('.header-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===id));}
+function goHome(){
+  switchView('home');
+  // ライブタブのactive状態をhomeに戻す
+  document.querySelectorAll('.header-tab').forEach(t=>{
+    t.classList.toggle('active', t.dataset.tab==='home');
+  });
+}
+
 function switchView(v){document.querySelectorAll('.view-section').forEach(el=>{el.classList.remove('active');el.style.display='none';});const t=document.getElementById('view-'+v);if(t){t.classList.add('active');t.style.display='block';}const m={home:'home',mypage:'mypage',mission:'mission',cards:'cards',match:'home'};setActiveTab(m[v]||'home');if(v==='mission')renderMissionSection();if(v==='cards')renderPackGrid();if(v==='predict')renderPredictView();document.querySelector('.scroll-area').scrollTop=0;}
 function showScreen(id){if(id==='home'){switchView('home');return;}if(id==='mypage'){switchView('mypage');setActiveTab('mypage');renderMpBets();renderMpLeague();return;}if(id==='rankingDetail'){document.querySelectorAll('.view-section').forEach(el=>{el.classList.remove('active');el.style.display='none';});const t=document.getElementById('rankingDetail');if(t){t.classList.add('active');t.style.display='block';}renderRankingDetail();document.querySelector('.scroll-area').scrollTop=0;}}
 function openMatchDetail(idx){const m=todayMatches[idx];if(!m)return;if(m.isDena){switchView('match');}else{alert(`${m.home.name} vs ${m.away.name} の詳細は準備中です`);}}
@@ -1906,9 +2538,9 @@ function studioSelect(tab){['live','result','news','ucomment','chat'].forEach(t=
 function renderPlayerCards(){const c=document.getElementById('playerCardScroll');if(!c)return;c.innerHTML=allPlayerCards.map(p=>`<div class="pcard rarity-${p.rarity}" onclick="openPlayerPanel('${cardPidMap[p.id]||''}')">${p.isNew?'<div class="pcard-new">NEW</div>':''}<div class="pcard-inner"><div class="pcard-top"><span class="pcard-number">${p.number}</span><span class="pcard-rbadge ${p.rarity}">${rarityLabel[p.rarity]}</span></div><div class="pcard-img-area"><div class="pcard-ball">${p.emoji}</div></div><div class="pcard-info"><div class="pcard-name">${p.name}</div><div class="pcard-team">${p.team}</div></div></div></div>`).join('');}
 
 // MYPAGE
-function renderMpBets(){const el=document.getElementById('mpBetList');if(!el)return;el.innerHTML=myBets.map(b=>{const icon=b.status==='won'?'✅':'⏳';const ptClass=b.status==='won'?'won':'pending';const pt=b.status==='won'?`+${b.payout-b.stake}pt`:'進行中';return `<div class="lb-row"><span class="lb-status">${icon}</span><span class="lb-label">${b.sport} • ${b.prediction}</span><span class="lb-pt ${ptClass}">${pt}</span></div>`;}).join('');}
-function renderMpLeague(){const el=document.getElementById('mpLeagueList');if(!el)return;el.innerHTML=leagueData.map(r=>`<div class="lr-row${r.isMe?' me':''}"><span class="lr-rank">${r.rank}</span><span class="lr-avatar">${r.avatar}</span><span class="lr-name${r.isMe?' me-name':''}">${r.name}</span><span class="lr-pts${r.isMe?' me-pts':''}">${r.pts.toLocaleString()}pt</span></div>`).join('');}
-function renderRankingDetail(){const el=document.getElementById('rankingDetailList');if(!el)return;el.innerHTML=leagueData.map(r=>`<div class="lr-row${r.isMe?' me':''}"><span class="lr-rank">${r.rank}</span><span class="lr-avatar">${r.avatar}</span><span class="lr-name${r.isMe?' me-name':''}">${r.name}</span><span class="lr-pts${r.isMe?' me-pts':''}">${r.pts.toLocaleString()}pt</span></div>`).join('');}
+function renderMpBets(){const el=document.getElementById('mpBetList');if(!el)return;if(!myBets.length){el.innerHTML='<div style="font-size:10px;color:#8b949e;padding:8px;">まだ予想がありません</div>';return;}el.innerHTML=myBets.map(b=>{const icon=b.status==='won'?'✅':b.status==='lost'?'❌':'⏳';const ptClass=b.status==='won'?'won':b.status==='lost'?'lost':'pending';const pt=b.status==='won'?`+${(b.payout-b.stake).toLocaleString()}pt`:b.status==='lost'?`-${b.stake.toLocaleString()}pt`:'進行中';return `<div class="lb-row"><span class="lb-status">${icon}</span><span class="lb-label">NPB • ${b.prediction}</span><span class="lb-pt ${ptClass}">${pt}</span></div>`;}).join('');}
+function renderMpLeague(){const el=document.getElementById('mpLeagueList');if(!el)return;el.innerHTML=buildRankingRows().slice(0,4).map(r=>`<div class="lr-row${r.isMe?' me':''}"><span class="lr-rank">${r.rank}</span><span class="lr-avatar">${r.avatar}</span><span class="lr-name${r.isMe?' me-name':''}">${r.name}</span><span class="lr-pts${r.isMe?' me-pts':''}">${r.pts.toLocaleString()}pt</span></div>`).join('');}
+function renderRankingDetail(){const el=document.getElementById('rankingDetailList');if(!el)return;el.innerHTML=buildRankingRows().map(r=>`<div class="lr-row${r.isMe?' me':''}"><span class="lr-rank">${r.rank}</span><span class="lr-avatar">${r.avatar}</span><span class="lr-name${r.isMe?' me-name':''}">${r.name}</span><span class="lr-pts${r.isMe?' me-pts':''}">${r.pts.toLocaleString()}pt</span></div>`).join('');}
 
 // CARDS
 function switchCardNav(tab,el){document.querySelectorAll('.card-nav-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('cview-pack').style.display=tab==='pack'?'block':'none';document.getElementById('cview-mycard').style.display=tab==='mycard'?'block':'none';if(tab==='mycard')renderCardList();}
@@ -1925,8 +2557,57 @@ function renderMissionSection(){const el=document.getElementById('mission-contai
 function closeModal(id){document.getElementById(id)?.classList.remove('active');}
 
 // PREDICT VIEW
-const allBets=[{id:'b1',status:'pending',match:'DeNA vs ロッテ',market:'勝敗',selection:'DeNA勝利',odds:1.85,stake:1000,payout:null,date:'本日',options:[{label:'DeNA勝利',odds:1.85},{label:'ロッテ勝利',odds:1.95}]},{id:'b2',status:'pending',match:'DeNA vs ロッテ',market:'藤浪 三振数',selection:'3-5個',odds:1.65,stake:500,payout:null,date:'本日',options:[{label:'0-2個',odds:3.20},{label:'3-5個',odds:1.65},{label:'6個以上',odds:2.10}]},{id:'b4',status:'won',match:'阪神 vs 巨人',market:'勝敗',selection:'阪神勝利',odds:1.90,stake:500,payout:950,date:'昨日',correct:'阪神勝利',actual:'阪神 3-1 巨人'},{id:'b5',status:'lost',match:'阪神 vs 広島',market:'先発QS',selection:'あり',odds:1.70,stake:400,payout:0,date:'3日前',correct:'なし',actual:'先発4回2/3で降板'}];
-const rankingData=[{rank:1,avatar:'😎',name:'Taro K.',pts:4120,won:18,total:24,isMe:false,streak:3},{rank:2,avatar:'🌸',name:'Hana M.',pts:3255,won:14,total:20,isMe:false,streak:1},{rank:3,avatar:'🦊',name:'あなた',pts:3240,won:12,total:17,isMe:true,streak:2},{rank:4,avatar:'🎃',name:'Yuki T.',pts:3190,won:11,total:16,isMe:false,streak:0}];
+// 予想ベット：空からスタート
+const allBets=[];
+// 予想しなかったマーケットの結果記録
+const resolvedResults=[];
+
+// 予想の正解定義（pitchData進行に連動して自動決着）
+// key = data-market値、value = 正解selection
+const betAnswers={
+  '勝敗': null,                    // 試合終了時に決定
+  '1回表先頭': '凡退（三振以外）', // 和田→左飛
+  '藤浪1回三振': '0個',            // 1回表は三振なし
+  '藤浪初球球速': '152〜',         // 初球152km/h
+  '藤浪1回三者凡退': '三者凡退',   // 1回表三者凡退
+  '梶原1回出塁': '出塁する',       // 梶原二塁打
+  '梶原1回長打': '長打あり',       // 梶原二塁打
+  '梶原1回初球': '初球見送り',     // 1ボールから
+  '度会1回打席': '凡退',           // 度会→右中間フライ
+  '度会1回球数': '4-5球',          // 5球
+  '度会1回打点': '打点なし',
+  'DeNA1回得点': '無得点',
+  '藤浪三振': '3-5個',
+  'ビシエド初打席': '凡退',
+  '梶原 安打数': '1本',
+  '梶原 二塁打': '二塁打あり',
+  '梶原 出塁': '1回以上出塁',
+  '度会 安打': '安打あり',
+  '度会 得点': '得点なし',
+  '度会 初球打ち': '初球打ちなし',
+};
+
+// 決着条件定義
+// trigger: 'atbat_end' = 指定打者の打席終了時, 'inning_end' = イニング終了時
+// bat: 対象打者名（atbat_end時のみ）
+// inn/half: 対象イニング
+const ATBAT_END_PLAYS = new Set(['out','strikeout','hit','double','triple','hr','walk','error']);
+
+const betSettleAt={
+  // 打席単位で決着
+  '1回表先頭':  {trigger:'atbat_end', bat:'和田 康士朗', inn:1, half:'表'},
+  '梶原1回出塁':{trigger:'atbat_end', bat:'梶原 昂希',   inn:1, half:'裏'},
+  '梶原1回長打':{trigger:'atbat_end', bat:'梶原 昂希',   inn:1, half:'裏'},
+  '梶原1回初球':{trigger:'atbat_end', bat:'梶原 昂希',   inn:1, half:'裏'},
+  '度会1回打席':{trigger:'atbat_end', bat:'度会 隆輝',   inn:1, half:'裏'},
+  '度会1回球数':{trigger:'atbat_end', bat:'度会 隆輝',   inn:1, half:'裏'},
+  '度会1回打点':{trigger:'atbat_end', bat:'度会 隆輝',   inn:1, half:'裏'},
+  // イニング終了で決着
+  '藤浪1回三振':    {trigger:'inning_end', inn:1, half:'表'},
+  '藤浪初球球速':   {trigger:'inning_end', inn:1, half:'表'},
+  '藤浪1回三者凡退':{trigger:'inning_end', inn:1, half:'表'},
+  'DeNA1回得点':    {trigger:'inning_end', inn:1, half:'裏'},
+};
 let currentPredTab='pending',_editingBetId=null;
 
 function switchPredTab(tab){
@@ -1937,12 +2618,10 @@ function switchPredTab(tab){
   });
   if(tab==='yoso'){
     bindOddsBtns(document.getElementById('ppanel-yoso'));
-    document.querySelectorAll('#ppanel-yoso .odds-btn').forEach(btn=>{
-      btn.classList.toggle('selected',state.bets.some(b=>b.id===btn.dataset.id));
-    });
+    refreshOddsBtnStates();
+    hideSettledMarkets();
   }
   if(tab==='ranking'){
-    ensureChartJS(() => renderRankGraph());
   }
 }
 function renderPredictView(){
@@ -1958,27 +2637,145 @@ function renderPredictView(){
   const pendingEl=document.getElementById('pred-pending-list');
   if(!allP.length){pendingEl.innerHTML='<div class="predict-empty">現在予想中の項目はありません</div>';}
   else{pendingEl.innerHTML=allP.map(b=>{const isC=b.fromCart;const sl=b.stake>0?`${b.stake.toLocaleString()}pt 賭け`:'pt 未入力';const bg=isC?'<span style="font-size:8px;background:rgba(245,166,35,0.2);color:var(--accent);padding:1px 5px;border-radius:3px;font-weight:bold;margin-left:4px;">カート</span>':'';return `<div class="predict-item pending" style="cursor:pointer;" onclick="openPredDetail('${b.id}')"><div class="predict-status-dot pending"></div><div class="predict-info"><div class="predict-match">${b.match}${bg} • ${b.date}</div><div class="predict-selection">${b.selection}</div><div class="predict-odds">${b.market} • オッズ ${b.odds.toFixed(2)}</div></div><div class="predict-result"><div class="predict-pt pending">${isC?'参加前':'進行中'}</div><div class="predict-stake">${sl}</div></div><div style="color:var(--text-sub);font-size:11px;margin-left:4px;">›</div></div>`;}).join('');}
-  const rEl=document.getElementById('pred-result-list');rEl.innerHTML=allBets.filter(b=>b.status!=='pending').map(b=>{const pt=b.status==='won'?`+${(b.payout-b.stake).toLocaleString()}pt`:`-${b.stake.toLocaleString()}pt`;return `<div class="predict-item ${b.status}" style="cursor:pointer;" onclick="openPredResult('${b.id}')"><div style="font-size:16px;flex-shrink:0;">${b.status==='won'?'✅':'❌'}</div><div class="predict-info"><div class="predict-match">${b.match} • ${b.date}</div><div class="predict-selection">${b.selection}</div><div class="predict-odds">${b.market} • オッズ ${b.odds.toFixed(2)}</div></div><div class="predict-result"><div class="predict-pt ${b.status}">${pt}</div><div class="predict-stake">${b.stake.toLocaleString()}pt</div></div><div style="color:var(--text-sub);font-size:11px;margin-left:4px;">›</div></div>`;}).join('');
+  const rEl=document.getElementById('pred-result-list');
+  const doneBets=allBets.filter(b=>b.status!=='pending');
+  const betHtml=doneBets.map(b=>{
+    const pt=b.status==='won'?`+${(b.payout-b.stake).toLocaleString()}pt`:`-${b.stake.toLocaleString()}pt`;
+    return `<div class="predict-item ${b.status}" style="cursor:pointer;" onclick="openPredResult('${b.id}')">
+      <div style="font-size:16px;flex-shrink:0;">${b.status==='won'?'✅':'❌'}</div>
+      <div class="predict-info">
+        <div class="predict-match">${b.match} • ${b.date}</div>
+        <div class="predict-selection">${b.selection}</div>
+        <div class="predict-odds">${b.market} • オッズ ${b.odds.toFixed(2)}</div>
+      </div>
+      <div class="predict-result">
+        <div class="predict-pt ${b.status}">${pt}</div>
+        <div class="predict-stake">${b.stake.toLocaleString()}pt</div>
+      </div>
+      <div style="color:var(--text-sub);font-size:11px;margin-left:4px;">›</div>
+    </div>`;
+  }).join('');
+  // 未予想マーケットの結果
+  const unbetHtml=resolvedResults.map(r=>`<div class="predict-item" style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
+    <div style="font-size:16px;flex-shrink:0;">📋</div>
+    <div class="predict-info" style="flex:1;">
+      <div class="predict-match" style="font-size:9px;color:var(--text-sub);">DeNA vs ロッテ • ${r.date}</div>
+      <div class="predict-selection" style="color:var(--text-sub);">未予想</div>
+      <div class="predict-odds" style="font-size:9px;">${r.market}</div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-size:10px;font-weight:bold;color:#3fb950;">正解: ${r.answer}</div>
+      <div style="font-size:9px;color:var(--text-sub);margin-top:2px;">参加なし</div>
+    </div>
+  </div>`).join('');
+  if(!doneBets.length && !resolvedResults.length){
+    rEl.innerHTML='<div style="font-size:10px;color:#8b949e;padding:16px;text-align:center;">まだ結果が確定した予想がありません</div>';
+  } else {
+    rEl.innerHTML = betHtml + (unbetHtml ? `<div style="margin-top:${doneBets.length?'10px':'0'};padding-top:${doneBets.length?'10px':'0'};${doneBets.length?'border-top:1px solid var(--border);':''}"><div style="font-size:9px;color:var(--text-sub);margin-bottom:6px;font-weight:bold;">📋 未参加の確定結果</div>${unbetHtml}</div>` : '');
+  }
   const medals=['🥇','🥈','🥉'];const rkEl=document.getElementById('pred-ranking-list');
-  rkEl.innerHTML=rankingData.map(r=>{const wr=Math.round(r.won/r.total*100);const rd=r.rank<=3?medals[r.rank-1]:r.rank;const rc=r.rank===1?'gold':r.rank===2?'silver':r.rank===3?'bronze':'';const st=r.streak>0?`<span style="color:#3fb950;font-size:9px;">🔥${r.streak}連勝</span>`:r.streak<0?`<span style="color:#ff6b6b;font-size:9px;">❄️${Math.abs(r.streak)}連敗</span>`:'';return `<div class="predict-rank-row${r.isMe?' me':''}"><div class="predict-rank-num ${rc}" style="width:28px;text-align:center;">${rd}</div><div class="predict-rank-avatar">${r.avatar}</div><div style="flex:1;min-width:0;"><div style="display:flex;align-items:center;gap:4px;"><span class="predict-rank-name${r.isMe?' me':''}">${r.name}</span>${r.isMe?'<span class="predict-rank-badge">YOU</span>':''}${st}</div><div style="font-size:9px;color:var(--text-sub);">${r.won}勝${r.total-r.won}敗 的中率${wr}%</div></div><div class="predict-rank-pt${r.isMe?' me':''}">${r.pts.toLocaleString()}<span style="font-size:8px;color:var(--text-sub);">pt</span></div></div>`;}).join('');
+  const rkRows=buildRankingRows();
+  if(!rkRows.length){rkEl.innerHTML='<div style="font-size:10px;color:#8b949e;padding:16px;text-align:center;">まだ予想が行われていません<br>予想するとランキングが始まります！</div>';}
+  else{rkEl.innerHTML=rkRows.map(r=>{const rd=r.rank<=3?medals[r.rank-1]:r.rank;const rc=r.rank===1?'gold':r.rank===2?'silver':r.rank===3?'bronze':'';return `<div class="predict-rank-row${r.isMe?' me':''}"><div class="predict-rank-num ${rc}" style="width:28px;text-align:center;">${rd}</div><div class="predict-rank-avatar">${r.avatar}</div><div style="flex:1;min-width:0;"><div style="display:flex;align-items:center;gap:4px;"><span class="predict-rank-name${r.isMe?' me':''}">${r.name}</span></div><div style="font-size:9px;color:var(--text-sub);">予想 ${r.total}回 / ${r.won}勝</div></div><div style="text-align:right;"><div style="font-weight:bold;font-family:var(--font-m);font-size:13px;color:${r.isMe?'var(--accent)':'var(--text-main)'};">${r.pts.toLocaleString()}<span style="font-size:8px;color:var(--text-sub);">pt</span></div></div></div>`;}).join('');}
   // ランキングタブ表示中のみグラフを描画
   if (currentPredTab === 'ranking') {
-    ensureChartJS(() => renderRankGraph());
   }
 }
+function renderStudioResults(){
+  const lists=['home-result-list','match-result-list'];
+  const done=allBets.filter(b=>b.status!=='pending');
+  const pending=allBets.filter(b=>b.status==='pending');
+  const html=[
+    ...pending.map(b=>`<div class="sp-result-row"><span class="sp-result-icon">⏳</span><span class="sp-result-label">${b.market} • ${b.selection}</span><span class="sp-result-pt pending">進行中</span></div>`),
+    ...done.map(b=>{const won=b.status==='won';const pt=won?`+${(b.payout-b.stake).toLocaleString()}pt`:`-${b.stake.toLocaleString()}pt`;return `<div class="sp-result-row"><span class="sp-result-icon">${won?'✅':'❌'}</span><span class="sp-result-label">${b.market} • ${b.selection}</span><span class="sp-result-pt ${b.status}">${pt}</span></div>`;}),
+    ...resolvedResults.map(r=>`<div class="sp-result-row"><span class="sp-result-icon">📋</span><span class="sp-result-label">${r.market} <span style="color:#3fb950;">→ ${r.answer}</span></span><span class="sp-result-pt" style="color:#8b949e;font-size:9px;">未参加</span></div>`)
+  ].join('');
+  lists.forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=html||'<span style="color:#8b949e;font-size:10px;">まだ予想がありません</span>';});
+}
 function openPredDetail(betId){_editingBetId=betId;const isC=betId.startsWith('cart-');let b;if(isC){const oid=betId.replace('cart-','');const cb=state.bets.find(x=>x.id===oid);if(!cb)return;b={id:betId,fromCart:true,match:cb.market,market:cb.market,selection:cb.selection,odds:cb.odds,stake:cb.stake,options:[],origId:oid};}else{b=allBets.find(x=>x.id===betId);if(!b)return;}_renderPDB(b);document.getElementById('modal-pred-detail').classList.add('active');}
-function _renderPDB(b){const opts=b.options||[];const sd=b.stake>0?`${b.stake.toLocaleString()}`:'';const rd=b.stake>0?`${Math.floor(b.stake*b.odds).toLocaleString()}pt`:'—';const sl=b.fromCart?'🟡 カート（未参加）':'🟢 進行中';let oh='';if(opts.length){oh=`<div style="margin-top:14px;"><div style="font-size:10px;color:var(--text-sub);margin-bottom:6px;font-weight:bold;">📌 予想を変更する</div><div class="pred-change-opts">${opts.map(o=>`<button class="pred-change-btn${o.label===b.selection?' current':''}" onclick="changePredSel('${b.id}','${o.label}',${o.odds})"><div style="font-weight:bold;font-size:11px;">${o.label}</div><div style="font-size:10px;color:var(--accent);margin-top:2px;">× ${o.odds.toFixed(2)}</div></button>`).join('')}</div></div>`;}
-const ph=`<div style="margin-top:14px;"><div style="font-size:10px;color:var(--text-sub);margin-bottom:6px;font-weight:bold;">💰 賭けポイントを変更する</div><div style="position:relative;margin-bottom:6px;"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text-sub);pointer-events:none;">pt</span><input type="number" id="pred-stake-input" class="stake-input" style="padding-left:28px;width:100%;" placeholder="ポイントを入力" value="${sd}" oninput="updatePR()"></div><div style="display:flex;gap:4px;margin-bottom:6px;">${[100,500,1000,3000].map(v=>`<button onclick="setPS(${v})" style="flex:1;background:var(--bg-main);border:1px solid var(--border);color:var(--text-sub);padding:4px 2px;border-radius:4px;font-size:9px;cursor:pointer;">+${v>=1000?v/1000+'k':v}</button>`).join('')}<button onclick="setPS('MAX')" style="flex:1;background:var(--bg-main);border:1px solid var(--border);color:var(--accent);padding:4px 2px;border-radius:4px;font-size:9px;cursor:pointer;font-weight:bold;">MAX</button></div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-sub);background:var(--bg-main);padding:6px 10px;border-radius:5px;"><span>受取予定</span><span id="pred-return-preview" style="font-weight:bold;font-family:var(--font-m);color:#3fb950;">${rd}</span></div><button onclick="savePS()" style="width:100%;margin-top:8px;background:var(--accent);color:#000;border:none;border-radius:6px;padding:9px;font-size:11px;font-weight:bold;cursor:pointer;">変更を保存</button></div>`;
-document.getElementById('pred-detail-body').innerHTML=`<div class="pred-detail-row"><span class="pred-detail-label">試合</span><span class="pred-detail-val" style="font-size:10px;">${b.match}</span></div><div class="pred-detail-row"><span class="pred-detail-label">マーケット</span><span class="pred-detail-val" style="font-size:10px;">${b.market}</span></div><div class="pred-detail-row"><span class="pred-detail-label">予想</span><span class="pred-detail-val" style="color:var(--accent);">${b.selection}</span></div><div class="pred-detail-row"><span class="pred-detail-label">オッズ</span><span class="pred-detail-val">${b.odds.toFixed(2)}</span></div><div class="pred-detail-row"><span class="pred-detail-label">ステータス</span><span class="pred-detail-val">${sl}</span></div>${oh}${ph}`;}
+function _renderPDB(b){
+  const isCart=b.fromCart;
+  const sl=isCart?'🟡 カート（未参加）':'🟢 進行中';
+  const sd=b.stake>0?`${b.stake.toLocaleString()}`:'';
+  const rd=b.stake>0?`${Math.floor(b.stake*b.odds).toLocaleString()}pt`:'—';
+
+  // カート中のみポイント入力UIを表示
+  const ph=isCart?`<div style="margin-top:14px;">
+    <div style="font-size:10px;color:var(--text-sub);margin-bottom:6px;font-weight:bold;">💰 賭けポイント</div>
+    <div style="position:relative;margin-bottom:6px;"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text-sub);pointer-events:none;">pt</span>
+    <input type="number" id="pred-stake-input" class="stake-input" style="padding-left:28px;width:100%;" placeholder="ポイントを入力" value="${sd}" oninput="updatePR()"></div>
+    <div style="display:flex;gap:4px;margin-bottom:6px;">${[100,500,1000,3000].map(v=>`<button onclick="setPS(${v})" style="flex:1;background:var(--bg-main);border:1px solid var(--border);color:var(--text-sub);padding:4px 2px;border-radius:4px;font-size:9px;cursor:pointer;">+${v>=1000?v/1000+'k':v}</button>`).join('')}<button onclick="setPS('MAX')" style="flex:1;background:var(--bg-main);border:1px solid var(--border);color:var(--accent);padding:4px 2px;border-radius:4px;font-size:9px;cursor:pointer;font-weight:bold;">MAX</button></div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-sub);background:var(--bg-main);padding:6px 10px;border-radius:5px;"><span>受取予定</span><span id="pred-return-preview" style="font-weight:bold;font-family:var(--font-m);color:#3fb950;">${rd}</span></div>
+  </div>`:'';
+
+  // 確定済みベット（allBets中・pending）→「予想をやめる」ボタン
+  const cancelBtn=(!isCart)?`<button onclick="cancelBet('${b.id}')" style="width:100%;margin-top:14px;background:rgba(255,59,48,0.15);border:1px solid #ff3b30;color:#ff6b6b;border-radius:6px;padding:9px;font-size:11px;font-weight:bold;cursor:pointer;">🚫 予想をやめる</button>`:'';
+
+  document.getElementById('pred-detail-body').innerHTML=`
+    <div class="pred-detail-row"><span class="pred-detail-label">試合</span><span class="pred-detail-val" style="font-size:10px;">${b.match}</span></div>
+    <div class="pred-detail-row"><span class="pred-detail-label">マーケット</span><span class="pred-detail-val" style="font-size:10px;">${b.market}</span></div>
+    <div class="pred-detail-row"><span class="pred-detail-label">予想</span><span class="pred-detail-val" style="color:var(--accent);">${b.selection}</span></div>
+    <div class="pred-detail-row"><span class="pred-detail-label">オッズ</span><span class="pred-detail-val">${b.odds.toFixed(2)}</span></div>
+    <div class="pred-detail-row"><span class="pred-detail-label">賭けポイント</span><span class="pred-detail-val">${b.stake.toLocaleString()}pt</span></div>
+    <div class="pred-detail-row"><span class="pred-detail-label">ステータス</span><span class="pred-detail-val">${sl}</span></div>
+    ${ph}${cancelBtn}`;
+}
 function updatePR(){const inp=document.getElementById('pred-stake-input'),s=parseInt(inp.value)||0;let odds=1;if(_editingBetId.startsWith('cart-')){const cb=state.bets.find(x=>x.id===_editingBetId.replace('cart-',''));if(cb)odds=cb.odds;}else{const b=allBets.find(x=>x.id===_editingBetId);if(b)odds=b.odds;}const r=document.getElementById('pred-return-preview');if(r)r.textContent=s>0?`${Math.floor(s*odds).toLocaleString()}pt`:'—';}
 function setPS(v){const i=document.getElementById('pred-stake-input');if(!i)return;if(v==='MAX')i.value=state.balance;else i.value=(parseInt(i.value)||0)+v;updatePR();}
 function savePS(){const inp=document.getElementById('pred-stake-input'),ns=parseInt(inp.value)||0;if(_editingBetId.startsWith('cart-')){const cb=state.bets.find(x=>x.id===_editingBetId.replace('cart-',''));if(cb){cb.stake=ns;renderBetslip();}}else{const b=allBets.find(x=>x.id===_editingBetId);if(b)b.stake=ns;}closeModal('modal-pred-detail');renderPredictView();}
+
+// 予想をやめる：allBetsから削除、ポイントを返還、予想するタブのボタンを戻す
+function cancelBet(betId){
+  const idx=allBets.findIndex(b=>b.id===betId);
+  if(idx<0) return;
+  const b=allBets[idx];
+  // ポイント返還
+  state.balance+=b.stake;
+  myTotal=Math.max(0,myTotal-1);
+  // allBets・myBets から削除
+  allBets.splice(idx,1);
+  const mi=myBets.findIndex(x=>x.id===betId);
+  if(mi>=0) myBets.splice(mi,1);
+  // 予想するタブのボタンを再度押せる状態に戻す
+  document.querySelectorAll(`.odds-btn[data-market="${b.market}"]`).forEach(btn=>{
+    btn.classList.remove('selected');
+    btn.disabled=false;
+    btn.style.opacity='';
+    btn.style.cursor='';
+  });
+  closeModal('modal-pred-detail');
+  updateHeaderBalance();
+  refreshOddsBtnStates();
+  renderPredictView();
+  renderStudioResults();
+  showToast(`🚫 「${b.market}」の予想を取り消しました`);
+}
 function changePredSel(bid,nl,no){const isC=bid.startsWith('cart-');if(isC){const cb=state.bets.find(x=>x.id===bid.replace('cart-',''));if(cb){cb.selection=nl;cb.odds=no;renderBetslip();}}else{const b=allBets.find(x=>x.id===bid);if(b){b.selection=nl;b.odds=no;}}let bl;if(isC){const cb=state.bets.find(x=>x.id===bid.replace('cart-',''));if(cb)bl={id:bid,fromCart:true,match:cb.market,market:cb.market,selection:cb.selection,odds:cb.odds,stake:cb.stake,options:[],origId:bid.replace('cart-','')};}else{bl=allBets.find(x=>x.id===bid);}if(bl)_renderPDB(bl);renderPredictView();}
 function openPredResult(bid){const b=allBets.find(x=>x.id===bid);if(!b)return;const iW=b.status==='won';const pg=iW?b.payout-b.stake:-b.stake;const pt=iW?`+${pg.toLocaleString()}pt`:`${pg.toLocaleString()}pt`;document.getElementById('pred-result-modal-title').textContent=iW?'✅ 的中！':'❌ 不正解';document.getElementById('pred-result-body').innerHTML=`<div style="text-align:center;padding:12px 0 16px;"><div style="font-size:36px;margin-bottom:6px;">${iW?'🎯':'😔'}</div><div style="font-size:24px;font-weight:900;font-family:var(--font-m);color:${iW?'#3fb950':'#ff6b6b'};">${pt}</div><div style="font-size:10px;color:var(--text-sub);margin-top:3px;">賭け ${b.stake.toLocaleString()}pt × ${b.odds.toFixed(2)}</div></div><div class="pred-detail-row"><span class="pred-detail-label">試合</span><span class="pred-detail-val">${b.match}</span></div><div class="pred-detail-row"><span class="pred-detail-label">予想</span><span class="pred-detail-val" style="color:${iW?'#3fb950':'#ff6b6b'};">${b.selection}</span></div>${b.correct?`<div class="pred-detail-row"><span class="pred-detail-label">正解</span><span class="pred-detail-val" style="color:#3fb950;">${b.correct}</span></div>`:''}${b.actual?`<div class="pred-detail-row"><span class="pred-detail-label">試合結果</span><span class="pred-detail-val">${b.actual}</span></div>`:''}<div class="ai-comment-box"><div class="ai-comment-head">🤖 BEAT-1 の分析</div><div class="ai-comment-text">${iW?'素晴らしい予想でした！データ分析と直感の融合が完璧でした。':'惜しい結果でしたが、次回はコンディション指標も加味しましょう。'}</div></div>`;document.getElementById('modal-pred-result').classList.add('active');}
 
 // YOSO HEADLINES
-const yosoHL=[{icon:'🔥',text:'DeNA勝利予想が急増中！3,842人が参加',badge:'hot',bt:'hot'},{icon:'📊',text:'あなたは現在リーグ3位。Taro K.との差 5pt',badge:'YOU',bt:'you'},{icon:'⬆️',text:'藤浪 3-5三振予想が人気1位。オッズ1.65',badge:'急上昇',bt:'up'}];
-function renderYosoHeadlines(){const el=document.getElementById('yoso-headlines');if(!el)return;el.innerHTML=yosoHL.map(h=>`<div class="yoso-headline"><span class="yoso-hl-icon">${h.icon}</span><span class="yoso-hl-text">${h.text}</span><span class="yoso-hl-badge ${h.bt}">${h.badge}</span></div>`).join('');}
+// 速報：最新3件を管理
+const yosoHL=[];
+const MAX_HEADLINE=3;
+
+function pushHeadline(icon,text,badge,bt){
+  yosoHL.unshift({icon,text,badge,bt});
+  if(yosoHL.length>MAX_HEADLINE) yosoHL.length=MAX_HEADLINE;
+  renderYosoHeadlines();
+  // 予想タブ速報パネル(static)も更新
+  const el2=document.getElementById('predict-news-list');
+  if(el2) el2.innerHTML=yosoHL.map(h=>`<div class="yoso-headline"><span class="yoso-hl-icon">${h.icon}</span><span class="yoso-hl-text">${h.text}</span><span class="yoso-hl-badge ${h.bt}">${h.badge}</span></div>`).join('');
+}
+
+function renderYosoHeadlines(){
+  ['yoso-headlines','yoso-headlines-predict'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    el.innerHTML=yosoHL.length
+      ? yosoHL.map(h=>`<div class="yoso-headline"><span class="yoso-hl-icon">${h.icon}</span><span class="yoso-hl-text">${h.text}</span><span class="yoso-hl-badge ${h.bt}">${h.badge}</span></div>`).join('')
+      : '<div style="font-size:10px;color:#8b949e;padding:6px 0;">速報はまだありません</div>';
+  });
+}
 
 // HOT BETS
 const hotBets={popular:[{tag:'popular',tagLabel:'人気No.1',match:'DeNA vs ロッテ',question:'⚾ 勝敗予想',participants:3842,opts:[{label:'DeNA勝利',pct:62,odds:1.85,leading:true},{label:'ロッテ勝利',pct:38,odds:1.95}]},{tag:'popular',tagLabel:'人気No.2',match:'DeNA vs ロッテ',question:'🎳 藤浪 奪三振数',participants:2140,opts:[{label:'3-5個',pct:58,odds:1.65,leading:true},{label:'6個以上',pct:25,odds:2.10},{label:'0-2個',pct:17,odds:3.20}]}],trending:[{tag:'trending',tagLabel:'急上昇🔥',match:'DeNA vs ロッテ',question:'💥 筒香 本塁打',participants:540,opts:[{label:'なし',pct:78,odds:1.20,leading:true},{label:'あり',pct:22,odds:4.50}]}],close:[{tag:'close',tagLabel:'接戦⚡',match:'DeNA vs ロッテ',question:'🎯 梶原 出塁',participants:890,opts:[{label:'1回以上',pct:53,odds:1.85,leading:true},{label:'出塁なし',pct:47,odds:1.95}]}]};
@@ -1987,6 +2784,40 @@ function switchHotTab(tab){currentHotTab=tab;['popular','trending','close'].forE
 function renderHotBets(){const el=document.getElementById('hot-bet-list');if(!el)return;const list=hotBets[currentHotTab]||[];el.innerHTML=list.map(b=>{const oh=b.opts.map(o=>`<div class="hot-bet-opt${o.leading?' leading':''}"><div class="hot-bet-opt-label">${o.label}</div><div class="hot-bet-opt-bar-wrap"><div class="hot-bet-opt-bar" style="width:${o.pct}%"></div></div><div style="display:flex;justify-content:space-between;"><span class="hot-bet-opt-pct">${o.pct}%</span><span class="hot-bet-odds">${o.odds.toFixed(2)}</span></div></div>`).join('');return `<div class="hot-bet-card" onclick="switchView('predict');setTimeout(()=>switchPredTab('yoso'),100)"><div class="hot-bet-top"><span class="hot-bet-tag ${b.tag}">${b.tagLabel}</span><span class="hot-bet-match">${b.match}</span><span class="hot-bet-participants">👥${b.participants.toLocaleString()}</span></div><div class="hot-bet-question">${b.question}</div><div class="hot-bet-opts">${oh}</div></div>`;}).join('');}
 
 // ★ odds-btn 全バインド（共通）
+// 予想するタブ全ボタンのselected状態を再適用
+// ・カート中（state.bets）→ selected
+// ・確定済みベット（allBets pending/won/lost）→ selected + disabled
+function refreshOddsBtnStates(){
+  const panel = document.getElementById('ppanel-yoso');
+  if(!panel) return;
+  panel.querySelectorAll('.odds-btn').forEach(btn=>{
+    const id = btn.dataset.id;
+    const market = btn.dataset.market;
+    // カート中
+    const inCart = state.bets.some(b=>b.id===id);
+    // 同マーケットが確定済みベットに存在
+    const betOnMarket = allBets.some(b=>b.market===market);
+    // 同マーケットで同じ選択が確定済み
+    const isBetSelected = allBets.some(b=>b.market===market && b.id && btn.dataset.selection===b.selection);
+
+    if(inCart){
+      btn.classList.add('selected');
+      btn.disabled = false;
+    } else if(betOnMarket){
+      // ベット済みマーケット：選択したボタンのみselected、全ボタンdisabled
+      btn.classList.toggle('selected', isBetSelected);
+      btn.disabled = true;
+      btn.style.opacity = isBetSelected ? '1' : '0.45';
+      btn.style.cursor = 'default';
+    } else {
+      btn.classList.remove('selected');
+      btn.disabled = false;
+      btn.style.opacity = '';
+      btn.style.cursor = '';
+    }
+  });
+}
+
 function bindOddsBtns(root) {
   (root || document).querySelectorAll('.odds-btn').forEach(btn => {
     btn.onclick = function() {
@@ -1995,14 +2826,7 @@ function bindOddsBtns(root) {
   });
 }
 
-// Chart.js ローダー
-window.ensureChartJS = function(cb) {
-  if (window.Chart) { cb(); return; }
-  const s = document.createElement('script');
-  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';
-  s.onload = cb;
-  document.head.appendChild(s);
-};
+
 
 // INIT
 bindOddsBtns();
